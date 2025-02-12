@@ -12,7 +12,7 @@
 				</template>
 			</v-toolbar>
 			<v-card-text>
-				<slot name="text"></slot>
+				<slot name="text"/>
 			</v-card-text>
 		</v-card>
 	</v-dialog>
@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 	import CloseBtn from "../Containment/Btns/CloseBtn.vue";
-	const emit = defineEmits(["close"]);
+	defineEmits(["close"]);
 	defineProps<{
 		maxWidth?: number;
 		opened: boolean;

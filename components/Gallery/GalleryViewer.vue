@@ -14,13 +14,12 @@
 						<BaseImg
 							v-if="img"
 							:img-src="img"
-							:img-options="galleryImgOptions">
-						</BaseImg>
+							:img-options="galleryImgOptions"/>
 						<v-sheet
 							v-else
 							rounded="lg"
 							class="pa-2 cursor-pointer"
-							color="surface-variant"
+							color="background"
 							width="100%"
 							height="100%">
 							<div

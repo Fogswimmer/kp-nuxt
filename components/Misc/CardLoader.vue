@@ -5,7 +5,7 @@
 		contained>
 		<v-progress-circular
 			indeterminate
-			color="primary"></v-progress-circular>
+			color="primary"/>
 	</v-overlay>
 </template>
 

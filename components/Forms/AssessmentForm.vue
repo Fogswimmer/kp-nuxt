@@ -11,16 +11,15 @@
 					active-color="warning"
 					clearable
 					hover
-					@update:model-value="$emit('update:rating', $event)">
-				</v-rating>
+					@update:model-value="$emit('update:rating', $event)"/>
 			</client-only>
 			<v-textarea
 				:model-value="comment"
 				:label="$t('pages.films.comment')"
-				@update:model-value="$emit('update:comment', $event)"></v-textarea>
+				@update:model-value="$emit('update:comment', $event)"/>
 		</v-card-text>
 		<v-card-actions>
-			<v-spacer></v-spacer>
+			<v-spacer/>
 			<v-btn
 				color="primary"
 				prepend-icon="mdi-check"

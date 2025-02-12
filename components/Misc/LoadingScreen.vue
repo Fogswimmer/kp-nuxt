@@ -1,7 +1,9 @@
 <template>
-  <div class="d-flex flex-column p-5 gap-2 align-center justify-center overlay bg-gradient">
+  <div
+    class="d-flex flex-column p-5 gap-2 align-center justify-center overlay bg-gradient"
+  >
     <span class="text-center">{{ $t("state.loading") }}...</span>
-    <span class="progress mx-auto"></span>
+    <span class="progress mx-auto" />
   </div>
 </template>
 
@@ -15,14 +17,14 @@
   z-index: 9999;
   width: 100%;
   height: 100%;
-  background-color: rgb(255, 255, 255);
+  background-color: #00000041;
 }
 
 .progress {
   width: 48px;
   height: 48px;
   border: 5px solid #5e5e5e17;
-  border-bottom-color: #6750a4;
+  border-bottom-color: #2196f3;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;

@@ -24,8 +24,7 @@
             :key="i"
             :value="item"
             :src="item"
-          >
-          </v-carousel-item>
+          />
         </v-carousel>
       </v-card-text>
     </v-sheet>

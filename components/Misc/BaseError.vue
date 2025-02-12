@@ -13,7 +13,7 @@
 					@click="reload"
 					>{{ $t("actions.reload") }}</v-btn
 				>
-				<CloseBtn @click="$emit('close')"></CloseBtn>
+				<CloseBtn @click="$emit('close')"/>
 			</div>
 		</v-sheet>
 	</v-bottom-sheet>

@@ -3,10 +3,9 @@
 		icon="mdi-plus"
 		color="primary"
 		absolute
-		
 		offset
 		location="top end"
-		:to="to"></v-fab>
+		:to="to"/>
 </template>
 
 <script lang="ts" setup>

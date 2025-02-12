@@ -2,7 +2,7 @@
 export const useAuthStore = defineStore("authStore", () => {
 	const currentUser = ref<CurrentUser | null>();
 	const loading = ref(false);
-	const authError = ref<Error | null>();
+	const authError = ref<Error | unknown>();
 	const tokenCookie = useCookie("auth_token");
 	const token = ref<string | null>(tokenCookie.value || null || "");
 	const isAuthenticated = computed(() => {
@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("authStore", () => {
 				headers: authHeaders.value,
 			});
 			currentUser.value = response;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			authError.value = error;
 			showErrorMessage.value = true;
 		} finally {
@@ -49,7 +49,7 @@ export const useAuthStore = defineStore("authStore", () => {
 				method: "POST",
 				body: userForm.value,
 			});
-		} catch (error: any) {
+		} catch (error: unknown) {
 			authError.value = error;
 			showErrorMessage.value = true;
 		} finally {
@@ -71,7 +71,7 @@ export const useAuthStore = defineStore("authStore", () => {
 			);
 			token.value = response?.token || null;
 			tokenCookie.value = token.value;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			authError.value = error;
 			showErrorMessage.value = true;
 		} finally {
@@ -85,7 +85,7 @@ export const useAuthStore = defineStore("authStore", () => {
 		currentUser.value = null;
 		token.value = null;
 	};
-	const uploadAvatar = async (avatar: File, id: Number) => {
+	const uploadAvatar = async (avatar: File, id: number) => {
 		try {
 			loading.value = true;
 			const formData = new FormData();
@@ -99,7 +99,7 @@ export const useAuthStore = defineStore("authStore", () => {
 				}
 			);
 			currentUser.value = response;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			authError.value = error;
 			showErrorMessage.value = true;
 		} finally {
@@ -107,7 +107,7 @@ export const useAuthStore = defineStore("authStore", () => {
 		}
 	};
 
-	const uploadCover = async (cover: File, id: Number) => {
+	const uploadCover = async (cover: File, id: number) => {
 		try {
 			loading.value = true;
 			const formData = new FormData();
@@ -121,7 +121,7 @@ export const useAuthStore = defineStore("authStore", () => {
 				}
 			);
 			currentUser.value = response;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			authError.value = error;
 			showErrorMessage.value = true;
 		} finally {

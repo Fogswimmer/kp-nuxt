@@ -11,70 +11,39 @@
 			:loading="loading"
 			:is-auth="isAuthenticated">
 			<template #menu>
-				<template v-if="$vuetify.display.smAndDown">
-					<v-menu location="bottom end">
-						<template v-slot:activator="{ props }">
-							<v-btn
-								icon
-								v-bind="props">
-								<v-icon>mdi-dots-vertical</v-icon>
-							</v-btn>
-						</template>
-						<v-list
-							density="compact"
-							class="dark-glass">
-							<v-list-item
-								:title="$t('actions.choose_cover')"
-								prepend-icon="mdi-image"
-								value="cover"
-								@click="showCoverChooseDialog = true"></v-list-item>
-							<v-list-item
-								:title="$t('actions.edit_avatar')"
-								prepend-icon="mdi-account"
-								value="avatar"
-								@click="showAvatarUploadDialog = true"></v-list-item>
-							<v-list-item
-								:title="$t('actions.edit')"
-								prepend-icon="mdi-pencil"
-								value="edit"
-								@click="handleEdit"></v-list-item>
-							<v-list-item
-								:title="$t('auth.sign_out')"
-								prepend-icon="mdi-logout"
-								value="logout"
-								@click="showConfirmLogoutDialog = true"></v-list-item>
-						</v-list>
-					</v-menu>
-				</template>
-				<template v-else>
-					<div class="d-flex ga-1">
+				<v-menu location="bottom end">
+					<template #activator="{ props }">
 						<v-btn
-							variant="tonal"
-							prepend-icon="mdi-image"
-							@click="showCoverChooseDialog = true"
-							>{{ $t("actions.choose_cover") }}</v-btn
+							icon
+							v-bind="props">
+							<v-icon>mdi-dots-vertical</v-icon>
+						</v-btn>
+					</template>
+					<v-list
+						density="compact"
 						>
-						<v-btn
-							variant="tonal"
+						<v-list-item
+							:title="$t('actions.choose_cover')"
+							prepend-icon="mdi-image"
+							value="cover"
+							@click="showCoverChooseDialog = true"/>
+						<v-list-item
+							:title="$t('actions.edit_avatar')"
 							prepend-icon="mdi-account"
-							@click="showAvatarUploadDialog = true">
-							{{ $t("actions.edit_avatar") }}
-						</v-btn>
-						<v-btn
-							variant="tonal"
+							value="avatar"
+							@click="showAvatarUploadDialog = true"/>
+						<v-list-item
+							:title="$t('actions.edit')"
 							prepend-icon="mdi-pencil"
-							@click="handleEdit">
-							{{ $t("actions.edit") }}
-						</v-btn>
-						<v-btn
-							variant="tonal"
-							base-color="warning"
+							value="edit"
+							@click="handleEdit"/>
+						<v-list-item
+							:title="$t('auth.sign_out')"
 							prepend-icon="mdi-logout"
-							@click="showConfirmLogoutDialog = true">
-							{{ $t("auth.sign_out") }}
-						</v-btn>
-					</div>
-				</template>
+							value="logout"
+							@click="showConfirmLogoutDialog = true"/>
+					</v-list>
+				</v-menu>
 			</template>
 		</DetailCard>
 
@@ -146,11 +115,22 @@
 	import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 	import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 	import UserForm from "~/components/Forms/UserForm.vue";
-	const { currentUser, loading, userForm } = storeToRefs(useAuthStore());
-	const showConfirmLogoutDialog = ref(false);
-	const showCoverChooseDialog = ref(false);
+	
 	const { t, locale } = useI18n();
-	const showDeleteDialog = ref(false);
+	const { currentUser, loading, userForm } = storeToRefs(useAuthStore());
+	const showConfirmLogoutDialog = ref<boolean>(false);
+	const showCoverChooseDialog = ref<boolean>(false);
+	const showWarning = ref<boolean>(false);
+	const showAvatarUploadDialog = ref<boolean>(false);
+	const editMode = ref<boolean>(false);
+	const avatarFile = ref<File>();
+	const computedLastLogin = computed((): string => {
+		const lastLogin = new Date(
+			currentUser.value?.lastLogin || 0
+		).toLocaleString();
+		return t("pages.profile.last_login", { time: lastLogin });
+	});
+	
 	const {
 		signOut,
 		uploadAvatar,
@@ -158,24 +138,12 @@
 		fetchCurrentUser,
 		isAuthenticated,
 	} = useAuthStore();
-	const editMode = ref(false);
-	const avatarFile = ref<File>();
-	const handleSignOut = async () => {
+	
+	const handleSignOut = async (): Promise<void> => {
 		await signOut();
 		showConfirmLogoutDialog.value = false;
 		navigateTo("/");
 	};
-
-	const computedLastLogin = computed(() => {
-		const lastLogin = new Date(
-			currentUser.value?.lastLogin || 0
-		).toLocaleString();
-		return t("pages.profile.last_login", { time: lastLogin });
-	});
-
-	const showWarning = ref(false);
-	const showAvatarUploadDialog = ref(false);
-
 	const handleUploadCover = async (files: File[]) => {
 		const file = files[0];
 		const id = Number(currentUser.value?.id);
@@ -185,21 +153,26 @@
 		showCoverChooseDialog.value = false;
 	};
 
-	const handleUploadAvatar = async (files: File[]) => {
+	const showReplacementWarning = (file: File): void => {
+		showWarning.value = true;
+		avatarFile.value = file;
+	};
+
+	const handleUploadAvatar = async (files: File[]): Promise<void> => {
 		const file = files[0];
 		const id = Number(currentUser.value?.id);
 		if (file) {
-			!currentUser.value?.avatar
-				? await uploadAvatar(file, id || 0)
-				: showWarningFunc(file);
+			if (!currentUser.value?.avatar) {
+				await uploadAvatar(file, id || 0);
+			}
+			else {
+				showReplacementWarning(file);
+			}
 		}
 		showAvatarUploadDialog.value = false;
 	};
 
-	const showWarningFunc = (file: File) => {
-		showWarning.value = true;
-		avatarFile.value = file;
-	};
+	
 
 	const handleEdit = () => {
 		editMode.value = true;
@@ -213,28 +186,27 @@
 		showWarning.value = false;
 	};
 
-	const computedGeneralInfo = computed(() => {
-		return {
-			subheader: t("pages.general_info"),
-			list: [
-				{
-					name: t("auth.email"),
-					value: currentUser.value?.email || "",
-					icon: "mdi-email",
-				},
-				{
-					name: t("forms.person.age"),
-					value:
-						locale.value === "ru"
-							? declineYearsInRussian(currentUser.value?.age || 0)
-							: currentUser.value?.age + " " + t("general.years_old") || "",
-					icon: "mdi-cake",
-				},
-			],
-		};
-	});
+	const computedGeneralInfo = computed((): Detail[] => {
+		return  [
+			{
+				title: t("auth.email"),
+				value: currentUser.value?.email || "",
+				icon: "mdi-email",
+			},
+			{
+				title: t("forms.person.age"),
+				value:
+					locale.value === "ru"
+						? declineInRussian(currentUser.value?.age || 0, ["год", "года", "лет"])
+						: currentUser.value?.age + " " + t("general.years_old") || "",
+				icon: "mdi-cake",
+			},
+		]
+		}
+	);
 	definePageMeta({
 		title: "Profile",
+		middleware: ["auth"],
 		key: (route) => route.fullPath,
 	});
 </script>

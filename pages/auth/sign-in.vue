@@ -20,8 +20,8 @@
 						:placeholder="$t('auth.login_placeholder')"
 						prepend-inner-icon="mdi-account-key"
 						variant="outlined"
-						:rules="requiredRules">
-					</v-text-field>
+						:rules="requiredRules"/>
+					
 					<v-text-field
 						v-model="userForm.password"
 						:append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -31,8 +31,8 @@
 						prepend-inner-icon="mdi-lock-outline"
 						variant="outlined"
 						:rules="requiredRules"
-						@click:append-inner="visible = !visible">
-					</v-text-field>
+						@click:append-inner="visible = !visible"/>
+					
 				</div>
 			</v-form>
 			<div class="d-flex flex-column ga-4 mt-5">
@@ -69,14 +69,13 @@
 		<v-snackbar
 			v-model="showErrorMessage"
 			color="error"
-			:text="$t('auth.invalid_credentials')"></v-snackbar>
+			:text="$t('auth.invalid_credentials')"/>
 	</div>
 </template>
 
 <script lang="ts" setup>
 	import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 	import { useAuthStore } from "~/stores/authStore";
-	import { storeToRefs } from "pinia";
 	const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
 	const { t } = useI18n();
 	const loginFormRef = ref();

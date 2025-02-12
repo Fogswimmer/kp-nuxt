@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
-  loading?: boolean;
-  disabled?: boolean;
-}>();
+	defineProps<{
+	loading?: boolean;
+	disabled?: boolean;
+	}>();
 
 defineEmits(["click:submit"]);
 </script>

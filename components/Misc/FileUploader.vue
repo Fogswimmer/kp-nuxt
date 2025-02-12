@@ -12,12 +12,12 @@
       :title="$t('general.drag_and_drop')"
       @update:model-value="$emit('update:modelValue', $event)"
     >
-      <template v-slot:item="{ props: itemProps }">
+      <template #item="{ props: itemProps }">
         <v-file-upload-item v-bind="itemProps" lines="one" nav>
     
   
-          <template v-slot:clear="{ props: clearProps }">
-            <v-btn color="primary" v-bind="clearProps"></v-btn>
+          <template #clear="{ props: clearProps }">
+            <v-btn color="primary" v-bind="clearProps"/>
           </template>
         </v-file-upload-item>
       </template>

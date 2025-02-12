@@ -27,34 +27,34 @@
 			browse-text="general.browse_files"
 			title="general.drag_and_drop"
 			@update:model-value="handlePreupload">
-			<template v-slot:item="{ props: itemProps }">
+			<template #item="{ props: itemProps }">
 				<v-file-upload-item
 					v-bind="itemProps"
 					lines="one"
 					nav>
-					<template v-slot:clear="{ props: clearProps }">
+					<template #clear="{ props: clearProps }">
 						<v-btn
 							color="primary"
-							v-bind="clearProps"></v-btn>
+							v-bind="clearProps"/>
 					</template>
 				</v-file-upload-item>
 			</template>
 		</v-file-upload>
 
-		<template v-slot:actions>
-			<v-spacer></v-spacer>
+		<template #actions>
+			<v-spacer/>
 			<v-btn
 				prepend-icon="mdi-close"
-				@click="clearPreviews"
 				:disabled="!previews.length"
 				:color="uploadError ? 'error' : ''"
+				@click="clearPreviews"
 				>{{ $t("actions.clear") }}</v-btn
 			>
 			<v-btn
 				prepend-icon="mdi-cloud"
-				@click="$emit('files:upload', previews)"
 				color="warning"
 				:disabled="!previews.length || uploadError"
+				@click="$emit('files:upload', previews)"
 				>{{ $t("actions.upload") }}</v-btn
 			>
 		</template>

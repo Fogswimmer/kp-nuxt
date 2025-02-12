@@ -25,7 +25,7 @@
 					<v-icon
 						icon="mdi-image-off"
 						color="error"
-						size="small"></v-icon>
+						size="small"/>
 				</v-sheet>
 			</template>
 		</v-img>
@@ -33,8 +33,8 @@
 </template>
 
 <script lang="ts" setup>
-	defineEmits(["remove", "click", "uploader:open"]);
 	import ImgPlaceholder from "./ImgPlaceholder.vue";
+	defineEmits(["remove", "click", "uploader:open"]);
 	defineProps<{
 		imgSrc: string;
 		imgOptions: ImgOptions;

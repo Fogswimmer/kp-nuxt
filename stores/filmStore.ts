@@ -1,6 +1,12 @@
 import { useAuthStore } from "./authStore";
 
 export const useFilmStore = defineStore("films", () => {
+    interface IFilmListResponse {
+        items: IFilm[];
+        totalPages: number;
+        currentPage: number;
+    }
+	
 	const authStore = useAuthStore();
 	const film = ref<IFilm | null>(null);
 	const films = ref<IFilm[]>([]);
@@ -10,7 +16,7 @@ export const useFilmStore = defineStore("films", () => {
 	const loading = ref<boolean>(false);
 	const total = ref<number>(0);
 	const latestFilms = ref<IFilm[]>([]);
-	const networkError = ref<Error | null>(null);
+	const networkError = ref<Error | null | unknown>(null);
 	const directors = ref<Partial<IPerson>[]>([]);
 	const actors = ref<Partial<IPerson>[]>([]);
 	const producers = ref<Partial<IPerson>[]>([]);
@@ -58,7 +64,7 @@ export const useFilmStore = defineStore("films", () => {
 			films.value = response?.items || [];
 			currentPage.value = response?.currentPage || 1;
 			totalPages.value = response?.totalPages || 0;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -72,7 +78,7 @@ export const useFilmStore = defineStore("films", () => {
 				`${baseUrl}/films/latest`
 			);
 			latestFilms.value = response?.items || [];
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -86,7 +92,7 @@ export const useFilmStore = defineStore("films", () => {
 				`${baseUrl}/films/${id}?locale=${locale}`
 			);
 			film.value = response;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -99,7 +105,7 @@ export const useFilmStore = defineStore("films", () => {
 				`${baseUrl}/films/${id}/form?locale=${locale}`
 			);
 			filmForm.value = response || {};
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -113,7 +119,7 @@ export const useFilmStore = defineStore("films", () => {
 				`${baseUrl}/genres/translations?locale=${locale}`
 			);
 			genres.value = response || [];
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -131,7 +137,7 @@ export const useFilmStore = defineStore("films", () => {
 			actors.value = response?.actors.items || [];
 			producers.value = response?.producers.items || [];
 			writers.value = response?.writers.items || [];
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -141,14 +147,14 @@ export const useFilmStore = defineStore("films", () => {
 	const addFilm = async (): Promise<boolean> => {
 		try {
 			loading.value = true;
-			const response = await $fetch<IFilm>(`/films`, {
+			const response = await $fetch<IFilm>(`${baseUrl}/films`, {
 				headers: authHeaders.value,
 				method: "POST",
 				body: filmForm.value,
 			});
 			filmForm.value = response || {};
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -168,7 +174,7 @@ export const useFilmStore = defineStore("films", () => {
 			);
 			film.value = response;
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -190,7 +196,7 @@ export const useFilmStore = defineStore("films", () => {
 			});
 			film.value = response;
 			filmForm.value = response;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -207,7 +213,7 @@ export const useFilmStore = defineStore("films", () => {
 			});
 			filmForm.value = response || {};
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -229,9 +235,9 @@ export const useFilmStore = defineStore("films", () => {
 			await $fetch(`${baseUrl}/films/${id}/assess?locale=${locale}`, {
 				headers: authHeaders.value,
 				method: "POST",
-				body: JSON.stringify({rating, comment }),
+				body: JSON.stringify({ rating, comment }),
 			});
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		}
 	};
@@ -243,7 +249,7 @@ export const useFilmStore = defineStore("films", () => {
 				`${baseUrl}/films/check`
 			);
 			filmsPresent.value = response?.present || false;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -257,7 +263,7 @@ export const useFilmStore = defineStore("films", () => {
 			await $fetch(`${baseUrl}/films/${id}`, {
 				method: "DELETE",
 			});
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;

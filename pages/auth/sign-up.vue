@@ -35,10 +35,10 @@
 		</v-card>
 
 		<v-snackbar
-			color="error"
 			v-model="showErrorMessage"
-			:text="authError?.message || ''">
-		</v-snackbar>
+			color="error"
+			:text="authError?.message || ''"/>
+		
 	</div>
 </template>
 
@@ -47,7 +47,15 @@
 	import UserForm from "~/components/Forms/UserForm.vue";
 	import { useAuthStore } from "~/stores/authStore";
 
-	const { loading, authError, showErrorMessage } = storeToRefs(useAuthStore());
+	interface AuthError {
+		message: string;
+	}
+
+	const { loading, authError, showErrorMessage } = storeToRefs(useAuthStore()) as {
+		loading: Ref<boolean>;
+		authError: Ref<AuthError | null>;
+		showErrorMessage: Ref<boolean>;
+	};
 
 	const { register } = useAuthStore();
 

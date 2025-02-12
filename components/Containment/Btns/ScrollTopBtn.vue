@@ -1,19 +1,17 @@
 <template>
 	<v-fab
 		v-if="$vuetify.display.mdAndUp"
-		:active="showScrollFab"
+		:active="show"
 		icon="mdi-arrow-up"
 		color="secondary"
-		location="top start"
+		location="bottom end"
 		size="64"
-		offset
-		fixed
-		appear
-		@click="$emit('scroll:top')"></v-fab>
+		app
+		@click="$emit('scroll:top')"/>
 </template>
 
 <script lang="ts" setup>
-defineProps<{ showScrollFab: boolean }>();
+defineProps<{ show: boolean }>();
 defineEmits(["scroll:top"]);
 </script>
 

@@ -1,13 +1,26 @@
 export const usePersonStore = defineStore("persons", () => {
+    interface IPersonListResponse {
+        items: IPerson[];
+        currentPage: number;
+        totalPages: number;
+    }
+
+    interface ICheckEmptyResponse {
+        present: boolean;
+    }
+
+
+
 	const persons = ref<IPerson[]>([]);
 	const person = ref<IPerson | null>(null);
 	const loading = ref<boolean>(false);
 	const currentPage = ref<number>(1);
 	const totalPages = ref<number>(0);
-	const networkError = ref<Error | null>();
+	const networkError = ref<Error | unknown>();
 	const genders = ref<IGender[]>([]);
 	const specialties = ref<ISpecialty[]>([]);
 	const personsPresent = ref<boolean>(false);
+	const popularActors = ref<IPerson[]>([]);
 	const baseUrl = useRuntimeConfig().public.apiBase;
 	const defaultPersonValues: Partial<IPerson> = {
 		id: null,
@@ -41,7 +54,7 @@ export const usePersonStore = defineStore("persons", () => {
 			persons.value = response?.items || [];
 			currentPage.value = response?.currentPage || 1;
 			totalPages.value = response?.totalPages || 0;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -55,7 +68,7 @@ export const usePersonStore = defineStore("persons", () => {
 				`${baseUrl}/persons/${id}?locale=${locale}`
 			);
 			person.value = response;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -69,7 +82,7 @@ export const usePersonStore = defineStore("persons", () => {
 				`${baseUrl}/persons/${id}/form`
 			);
 			personForm.value = response || {};
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -83,7 +96,7 @@ export const usePersonStore = defineStore("persons", () => {
 				`${baseUrl}/genders/translations?locale=${locale}`
 			);
 			genders.value = response || [];
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -97,7 +110,7 @@ export const usePersonStore = defineStore("persons", () => {
 				`${baseUrl}/specialties/translations?locale=${locale}`
 			);
 			specialties.value = response || [];
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -113,7 +126,7 @@ export const usePersonStore = defineStore("persons", () => {
 			});
 			personForm.value = response || {};
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -130,7 +143,7 @@ export const usePersonStore = defineStore("persons", () => {
 			});
 			person.value = response;
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -155,7 +168,7 @@ export const usePersonStore = defineStore("persons", () => {
 			person.value = response;
 			personForm.value = response || {};
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -175,7 +188,7 @@ export const usePersonStore = defineStore("persons", () => {
 			person.value = response
 			personForm.value = response || {};
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -190,7 +203,7 @@ export const usePersonStore = defineStore("persons", () => {
 				method: "DELETE",
 			});
 			return true;
-		} catch (error: any) {
+		} catch (error: unknown) {
 			networkError.value = error;
 			return false;
 		} finally {
@@ -204,7 +217,19 @@ export const usePersonStore = defineStore("persons", () => {
 			const response =
 				await  $fetch<ICheckEmptyResponse>(`${baseUrl}/persons/check`);
 			personsPresent.value = response?.present || false;
-		} catch (error: any) {
+		} catch (error: unknown) {
+			networkError.value = error;
+		} finally {
+			loading.value = false;
+		}
+	};
+
+	const listPopularActors = async () => {
+		try {
+			loading.value = true;
+			const response = await $fetch<IPersonListResponse>(`${baseUrl}/persons/actors-popular`);
+			popularActors.value = response?.items || [];
+		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
 			loading.value = false;
@@ -229,6 +254,7 @@ export const usePersonStore = defineStore("persons", () => {
 		currentPage,
 		GALLERY_SIZE,
 		personsPresent,
+		popularActors,
 		fetchFilteredPersons,
 		fetchPersonDetails,
 		fetchGenders,
@@ -241,5 +267,6 @@ export const usePersonStore = defineStore("persons", () => {
 		uploadCover,
 		removePerson,
 		checkPersonsPresence,
+		listPopularActors,
 	};
 });

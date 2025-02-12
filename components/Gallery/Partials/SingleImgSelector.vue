@@ -47,7 +47,7 @@
 			</v-slide-group>
 		</v-card-text>
 		<v-card-actions>
-			<v-spacer></v-spacer>
+			<v-spacer/>
 			<v-btn
 				prepend-icon="mdi-check"
 				color="primary"

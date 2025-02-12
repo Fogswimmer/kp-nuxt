@@ -1,8 +1,8 @@
 export default {
   welcome: "Bienvenue",
-
   general: {
     about: "A propos du projet",
+    see_all:"Voir tout",
     created_at: "Créé",
     updated_at: "Mis à jour",
     published_by: "Publié par",
@@ -263,6 +263,8 @@ export default {
     home: {
       title: "Accueil",
       newest: "Les plus nouveaux",
+      popular_persons: "Personnes populaires",
+      popular_actors: "Acteurs populaires",
       buy_tickets: "Acheter des billets",
       watch_trailer: "Voir le trailer",
       watch_now: "Regarder maintenant",
@@ -300,6 +302,8 @@ export default {
       your_assessment: "Votre avis",
       comment: "Commentaire",
       comments: "Commentaires",
+      last_comments: "Derniers commentaires",
+      no_comments: "Aucun commentaire",
       confirm_assessment: "Confirmer l'avis",
       producer: "Producteur",
       writer: "Auteur",

@@ -11,7 +11,7 @@
 				>
 			</v-card-text>
 			<v-card-actions>
-				<v-btn @click="$emit('cancel')" prepend-icon="mdi-close" color="error">{{ $t("actions.cancel") }}</v-btn>
+				<v-btn prepend-icon="mdi-close" color="error" @click="$emit('cancel')">{{ $t("actions.cancel") }}</v-btn>
 				<v-btn
 					prepend-icon="mdi-check"
 					@click="$emit('confirm')"
@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 	defineEmits(["confirm", "cancel"]);
-	const props = defineProps<{
+	defineProps<{
 		modelValue: boolean;
 		text?: string;
 	}>();

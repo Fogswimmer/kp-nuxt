@@ -2,6 +2,7 @@ export default {
 	welcome: "Добро пожаловать",
 	general: {
 		about: "О проекте",
+		see_all:"Показать все",
 		created_at: "Создано",
 		updated_at: "Обновлено",
 		published_by: "Опубликовал",
@@ -262,6 +263,8 @@ export default {
 		home: {
 			title: "Главная",
 			newest: "Новинки кинопроката",
+			popular_persons: "Популярные персоны",
+			popular_actors: "Популярные актеры",
 			buy_tickets: "Купить билеты",
 			watch_trailer: "Смотреть трейлер",
 			watch_now: "Смотреть сейчас",
@@ -302,6 +305,8 @@ export default {
 			your_assessment: "Ваша оценка",
 			comment: "Комментарий",
 			comments: "Комментарии",
+			last_comments: "Последние комментарии",
+      no_comments: "Нет комментариев",
 			confirm_assessment: "Подтвердить оценку",
 			team: "Над фильмом работали",
 			gallery_banner:

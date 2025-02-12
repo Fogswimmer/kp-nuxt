@@ -1,6 +1,7 @@
 export default {
   welcome: "Welcome",
   general: {
+    see_all:"See all",
     about: "About project",
     total: "Total",
     published_by: "Published by",
@@ -261,6 +262,7 @@ export default {
     home: {
       title: "Home",
       newest: "Newest",
+      popular_persons: "Popular persons",
       buy_tickets: "Buy tickets",
       watch_trailer: "Watch trailer",
       watch_now: "Watch now",
@@ -302,6 +304,8 @@ export default {
       confirm_assessment: "Confirm assessment",
       comment: "Comment",
       comments: "Comments",
+      last_comments: "Last comments",
+      no_comments: "No comments",
       producer: "Producer",
       writer: "Writer",
       age: "Age restriction",

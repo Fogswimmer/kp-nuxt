@@ -15,7 +15,7 @@
 					<div class="d-flex flex-column align-center justify-center ga-1">
 						<v-icon
 							icon="mdi-image-off"
-							size="x-small"></v-icon>
+							size="x-small"/>
 					</div>
 				</v-list-item>
 			</div>
@@ -24,8 +24,7 @@
 		<div
 			v-else
 			class="d-flex flex-column align-center justify-center fill-height">
-			<v-progress-circular indeterminate></v-progress-circular
-		></div>
+			<v-progress-circular indeterminate/></div>
 	</v-sheet>
 </template>
 

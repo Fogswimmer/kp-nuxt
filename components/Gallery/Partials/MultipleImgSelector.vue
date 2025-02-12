@@ -2,15 +2,15 @@
 	<v-card>
 		<v-card-text>
 			<v-item-group
-				multiple
 				v-model="selectedItems"
+				multiple
 				@update:model-value="$emit('update:selected', $event)">
 				<v-container>
 					<v-row>
 						<v-col
-							cols="auto"
 							v-for="(img, index) in sliderGalleryArr"
-							:key="index">
+							:key="index"
+							cols="auto">
 							<v-item v-slot="{ isSelected, selectedClass, toggle }">
 								<v-sheet class="text-center">
 									<v-card
@@ -47,8 +47,8 @@
 										</v-scroll-y-transition>
 									</v-card>
 									<v-label
-										class="mt-2"
 										v-if="img"
+										class="mt-2"
 										>{{ $t("general.img") + " " + (index + 1) }}</v-label
 									>
 								</v-sheet>
@@ -58,19 +58,19 @@
 				</v-container>
 			</v-item-group>
 		</v-card-text>
-		<template v-slot:actions>
-			<v-spacer></v-spacer>
+		<template #actions>
+			<v-spacer/>
 			<v-btn
 				prepend-icon="mdi-close"
-				@click="emit('gallery:clear')"
 				:disabled="!selectedItems.length"
+				@click="emit('gallery:clear')"
 				>{{ $t("actions.clear") }}</v-btn
 			>
 			<v-btn
 				prepend-icon="mdi-delete"
-				@click="$emit('delete:selected', selectedItems)"
 				color="error"
 				:disabled="!selectedItems.length"
+				@click="$emit('delete:selected', selectedItems)"
 				>{{ $t("actions.remove") }}</v-btn
 			>
 		</template>
