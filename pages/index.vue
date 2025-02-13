@@ -1,3 +1,4 @@
+div
 <template>
   <div>
     <client-only>
@@ -17,46 +18,31 @@
             :value="link.value"
             :prepend-icon="link.icon"
             :href="`/#${link.value}`"
+            @click="activeSection = link.value"
           />
         </v-list>
         <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
       </v-navigation-drawer>
     </client-only>
     <main v-scroll="onScroll" class="d-flex flex-column ga-6 overflow-y-auto">
-      <v-card
-        v-if="filmsPresent"
+      <MasonrySection
         id="newest_films"
-        variant="text"
+        class="content-item"
+        :present="filmsPresent"
         :loading="filmLoading"
-        :class="[
-          'd-flex flex-column ga-2 px-12 content-item',
-          { 'content-item_dark': $vuetify.theme.global.current.dark },
-          { 'content-item_light': !$vuetify.theme.global.current.dark },
-        ]"
+        :dark-accent-color="darkAccentColors[0]"
+        :title="$t('pages.home.newest')"
       >
-        <v-card-title>
-          <h4 class="text-h4 text-center">{{ $t("pages.home.newest") }}</h4>
-        </v-card-title>
-        <v-card-text v-if="!filmLoading">
+        <template #default>
           <masonry-wall :items="latestFilms" :max-columns="2" :gap="32">
             <template #default="{ item, index }">
-              <v-card
-                :key="index"
-                :title="item?.name + ' (' + item?.releaseYear + ')'"
-                variant="text"
-                :class="
-                  $vuetify.theme.global.current.dark
-                    ? 'dark-glass'
-                    : 'light-glass'
-                "
+              <MasonryCard
+                :loading="filmLoading"
+                :index="index"
+                :item="item"
+                :img="item?.cover || ''"
+                :link="`/films/${item?.id}`"
               >
-                <v-img
-                  :src="item?.cover || ''"
-                  min-height="200"
-                  cover
-                  class="cursor-pointer"
-                  @click="navigateTo(`/films/${item?.id}`)"
-                />
                 <template #append>
                   <ClientOnly>
                     <v-rating
@@ -68,150 +54,122 @@
                   </ClientOnly>
                 </template>
 
-                <v-card
-                  :subtitle="$t('pages.films.description')"
-                  variant="text"
-                  border
-                  class="ma-2"
-                >
-                  <template #append>
-                    <v-icon size="x-small">mdi-details</v-icon>
-                  </template>
-                  <v-card-text>
-                    <div class="d-flex flex-column ga-1">
-                      <v-list-item
-                        :subtitle="item?.description"
-                        :lines="
-                          item?.description.length > 100
-                            ? expandedStates[index]
-                              ? false
-                              : 'three'
-                            : 'two'
-                        "
-                      />
-                      <ExpandBtn
-                        v-if="item?.description.length > 100"
-                        :expanded="expandedStates[index]"
-                        @click="handleExpandDescription(index)"
-                      />
-                    </div>
-                  </v-card-text>
-                </v-card>
+                <template #default>
+                  <v-card
+                    :subtitle="$t('pages.films.description')"
+                    variant="text"
+                    border
+                    class="ma-2"
+                  >
+                    <template #append>
+                      <v-icon size="x-small">mdi-details</v-icon>
+                    </template>
+                    <v-card-text>
+                      <div class="d-flex flex-column ga-1">
+                        <v-list-item
+                          :subtitle="item?.description"
+                          :lines="
+                            item?.description.length > 100
+                              ? expandedStates[index]
+                                ? false
+                                : 'three'
+                              : 'two'
+                          "
+                        />
+                        <ExpandBtn
+                          v-if="item?.description.length > 100"
+                          :expanded="expandedStates[index] || false"
+                          @click="handleExpandDescription(index)"
+                        />
+                      </div>
+                    </v-card-text>
+                  </v-card>
 
-                <v-card
-                  :subtitle="
-                    $t('pages.films.comments') +
-                    ' (' +
-                    item.assessments.length +
-                    ')'
-                  "
-                  variant="text"
-                  border
-                  class="ma-2"
-                >
-                  <template #append>
-                    <v-icon size="x-small">mdi-comment-outline</v-icon>
-                  </template>
-                  <v-card-text v-if="item.assessments.length > 0">
-                    <v-list>
-                      <v-list-item
-                        v-for="(comment, i) in item.assessments.slice(0, 2)"
-                        :key="i"
-                        :title="
-                          comment?.authorName
-                            ? comment?.authorName
-                            : 'Anonymous'
-                        "
-                        :prepend-avatar="
-                          comment?.authorAvatar
-                            ? comment?.authorAvatar
-                            : undefined
-                        "
-                        :subtitle="comment.comment"
+                  <v-card
+                    :subtitle="
+                      $t('pages.films.comments') +
+                      ' (' +
+                      item.assessments.length +
+                      ')'
+                    "
+                    variant="text"
+                    border
+                    class="ma-2"
+                  >
+                    <template #append>
+                      <v-icon size="x-small">mdi-comment-outline</v-icon>
+                    </template>
+                    <v-card-text v-if="item.assessments.length > 0">
+                      <v-list>
+                        <v-list-item
+                          v-for="(comment, i) in item.assessments.slice(0, 2)"
+                          :key="i"
+                          :title="
+                            comment?.authorName
+                              ? comment?.authorName
+                              : 'Anonymous'
+                          "
+                          :prepend-avatar="
+                            comment?.authorAvatar
+                              ? comment?.authorAvatar
+                              : undefined
+                          "
+                          :subtitle="comment.comment"
+                        >
+                          <template #append>
+                            <v-chip
+                              color="warning"
+                              density="compact"
+                              prepend-icon="mdi-star"
+                            >
+                              {{ comment.rating }}
+                            </v-chip>
+                          </template>
+                        </v-list-item>
+                      </v-list>
+                      <div
+                        v-if="item.assessments.length > 2"
+                        class="d-flex flex-column justify-center align-center"
                       >
-                        <template #append>
-                          <v-chip
-                            color="warning"
-                            density="compact"
-                            prepend-icon="mdi-star"
-                          >
-                            {{ comment.rating }}
-                          </v-chip>
-                        </template>
-                      </v-list-item>
-                    </v-list>
-                    <div
-                      v-if="item.assessments.length > 2"
-                      class="d-flex flex-column justify-center align-center"
-                    >
-                      <span class="text-h6 mb-2">...</span>
-                      <v-btn
-                        prepend-icon="mdi-arrow-right"
-                        variant="plain"
-                        @click="navigateTo(`/films/${item?.id}`)"
-                      >
-                        {{ $t("actions.to_page") }}</v-btn
-                      >
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </v-card>
+                        <span class="text-h6 mb-2">...</span>
+                        <v-btn
+                          prepend-icon="mdi-arrow-right"
+                          variant="plain"
+                          @click="navigateTo(`/films/${item?.id}`)"
+                        >
+                          {{ $t("actions.to_page") }}</v-btn
+                        >
+                      </div>
+                    </v-card-text>
+                  </v-card>
+                </template>
+              </MasonryCard>
             </template>
           </masonry-wall>
-        </v-card-text>
-        <v-row v-else>
-          <v-col v-for="i in 2" :key="i">
-            <v-skeleton-loader type="card" height="400" />
-          </v-col>
-        </v-row>
-      </v-card>
+        </template>
+      </MasonrySection>
 
-      <v-card
-        v-if="personsPresent"
+      <MasonrySection
         id="popular_actors"
-        :class="[
-          'd-flex flex-column ga-2 px-12 content-item',
-          { 'content-item_dark': $vuetify.theme.global.current.dark },
-          { 'content-item_light': !$vuetify.theme.global.current.dark },
-        ]"
+        :present="personsPresent"
+        :loading="personLoading"
+        :dark-accent-color="darkAccentColors[1]"
+        :title="$t('pages.home.popular_actors')"
       >
-        <v-card-title>
-          <h4 class="text-h4 text-center">
-            {{ $t("pages.home.popular_actors") }}
-          </h4>
-        </v-card-title>
-        <v-divider />
-        <v-card-text v-if="!personLoading">
-          <masonry-wall :items="popularActors" :max-columns="3" :gap="16">
+        <template #default>
+          <masonry-wall :items="popularActors" :min-columns="3" :gap="16">
             <template #default="{ item, index }">
-              <v-card
-                :key="index"
+              <MasonryCard
                 :loading="personLoading"
-                elevation="10"
-                :title="item?.name"
-                :class="
-                  $vuetify.theme.global.current.dark
-                    ? 'dark-glass'
-                    : 'light-glass'
-                "
-              >
-                <v-img
-                  :src="item?.avatar || ''"
-                  min-height="400"
-                  cover
-                  class="cursor-pointer"
-                  @click="navigateTo(`/persons/${item?.id}`)"
-                />
-              </v-card>
+                :item="item"
+                :index="index"
+                :img="item?.avatar || ''"
+                :link="`/persons/${item?.id}`"
+              />
             </template>
           </masonry-wall>
-        </v-card-text>
-        <v-row v-else>
-          <v-col v-for="i in 2" :key="i">
-            <v-skeleton-loader type="card" height="400" />
-          </v-col>
-        </v-row>
-      </v-card>
+        </template>
+      </MasonrySection>
     </main>
   </div>
 </template>
@@ -221,6 +179,8 @@ import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 import ExpandBtn from "~/components/Containment/Btns/ExpandBtn.vue";
 import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
+import MasonryCard from "~/components/Containment/Cards/MasonryCard.vue";
+import MasonrySection from "~/components/Containment/Cards/MasonrySection.vue";
 
 // const theme = useTheme();
 const { t } = useI18n();
@@ -237,8 +197,8 @@ const {
   popularActors,
 } = storeToRefs(usePersonStore());
 const expandedStates = ref<boolean[]>([]);
-const activeSection = ref<string | undefined>("newest");
-
+const activeSection = ref<string | undefined>("newest_films");
+const scrollPosition = ref<number>(0);
 const showScrollFab = ref<boolean>(false);
 
 const fetchData = async (): Promise<void> => {
@@ -256,6 +216,10 @@ const handleExpandDescription = (index: number): void => {
   expandedStates.value[index] = !expandedStates.value[index];
 };
 
+const darkAccentColors = Array.from({ length: 2 }, () =>
+  randomColorGenerator()
+);
+
 const pageContents: Partial<Detail>[] = [
   {
     title: t("pages.home.newest"),
@@ -269,35 +233,23 @@ const pageContents: Partial<Detail>[] = [
   },
 ];
 
-const onScroll = () => {
-  watchScrolling("content-item", activeSection, showScrollFab);
+const onScroll = async () => {
+  scrollPosition.value = window.scrollY;
 };
 
 onMounted(async (): Promise<void> => {
   await fetchData();
 });
 
+watch(
+  () => scrollPosition.value,
+  () => {
+    showScrollFab.value = scrollPosition.value > 100;
+  }
+);
+
 definePageMeta({
   name: "home",
   path: "/",
 });
 </script>
-
-<style lang="scss">
-.content-item {
-  &_dark {
-    background-image: radial-gradient(
-      circle at center center,
-      rgba(23, 93, 151, 0.247),
-      rgb(8, 8, 8, 0.7)
-    ) !important;
-  }
-  &_light {
-    background-image: radial-gradient(
-      circle at center center,
-      rgb(173, 173, 173),
-      rgb(255, 255, 255)
-    ) !important;
-  }
-}
-</style>

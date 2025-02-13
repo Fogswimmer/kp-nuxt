@@ -61,16 +61,22 @@ p {
   text-indent: 2rem !important;
 }
 .light-glass {
-	background: rgba(255,255,255,0.5);
--webkit-backdrop-filter: blur(10px);
-backdrop-filter: blur(10px);
-border: 1px solid rgba(255,255,255,0.25);
+	background: rgba(255,255,255,0.6) !important;
+-webkit-backdrop-filter: blur(10px !important);
+backdrop-filter: blur(10px) !important;
+
 }
-.dark-glass {
-  background: rgba(0, 0, 0, 0.5) !important;
+.neutral-glass {
+  background: rgba(27, 26, 26, 0.6) !important;
   -webkit-backdrop-filter: blur(10px)  !important;
   backdrop-filter: blur(10px)  !important;
-  border: 1px solid rgba(0, 0, 0, 0.25) ;
+
+}
+.dark-glass {
+  background: rgba(0, 0, 0, 0.6) !important;
+  -webkit-backdrop-filter: blur(10px)  !important;
+  backdrop-filter: blur(10px)  !important;
+
 }
 
 html {

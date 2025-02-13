@@ -4,8 +4,9 @@
       <v-navigation-drawer v-if="$vuetify.display.mdAndUp" location="start" />
       <v-navigation-drawer
         v-if="$vuetify.display.mdAndUp"
-        order="1"
+        order="0"
         location="end"
+        color="transparent"
       >
         <v-list nav>
           <v-list-item

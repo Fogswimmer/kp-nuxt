@@ -73,7 +73,7 @@ export default defineNuxtConfig({
             dark: true,
             colors: {
               background: "#000000",
-              surface: "#1a1d22",
+              surface: "rgb(12, 13, 14)",
               accent: "#f04ad1",
             },
           },

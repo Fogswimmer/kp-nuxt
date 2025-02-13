@@ -263,6 +263,7 @@ export default {
       title: "Home",
       newest: "Newest",
       popular_persons: "Popular persons",
+      popular_actors: "Popular actors",
       buy_tickets: "Buy tickets",
       watch_trailer: "Watch trailer",
       watch_now: "Watch now",

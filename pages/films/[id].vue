@@ -5,7 +5,11 @@
         v-if="$vuetify.display.mdAndUp"
         v-model="showLeftDrawer"
         location="start"
+        order="1"
         width="350"
+        :class="
+          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+        "
       >
         <FilmDrawerContent
           :general-info="generalInfo"
@@ -13,7 +17,13 @@
           :team="team"
         />
       </v-navigation-drawer>
-      <v-navigation-drawer location="end" order="1">
+      <v-navigation-drawer
+        :class="
+          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+        "
+        location="end"
+        order="1"
+      >
         <v-list nav>
           <v-list-item
             v-for="(link, index) in pageContents"
@@ -22,6 +32,12 @@
             :title="link.title"
             :value="link.value"
             :prepend-icon="link.icon"
+            color="transparent"
+            :class="
+              $vuetify.theme.global.current.dark
+                ? 'neutral-glass'
+                : 'light-glass'
+            "
             @click="handleScrollToSection(link.value || '')"
           />
           <NotAuthWarning v-if="!isAuthenticated" />
@@ -49,7 +65,12 @@
         />
       </template>
       <template #text>
-        <main v-scroll="onScroll">
+        <main
+          v-scroll="onScroll"
+          :class="
+            $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+          "
+        >
           <FilmDrawerContent
             v-if="$vuetify.display.smAndDown"
             :general-info="generalInfo"
@@ -61,11 +82,11 @@
             variant="accordion"
             bg-color="transparent"
             multiple
+            border
           >
             <v-expansion-panel
               id="gallery"
               value="gallery"
-              class="content-item"
               tag="section"
               :title="$t('pages.films.gallery')"
             >
@@ -343,6 +364,7 @@ const generalInfo = computed((): Detail[] => {
 const starring = computed((): Detail[] => {
   return film.value
     ? film.value.actorsData.map((person: FilmPerson): Detail => {
+        console.log(person);
         return {
           title: "",
           value: person?.name || "",

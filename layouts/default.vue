@@ -12,11 +12,19 @@
         v-model="drawer"
         order="1"
         :location="$vuetify.display.smAndDown ? 'end' : 'start'"
+        :class="
+          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+        "
       >
         <NavDrawerContent />
       </v-navigation-drawer>
     </client-only>
-    <v-app-bar order="0">
+    <v-app-bar
+      :class="
+        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+      "
+      order="0"
+    >
       <v-app-bar-title>
         <Logo />
       </v-app-bar-title>
@@ -159,6 +167,7 @@ watch(
       transparent 100%
     ),
     linear-gradient(90deg, rgb(0, 0, 0), rgb(17, 17, 17)) !important;
+  background-attachment: fixed !important;
 }
 .bg-gradient-light {
   background-image:
@@ -226,5 +235,6 @@ watch(
       transparent 100%
     ),
     linear-gradient(0deg, hsl(279, 0%, 100%), hsl(279, 0%, 100%)) !important;
+  background-attachment: fixed !important;
 }
 </style>

@@ -41,7 +41,7 @@
             :key="index"
             :title="actor.value"
             :value="index"
-            :to="`/persons/${actor.id}`"
+            :to="actor.to"
             base-color="primary"
           >
             <template #prepend>

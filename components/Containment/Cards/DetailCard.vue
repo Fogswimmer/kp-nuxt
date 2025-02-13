@@ -1,6 +1,13 @@
 <template>
-  <v-card>
-    <v-toolbar>
+  <v-card variant="text">
+    <template v-if="$vuetify.theme.global.current.dark" #image>
+      <v-img :src="cover" cover class="img-blur" />
+    </template>
+    <v-toolbar
+      :class="
+        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+      "
+    >
       <template #prepend>
         <v-app-bar-nav-icon
           v-if="drawer && $vuetify.display.smAndDown"
@@ -19,7 +26,11 @@
       <slot name="menu" />
     </v-toolbar>
 
-    <v-card flat>
+    <v-card
+      :class="
+        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+      "
+    >
       <v-img :src="cover" cover height="300">
         <template #placeholder>
           <v-sheet height="100%" class="default-cover" />

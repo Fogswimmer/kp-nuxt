@@ -5,9 +5,7 @@ export const usePersonStore = defineStore("persons", () => {
         totalPages: number;
     }
 
-    interface ICheckEmptyResponse {
-        present: boolean;
-    }
+
 
 
 
