@@ -1,9 +1,18 @@
 <template>
   <div>
     <ClientOnly>
-      <v-navigation-drawer v-if="$vuetify.display.mdAndUp" location="start" />
       <v-navigation-drawer
         v-if="$vuetify.display.mdAndUp"
+        location="start"
+        :class="
+          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+        "
+      />
+      <v-navigation-drawer
+        v-if="$vuetify.display.mdAndUp"
+        :class="
+          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+        "
         order="0"
         location="end"
         color="transparent"
@@ -16,7 +25,8 @@
             :title="link.title"
             :value="link.value"
             :prepend-icon="link.icon"
-            @click="handleScrollToSection(link.value || '')"
+            :href="`/persons/${person?.id}#${link.value}`"
+            @click="activeSection = link.value"
           />
           <NotAuthWarning v-if="!isAuthenticated" />
         </v-list>
@@ -405,10 +415,6 @@ const specialtyNames = computed((): string => {
     ? person.value.specialtyNames.join(", ")
     : "";
 });
-
-const handleScrollToSection = (link: string): void => {
-  scrollOnContentItemClick(link, mainAccordion, activeSection);
-};
 
 const onScroll = () => {
   watchScrolling("content-item", activeSection, showScrollFab);

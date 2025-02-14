@@ -13,6 +13,15 @@
     @update:search="search = $event"
     @update:search-options="updateSpecialtySort($event.value)"
   >
+    <template #sidebar>
+      <v-card class="pa-4" :title="$t('pages.home.popular_actors')">
+        <PopularActorsMasonry
+            :popular-actors="popularActors"
+            :loading="loading"
+            sidebar
+          />
+      </v-card>
+    </template>
     <template #filters>
       <Filters
         :sort-options="sortOptions"
@@ -28,13 +37,21 @@
 <script lang="ts" setup>
 import ListPage from "~/components/Misc/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
+import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import { usePersonStore } from "~/stores/personStore";
 
 const { locale, t } = useI18n();
-const { loading, totalPages, currentPage, personsPresent, persons } =
-  storeToRefs(usePersonStore());
+const {
+  loading,
+  totalPages,
+  currentPage,
+  personsPresent,
+  persons,
+  popularActors,
+} = storeToRefs(usePersonStore());
 const {
   fetchFilteredPersons,
+  listPopularActors,
   fetchGenders,
   fetchSpecialties,
   checkPersonsPresence,
@@ -90,6 +107,7 @@ const fetchData = async (): Promise<void> => {
       ),
       fetchGenders(locale.value),
       fetchSpecialties(locale.value),
+      listPopularActors(),
     ]);
   } else {
     navigateTo("/persons/empty");
@@ -105,6 +123,9 @@ const personItems = computed((): Detail[] => {
         value: person?.specialtyNames.join(", "),
         avatar: person?.avatar || "",
         to: "/persons/" + person?.id,
+        createdAt: person?.createdAt || "",
+        updatedAt: person?.updatedAt || "",
+        publishedBy: person?.publisherData.name || "",
       };
     })
   );

@@ -1,14 +1,12 @@
+import { useAuthStore } from "./authStore";
+
 export const usePersonStore = defineStore("persons", () => {
     interface IPersonListResponse {
         items: IPerson[];
         currentPage: number;
         totalPages: number;
     }
-
-
-
-
-
+	const authStore = useAuthStore();
 	const persons = ref<IPerson[]>([]);
 	const person = ref<IPerson | null>(null);
 	const loading = ref<boolean>(false);
@@ -20,6 +18,11 @@ export const usePersonStore = defineStore("persons", () => {
 	const personsPresent = ref<boolean>(false);
 	const popularActors = ref<IPerson[]>([]);
 	const baseUrl = useRuntimeConfig().public.apiBase;
+	const authHeaders = computed(() => {
+		return {
+			Authorization: `Bearer ${authStore.token}`,
+		};
+	});
 	const defaultPersonValues: Partial<IPerson> = {
 		id: null,
 		firstname: "",
@@ -45,6 +48,7 @@ export const usePersonStore = defineStore("persons", () => {
 		locale: string
 	) => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response  = await $fetch<IPersonListResponse>(
 				`${baseUrl}/persons/filter?limit=${limit}&offset=${offset}&search=${search}&sortBy=${sortBy}&order=${order}&specialty=${specialty}&locale=${locale}`
@@ -61,6 +65,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const fetchPersonDetails = async (id: number, locale: string) => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response  = await $fetch<IPerson>(
 				`${baseUrl}/persons/${id}?locale=${locale}`
@@ -75,6 +80,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const fetchPersonForm = async (id: number) => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response = await $fetch<Partial<IPerson>>(
 				`${baseUrl}/persons/${id}/form`
@@ -89,6 +95,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const fetchGenders = async (locale: string) => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response = await $fetch<Array<IGender>>(
 				`${baseUrl}/genders/translations?locale=${locale}`
@@ -117,8 +124,10 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const addPerson = async (): Promise<boolean> => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response = await $fetch<Partial<IPerson>>(`${baseUrl}/persons`, {
+				headers: authHeaders.value,
 				method: "POST",
 				body: personForm.value,
 			});
@@ -134,6 +143,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const editPerson = async (): Promise<boolean> => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response = await $fetch<IPerson>(`${baseUrl}/persons/${personForm.value.id}`, {
 				method: "PUT",
@@ -151,6 +161,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const uploadPhotos = async (photos: File[], id: number): Promise<boolean> => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const formData = new FormData();
 			photos.forEach((photo) => {
@@ -176,6 +187,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const uploadCover = async (cover: File, id: number): Promise<boolean> => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const formData = new FormData();
 			formData.append("file", cover);
@@ -196,6 +208,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const removePerson = async (id: number): Promise<boolean> => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			await $fetch<IPerson>(`${baseUrl}/persons/${id}`, {
 				method: "DELETE",
@@ -211,6 +224,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const checkPersonsPresence = async () => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response =
 				await  $fetch<ICheckEmptyResponse>(`${baseUrl}/persons/check`);
@@ -224,6 +238,7 @@ export const usePersonStore = defineStore("persons", () => {
 
 	const listPopularActors = async () => {
 		try {
+			networkError.value = null;
 			loading.value = true;
 			const response = await $fetch<IPersonListResponse>(`${baseUrl}/persons/actors-popular`);
 			popularActors.value = response?.items || [];

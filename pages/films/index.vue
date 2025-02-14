@@ -12,6 +12,15 @@
     @update:page="updateQueryParams"
     @update:search="search = $event"
   >
+    <template #sidebar>
+      <v-card class="pa-4" :title="$t('pages.home.newest')">
+        <NewestFilmsMasonryWall
+          :latest-films="latestFilms"
+          :loading="loading"
+          sidebar
+        />
+      </v-card>
+    </template>
     <template #filters>
       <Filters
         :sort-options="sortOptions"
@@ -27,11 +36,24 @@
 <script lang="ts" setup>
 import ListPage from "~/components/Misc/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
+import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import { useFilmStore } from "~/stores/filmStore";
 
-const { films, loading, totalPages, genres, currentPage, filmsPresent } =
-  storeToRefs(useFilmStore());
-const { fetchFilteredFilms, fetchGenres, checkFilmsPresence } = useFilmStore();
+const {
+  films,
+  loading,
+  totalPages,
+  genres,
+  currentPage,
+  filmsPresent,
+  latestFilms,
+} = storeToRefs(useFilmStore());
+const {
+  fetchFilteredFilms,
+  fetchGenres,
+  checkFilmsPresence,
+  fetchLatestFilms,
+} = useFilmStore();
 const { locale, t } = useI18n();
 const limit = ref<number>(5);
 const offset = ref<number>(0);
@@ -74,6 +96,7 @@ const fetchData = async (): Promise<void> => {
         locale.value
       ),
       fetchGenres(locale.value),
+      fetchLatestFilms(),
     ]);
   } else {
     navigateTo("/films/empty");

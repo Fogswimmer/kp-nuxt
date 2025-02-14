@@ -61,22 +61,22 @@ export default defineNuxtConfig({
       theme: {
         defaultTheme: "dark",
         themes: {
-          light: {
-            dark: false,
-            colors: {
-              background: "#FFFFFF",
-              surface: "#FFFFFF",
-              accent: "#f04ad1",
-            },
-          },
-          dark: {
-            dark: true,
-            colors: {
-              background: "#000000",
-              surface: "rgb(12, 13, 14)",
-              accent: "#f04ad1",
-            },
-          },
+          // light: {
+          //   dark: false,
+          //   colors: {
+          //     background: "#FFFFFF",
+          //     surface: "#FFFFFF",
+          //     accent: "#f04ad1",
+          //   },
+          // },
+          // dark: {
+          //   dark: true,
+          //   colors: {
+          //     background: "#000000",
+          //     surface: "rgb(12, 13, 14)",
+          //     accent: "#f04ad1",
+          //   },
+          // },
         },
       },
     },

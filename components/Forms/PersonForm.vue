@@ -1,12 +1,12 @@
 <template>
-  <v-card>
+  <v-card variant="text" flat>
     <v-form ref="formRef">
       <v-text-field
         v-model="form.firstname"
         name="firstname"
+        prepend-icon="mdi-account"
         :rules="nameRules"
         :label="$t('forms.person.firstname')"
-        prepend-icon="mdi-account"
         @update:model-value="handleUpdateModelValue"
       />
       <v-text-field
@@ -15,7 +15,7 @@
         prepend-icon="mdi-account"
         :rules="nameRules"
         :label="$t('forms.person.lastname')"
-		@update:model-value="handleUpdateModelValue"
+        @update:model-value="handleUpdateModelValue"
       />
       <v-select
         v-model="form.genderId"
@@ -70,10 +70,7 @@
     </v-form>
     <v-card-actions>
       <v-spacer />
-      <SubmitBtn
-        :loading="Boolean(loading)"
-        @click:submit="validateAndSubmit"
-      />
+      <SubmitBtn :loading="loading" @click:submit="validateAndSubmit" />
     </v-card-actions>
   </v-card>
 </template>
@@ -81,10 +78,9 @@
 <script lang="ts" setup>
 import SubmitBtn from "../Containment/Btns/SubmitBtn.vue";
 const { t } = useI18n();
-const formRef = ref<HTMLFormElement | null>(null);
+const formRef = ref<HTMLFormElement>();
 const emit = defineEmits<{
   (event: "form:submit"): void;
-  (event: "validate", valid: boolean): void;
   (event: "update:modelValue", value: Partial<IPerson>): void;
 }>();
 
@@ -133,17 +129,17 @@ const multipleSelectRules = [
 const handleUpdateModelValue = (): void =>
   emit("update:modelValue", form.value);
 
-const validate = (): void => {
-  const { valid } = formRef.value ? formRef.value.validate() : { valid: true };
+const validate = async (): Promise<void> => {
+  if (!formRef.value) return;
+  const { valid } = await formRef.value.validate();
   if (!valid) {
     isFormValid.value = false;
   } else {
     isFormValid.value = true;
   }
-  emit("validate", valid);
 };
-const validateAndSubmit = (): void => {
-  validate();
+const validateAndSubmit = async (): Promise<void> => {
+  await validate();
   if (isFormValid.value) {
     emit("form:submit");
   }

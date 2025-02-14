@@ -152,7 +152,6 @@ const { t } = useI18n();
 const formRef = ref<HTMLFormElement | null>(null);
 const emit = defineEmits<{
   (event: "form:submit"): void;
-  (event: "validate", valid: boolean): void;
   (event: "update:modelValue", value: Partial<IFilm>): void;
 }>();
 
@@ -203,21 +202,22 @@ const descriptionRules = [(v: string) => !!v || t("forms.rules.required")];
 const multipleSelectRules = [(v: string) => !!v || t("forms.rules.required")];
 const ageRules = [(v: number) => !!v || t("forms.rules.required")];
 const ageItems = [0, 3, 12, 16, 18];
-const validate = (): void => {
-  const { valid } = formRef.value ? formRef.value.validate() : { valid: true };
+const validate = async (): Promise<void> => {
+  if (!formRef.value) return;
+  const { valid } = await formRef.value.validate();
   if (!valid) {
     isFormValid.value = false;
   } else {
     isFormValid.value = true;
   }
-  emit("validate", valid);
+
 };
 
 const handleUpdateModelValue = (): void =>
   emit("update:modelValue", form.value);
 
-const handleValidationAndSubmit = (): void => {
-  validate();
+const handleValidationAndSubmit = async (): Promise<void> => {
+  await validate();
   if (isFormValid.value) {
     emit("form:submit");
   }

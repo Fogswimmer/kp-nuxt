@@ -1,24 +1,33 @@
 <template>
   <div class="d-flex flex-column ga-2">
     <transition-group>
-      <v-sheet v-if="!isAssessing" class="pa-2" rounded="lg" elevation="2">
-        <div class="d-flex flex-column justify-center ga-1 align-center">
-          <div class="d-flex ga-1 align-center">
-            <v-icon icon="mdi-star" size="x-large" color="warning" />
-            <span class="text-h4">{{ currentRating }}</span>
+      <v-card
+        v-if="!isAssessing"
+        :class="
+          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+        "
+        rounded="lg"
+        elevation="2"
+      >
+        <v-card-text>
+          <div class="d-flex flex-column justify-center ga-1 align-center">
+            <div class="d-flex ga-1 align-center">
+              <v-icon icon="mdi-star" size="x-large" color="warning" />
+              <span class="text-h4">{{ currentRating }}</span>
+            </div>
+            <v-label>{{
+              assessments.length + " " + $t("pages.films.assessments") ||
+              $t("pages.films.no_assessments")
+            }}</v-label>
+            <v-btn
+              :disabled="!isAuthenticated"
+              @click="$emit('assession:enable')"
+            >
+              {{ $t("pages.films.assess") }}
+            </v-btn>
           </div>
-          <v-label>{{
-            assessments.length + " " + $t("pages.films.assessments") ||
-            $t("pages.films.no_assessments")
-          }}</v-label>
-          <v-btn
-            :disabled="!isAuthenticated"
-            @click="$emit('assession:enable')"
-          >
-            {{ $t("pages.films.assess") }}
-          </v-btn>
-        </div>
-      </v-sheet>
+        </v-card-text>
+      </v-card>
     </transition-group>
     <v-scroll-y-transition>
       <AssessmentForm
@@ -31,9 +40,11 @@
         @submit="$emit('assession:submit')"
       />
     </v-scroll-y-transition>
-    <v-sheet
+    <v-card
       v-if="assessments.length > 0"
-      class="pa-2"
+      :class="
+        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+      "
       rounded="lg"
       elevation="2"
     >
@@ -42,13 +53,14 @@
         :page="page"
         :items-per-page="itemsPerPage"
       >
-        <template #header="{ pageCount, prevPage, nextPage }">
-          <div class="d-flex justify-space-between align-center">
+        <template #header="{ page, pageCount, prevPage, nextPage }">
+          <div class="d-flex justify-space-between align-center pa-2">
             <h4>{{ $t("pages.films.comments") }}</h4>
             <v-btn class="me-8" variant="text" @click="seeAllOnClick">
-              <span class="text-decoration-underline text-none">{{
-                $t("general.see_all")
-              }}</span>
+              <span
+                class="text-decoration-underline text-none text-subtitle-2"
+                >{{ $t("general.see_all") }}</span
+              >
             </v-btn>
             <div class="d-inline-flex">
               <v-btn
@@ -57,6 +69,7 @@
                 icon="mdi-arrow-left"
                 size="small"
                 variant="plain"
+                density="compact"
                 @click="prevPage"
               />
 
@@ -65,6 +78,7 @@
                 icon="mdi-arrow-right"
                 size="small"
                 variant="plain"
+                density="compact"
                 @click="nextPage"
               />
             </div>
@@ -109,10 +123,7 @@
           </template>
         </template>
         <template #footer="{ pageCount }">
-          <v-footer
-            class="justify-space-between text-body-2 mt-4"
-            color="surface-variant"
-          >
+          <v-footer class="justify-space-between text-subtitle-2 mt-4">
             {{ $t("general.total") }}: {{ assessments.length }}
 
             <div>
@@ -122,7 +133,7 @@
           </v-footer>
         </template>
       </v-data-iterator>
-    </v-sheet>
+    </v-card>
   </div>
 </template>
 

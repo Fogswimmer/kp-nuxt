@@ -1,7 +1,7 @@
 <template>
   <LoadingScreen v-if="isLoading" />
   <NuxtLayout>
-    <NuxtLoadingIndicator color="#6750a4" />
+    <NuxtLoadingIndicator color="#2196f3" />
     <NuxtPage />
   </NuxtLayout>
 </template>

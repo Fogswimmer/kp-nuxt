@@ -99,6 +99,7 @@ export default {
   nav: {
     title: "Navigation",
     home: "Accueil",
+    settings: "Paramètres",
     films: "Films",
     menu: "Menu",
     films_list: "Liste des films",
@@ -234,6 +235,8 @@ export default {
         add: "Ajouté avec succès",
         edit: "Modifié avec succès",
         remove: "Supprimé avec succès",
+        files_added: "Fichiers bien ajoutés",
+        files_removed: "Fichiers bien supprimés",
       },
       error: {
         add: "Erreur ajoutant",

@@ -55,7 +55,9 @@ defineProps<{
 }>();
 const { userForm } = storeToRefs(useAuthStore());
 
-const emit = defineEmits<["form:submit"]>();
+const emit = defineEmits<{
+  (event: "form:submit"): void;
+}>();
 const isFormValid = ref<boolean>(false);
 const visible = ref<boolean>(false);
 const registerFormRef = ref<HTMLFormElement>();

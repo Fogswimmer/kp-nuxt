@@ -99,6 +99,7 @@ export default {
   },
   nav: {
     title: "Navigation",
+    settings: "Settings",
     home: "Home",
     menu: "Menu",
     films: "Films",
@@ -233,6 +234,8 @@ export default {
         add: "Successfully added",
         edit: "Successfully edited",
         remove: "Successfully removed",
+        files_added: "Successfully added files",
+        files_removed: "Successfully removed files",
       },
       error: {
         add: "Error adding",

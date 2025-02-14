@@ -8,7 +8,7 @@
   >
     <client-only>
       <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp"
+        v-if="$vuetify.display.smAndDown"
         v-model="drawer"
         order="1"
         :location="$vuetify.display.smAndDown ? 'end' : 'start'"

@@ -1,148 +1,193 @@
 <template>
-	<v-card
-		class="mx-auto"
-		style="max-width: 800px"
-		:loading="loading">
-		<v-toolbar :title="$t('forms.person.add')">
-			<template #prepend>
-				<BackBtn />
-			</template>
-		</v-toolbar>
+  <div>
+    <v-card class="mx-auto" style="max-width: 800px" :loading="loading">
+      <v-toolbar :title="$t('forms.person.add')">
+        <template #prepend>
+          <BackBtn />
+        </template>
+      </v-toolbar>
 
-		<v-stepper
-			v-model="step"
-			:mobile="!$vuetify.display.mdAndUp">
-			<v-stepper-header>
-				<v-stepper-item
-					value="1"
-					:title="$t('stepper.general')"
-					:complete="step === 1"
-					:color="step === 1 ? 'success' : 'primary'"/>
-				
-				<v-divider/>
-				<v-stepper-item
-					value="2"
-					:title="$t('stepper.gallery')"
-					:complete="step === 2"
-					:color="step === 2 ? 'success' : 'primary'"/>
-				
-				<v-divider/>
-				<v-stepper-item
-					value="3"
-					:title="$t('stepper.avatar')"
-					:complete="step === 3"
-					:color="step === 3 ? 'success' : 'primary'"/>
-				
-				<v-divider/>
-				<v-stepper-item
-					value="4"
-					color="primary"
-					:title="$t('stepper.cover')"/>
-				
-			</v-stepper-header>
-			<v-stepper-window>
-				<v-stepper-window-item value="1">
-					<PersonForm
-						:loading="loading"
-						:person-form="personForm"
-						:genders="genders"
-						:specialties="specialties"
-						@validate="isFormValid = $event"
-						@form:submit="handleGeneralInfoSubmit" />
-				</v-stepper-window-item>
-				<v-stepper-window-item value="2">
-					<GalleryUploader
-						:upload-count="GALLERY_LIMIT"
-						@files:upload="handlePhotoSubmit" />
-				</v-stepper-window-item>
-				<v-stepper-window-item value="3">
-					<SingleImgSelector
-						:gallery="personForm.photos || []"
-						@img:select="handleAvatarSubmit" />
-				</v-stepper-window-item>
-				<v-stepper-window-item value="4">
-					<GalleryUploader
-						:upload-count="GALLERY_LIMIT"
-						@files:upload="handleCoverSubmit" />
-				</v-stepper-window-item>
-			</v-stepper-window>
-		</v-stepper>
-	</v-card>
+      <v-stepper v-model="step" :mobile="!$vuetify.display.mdAndUp">
+        <v-stepper-header>
+          <v-stepper-item
+            value="1"
+            :title="$t('stepper.general')"
+            :complete="step === 1"
+            :color="step === 1 ? 'success' : 'primary'"
+          />
+
+          <v-divider />
+          <v-stepper-item
+            value="2"
+            :title="$t('stepper.gallery')"
+            :complete="step === 2"
+            :color="step === 2 ? 'success' : 'primary'"
+          />
+
+          <v-divider />
+          <v-stepper-item
+            value="3"
+            :title="$t('stepper.avatar')"
+            :complete="step === 3"
+            :color="step === 3 ? 'success' : 'primary'"
+          />
+          <v-divider />
+          <v-stepper-item
+            value="4"
+            color="primary"
+            :title="$t('stepper.cover')"
+          />
+        </v-stepper-header>
+        <v-stepper-window>
+          <v-stepper-window-item value="1">
+            <PersonForm
+              :loading="loading"
+              :person-form="personForm"
+              :genders="genders"
+              :specialties="specialties"
+              @form:submit="handleGeneralInfoSubmit"
+              @update:model-value="personForm = $event"
+            />
+          </v-stepper-window-item>
+          <v-stepper-window-item value="2">
+            <GalleryUploader
+              :upload-count="GALLERY_LIMIT"
+              @files:upload="handlePhotoSubmit"
+            />
+          </v-stepper-window-item>
+          <v-stepper-window-item value="3">
+            <SingleImgSelector
+              :gallery="personForm.photos || []"
+              @img:select="handleAvatarSubmit"
+            />
+          </v-stepper-window-item>
+          <v-stepper-window-item value="4">
+            <GalleryUploader
+              :upload-count="GALLERY_LIMIT"
+              @files:upload="handleCoverSubmit"
+            />
+          </v-stepper-window-item>
+          <v-btn :disabled="step === 0" @click="handleFinish">{{
+            $t("actions.finish")
+          }}</v-btn>
+        </v-stepper-window>
+      </v-stepper>
+    </v-card>
+    <v-snackbar v-model="showFirstStepSnackbar" color="success">
+      {{ $t("toast.messages.success.add") }}
+    </v-snackbar>
+    <v-snackbar v-model="showSecondStepSnackbar" color="success">
+      {{ $t("toast.messages.success.files_added") }}
+    </v-snackbar>
+    <v-snackbar v-model="showThirdStepSnackbar" color="success">
+      {{ $t("toast.messages.success.edit") }}
+    </v-snackbar>
+	<v-snackbar v-model="showThirdStepSnackbar" color="error">
+      {{ $t("toast.messages.error.add") }}
+    </v-snackbar>
+  </div>
 </template>
 
 <script lang="ts" setup>
-	import { usePersonStore } from "~/stores/personStore";
-	import PersonForm from "~/components/Forms/PersonForm.vue";
-	import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
-	import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
-	import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
-	
-	const { locale } = useI18n();
-	const step = ref(0);
-	const isFormValid = ref(false);
-	const GALLERY_LIMIT = 8;
-	const { loading, personForm, genders, specialties, networkError } =
-		storeToRefs(usePersonStore());
-	const nextStep = () => {
-		if (!networkError.value) {
-			step.value++;
-		}
-	};
-	const {
-		fetchGenders,
-		fetchSpecialties,
-		addPerson,
-		editPerson,
-		uploadPhotos,
-		clearPersonForm,
-		uploadCover,
-	} = usePersonStore();
+import { usePersonStore } from "~/stores/personStore";
+import PersonForm from "~/components/Forms/PersonForm.vue";
+import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
+import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
+import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 
-	const handleGeneralInfoSubmit = async (): Promise<void> => {
-		if (await addPerson()) {
-			nextStep();
-		}
-	};
+const { locale } = useI18n();
+const step = ref<number>(0);
+const showFirstStepSnackbar = ref<boolean>(false);
+const showSecondStepSnackbar = ref<boolean>(false);
+const showThirdStepSnackbar = ref<boolean>(false);
+const GALLERY_LIMIT: number = 8;
+const { loading, personForm, genders, specialties, networkError } =
+  storeToRefs(usePersonStore());
+const nextStep = () => {
+	console.log(networkError.value);
+  if (!networkError.value) {
+    step.value++;
+	console.log(step.value);
+    switch (step.value) {
+      case 1:
+        showFirstStepSnackbar.value = true;
+        break;
+      case 2:
+        showSecondStepSnackbar.value = true;
+        break;
+      case 3:
+        showThirdStepSnackbar.value = true;
+        break;
+    }
+  }
+};
+const {
+  fetchGenders,
+  fetchSpecialties,
+  addPerson,
+  editPerson,
+  uploadPhotos,
+  clearPersonForm,
+  uploadCover,
+} = usePersonStore();
 
-	const handlePhotoSubmit = async (files: File[]): Promise<void> => {
-		const id = personForm.value.id;
-		if (id) {
-			await uploadPhotos(files, id || 0);
-			nextStep();
-		}
-	};
-	const handleCoverSubmit = async (files: File[]): Promise<void> => {
-		const coverFile = files[0];
-		const id = personForm.value.id;
-		await uploadCover(coverFile, id || 0);
-		navigateTo(`/persons/${personForm.value.id}`);
-	};
+const handleGeneralInfoSubmit = async (): Promise<void> => {
+  if (await addPerson()) {
+    nextStep();
+  }
+};
 
-	const handleAvatarSubmit = async (index: number): Promise<void> => {
-		personForm.value.avatar = personForm.value?.photos?.length
-			? personForm.value?.photos[index - 1]
-			: "";
-		await editPerson();
-		nextStep();
-	};
+const handlePhotoSubmit = async (files: File[]): Promise<void> => {
+  const id = personForm.value.id;
+  if (id) {
+    await uploadPhotos(files, id || 0);
+    nextStep();
+  }
+};
 
-	const fetchData = async (): Promise<void> => {
-		await Promise.allSettled([
-			fetchGenders(locale.value),
-			fetchSpecialties(locale.value),
-		]);
-	};
+const handleFinish = (): void => {
+  if (step.value <= 2) {
+    navigateTo(`/persons`);
+  } else {
+    navigateTo(`/persons/${personForm.value.id}`);
+  }
+};
+const handleCoverSubmit = async (files: File[]): Promise<void> => {
+  const coverFile = files[0];
+  const id = personForm.value.id;
+  await uploadCover(coverFile, id || 0);
+  navigateTo(`/persons/${personForm.value.id}`);
+};
 
-	onMounted(async (): Promise<void> => {
-		clearPersonForm();
-		await fetchData();
-	});
+const handleAvatarSubmit = async (index: number): Promise<void> => {
+  personForm.value.avatar = personForm.value?.photos?.length
+    ? personForm.value?.photos[index - 1]
+    : "";
+  await editPerson();
+  nextStep();
+};
 
-	definePageMeta({
-		name: "newPerson",
-		path: "/persons/new",
-		key: (route) => route.fullPath,
-	});
+const fetchData = async (): Promise<void> => {
+  await Promise.allSettled([
+    fetchGenders(locale.value),
+    fetchSpecialties(locale.value),
+  ]);
+};
+
+onMounted(async (): Promise<void> => {
+  clearPersonForm();
+  await fetchData();
+  showFirstStepSnackbar.value = false;
+  showSecondStepSnackbar.value = false;
+  showThirdStepSnackbar.value = false;
+});
+
+definePageMeta({
+  name: "newPerson",
+  path: "/persons/new",
+  middleware: ["auth"],
+  key: (route) => route.fullPath,
+});
 </script>
 
 <style></style>

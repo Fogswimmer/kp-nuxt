@@ -45,7 +45,6 @@
             :writers="writers"
             :composers="composers"
             show-description
-            @validate="isFormValid = $event"
             @form:submit="handleGeneralInfoSubmit"
             @update:model-value="filmForm = $event"
           />
@@ -79,7 +78,6 @@ const { personsPresent } = storeToRefs(usePersonStore());
 const { checkPersonsPresence } = usePersonStore();
 const step = ref(0);
 const GALLERY_LIMIT = 8;
-const isFormValid = ref(false);
 const { locale } = useI18n();
 const {
   genres,
@@ -143,6 +141,7 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "newFilm",
   path: "/films/new",
+  middleware: ["auth"],
   key: (route) => route.fullPath,
 });
 </script>

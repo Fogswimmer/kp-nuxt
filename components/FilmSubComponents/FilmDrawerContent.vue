@@ -7,7 +7,12 @@
   >
     <v-expansion-panel :title="$t('pages.general_info')" value="info">
       <v-expansion-panel-text>
-        <v-list nav>
+        <v-list
+          :class="
+            $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+          "
+          
+        >
           <div v-for="(detail, index) in generalInfo" :key="index">
             <v-list-item
               :key="index"
@@ -35,7 +40,12 @@
 
     <v-expansion-panel :title="$t('pages.films.starring')" value="starring">
       <v-expansion-panel-text>
-        <v-list nav>
+        <v-list
+          :class="
+            $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+          "
+          
+        >
           <v-list-item
             v-for="(actor, index) in starring"
             :key="index"
@@ -57,7 +67,12 @@
 
     <v-expansion-panel value="team" :title="$t('pages.films.team')">
       <v-expansion-panel-text>
-        <v-list nav>
+        <v-list
+          :class="
+            $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
+          "
+          
+        >
           <v-list-item
             v-for="(person, index) in team"
             :key="index"

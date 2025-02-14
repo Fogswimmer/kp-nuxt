@@ -24,7 +24,7 @@
         location="end"
         order="1"
       >
-        <v-list nav>
+        <v-list>
           <v-list-item
             v-for="(link, index) in pageContents"
             :key="index"
@@ -32,13 +32,8 @@
             :title="link.title"
             :value="link.value"
             :prepend-icon="link.icon"
-            color="transparent"
-            :class="
-              $vuetify.theme.global.current.dark
-                ? 'neutral-glass'
-                : 'light-glass'
-            "
-            @click="handleScrollToSection(link.value || '')"
+            :href="`/films/${film?.id}#${link.value}`"
+            @click="activeSection = link.value"
           />
           <NotAuthWarning v-if="!isAuthenticated" />
         </v-list>
@@ -145,9 +140,7 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </main>
-      </template>
-      <template #footer>
-        <v-footer class="d-flex align-center ga-2 text-caption">
+        <v-footer class="d-flex align-center ga-2 text-caption mt-4">
           <v-spacer />
           <span>{{ $t("general.published_by") }}</span>
           <nuxt-link>{{
@@ -262,9 +255,11 @@ const showScrollFab = ref<boolean>(false);
 
 const comment = ref<string>("");
 const rating = ref<number>(0);
+const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const activeSection = ref<string | undefined>("gallery");
-const mainAccordion = ref<string[]>(["gallery", "rating"]);
+const mainAccordion = ref<string[]>(["gallery", "rating", "description"]);
+
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
   film,
@@ -291,7 +286,7 @@ const {
   GALLERY_SIZE,
 } = useFilmStore();
 const { locale, t } = useI18n();
-const activeTab = ref(0);
+
 const imagesToDelete = computed(() => {
   return film.value?.gallery
     .filter((_: string, index: number): boolean =>
@@ -364,7 +359,6 @@ const generalInfo = computed((): Detail[] => {
 const starring = computed((): Detail[] => {
   return film.value
     ? film.value.actorsData.map((person: FilmPerson): Detail => {
-        console.log(person);
         return {
           title: "",
           value: person?.name || "",
@@ -410,10 +404,6 @@ const fetchData = async (): Promise<void> => {
 
 const onScroll = () => {
   watchScrolling("content-item", activeSection, showScrollFab);
-};
-
-const handleScrollToSection = (link: string): void => {
-  scrollOnContentItemClick(link, mainAccordion, activeSection);
 };
 
 const sliderGalleryArr = computed((): string[] => {

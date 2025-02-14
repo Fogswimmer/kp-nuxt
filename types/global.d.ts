@@ -49,13 +49,16 @@ declare global {
   }
 
   interface Detail {
-    id?: number | null;
     title: string;
-    subtitle?: string;
     value: string;
+    id?: number | null;
+    subtitle?: string;
     icon?: string;
     to?: string;
     avatar?: string;
+    createdAt?: string;
+    updatedAt?: string;
+    publishedBy?: string;
   }
 
   interface IFilmForm {
@@ -99,6 +102,7 @@ declare global {
     avatar: string | null;
     createdAt: string | null;
     updatedAt: string | null;
+    publisherData: FilmPerson;
   }
   interface IPersonForm {
     id: number | null;

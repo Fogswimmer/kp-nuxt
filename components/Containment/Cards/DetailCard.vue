@@ -1,5 +1,8 @@
 <template>
   <v-card variant="text">
+    <template v-if="loading" #loader>
+      <v-progress-linear indeterminate color="primary"/>
+    </template>
     <template v-if="$vuetify.theme.global.current.dark" #image>
       <v-img :src="cover" cover class="img-blur" />
     </template>
@@ -85,9 +88,6 @@
       </div>
       <slot name="text" />
     </v-card>
-    <v-footer class="text-subtitle-2">
-      <slot name="footer" />
-    </v-footer>
   </v-card>
 </template>
 
