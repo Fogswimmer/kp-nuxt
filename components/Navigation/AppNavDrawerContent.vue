@@ -98,7 +98,13 @@ import ProfileNav from "./ProfileNav.vue";
 const { setLocale, locale, t } = useI18n();
 const route = useRoute();
 const activeRoute = computed((): string => route.path);
-const changeLanguage = (lang: string) => {
+
+enum Language {
+  RU = "ru",
+  EN = "en",
+  FR = "fr",
+}
+const changeLanguage = (lang: Language ) => {
   setLocale(lang);
 };
 const selectedTheme = ref<string>("light");

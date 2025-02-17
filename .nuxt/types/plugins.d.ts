@@ -31,7 +31,6 @@ type NuxtAppInjections =
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.2.0_@vue+compiler-dom@3.5.13_eslint@9.20.0_jiti@2.4.2__magicast@0.3.5_rollup@4_4iohylulbxel3nmgw3gsdg5rsu/node_modules/@nuxtjs/i18n/dist/runtime/plugins/i18n.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.1_db0@0.2.3_eslint@9.20.0_jiti@2.4.2__ior_lutkrumxrjlswpsll6stxvs6x4/node_modules/nuxt/dist/app/plugins/dev-server-logs.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.1_db0@0.2.3_eslint@9.20.0_jiti@2.4.2__ior_lutkrumxrjlswpsll6stxvs6x4/node_modules/nuxt/dist/app/plugins/check-if-layout-used.js")> &
-  InjectionType<typeof import("../../plugins/api")> &
   InjectionType<typeof import("../../plugins/vue-masonry-wall")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.2.0_@vue+compiler-dom@3.5.13_eslint@9.20.0_jiti@2.4.2__magicast@0.3.5_rollup@4_4iohylulbxel3nmgw3gsdg5rsu/node_modules/@nuxtjs/i18n/dist/runtime/plugins/ssg-detect.js")>
 

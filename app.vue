@@ -60,23 +60,23 @@ p {
   margin-top: 1rem;
   text-indent: 2rem !important;
 }
-.light-glass {
-	background: rgba(255,255,255,0.6) !important;
--webkit-backdrop-filter: blur(10px !important);
-backdrop-filter: blur(10px) !important;
 
-}
-.neutral-glass {
-  background: rgba(27, 26, 26, 0.6) !important;
+.glassed {
+  background: rgba(0, 0, 0, 0.2) !important;
   -webkit-backdrop-filter: blur(10px)  !important;
   backdrop-filter: blur(10px)  !important;
-
 }
-.dark-glass {
-  background: rgba(0, 0, 0, 0.6) !important;
-  -webkit-backdrop-filter: blur(10px)  !important;
-  backdrop-filter: blur(10px)  !important;
 
+.bg-gradient {
+  background-image: linear-gradient(
+    to right top,
+    #0c151c,
+    #101d27,
+    #122534,
+    #142d40,
+    #16354d
+  ) !important;
+  background-attachment: fixed !important;
 }
 
 html {

@@ -538,6 +538,7 @@ onMounted(async () => {
 definePageMeta({
   name: "filmDetails",
   path: "/films/:id",
+  middleware: ["content-present"],
   key: (route) => route.fullPath,
 });
 </script>

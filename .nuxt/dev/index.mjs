@@ -600,10 +600,10 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "http://kinopoisk.light/api",
+    "apiBase": "https://nebelschwimmer.site/api",
     "i18n": {
-      "baseUrl": "",
-      "defaultLocale": "",
+      "baseUrl": "https://nebelschwimmer.site/",
+      "defaultLocale": "ru",
       "defaultDirection": "ltr",
       "strategy": "prefix_except_default",
       "lazy": false,
@@ -613,7 +613,20 @@ const _inlineRuntimeConfig = {
       "skipSettingLocaleOnNavigate": false,
       "differentDomains": false,
       "trailingSlash": false,
-      "locales": [],
+      "locales": [
+        {
+          "code": "ru",
+          "iso": "ru-RU"
+        },
+        {
+          "code": "en",
+          "iso": "en-US"
+        },
+        {
+          "code": "fr",
+          "iso": "fr-FR"
+        }
+      ],
       "detectBrowserLanguage": {
         "alwaysRedirect": false,
         "cookieCrossOrigin": false,
@@ -873,7 +886,7 @@ const _inlineRuntimeConfig = {
     },
     "http": {
       "domains": [
-        "kinopoisk.light"
+        "nebelschwimmer.site"
       ]
     }
   }

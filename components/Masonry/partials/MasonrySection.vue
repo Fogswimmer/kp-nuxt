@@ -9,10 +9,6 @@
       v-if="present"
       :loading="loading"
       variant="text"
-      :class="[
-        'd-flex flex-column ga-2',
-        { 'content-item_light': !$vuetify.theme.global.current.dark },
-      ]"
       :style="
         $vuetify.theme.global.current.dark
           ? `background-image: radial-gradient(

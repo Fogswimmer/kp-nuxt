@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils/module",
     "nuxt-auth-utils",
   ],
+  css: ['@/assets/css/globals.scss'],
   app: {
     pageTransition: {
       name: "page",
@@ -39,53 +40,30 @@ export default defineNuxtConfig({
     },
   },
   vuetify: {
-    vuetifyOptions: {
-      labComponents: true,
-      defaults: {
-        VTextField: {
-          variant: "filled",
-        },
-        VSelect: {
-          variant: "filled",
-        },
-        VCombobox: {
-          variant: "filled",
-        },
-        VNavigationDrawer: {
-          color: "transparent",
-        },
-        VExpansionPanels: {
-          "bg-color": "transparent",
-        },
-      },
-      theme: {
-        defaultTheme: "dark",
-        themes: {
-          // light: {
-          //   dark: false,
-          //   colors: {
-          //     background: "#FFFFFF",
-          //     surface: "#FFFFFF",
-          //     accent: "#f04ad1",
-          //   },
-          // },
-          // dark: {
-          //   dark: true,
-          //   colors: {
-          //     background: "#000000",
-          //     surface: "rgb(12, 13, 14)",
-          //     accent: "#f04ad1",
-          //   },
-          // },
-        },
-      },
-    },
+    vuetifyOptions: './vuetify.config.ts'
   },
   imports: {
     dirs: ["types/*.ts", "store/*.ts", "types/**/*.ts"],
   },
   i18n: {
     vueI18n: "./i18n.config.ts",
+    defaultLocale: "ru",
+    strategy: 'prefix_except_default',
+    baseUrl: process.env.BASE_URL,
+    locales: [
+      {
+        code: 'ru',
+        iso: 'ru-RU'
+      },
+      {
+        code: 'en',
+        iso: 'en-US'
+      },
+      {
+        code: 'fr',
+        iso: 'fr-FR'
+      }
+    ]
   },
   image: {
     domains: [process.env.DOMAIN_NAME as string],

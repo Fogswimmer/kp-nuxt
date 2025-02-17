@@ -1,10 +1,5 @@
 <template>
-  <v-sheet
-    :class="
-      $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-    "
-    rounded="lg"
-  >
+  <v-sheet rounded="lg">
     <div v-if="!editMode" class="text-body-1 overflow-auto pa-2">
       <div v-if="text" class="d-flex flex-column justify-center">
         <p

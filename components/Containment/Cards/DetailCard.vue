@@ -1,16 +1,10 @@
 <template>
-  <v-card variant="text">
+  <v-sheet max-width="1000" class="mx-auto">
     <template v-if="loading" #loader>
-      <v-progress-linear indeterminate color="primary"/>
+      <v-progress-linear indeterminate color="primary" />
     </template>
-    <template v-if="$vuetify.theme.global.current.dark" #image>
-      <v-img :src="cover" cover class="img-blur" />
-    </template>
-    <v-toolbar
-      :class="
-        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-      "
-    >
+   
+    <v-toolbar>
       <template #prepend>
         <v-app-bar-nav-icon
           v-if="drawer && $vuetify.display.smAndDown"
@@ -28,19 +22,21 @@
       </v-app-bar-title>
       <slot name="menu" />
     </v-toolbar>
+    <template v-if="notification">
+      <slot name="notification" />
+    </template>
 
-    <v-card
-      :class="
-        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-      "
-    >
-      <v-img :src="cover" cover height="300">
+    <v-card>
+      <template #image>
+      <v-parallax height="500" :src="cover" cover class="img-blur" gradient=""/>
+    </template>
+      <v-img :src="cover" cover height="250">
         <template #placeholder>
-          <v-sheet height="100%" class="default-cover" />
+          <v-sheet height="250" width="100%" class="default-cover" />
         </template>
       </v-img>
       <div v-if="displayAvatar" class="position-relative">
-        <v-sheet height="200" border>
+        <v-sheet height="200" border color="red">
           <div class="d-flex justify-center">
             <div class="position-absolute text-center" style="top: -50%">
               <div>
@@ -88,7 +84,7 @@
       </div>
       <slot name="text" />
     </v-card>
-  </v-card>
+  </v-sheet>
 </template>
 
 <script lang="ts" setup>
@@ -105,32 +101,46 @@ defineProps<{
   avatar?: string;
   displayAvatar?: boolean;
   drawer?: boolean;
+  notification?: boolean;
 }>();
 </script>
 
 <style>
 .default-cover {
   background-image:
-    repeating-radial-gradient(
-      circle at center center,
-      transparent 0px,
-      transparent 1px,
-      rgba(0, 0, 0, 0.05) 1px,
-      rgba(0, 0, 0, 0.05) 10px,
-      transparent 10px,
-      transparent 11px
+    linear-gradient(
+      302deg,
+      rgba(107, 70, 255, 0.5) 0%,
+      rgba(107, 70, 255, 0.5) 14.286%,
+      rgba(106, 86, 235, 0.5) 14.286%,
+      rgba(106, 86, 235, 0.5) 28.572%,
+      rgba(106, 102, 215, 0.5) 28.572%,
+      rgba(106, 102, 215, 0.5) 42.858%,
+      rgba(105, 118, 195, 0.5) 42.858%,
+      rgba(105, 118, 195, 0.5) 57.144%,
+      rgba(104, 134, 174, 0.5) 57.144%,
+      rgba(104, 134, 174, 0.5) 71.43%,
+      rgba(104, 150, 154, 0.5) 71.43%,
+      rgba(104, 150, 154, 0.5) 85.716%,
+      rgba(103, 166, 134, 0.5) 85.716%,
+      rgba(103, 166, 134, 0.5) 100.002%
     ),
-    repeating-radial-gradient(
-      circle at center center,
-      rgb(255, 255, 255, 0.2) 0px,
-      rgb(255, 255, 255, 0.2) 9px,
-      rgb(255, 255, 255, 0.2) 9px,
-      rgb(255, 255, 255, 0.2) 18px,
-      rgb(255, 255, 255, 0.2) 18px,
-      rgb(255, 255, 255, 0.2) 20px,
-      rgb(255, 255, 255, 0.2) 20px,
-      rgb(255, 255, 255, 0.2) 26px
+    linear-gradient(
+      323deg,
+      rgb(14, 186, 116) 0%,
+      rgb(14, 186, 116) 14.286%,
+      rgb(15, 160, 133) 14.286%,
+      rgb(15, 160, 133) 28.572%,
+      rgb(16, 133, 151) 28.572%,
+      rgb(16, 133, 151) 42.858%,
+      rgb(17, 107, 168) 42.858%,
+      rgb(17, 107, 168) 57.144%,
+      rgb(18, 80, 185) 57.144%,
+      rgb(18, 80, 185) 71.43%,
+      rgb(19, 54, 203) 71.43%,
+      rgb(19, 54, 203) 85.716%,
+      rgb(20, 27, 220) 85.716%,
+      rgb(20, 27, 220) 100.002%
     );
-  background-size: 53px 53px !important;
 }
 </style>

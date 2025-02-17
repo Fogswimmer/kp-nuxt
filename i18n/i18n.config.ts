@@ -1,6 +1,6 @@
-import ru_messages from "./locales/ru-RU";
-import en_messages from "./locales/en-US";
-import fr_messages from "./locales/fr-FR";
+import ru_messages from "./locales/ru";
+import en_messages from "./locales/en";
+import fr_messages from "./locales/fr";
 import { en, fr, ru } from "vuetify/locale";
 
 export default defineI18nConfig(() => ({

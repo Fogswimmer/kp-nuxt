@@ -1,4 +1,9 @@
 declare global {
+  enum Language {
+    RU = "ru",
+    EN = "en",
+    FR = "fr",
+  }
   interface IFilm {
     id: number | null;
     name: string;

@@ -66,11 +66,6 @@
             <v-card-text v-if="item.assessments.length > 0">
               <v-list
                 :nav="sidebar"
-                :class="
-                  $vuetify.theme.global.current.dark
-                    ? 'neutral-glass'
-                    : 'light-glass'
-                "
               >
                 <v-list-item
                   v-for="(comment, i) in item.assessments.slice(0, 5)"

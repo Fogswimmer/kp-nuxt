@@ -1,69 +1,84 @@
 <template>
   <div>
-    <client-only>
-      <v-navigation-drawer order="1" floating />
-      <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp"
-        location="end"
-        tag="aside"
-        order="1"
-      >
-        <v-list nav>
-          <v-list-item
-            v-for="(link, index) in pageContents"
-            :key="index"
-            :active="link.value === activeSection"
-            :title="link.title"
-            :value="link.value"
-            :prepend-icon="link.icon"
-            :href="`/#${link.value}`"
-            @click="activeSection = link.value"
-          />
-        </v-list>
-        <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
-      </v-navigation-drawer>
-    </client-only>
-    <main v-scroll="onScroll" class="d-flex flex-column ga-6 overflow-y-auto">
-      <MasonrySection
-        id="newest_films"
-        class="content-item"
-        :present="filmsPresent"
-        :loading="filmLoading"
-        :dark-accent-color="darkAccentColors[0]"
-        :title="$t('pages.home.newest')"
-      >
-        <template #default>
-          <NewestFilmsMasonryWall
-            :latest-films="latestFilms"
-            :loading="filmLoading"
-            :sidebar="false"
-          />
-        </template>
-      </MasonrySection>
+    <template v-if="filmsPresent && personsPresent">
+      <client-only>
+        <v-navigation-drawer order="1" floating />
+        <v-navigation-drawer
+          v-if="$vuetify.display.mdAndUp"
+          location="end"
+          tag="aside"
+          order="1"
+        >
+          <v-list nav>
+            <v-list-item
+              v-for="(link, index) in pageContents"
+              :key="index"
+              :active="link.value === activeSection"
+              :title="link.title"
+              :value="link.value"
+              :prepend-icon="link.icon"
+              :href="`/#${link.value}`"
+              @click="activeSection = link.value"
+            />
+          </v-list>
+          <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
+        </v-navigation-drawer>
+      </client-only>
+      <main v-scroll="onScroll" class="d-flex flex-column ga-6 overflow-y-auto">
+        <MasonrySection
+          id="newest_films"
+          class="content-item"
+          :present="filmsPresent"
+          :loading="filmLoading"
+          :dark-accent-color="darkAccentColors[0]"
+          :title="$t('pages.home.newest')"
+        >
+          <template #default>
+            <NewestFilmsMasonryWall
+              :latest-films="latestFilms"
+              :loading="filmLoading"
+              :sidebar="false"
+            />
+          </template>
+        </MasonrySection>
 
-      <MasonrySection
-        id="popular_actors"
-        :present="personsPresent"
-        :loading="personLoading"
-        :dark-accent-color="darkAccentColors[1]"
-        :title="$t('pages.home.popular_actors')"
-      >
+        <MasonrySection
+          id="popular_actors"
+          :present="personsPresent"
+          :loading="personLoading"
+          :dark-accent-color="darkAccentColors[1]"
+          :title="$t('pages.home.popular_actors')"
+        >
+          <template #default>
+            <PopularActorsMasonry
+              :popular-actors="popularActors"
+              :loading="personLoading"
+              :sidebar="false"
+            />
+          </template>
+        </MasonrySection>
+      </main>
+    </template>
+    <template v-else>
+      <EmptyPage>
         <template #default>
-          <PopularActorsMasonry
-            :popular-actors="popularActors"
-            :loading="personLoading"
-            :sidebar="false"
+          <v-empty-state
+            :headline="$t('empty_states.no_content')"
+            :title="$t('empty_states.no_content_notice')"
+            :action-text="$t('empty_states.actions.add_persons')"
+            icon="mdi-alert-circle"
+            @click:action="navigateTo('/persons/new')"
           />
         </template>
-      </MasonrySection>
-    </main>
+      </EmptyPage>
+    </template>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
-
+import EmptyPage from "~/components/Templates/EmptyPage.vue";
 import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
@@ -96,6 +111,8 @@ const fetchData = async (): Promise<void> => {
   }
   if (personsPresent.value) {
     await listPopularActors();
+  } else if (!filmsPresent.value && !personsPresent.value) {
+    navigateTo("/no-content");
   }
 };
 

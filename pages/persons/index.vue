@@ -14,13 +14,22 @@
     @update:search-options="updateSpecialtySort($event.value)"
   >
     <template #sidebar>
-      <v-card class="pa-4" :title="$t('pages.home.popular_actors')">
-        <PopularActorsMasonry
+   
+        <v-card
+          variant="text"
+          height="100%"
+          class="pa-4 text-center"
+          :title="$t('pages.home.popular_actors')"
+        >
+          <PopularActorsMasonry
+             v-if="popularActors.length"
             :popular-actors="popularActors"
             :loading="loading"
             sidebar
           />
-      </v-card>
+          <v-label v-else class="mt-12"> {{ $t("empty_states.title") }}</v-label>
+        </v-card>
+  
     </template>
     <template #filters>
       <Filters
@@ -35,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import ListPage from "~/components/Misc/ListPage.vue";
+import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import { usePersonStore } from "~/stores/personStore";

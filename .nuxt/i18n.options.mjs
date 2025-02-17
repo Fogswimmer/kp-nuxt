@@ -2,10 +2,16 @@
 // @ts-nocheck
 
 
-export const localeCodes =  []
+export const localeCodes =  [
+  "ru",
+  "en",
+  "fr"
+]
 
 export const localeLoaders = {
-
+  "ru": [],
+  "en": [],
+  "fr": []
 }
 
 export const vueI18nConfigs = [
@@ -40,8 +46,21 @@ export const nuxtI18nOptions = {
     "globalSFCScope": false
   },
   "vueI18n": "./i18n.config.ts",
-  "locales": [],
-  "defaultLocale": "",
+  "locales": [
+    {
+      "code": "ru",
+      "iso": "ru-RU"
+    },
+    {
+      "code": "en",
+      "iso": "en-US"
+    },
+    {
+      "code": "fr",
+      "iso": "fr-FR"
+    }
+  ],
+  "defaultLocale": "ru",
   "defaultDirection": "ltr",
   "routesNameSeparator": "___",
   "trailingSlash": false,
@@ -60,7 +79,7 @@ export const nuxtI18nOptions = {
     "useCookie": true
   },
   "differentDomains": false,
-  "baseUrl": "",
+  "baseUrl": "https://nebelschwimmer.site/",
   "customRoutes": "page",
   "pages": {},
   "skipSettingLocaleOnNavigate": false,
@@ -71,7 +90,23 @@ export const nuxtI18nOptions = {
   "i18nModules": []
 }
 
-export const normalizedLocales = []
+export const normalizedLocales = [
+  {
+    "code": "ru",
+    "iso": "ru-RU",
+    "files": []
+  },
+  {
+    "code": "en",
+    "iso": "en-US",
+    "files": []
+  },
+  {
+    "code": "fr",
+    "iso": "fr-FR",
+    "files": []
+  }
+]
 
 export const NUXT_I18N_MODULE_ID = "@nuxtjs/i18n"
 export const parallelPlugin = false

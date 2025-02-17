@@ -4,15 +4,10 @@
       <v-navigation-drawer
         v-if="$vuetify.display.mdAndUp"
         location="start"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
+        floating
       />
       <v-navigation-drawer
         v-if="$vuetify.display.mdAndUp"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
         order="0"
         location="end"
         color="transparent"
@@ -28,7 +23,7 @@
             :href="`/persons/${person?.id}#${link.value}`"
             @click="activeSection = link.value"
           />
-          <NotAuthWarning v-if="!isAuthenticated" />
+         
         </v-list>
         <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
       </v-navigation-drawer>
@@ -43,7 +38,11 @@
       :subtitle="specialtyNames"
       :is-auth="isAuthenticated"
       :loading="loading"
+      :notification="!isAuthenticated"
     >
+    <template #notification>
+      <NotAuthWarning v-if="!isAuthenticated" />
+    </template>
       <template #menu>
         <v-menu location="bottom end">
           <template #activator="{ props }">
@@ -110,7 +109,6 @@
         <main v-scroll="onScroll">
           <v-expansion-panels
             v-model="mainAccordion"
-            bg-color="transparent"
             variant="accordion"
             multiple
           >
@@ -162,7 +160,7 @@
             >
               <v-expansion-panel-text>
                 <v-card
-                  v-if="person?.actedInFilms.length"
+                  v-if="person?.actedInFilms?.length"
                   :title="$t('pages.persons.featuredInFilms')"
                   prepend-icon="mdi-format-list-bulleted"
                   variant="elevated"
@@ -318,7 +316,7 @@ const showScrollFab = ref<boolean>(false);
 
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const mainAccordion = ref<string[]>(["bio", "gallery"]);
+const mainAccordion = ref<string[]>(["bio", "gallery", "filmography"]);
 const coverFile = ref<File>();
 const activeSection = ref<string | undefined>("bio");
 
@@ -506,6 +504,7 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "personDetails",
   path: "/persons/:id",
+  middleware: ["content-present"],
   key: (route) => route.fullPath,
 });
 </script>

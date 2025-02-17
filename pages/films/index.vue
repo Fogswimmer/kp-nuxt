@@ -6,7 +6,7 @@
     :total-pages="totalPages"
     :page="currentPage"
     :search-options="genresOptions"
-    :limit="limit !== 'all' ? (limit as number) : 15"
+    :limit="computedLimitProp"
     :list-title="$t('nav.films_list')"
     new-page-link="/films/new"
     @update:page="updateQueryParams"
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import ListPage from "~/components/Misc/ListPage.vue";
+import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import { useFilmStore } from "~/stores/filmStore";
@@ -119,6 +119,10 @@ const filmItems = computed((): Detail[] => {
       })
     : [];
 });
+
+const computedLimitProp = computed((): number => {
+  return typeof limit.value === "number" ? limit.value : 15;
+})
 
 /**
  * Updates query parameters when the page changes.

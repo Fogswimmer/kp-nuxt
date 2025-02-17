@@ -1,16 +1,18 @@
 <template>
-	<v-app id ="persons-empty">
-		<v-main>
-			<v-empty-state
-				:title="$t('empty_states.persons')"
-				icon="mdi-account-off"
-				:action-text="$t('empty_states.actions.add')"
-				@click:action="navigateTo('/persons/new')"/>
-		</v-main>
-	</v-app>
-	
+  <EmptyPage>
+    <template #default>
+      <v-empty-state
+        :title="$t('empty_states.persons')"
+        icon="mdi-account-off"
+        :action-text="$t('empty_states.actions.add')"
+        @click:action="navigateTo('/persons/new')"
+      />
+    </template>
+  </EmptyPage>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import EmptyPage from "~/components/Templates/EmptyPage.vue";
+</script>
 
 <style></style>
