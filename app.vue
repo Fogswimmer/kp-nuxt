@@ -1,7 +1,7 @@
 <template>
   <LoadingScreen v-if="isLoading" />
   <NuxtLayout>
-    <NuxtLoadingIndicator color="#2196f3" />
+    <NuxtLoadingIndicator color="rgb(255, 174, 0)" />
     <NuxtPage />
   </NuxtLayout>
 </template>
@@ -62,7 +62,7 @@ p {
 }
 
 .glassed {
-  background: rgba(0, 0, 0, 0.2) !important;
+  background: rgba(0, 0, 0, 0.3) !important;
   -webkit-backdrop-filter: blur(10px)  !important;
   backdrop-filter: blur(10px)  !important;
 }

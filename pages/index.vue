@@ -43,6 +43,7 @@
         </MasonrySection>
 
         <MasonrySection
+          v-if="popularActors.length > 0"
           id="popular_actors"
           :present="personsPresent"
           :loading="personLoading"
@@ -84,7 +85,6 @@ import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 
-// const theme = useTheme();
 const { t } = useI18n();
 const {
   loading: filmLoading,

@@ -6,6 +6,7 @@ export const usePersonStore = defineStore("persons", () => {
         currentPage: number;
         totalPages: number;
     }
+	const GALLERY_SIZE: number = 6;
 	const authStore = useAuthStore();
 	const persons = ref<IPerson[]>([]);
 	const person = ref<IPerson | null>(null);
@@ -36,7 +37,6 @@ export const usePersonStore = defineStore("persons", () => {
 	const personForm = ref<Partial<IPerson>>({
 		...defaultPersonValues,
 	});
-	const GALLERY_SIZE: number = 8;
 
 	const fetchFilteredPersons = async (
 		limit: number | string,

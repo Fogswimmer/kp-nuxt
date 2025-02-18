@@ -1,5 +1,5 @@
 <template>
-  <v-list nav subheader>
+  <v-list nav>
     <v-list-subheader> {{ $t("nav.title") }}</v-list-subheader>
     <v-divider />
     <v-list-item
@@ -65,14 +65,14 @@
         to="/persons/new"
       />
     </v-list-group>
-    
+
     <template v-if="$vuetify.display.smAndDown">
       <v-divider />
-      <v-list-subheader> {{ $t("nav.account") }}</v-list-subheader>
+      <!-- <v-list-subheader> {{ $t("nav.account") }}</v-list-subheader>
       <div class="ma-2"><ProfileNav /></div>
-      <v-divider />
+      <v-divider /> -->
       <v-list-subheader> {{ $t("nav.settings") }}</v-list-subheader>
-  
+
       <v-select
         v-model="locale"
         :label="$t('nav.language')"
@@ -81,33 +81,18 @@
         density="compact"
         @update:model-value="changeLanguage"
       />
-      <v-select
-        v-model="selectedTheme"
-        :label="$t('menu.theme.title')"
-        :items="themeOptions"
-        density="compact"
-        @update:model-value="toggleTheme"
-      />
     </template>
   </v-list>
 </template>
 
 <script lang="ts" setup>
-import ProfileNav from "./ProfileNav.vue";
-
-const { setLocale, locale, t } = useI18n();
+const { setLocale, locale } = useI18n();
 const route = useRoute();
 const activeRoute = computed((): string => route.path);
 
-enum Language {
-  RU = "ru",
-  EN = "en",
-  FR = "fr",
-}
-const changeLanguage = (lang: Language ) => {
+const changeLanguage = (lang: Language) => {
   setLocale(lang);
 };
-const selectedTheme = ref<string>("light");
 
 const languageOptions: { title: string; value: string; flag: string }[] = [
   {
@@ -126,20 +111,7 @@ const languageOptions: { title: string; value: string; flag: string }[] = [
     flag: "🇫🇷",
   },
 ];
-const theme = useTheme();
-const toggleTheme = (): void => {
-  theme.global.name.value = theme.global.current.value.dark ? "light" : "dark";
-};
-const themeOptions: { title: string; value: string }[] = [
-  {
-    title: t("menu.theme.dark"),
-    value: "dark",
-  },
-  {
-    title: t("menu.theme.light"),
-    value: "light",
-  },
-];
+
 </script>
 
 <style></style>

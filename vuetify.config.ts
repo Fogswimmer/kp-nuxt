@@ -13,9 +13,6 @@ export default defineVuetifyConfiguration({
     VCombobox: {
       variant: "filled",
     },
-    VNavigationDrawer: {
-      color: "transparent",
-    },
     VSheet: {
       class: "glassed",
       border: true,
@@ -34,9 +31,9 @@ export default defineVuetifyConfiguration({
       dark: {
         dark: true,
         colors: {
-          background: "#0C151C",
-          surface: "#16354D",
-          primary: "#6B99C3",
+          background: "rgb(12, 21, 28)",
+          surface: "rgb(24, 34, 41)",
+          primary: "rgb(255, 174, 0)",
         },
       },
     },

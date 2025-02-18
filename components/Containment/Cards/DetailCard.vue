@@ -1,10 +1,9 @@
 <template>
-  <v-sheet max-width="1000" class="mx-auto">
-    <template v-if="loading" #loader>
-      <v-progress-linear indeterminate color="primary" />
-    </template>
-   
-    <v-toolbar>
+  <div>
+    <v-app-bar order="1" scroll-behavior="fade-image" class="glassed">
+      <template #image>
+        <v-img gradient="to top right, rgba(0,0,0,.5), rgba(0,0,0,.5)" />
+      </template>
       <template #prepend>
         <v-app-bar-nav-icon
           v-if="drawer && $vuetify.display.smAndDown"
@@ -13,134 +12,123 @@
         <BackBtn v-else />
       </template>
       <v-app-bar-title>
-        <div class="d-flex ga-2">
-          <span class="font-weight-bold"> {{ pageName }} </span>
-          <span v-if="!displayAvatar" class="font-weight-bold">
-            {{ title }}</span
-          >
-        </div>
+        <span class="font-weight-bold"> {{ pageName }} </span>
       </v-app-bar-title>
-      <slot name="menu" />
-    </v-toolbar>
-    <template v-if="notification">
-      <slot name="notification" />
-    </template>
 
-    <v-card>
-      <template #image>
-      <v-parallax height="500" :src="cover" cover class="img-blur" gradient=""/>
-    </template>
-      <v-img :src="cover" cover height="250">
-        <template #placeholder>
-          <v-sheet height="250" width="100%" class="default-cover" />
-        </template>
-      </v-img>
-      <div v-if="displayAvatar" class="position-relative">
-        <v-sheet height="200" border color="red">
-          <div class="d-flex justify-center">
-            <div class="position-absolute text-center" style="top: -50%">
-              <div>
-                <v-avatar size="200" border>
-                  <v-img :src="avatar" :lazy-src="avatar" cover>
-                    <template #placeholder>
-                      <v-sheet height="100%">
-                        <div class="d-flex align-center justify-center h-100">
-                          <v-icon size="64" icon="mdi-account-off" />
-                        </div>
-                      </v-sheet>
-                    </template>
-                    <template #error>
-                      <v-sheet height="100%">
-                        <div class="d-flex align-center justify-center h-100">
-                          <v-icon color="error" icon="mdi-image-broken" />
-                        </div>
-                      </v-sheet>
-                    </template>
-                  </v-img>
-                </v-avatar>
-              </div>
-              <template v-if="!loading">
-                <span class="text-h6 text-lg-h4 font-weight-bold text-primary">
-                  {{ title }}</span
-                >
-                <div class="text-caption text-lg-subtitle-1">
-                  {{
-                    generalInfo?.map((item: Detail) => item.value).join(", ")
-                  }}
-                </div>
-                <div class="text-capitalize text-caption text-lg-subtitle-1">
-                  {{ subtitle }}
-                </div>
-              </template>
-              <template v-else>
-                <v-skeleton-loader
-                  class="stained-glass"
-                  type="list-item-three-line"
-                />
-              </template>
-            </div>
-          </div>
-        </v-sheet>
+      <slot name="menu" />
+    </v-app-bar>
+    <v-app-bar
+      v-if="notification"
+      :location="$vuetify.display.smAndDown ? 'top' : 'bottom'"
+      height="36"
+      order="2"
+    >
+      <div class="d-flex justify-center w-100">
+        <slot name="notification" location="start" />
       </div>
-      <slot name="text" />
+    </v-app-bar>
+
+    <v-navigation-drawer
+      v-if="$vuetify.display.mdAndUp"
+      location="start"
+      width="350"
+    >
+      <slot name="left-drawer" />
+    </v-navigation-drawer>
+    <v-navigation-drawer v-if="$vuetify.display.mdAndUp" location="end">
+      <slot name="right-drawer" />
+      <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
+    </v-navigation-drawer>
+
+    <v-card v-scroll="onScroll" class="mx-auto">
+      <template v-if="loading" #loader>
+        <v-progress-linear indeterminate color="primary" />
+      </template>
+      <v-card>
+        <template #image>
+          <v-parallax height="500" :src="cover" cover class="img-blur" />
+        </template>
+        <v-img v-if="cover" :src="cover" cover height="350">
+          <template #placeholder>
+            <v-sheet height="100%">
+              <div class="fill-height d-flex align-center justify-center">
+                <v-progress-circular indeterminate />
+              </div>
+            </v-sheet>
+          </template>
+        </v-img>
+        <div v-else class="default-cover" height="250" />
+        <slot name="general_info" />
+        <slot name="text" />
+      </v-card>
     </v-card>
-  </v-sheet>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
-defineEmits(["drawer:toggle"]);
+import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
+import scrollTop from "~/utils/scrollTop";
 
+defineEmits(["drawer:toggle"]);
 defineProps<{
-  title?: string;
   pageName?: string;
-  subtitle?: string;
+  title?: string;
   loading: boolean;
   cover?: string;
-  generalInfo?: Detail[];
-  avatar?: string;
-  displayAvatar?: boolean;
   drawer?: boolean;
   notification?: boolean;
 }>();
+
+const showScrollFab = ref<boolean>(false);
+
+const onScroll = () => {
+  const scrollPosition = window.scrollY;
+  showScrollFab.value = scrollPosition > 100;
+};
 </script>
 
 <style>
 .default-cover {
+  height: 250px;
+  width: 100%;
   background-image:
     linear-gradient(
-      302deg,
-      rgba(107, 70, 255, 0.5) 0%,
-      rgba(107, 70, 255, 0.5) 14.286%,
-      rgba(106, 86, 235, 0.5) 14.286%,
-      rgba(106, 86, 235, 0.5) 28.572%,
-      rgba(106, 102, 215, 0.5) 28.572%,
-      rgba(106, 102, 215, 0.5) 42.858%,
-      rgba(105, 118, 195, 0.5) 42.858%,
-      rgba(105, 118, 195, 0.5) 57.144%,
-      rgba(104, 134, 174, 0.5) 57.144%,
-      rgba(104, 134, 174, 0.5) 71.43%,
-      rgba(104, 150, 154, 0.5) 71.43%,
-      rgba(104, 150, 154, 0.5) 85.716%,
-      rgba(103, 166, 134, 0.5) 85.716%,
-      rgba(103, 166, 134, 0.5) 100.002%
+      306deg,
+      rgba(54, 54, 54, 0.05) 0%,
+      rgba(54, 54, 54, 0.05) 33.333%,
+      rgba(85, 85, 85, 0.05) 33.333%,
+      rgba(85, 85, 85, 0.05) 66.666%,
+      rgba(255, 255, 255, 0.05) 66.666%,
+      rgba(255, 255, 255, 0.05) 99.999%
     ),
     linear-gradient(
-      323deg,
-      rgb(14, 186, 116) 0%,
-      rgb(14, 186, 116) 14.286%,
-      rgb(15, 160, 133) 14.286%,
-      rgb(15, 160, 133) 28.572%,
-      rgb(16, 133, 151) 28.572%,
-      rgb(16, 133, 151) 42.858%,
-      rgb(17, 107, 168) 42.858%,
-      rgb(17, 107, 168) 57.144%,
-      rgb(18, 80, 185) 57.144%,
-      rgb(18, 80, 185) 71.43%,
-      rgb(19, 54, 203) 71.43%,
-      rgb(19, 54, 203) 85.716%,
-      rgb(20, 27, 220) 85.716%,
-      rgb(20, 27, 220) 100.002%
-    );
+      353deg,
+      rgba(81, 81, 81, 0.05) 0%,
+      rgba(81, 81, 81, 0.05) 33.333%,
+      rgba(238, 238, 238, 0.05) 33.333%,
+      rgba(238, 238, 238, 0.05) 66.666%,
+      rgba(32, 32, 32, 0.05) 66.666%,
+      rgba(32, 32, 32, 0.05) 99.999%
+    ),
+    linear-gradient(
+      140deg,
+      rgba(192, 192, 192, 0.05) 0%,
+      rgba(192, 192, 192, 0.05) 33.333%,
+      rgba(109, 109, 109, 0.05) 33.333%,
+      rgba(109, 109, 109, 0.05) 66.666%,
+      rgba(30, 30, 30, 0.05) 66.666%,
+      rgba(30, 30, 30, 0.05) 99.999%
+    ),
+    linear-gradient(
+      189deg,
+      rgba(77, 77, 77, 0.05) 0%,
+      rgba(77, 77, 77, 0.05) 33.333%,
+      rgba(55, 55, 55, 0.05) 33.333%,
+      rgba(55, 55, 55, 0.05) 66.666%,
+      rgba(145, 145, 145, 0.05) 66.666%,
+      rgba(145, 145, 145, 0.05) 99.999%
+    ),
+    linear-gradient(90deg, rgb(63, 53, 21), rgba(3, 117, 211, 0.603));
 }
 </style>

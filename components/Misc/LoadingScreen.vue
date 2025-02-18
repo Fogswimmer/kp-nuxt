@@ -24,7 +24,7 @@
   width: 48px;
   height: 48px;
   border: 5px solid #5e5e5e17;
-  border-bottom-color: rgb(33, 150, 243);
+  border-bottom-color: rgb(255, 174, 0);
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;

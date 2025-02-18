@@ -1,46 +1,7 @@
 <template>
-  <v-app id="list-page">
-    <client-only>
-      <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp"
-        location="start"
-        order="0"
-        width="350"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
-      >
-        <slot name="sidebar" />
-      </v-navigation-drawer>
-      <v-navigation-drawer
-        v-model="showFilters"
-        order="1"
-        width="400"
-        location="end"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
-      >
-        <div class="pa-4">
-          <v-combobox
-            v-model="activeSearchOption"
-            v-model:search="needle"
-            :label="$t('actions.search')"
-            :items="searchOptions"
-            chips
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            variant="outlined"
-            density="comfortable"
-            @update:search="$emit('update:search', $event)"
-            @update:model-value="$emit('update:search-options', $event)"
-          />
-          <slot name="filters" />
-        </div>
-      </v-navigation-drawer>
-    </client-only>
-    <v-app-bar order="0">
-      <template v-if="$vuetify.display.mdAndUp" #prepend>
+  <div>
+    <v-app-bar order="1">
+      <template #prepend>
         <BackBtn />
       </template>
       <v-app-bar-title>
@@ -67,78 +28,83 @@
         </v-btn>
       </template>
     </v-app-bar>
-    <v-main>
-      <v-card :loading="loading">
-        <v-card-text>
-          <v-list
-            v-if="items.length > 0"
-            :class="
-              $vuetify.theme.global.current.dark
-                ? 'neutral-glass'
-                : 'light-glass'
-            "
-          >
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-              :to="item.to"
-              variant="tonal"
-              rounded="lg"
-              elevation="5"
-              class="my-4 ma-4"
-              lines="three"
-              :title="item.title"
-              :subtitle="item.value"
-              :value="item"
-            >
-              <template #prepend>
-                <v-avatar size="100">
-                  <v-img :src="item.avatar">
-                    <template #placeholder>
-                      <v-sheet height="100%">
-                        <div
-                          class="d-flex align-center justify-center fill-height"
-                        >
-                          <v-icon icon="mdi-image-off" />
-                        </div>
-                      </v-sheet>
-                    </template>
-                  </v-img>
-                </v-avatar>
-              </template>
-              <template #append>
-                <span> {{ item.createdAt }}</span>
-              </template>
-            </v-list-item>
-          </v-list>
-          <v-skeleton-loader
-            v-for="n in limit"
-            v-else-if="loading"
-            :key="n"
-            rounded="lg"
-            class="my-3 stained-glass"
-            type="list-item-avatar-three-line"
+    <client-only>
+      <v-navigation-drawer v-model="showFilters" order="1" location="end">
+        <div class="pa-4">
+          <v-combobox
+            v-model="activeSearchOption"
+            v-model:search="needle"
+            :label="$t('actions.search')"
+            :items="searchOptions"
+            chips
+            hide-details
+            prepend-inner-icon="mdi-magnify"
+            variant="outlined"
+            density="comfortable"
+            @update:search="$emit('update:search', $event)"
+            @update:model-value="$emit('update:search-options', $event)"
           />
-        </v-card-text>
+          <slot name="filters" />
+        </div>
+      </v-navigation-drawer>
+    </client-only>
 
-        <slot name="empty-state" />
-      </v-card>
-    </v-main>
-    <v-app-bar location="bottom">
+    <div>
+      <v-list v-if="items.length > 0">
+        <v-list-item
+          v-for="(item, i) in items"
+          :key="i"
+          :to="item.to"
+          rounded="lg"
+          elevation="5"
+          lines="two"
+          :title="item.title"
+          :subtitle="item.value"
+          :value="item"
+        >
+          <template #prepend>
+            <v-avatar size="100">
+              <v-img :src="item.avatar">
+                <template #placeholder>
+                  <v-sheet height="100%">
+                    <div class="d-flex align-center justify-center fill-height">
+                      <v-icon icon="mdi-image-off" />
+                    </div>
+                  </v-sheet>
+                </template>
+              </v-img>
+            </v-avatar>
+          </template>
+          <template v-if="$vuetify.display.mdAndUp" #append>
+            <v-chip variant="plain" density="compact">
+              {{ $t("general.created_at") + ": " + item.createdAt }}</v-chip
+            >
+          </template>
+        </v-list-item>
+      </v-list>
+      <v-skeleton-loader
+        v-for="n in limit"
+        v-else-if="loading"
+        :key="n"
+        rounded="lg"
+        class="my-3 stained-glass"
+        type="list-item-avatar-three-line"
+      />
+    </div>
+    <v-app-bar location="bottom" order="1">
       <v-footer class="d-flex justify-center">
-        <ClientOnly>
-          <v-pagination
-            v-model="currentPage"
-            :length="totalPages"
-            rounded="lg"
-            color="primary"
-            :total-visible="3"
-            @update:model-value="handlePageChange"
-          />
-        </ClientOnly>
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPages"
+          rounded="lg"
+          color="primary"
+          :total-visible="3"
+          @update:model-value="handlePageChange"
+        />
       </v-footer>
     </v-app-bar>
-  </v-app>
+    <slot name="empty-state" />
+  </div>
 </template>
 
 <script lang="ts" setup>

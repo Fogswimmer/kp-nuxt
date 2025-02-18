@@ -1,14 +1,7 @@
 <template>
   <div class="d-flex flex-column ga-2">
     <transition-group>
-      <v-card
-        v-if="!isAssessing"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
-        rounded="lg"
-        elevation="2"
-      >
+      <v-card v-if="!isAssessing" rounded="lg" elevation="2">
         <v-card-text>
           <div class="d-flex flex-column justify-center ga-1 align-center">
             <div class="d-flex ga-1 align-center">
@@ -21,6 +14,7 @@
             }}</v-label>
             <v-btn
               :disabled="!isAuthenticated"
+              color="secondary"
               @click="$emit('assession:enable')"
             >
               {{ $t("pages.films.assess") }}
@@ -40,23 +34,21 @@
         @submit="$emit('assession:submit')"
       />
     </v-scroll-y-transition>
-    <v-card
-      v-if="assessments.length > 0"
-      :class="
-        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-      "
-      rounded="lg"
-      elevation="2"
-    >
+    <v-card v-if="assessments.length > 0" rounded="lg" >
       <v-data-iterator
         :items="assessments"
         :page="page"
         :items-per-page="itemsPerPage"
       >
-        <template #header="{ page, pageCount, prevPage, nextPage }">
+        <template #header="{ page: currPage, pageCount, prevPage, nextPage }">
           <div class="d-flex justify-space-between align-center pa-2">
             <h4>{{ $t("pages.films.comments") }}</h4>
-            <v-btn class="me-8" variant="text" @click="seeAllOnClick">
+            <v-btn
+              class="me-8"
+              variant="text"
+              :disabled="assessments.length > itemsPerPage"
+              @click="seeAllOnClick"
+            >
               <span
                 class="text-decoration-underline text-none text-subtitle-2"
                 >{{ $t("general.see_all") }}</span
@@ -64,7 +56,7 @@
             </v-btn>
             <div class="d-inline-flex">
               <v-btn
-                :disabled="page === 1"
+                :disabled="currPage === 1"
                 class="me-2"
                 icon="mdi-arrow-left"
                 size="small"
@@ -74,7 +66,7 @@
               />
 
               <v-btn
-                :disabled="page === pageCount"
+                :disabled="currPage === pageCount"
                 icon="mdi-arrow-right"
                 size="small"
                 variant="plain"
@@ -114,9 +106,11 @@
                   <span>{{
                     item.raw.authorName ? item.raw.authorName : "Anonymous"
                   }}</span>
-                  <span class="text-caption text-disabled">{{
-                    dateFormatter(item.raw.createdAt)
-                  }}</span>
+                  <span
+                    v-if="$vuetify.display.mdAndUp"
+                    class="text-caption text-disabled"
+                    >{{ dateFormatter(item.raw.createdAt) }}</span
+                  >
                 </div>
               </template>
             </v-list-item>
@@ -156,7 +150,7 @@ const props = defineProps<{
   comment: string;
 }>();
 
-const itemsPerPage = ref(5);
+const itemsPerPage = ref<number>(5);
 
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;

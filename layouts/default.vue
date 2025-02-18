@@ -6,19 +6,11 @@
         v-model="drawer"
         order="1"
         :location="$vuetify.display.smAndDown ? 'end' : 'start'"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
       >
         <NavDrawerContent />
       </v-navigation-drawer>
     </client-only>
-    <v-app-bar
-      :class="
-        $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-      "
-      order="0"
-    >
+    <v-app-bar order="0">
       <v-app-bar-title>
         <Logo />
       </v-app-bar-title>
@@ -27,10 +19,10 @@
       </div>
 
       <v-spacer />
-      <template v-if="!$vuetify.display.smAndDown" #append>
+      <template  #append>
         <div class="d-flex ga-1 align-center">
           <ProfileNav />
-          <LanguageChangeBtn />
+          <LanguageChangeBtn/>
           <!-- <ToggleThemeBtn stacked /> -->
         </div>
       </template>
@@ -71,11 +63,11 @@ import { usePersonStore } from "~/stores/personStore";
 import ProfileNav from "~/components/Navigation/ProfileNav.vue";
 import NavDrawerContent from "~/components/Navigation/AppNavDrawerContent.vue";
 
-
 interface NetworkError {
   message: string;
 }
 
+const route = useRoute();
 const { networkError: filmNetworkError } = storeToRefs(useFilmStore()) as {
   networkError: Ref<NetworkError | null>;
 };
@@ -92,13 +84,12 @@ const checkBrowserHistory = () => {
     showBackBtn.value = true;
   }
 };
+
 watch([filmNetworkError, personNetworkError], () => {
   if (filmNetworkError.value || personNetworkError.value) {
     showErrorMessage.value = true;
   }
 });
-
-const route = useRoute();
 
 watch(
   () => route.path,
@@ -119,6 +110,4 @@ watch(
 // })
 </script>
 
-<style>
-
-</style>
+<style></style>

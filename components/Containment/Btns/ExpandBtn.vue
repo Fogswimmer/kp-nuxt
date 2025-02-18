@@ -1,10 +1,7 @@
 <template>
   <v-btn
-    variant="flat"
+    variant="plain"
     :prepend-icon="expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-    :class="
-      $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-    "
     @click="$emit('toggle:expanded')"
     >{{
       !expanded

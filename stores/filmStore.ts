@@ -6,7 +6,6 @@ export const useFilmStore = defineStore("films", () => {
         totalPages: number;
         currentPage: number;
     }
-	
 	const authStore = useAuthStore();
 	const film = ref<IFilm | null>(null);
 	const films = ref<IFilm[]>([]);
@@ -47,7 +46,7 @@ export const useFilmStore = defineStore("films", () => {
 		cover: "",
 	};
 	const filmForm = ref<Partial<IFilm>>({ ...defaultFilmValues });
-	const GALLERY_SIZE = 8;
+	const GALLERY_SIZE: number = 6;
 	const fetchFilteredFilms = async (
 		limit: number,
 		offset: number,

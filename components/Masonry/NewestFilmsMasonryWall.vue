@@ -14,6 +14,7 @@
               :model-value="item?.rating || 0"
               density="compact"
               size="small"
+              readonly
               active-color="yellow-darken-3"
             />
           </ClientOnly>
@@ -23,28 +24,18 @@
           <v-card
             v-if="!sidebar"
             :subtitle="$t('pages.films.description')"
-            variant="text"
-            class="ma-2"
+            variant="plain"
+            rounded="lg"
+            class="ma-2 glassed"
           >
-            <template #append>
-              <v-icon size="x-small">mdi-details</v-icon>
+            <template #prepend>
+              <v-icon size="x-small">mdi-text</v-icon>
             </template>
             <v-card-text>
               <div class="d-flex flex-column ga-1">
                 <v-list-item
                   :subtitle="item?.description"
-                  :lines="
-                    item?.description.length > 100
-                      ? expandedStates[index]
-                        ? false
-                        : 'three'
-                      : 'two'
-                  "
-                />
-                <ExpandBtn
-                  v-if="item?.description.length > 100"
-                  :expanded="expandedStates[index] || false"
-                  @click="handleExpandDescription(index)"
+                  lines="three"
                 />
               </div>
             </v-card-text>
@@ -57,16 +48,15 @@
               item.assessments.length +
               ')'
             "
-            variant="text"
+            rounded="lg"
+            variant="plain"
             class="ma-2"
           >
             <template #append>
               <v-icon size="x-small">mdi-comment-outline</v-icon>
             </template>
             <v-card-text v-if="item.assessments.length > 0">
-              <v-list
-                :nav="sidebar"
-              >
+              <v-list :nav="sidebar">
                 <v-list-item
                   v-for="(comment, i) in item.assessments.slice(0, 5)"
                   :key="i"
@@ -112,7 +102,6 @@
 
 <script lang="ts" setup>
 import MasonryCard from "./partials/MasonryCard.vue";
-import ExpandBtn from "~/components/Containment/Btns/ExpandBtn.vue";
 
 defineProps<{
   latestFilms: IFilm[];
@@ -120,11 +109,9 @@ defineProps<{
   sidebar?: boolean;
 }>();
 
-const expandedStates = ref<boolean[]>([]);
 
-const handleExpandDescription = (index: number): void => {
-  expandedStates.value[index] = !expandedStates.value[index];
-};
+
+
 </script>
 
 <style></style>

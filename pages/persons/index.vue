@@ -1,46 +1,40 @@
 <template>
-  <ListPage
-    v-if="personsPresent"
-    :items="personItems || []"
-    :loading="loading"
-    :total-pages="totalPages"
-    :search-options="searchOptions"
-    :page="currentPage"
-    :limit="limit !== 'all' ? (limit as number) : 15"
-    :list-title="$t('nav.persons')"
-    new-page-link="/persons/new"
-    @update:page="updateQueryParams"
-    @update:search="search = $event"
-    @update:search-options="updateSpecialtySort($event.value)"
-  >
-    <template #sidebar>
-   
-        <v-card
-          variant="text"
-          height="100%"
-          class="pa-4 text-center"
-          :title="$t('pages.home.popular_actors')"
-        >
-          <PopularActorsMasonry
-             v-if="popularActors.length"
-            :popular-actors="popularActors"
-            :loading="loading"
-            sidebar
-          />
-          <v-label v-else class="mt-12"> {{ $t("empty_states.title") }}</v-label>
-        </v-card>
-  
-    </template>
-    <template #filters>
-      <Filters
-        :sort-options="sortOptions"
-        @update:limit="limit = $event.value"
-        @update:order="order = $event.value"
-        @update:search="search = $event.value"
-        @update:sort="sortBy = $event.value"
+  <div>
+    <v-navigation-drawer location="start" width="400">
+      <PopularActorsMasonry
+        v-if="popularActors.length"
+        :popular-actors="popularActors"
+        :loading="loading"
+        sidebar
       />
-    </template>
-  </ListPage>
+      <v-label v-else class="mt-12"> {{ $t("empty_states.title") }}</v-label>
+    </v-navigation-drawer>
+    
+    <ListPage
+      v-if="personsPresent"
+      :items="personItems || []"
+      :loading="loading"
+      :total-pages="totalPages"
+      :search-options="searchOptions"
+      :page="currentPage"
+      :limit="limit !== 'all' ? (limit as number) : 15"
+      :list-title="$t('nav.persons')"
+      new-page-link="/persons/new"
+      @update:page="updateQueryParams"
+      @update:search="search = $event"
+      @update:search-options="updateSpecialtySort($event.value)"
+    >
+      <template #filters>
+        <Filters
+          :sort-options="sortOptions"
+          @update:limit="limit = $event.value"
+          @update:order="order = $event.value"
+          @update:search="search = $event.value"
+          @update:sort="sortBy = $event.value"
+        />
+      </template>
+    </ListPage>
+  </div>
 </template>
 
 <script lang="ts" setup>

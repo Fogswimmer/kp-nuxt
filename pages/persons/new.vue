@@ -51,7 +51,7 @@
           </v-stepper-window-item>
           <v-stepper-window-item value="2">
             <GalleryUploader
-              :upload-count="GALLERY_LIMIT"
+              :upload-count="GALLERY_SIZE"
               @files:upload="handlePhotoSubmit"
             />
           </v-stepper-window-item>
@@ -63,7 +63,7 @@
           </v-stepper-window-item>
           <v-stepper-window-item value="4">
             <GalleryUploader
-              :upload-count="GALLERY_LIMIT"
+              :upload-count="1"
               @files:upload="handleCoverSubmit"
             />
           </v-stepper-window-item>
@@ -82,7 +82,7 @@
     <v-snackbar v-model="showThirdStepSnackbar" color="success">
       {{ $t("toast.messages.success.edit") }}
     </v-snackbar>
-	<v-snackbar v-model="showThirdStepSnackbar" color="error">
+	<v-snackbar v-model="showErrorSnackbar" color="error">
       {{ $t("toast.messages.error.add") }}
     </v-snackbar>
   </div>
@@ -100,14 +100,13 @@ const step = ref<number>(0);
 const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
-const GALLERY_LIMIT: number = 8;
+const showErrorSnackbar = ref<boolean>(false);
+
 const { loading, personForm, genders, specialties, networkError } =
   storeToRefs(usePersonStore());
 const nextStep = () => {
-	console.log(networkError.value);
   if (!networkError.value) {
     step.value++;
-	console.log(step.value);
     switch (step.value) {
       case 1:
         showFirstStepSnackbar.value = true;
@@ -129,11 +128,15 @@ const {
   uploadPhotos,
   clearPersonForm,
   uploadCover,
+  GALLERY_SIZE
 } = usePersonStore();
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
   if (await addPerson()) {
     nextStep();
+  }
+  else if (networkError.value) {
+    showErrorSnackbar.value = true;
   }
 };
 
@@ -142,6 +145,9 @@ const handlePhotoSubmit = async (files: File[]): Promise<void> => {
   if (id) {
     await uploadPhotos(files, id || 0);
     nextStep();
+  }
+  else if (networkError.value) {
+    showErrorSnackbar.value = true;
   }
 };
 
@@ -156,7 +162,12 @@ const handleCoverSubmit = async (files: File[]): Promise<void> => {
   const coverFile = files[0];
   const id = personForm.value.id;
   await uploadCover(coverFile, id || 0);
-  navigateTo(`/persons/${personForm.value.id}`);
+  if (networkError.value) {
+    showErrorSnackbar.value = true;
+  }
+  else {
+    navigateTo(`/persons/${personForm.value.id}`);
+  }
 };
 
 const handleAvatarSubmit = async (index: number): Promise<void> => {
@@ -164,6 +175,9 @@ const handleAvatarSubmit = async (index: number): Promise<void> => {
     ? personForm.value?.photos[index - 1]
     : "";
   await editPerson();
+  if (networkError.value) {
+    showErrorSnackbar.value = true;
+  }
   nextStep();
 };
 

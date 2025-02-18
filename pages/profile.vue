@@ -2,12 +2,8 @@
   <div>
     <DetailCard
       display-avatar
-      :title="currentUser?.displayName"
-      :subtitle="computedLastLogin"
       :page-name="$t('pages.profile.title')"
-      :general-info="computedGeneralInfo"
       :cover="currentUser?.cover || ''"
-      :avatar="currentUser?.avatar || ''"
       :loading="loading"
       :is-auth="isAuthenticated"
     >
@@ -45,6 +41,15 @@
             />
           </v-list>
         </v-menu>
+      </template>
+      <template #general_info>
+        <TopInfo
+          :loading="loading"
+          :general-info="computedGeneralInfo"
+          :avatar="currentUser?.avatar || ''"
+          :title="currentUser?.displayName || ''"
+          :subtitle="computedLastLogin"
+        />
       </template>
     </DetailCard>
 
@@ -124,6 +129,7 @@ import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import UserForm from "~/components/Forms/UserForm.vue";
+import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 
 const { t, locale } = useI18n();
 const { currentUser, loading, userForm } = storeToRefs(useAuthStore());

@@ -1,22 +1,19 @@
 <template>
-  <v-sheet rounded="lg">
-    <div v-if="!editMode" class="text-body-1 overflow-auto pa-2">
-      <div v-if="text" class="d-flex flex-column justify-center">
-        <p
-          v-for="(paragraph, index) in computedTruncatedText.split('\n')"
-          :key="index"
-        >
+  <v-card rounded="lg" class="pa-2" >
+    <div v-if="!editMode" class="text-body-1 pa-2">
+      <div v-if="text" :class="['text-container', { expanded: !collapsed }]">
+        <p v-for="(paragraph, index) in text.split('\n')" :key="index">
           {{ paragraph || "" }}
         </p>
-        <div class="mt-2 text-center">
-          <ExpandBtn
-            v-if="text.length > 600"
-            :expanded="!collapsed"
-            @click="collapsed = !collapsed"
-          />
-        </div>
       </div>
       <v-skeleton-loader v-else type="text" />
+      <div class="mt-2 text-center">
+        <ExpandBtn
+          v-if="shouldShowExpandButton"
+          :expanded="!collapsed"
+          @click="collapsed = !collapsed"
+        />
+      </div>
     </div>
     <v-confirm-edit
       v-else
@@ -40,7 +37,7 @@
         </v-card>
       </template>
     </v-confirm-edit>
-  </v-sheet>
+  </v-card>
 </template>
 
 <script lang="ts" setup>
@@ -56,14 +53,31 @@ defineEmits(["sumbit:edit"]);
 const editModeText = ref<string>(props.text);
 const collapsed = ref<boolean>(true);
 
-const computedTruncatedText = computed(() => {
-  if (props.text.length > 600) {
-    return collapsed.value
-      ? `${props.text.slice(0, 600).trim().replace(" .", "")}...`
-      : props.text;
-  }
-  return props.text;
+const shouldShowExpandButton = computed((): boolean => {
+  const lineHeight = 1.4; 
+  const maxLines = 3; 
+  const maxHeight = lineHeight * maxLines; 
+  const textHeight = props.text.split("\n").length * lineHeight + 1; 
+
+  return textHeight > maxHeight;
 });
 </script>
 
-<style></style>
+<style sroped>
+.text-container {
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4em;
+  max-height: calc(1.4em * 6);
+}
+
+.expanded {
+  max-height: none;
+  line-clamp: unset;
+  -webkit-line-clamp: unset;
+}
+</style>

@@ -1,45 +1,5 @@
 <template>
   <div>
-    <client-only>
-      <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp"
-        v-model="showLeftDrawer"
-        location="start"
-        order="1"
-        width="350"
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
-      >
-        <FilmDrawerContent
-          :general-info="generalInfo"
-          :starring="starring"
-          :team="team"
-        />
-      </v-navigation-drawer>
-      <v-navigation-drawer
-        :class="
-          $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-        "
-        location="end"
-        order="1"
-      >
-        <v-list>
-          <v-list-item
-            v-for="(link, index) in pageContents"
-            :key="index"
-            :active="link.value === activeSection"
-            :title="link.title"
-            :value="link.value"
-            :prepend-icon="link.icon"
-            :href="`/films/${film?.id}#${link.value}`"
-            @click="activeSection = link.value"
-          />
-          <NotAuthWarning v-if="!isAuthenticated" />
-        </v-list>
-        <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
-      </v-navigation-drawer>
-    </client-only>
     <DetailCard
       :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
       :loading="loading"
@@ -47,8 +7,34 @@
       :cover="film?.cover || ''"
       :is-auth="isAuthenticated"
       left-drawer
+      :notification="!isAuthenticated"
       @drawer:toggle="showLeftDrawer = !showLeftDrawer"
     >
+      <template #left-drawer>
+        <FilmDrawerContent
+          :general-info="generalInfo"
+          :starring="starring"
+          :team="team"
+        />
+      </template>
+      <template #right-drawer>
+        <v-list rounded="lg">
+        <v-list-item
+          v-for="(link, index) in pageContents"
+          :key="index"
+          :active="link.value === activeSection"
+          :title="link.title"
+          :value="link.value"
+          :prepend-icon="link.icon"
+          :href="`/films/${film?.id}#${link.value}`"
+          nav
+          @click="activeSection = link.value"
+        />
+      </v-list>
+      </template>
+      <template #notification>
+        <NotAuthWarning v-if="!isAuthenticated" />
+      </template>
       <template #menu>
         <FilmDetailMenu
           :is-authenticated="isAuthenticated"
@@ -235,9 +221,9 @@ import FilmAssessments from "~/components/FilmSubComponents/FilmAssessments.vue"
 import FilmDrawerContent from "~/components/FilmSubComponents/FilmDrawerContent.vue";
 import FilmDetailMenu from "~/components/FilmSubComponents/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
-import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
+
 import watchScrolling from "~/utils/watchScrolling";
-import scrollTop from "~/utils/scrollTop";
+
 
 const GALLERY_CARD_HEIGHT: number = 200;
 
@@ -539,7 +525,6 @@ definePageMeta({
   name: "filmDetails",
   path: "/films/:id",
   middleware: ["content-present"],
-  key: (route) => route.fullPath,
 });
 </script>
 

@@ -1,18 +1,15 @@
 <template>
   <div>
-    <ClientOnly>
-      <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp"
-        location="start"
-        floating
-      />
-      <v-navigation-drawer
-        v-if="$vuetify.display.mdAndUp"
-        order="0"
-        location="end"
-        color="transparent"
-      >
-        <v-list nav>
+    <DetailCard
+      display-avatar
+      :page-name="$t('pages.persons.details')"
+      :cover="person?.cover || ''"
+      :is-auth="isAuthenticated"
+      :loading="loading"
+      :notification="!isAuthenticated"
+    >
+      <template #right-drawer>
+        <v-list nav class="ma-2">
           <v-list-item
             v-for="(link, index) in pageContents"
             :key="index"
@@ -21,28 +18,22 @@
             :value="link.value"
             :prepend-icon="link.icon"
             :href="`/persons/${person?.id}#${link.value}`"
-            @click="activeSection = link.value"
+            @click="handleContentClick(link.value as string)"
           />
-         
         </v-list>
-        <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
-      </v-navigation-drawer>
-    </ClientOnly>
-    <DetailCard
-      display-avatar
-      :title="personFullName"
-      :general-info="computedPersonDetails"
-      :page-name="$t('pages.persons.details')"
-      :avatar="person?.avatar || ''"
-      :cover="person?.cover || ''"
-      :subtitle="specialtyNames"
-      :is-auth="isAuthenticated"
-      :loading="loading"
-      :notification="!isAuthenticated"
-    >
-    <template #notification>
-      <NotAuthWarning v-if="!isAuthenticated" />
-    </template>
+      </template>
+      <template #general_info>
+        <TopInfo
+          :loading="loading"
+          :general-info="computedPersonDetails"
+          :avatar="person?.avatar || ''"
+          :title="personFullName"
+          :subtitle="specialtyNames"
+        />
+      </template>
+      <template #notification>
+        <NotAuthWarning v-if="!isAuthenticated" />
+      </template>
       <template #menu>
         <v-menu location="bottom end">
           <template #activator="{ props }">
@@ -106,113 +97,110 @@
       </template>
 
       <template #text>
-        <main v-scroll="onScroll">
-          <v-expansion-panels
-            v-model="mainAccordion"
-            variant="accordion"
-            multiple
+        <v-expansion-panels
+          v-model="mainAccordion"
+          variant="accordion"
+          multiple
+        >
+          <v-expansion-panel
+            id="bio"
+            value="bio"
+            class="content-item"
+            tag="section"
+            :title="$t('pages.persons.bio')"
           >
-            <v-expansion-panel
-              id="bio"
-              value="bio"
-              class="content-item"
-              tag="section"
-              :title="$t('pages.persons.bio')"
-            >
-              <v-expansion-panel-text>
-                <IndentedEditableText
-                  v-if="person?.bio"
-                  :edit-mode="bioEditMode"
-                  :messages="$t('pages.persons.edit_bio')"
-                  :text="person?.bio || ''"
-                  @sumbit:edit="submitBioEdit"
-                />
-                <div v-else class="w-100 text-center">
-                  <span>{{ $t("general.no_data") }}</span>
-                </div>
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-
-            <v-expansion-panel
-              id="gallery"
-              tag="section"
-              class="content-item"
-              value="gallery"
-              :title="$t('pages.persons.photos')"
-            >
-              <v-expansion-panel-text>
-                <GalleryViewer
-                  :slider-arr="sliderGalleryArr || []"
-                  :disabled="!isAuthenticated"
-                  :gallery="person?.photos || []"
-                  :entity-name="personFullName"
-                  :loading="loading"
-                  @editor:open="photoEditMode = true"
-                />
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            <v-expansion-panel
-              id="filmography"
-              tag="section"
-              value="filmography"
-              class="content-item"
-              :title="$t('pages.persons.filmography')"
-            >
-              <v-expansion-panel-text>
-                <v-card
-                  v-if="person?.actedInFilms?.length"
-                  :title="$t('pages.persons.featuredInFilms')"
-                  prepend-icon="mdi-format-list-bulleted"
-                  variant="elevated"
-                >
-                  <v-divider />
-                  <v-table>
-                    <thead>
-                      <tr>
-                        <th style="width: 20%">
-                          {{ $t("pages.films.release_year") }}
-                        </th>
-                        <th>
-                          {{ $t("pages.films.name") }}
-                        </th>
-                        <th>
-                          {{ $t("pages.persons.role") }}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="film in person?.actedInFilms" :key="film.id">
-                        <td>{{ film.releaseYear || $t("general.no_data") }}</td>
-                        <td>
-                          <nuxt-link
-                            :to="`/films/${film.id}`"
-                            class="text-accent"
-                          >
-                            {{ film.name }}</nuxt-link
-                          >
-                        </td>
-                        <td>
-                          {{
-                            film.roleNames
-                              ? film.roleNames.join(", ")
-                              : $t("general.no_data")
-                          }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </v-table>
-                </v-card>
-                <v-empty-state
-                  v-else
-                  :title="$t('empty_states.filmography')"
-                  icon="mdi-note-off"
-                  :action-text="$t('empty_states.actions.to_films')"
-                  @click:action="navigateTo('/films')"
-                />
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </main>
+            <v-expansion-panel-text>
+              <IndentedEditableText
+                v-if="person?.bio"
+                :edit-mode="bioEditMode"
+                :messages="$t('pages.persons.edit_bio')"
+                :text="person?.bio || ''"
+                @sumbit:edit="submitBioEdit"
+              />
+              <div v-else class="w-100 text-center">
+                <span>{{ $t("general.no_data") }}</span>
+              </div>
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+          <v-expansion-panel
+            id="filmography"
+            tag="section"
+            value="filmography"
+            class="content-item"
+            :title="$t('pages.persons.filmography')"
+          >
+            <v-expansion-panel-text>
+              <v-card
+                v-if="person?.actedInFilms?.length"
+                :title="$t('pages.persons.featuredInFilms')"
+                prepend-icon="mdi-format-list-bulleted"
+                variant="elevated"
+              >
+                <v-divider />
+                <v-table>
+                  <thead>
+                    <tr>
+                      <th style="width: 20%">
+                        {{ $t("pages.films.release_year") }}
+                      </th>
+                      <th>
+                        {{ $t("pages.films.name") }}
+                      </th>
+                      <th>
+                        {{ $t("pages.persons.role") }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="film in person?.actedInFilms" :key="film.id">
+                      <td>{{ film.releaseYear || $t("general.no_data") }}</td>
+                      <td>
+                        <nuxt-link
+                          :to="`/films/${film.id}`"
+                          class="text-accent"
+                        >
+                          {{ film.name }}</nuxt-link
+                        >
+                      </td>
+                      <td>
+                        {{
+                          film.roleNames
+                            ? film.roleNames.join(", ")
+                            : $t("general.no_data")
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </v-table>
+              </v-card>
+              <v-empty-state
+                v-else
+                :title="$t('empty_states.filmography')"
+                icon="mdi-note-off"
+                :action-text="$t('empty_states.actions.to_films')"
+                @click:action="navigateTo('/films')"
+              />
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+          <v-expansion-panel
+            id="gallery"
+            tag="section"
+            class="content-item"
+            value="gallery"
+            :title="$t('pages.persons.photos')"
+          >
+            <v-expansion-panel-text>
+              <GalleryViewer
+                :slider-arr="sliderGalleryArr || []"
+                :disabled="!isAuthenticated"
+                :gallery="person?.photos || []"
+                :entity-name="personFullName"
+                :loading="loading"
+                @editor:open="photoEditMode = true"
+              />
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </template>
     </DetailCard>
     <BaseDialog
@@ -291,7 +279,6 @@
 <script lang="ts" setup>
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
-import { usePersonStore } from "~/stores/personStore";
 import PersonForm from "~/components/Forms/PersonForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
@@ -299,10 +286,10 @@ import PersonGalleryEdit from "~/components/Gallery/PersonGalleryEdit.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
+import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
+
+import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
-import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
-import scrollTop from "~/utils/scrollTop";
-import watchScrolling from "~/utils/watchScrolling";
 
 const isFormValid = ref<boolean>(false);
 const showSnackbar = ref<boolean>(false);
@@ -312,13 +299,12 @@ const photoEditMode = ref<boolean>(false);
 const showCoverReplacementWarning = ref<boolean>(false);
 const generalInfoEdit = ref<boolean>(false);
 const bioEditMode = ref<boolean>(false);
-const showScrollFab = ref<boolean>(false);
 
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>(["bio", "gallery", "filmography"]);
 const coverFile = ref<File>();
-const activeSection = ref<string | undefined>("bio");
+const activeSection = ref<string | undefined>(mainAccordion.value[0]);
 
 const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());
 const { person, genders, specialties, personForm, loading } =
@@ -343,14 +329,14 @@ const pageContents: Partial<Detail>[] = [
     icon: "mdi-text",
   },
   {
-    title: t("pages.persons.photos"),
-    value: "photos",
-    icon: "mdi-image",
-  },
-  {
     title: t("pages.persons.filmography"),
     value: "filmography",
     icon: "mdi-format-list-bulleted",
+  },
+  {
+    title: t("pages.persons.photos"),
+    value: "gallery",
+    icon: "mdi-image",
   },
 ];
 
@@ -414,15 +400,11 @@ const specialtyNames = computed((): string => {
     : "";
 });
 
-const onScroll = () => {
-  watchScrolling("content-item", activeSection, showScrollFab);
-};
-
 const submitGeneralInfoEdit = async (): Promise<void> => {
   await editPerson();
   await fetchData();
   generalInfoEdit.value = false;
-  showSnackbar.value = true;
+  showSnackbar.value = !showSnackbar.value;
 };
 
 const submitBioEdit = async (text: string): Promise<void> => {
@@ -430,7 +412,7 @@ const submitBioEdit = async (text: string): Promise<void> => {
   await editPerson();
   await fetchData();
   bioEditMode.value = false;
-  showSnackbar.value = true;
+  showSnackbar.value = !showSnackbar.value;
 };
 
 const handleChangeAvatar = async (index: number): Promise<void> => {
@@ -438,7 +420,7 @@ const handleChangeAvatar = async (index: number): Promise<void> => {
   await editPerson();
   photoEditMode.value = false;
   await fetchData();
-  showSnackbar.value = true;
+  showSnackbar.value = !showSnackbar.value;
 };
 
 const chooseAvatar = (): void => {
@@ -452,7 +434,7 @@ const handlePhotosUpload = async (files: File[]): Promise<void> => {
   await uploadPhotos(files, personId);
   photoEditMode.value = false;
   await fetchData();
-  showSnackbar.value = true;
+  showSnackbar.value = !showSnackbar.value;
 };
 
 const handleCoverChange = async (files: File[]): Promise<void> => {
@@ -466,7 +448,7 @@ const handleCoverChange = async (files: File[]): Promise<void> => {
   await uploadCover(file, id || 0);
   await fetchData();
   photoEditMode.value = false;
-  showSnackbar.value = true;
+  showSnackbar.value = !showSnackbar.value;
 };
 
 const replaceCover = async (): Promise<void> => {
@@ -476,7 +458,7 @@ const replaceCover = async (): Promise<void> => {
   await uploadCover(file, id || 0);
   await fetchData();
   photoEditMode.value = false;
-  showSnackbar.value = true;
+  showSnackbar.value = !showSnackbar.value;
 };
 
 const handlePhotosDelete = async () => {};
@@ -497,6 +479,12 @@ const fetchData = async (): Promise<void> => {
   ]);
 };
 
+const handleContentClick = async (section: string): Promise<void> => {
+  await nextTick(() => {
+    activeSection.value = section;
+  });
+};
+
 onMounted(async (): Promise<void> => {
   await fetchData();
 });
@@ -505,7 +493,6 @@ definePageMeta({
   name: "personDetails",
   path: "/persons/:id",
   middleware: ["content-present"],
-  key: (route) => route.fullPath,
 });
 </script>
 

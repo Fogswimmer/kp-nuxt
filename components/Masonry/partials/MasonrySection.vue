@@ -12,9 +12,9 @@
       :style="
         $vuetify.theme.global.current.dark
           ? `background-image: radial-gradient(
-        circle at 50% 50%,
-        ${darkAccentColor},
-        transparent
+        ellipse at center center,
+        ${darkAccentColor} 5%,
+        transparent 70%
       ) !important;`
           : ''
       "

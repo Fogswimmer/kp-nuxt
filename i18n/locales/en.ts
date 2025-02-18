@@ -265,6 +265,7 @@ export default {
     general_info: "General info",
     detailed_info: "Detailed info",
     gallery: "Gallery",
+    common: "Common",
     home: {
       title: "Home",
       newest: "Newest",

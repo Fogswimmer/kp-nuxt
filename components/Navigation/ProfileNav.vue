@@ -11,8 +11,7 @@
     </v-btn>
 
     <v-list-item
-      v-else
-      link
+      v-if="$vuetify.display.mdAndUp"
       density="compact"
       rounded="lg"
       lines="one"
@@ -21,7 +20,7 @@
       to="/profile"
     >
       <template #prepend>
-        <v-avatar v-if="isAuthenticated" border>
+        <v-avatar v-if="isAuthenticated">
           <v-img
             v-if="currentUser?.avatar"
             :src="currentUser?.avatar || ''"
@@ -31,6 +30,14 @@
         </v-avatar>
       </template>
     </v-list-item>
+    <v-avatar v-else class="cursor-pointer">
+      <v-img
+        v-if="currentUser?.avatar"
+        :src="currentUser?.avatar || ''"
+        @click="navigateTo('/profile')"
+      />
+      <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
+    </v-avatar>
 
     <ConfirmDialog
       v-model="showConfirmDialog"
@@ -54,9 +61,15 @@ const handleSignOut = async (): Promise<void> => {
   showConfirmDialog.value = false;
 };
 
-onMounted(async (): Promise<void> => {
-  if (isAuthenticated.value) {
-    await fetchCurrentUser();
+watch(isAuthenticated, () => {
+  if (!isAuthenticated.value) {
+    fetchCurrentUser();
   }
 });
+
+// onMounted(async (): Promise<void> => {
+//   if (isAuthenticated.value) {
+//     await fetchCurrentUser();
+//   }
+// });
 </script>

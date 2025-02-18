@@ -51,7 +51,7 @@
         </v-stepper-window-item>
         <v-stepper-window-item value="2">
           <GalleryUploader
-            :upload-count="GALLERY_LIMIT"
+            :upload-count="GALLERY_SIZE"
             @files:upload="handleGallerySubmit"
           />
         </v-stepper-window-item>
@@ -77,7 +77,7 @@ import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.v
 const { personsPresent } = storeToRefs(usePersonStore());
 const { checkPersonsPresence } = usePersonStore();
 const step = ref(0);
-const GALLERY_LIMIT = 8;
+
 const { locale } = useI18n();
 const {
   genres,
@@ -97,6 +97,7 @@ const {
   uploadGallery,
   clearFilmForm,
   editFilm,
+  GALLERY_SIZE,
 } = useFilmStore();
 
 const fetchData = async (): Promise<void> => {
@@ -128,7 +129,8 @@ const handleGallerySubmit = async (files: File[]): Promise<void> => {
 const handleSetCover = async (id: number): Promise<void> => {
   filmForm.value.cover =
     (filmForm.value.gallery && filmForm.value?.gallery[id - 1]) || "";
-  const { locale } = useI18n();
+    console.log(filmForm.value.cover);
+
   await editFilm(locale.value);
   navigateTo(`/films/${filmForm.value.id}`);
 };
