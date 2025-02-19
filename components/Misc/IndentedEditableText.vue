@@ -2,7 +2,7 @@
   <v-card rounded="lg" class="pa-2" >
     <div v-if="!editMode" class="text-body-1 pa-2">
       <div v-if="text" :class="['text-container', { expanded: !collapsed }]">
-        <p v-for="(paragraph, index) in text.split('\n')" :key="index">
+        <p v-for="(paragraph, index) in text ? text?.split('\n') : []" :key="index">
           {{ paragraph || "" }}
         </p>
       </div>
@@ -57,7 +57,7 @@ const shouldShowExpandButton = computed((): boolean => {
   const lineHeight = 1.4; 
   const maxLines = 3; 
   const maxHeight = lineHeight * maxLines; 
-  const textHeight = props.text.split("\n").length * lineHeight + 1; 
+  const textHeight = props.text ? (props.text?.split("\n").length * lineHeight + 1) : 0; 
 
   return textHeight > maxHeight;
 });

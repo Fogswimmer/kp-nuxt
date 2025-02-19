@@ -13,11 +13,7 @@ export { defineFlatConfigs }
 
 export const options = resolveOptions({
   features: {
-  "standalone": true,
-  "stylistic": {
-    "indent": "tab",
-    "semi": true
-  }
+  "standalone": true
 },
   dirs: {
     pages: ["pages"],

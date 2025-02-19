@@ -118,18 +118,6 @@ export default defineNuxtConfig({
       },
     },
   },
-  eslint: {
-    checker: true,
-    config: {
-      stylistic: {
-        indent: "tab",
-        semi: true,
-      }, // <---
-    },
-  },
-  typescript: {
-    typeCheck: true,
-  },
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
 });
