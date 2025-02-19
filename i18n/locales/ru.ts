@@ -191,6 +191,8 @@ export default {
 		edit_cover: "Изменить обложку",
 		delete_cover: "Удалить обложку",
 		edit_avatar: "Изменить аватар",
+		set_avatar: "Установить как аватар",
+		set_cover: "Установить как обложку",
 	},
 	search: {
 		title: "Поиск",

@@ -13,15 +13,22 @@
           @click="openFullScreenModeOnClick(index)"
         >
           <template #image>
-            <BaseImg
-              v-if="img"
-              :img-src="img"
-              :img-options="galleryImgOptions"
-            />
+            <v-img v-if="img" :src="img" cover>
+              <template #placeholder>
+                <div class="d-flex align-center justify-center fill-height">
+                  <v-progress-circular indeterminate />
+                </div>
+              </template>
+              <template #error>
+                <div class="d-flex align-center justify-center fill-height">
+                  <v-icon color="error">mdi-image-broken</v-icon>
+                </div>
+              </template>
+            </v-img>
             <v-sheet
               v-else
               rounded="lg"
-              class="pa-2 cursor-pointer"
+              class="pa-2 cursor-pointer glassed"
               width="100%"
               height="100%"
             >
@@ -43,14 +50,15 @@
       :gallery-content="gallery"
       :name="entityName"
       :no-content-label="$t('pages.films.no_gallery')"
+      :with-avatar="withAvatar"
       @close="fullscreenMode = false"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
-import BaseImg from "~/components/Containment/Img/BaseImg.vue";
 import GalleryFullscreenViewer from "./GalleryFullscreenViewer.vue";
+
 const emit = defineEmits(["editor:open"]);
 const props = defineProps<{
   sliderArr: string[];
@@ -58,22 +66,14 @@ const props = defineProps<{
   entityName: string;
   loading: boolean;
   disabled?: boolean;
+  withAvatar: boolean;
 }>();
-const fullscreenMode = ref(false);
-const activeImg = ref(0);
-const galleryImgOptions = {
-  height: 400,
-  cover: true,
-  uploader: true,
-  placeholderOptions: {
-    displayIcon: true,
-  },
-} as ImgOptions;
+const fullscreenMode = ref<boolean>(false);
+const activeImg = ref<number>(0);
+const SLIDER_HEIGHT: number = 275;
+const CARD_WIDTH: number = 180;
 
-const SLIDER_HEIGHT = 275;
-const CARD_WIDTH = 180;
-
-const openFullScreenModeOnClick = (index: number) => {
+const openFullScreenModeOnClick = (index: number): void => {
   if (props.gallery[index]) {
     fullscreenMode.value = true;
     activeImg.value = index;

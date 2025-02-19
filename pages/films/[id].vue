@@ -1,5 +1,26 @@
 <template>
   <div>
+    <v-navigation-drawer location="end">
+      <v-list rounded="lg">
+        <v-list-item
+          v-for="(link, index) in pageContents"
+          :key="index"
+          :active="link.value === activeSection"
+          :title="link.title"
+          :value="link.value"
+          :prepend-icon="link.icon"
+          nav
+          @click="handleContentClick(link.value as string)"
+        />
+      </v-list>
+    </v-navigation-drawer>
+    <v-navigation-drawer location="start" width="400">
+      <FilmDrawerContent
+        :general-info="generalInfo"
+        :starring="starring"
+        :team="team"
+      />
+    </v-navigation-drawer>
     <DetailCard
       :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
       :loading="loading"
@@ -10,28 +31,6 @@
       :notification="!isAuthenticated"
       @drawer:toggle="showLeftDrawer = !showLeftDrawer"
     >
-      <template #left-drawer>
-        <FilmDrawerContent
-          :general-info="generalInfo"
-          :starring="starring"
-          :team="team"
-        />
-      </template>
-      <template #right-drawer>
-        <v-list rounded="lg">
-        <v-list-item
-          v-for="(link, index) in pageContents"
-          :key="index"
-          :active="link.value === activeSection"
-          :title="link.title"
-          :value="link.value"
-          :prepend-icon="link.icon"
-          :href="`/films/${film?.id}#${link.value}`"
-          nav
-          @click="activeSection = link.value"
-        />
-      </v-list>
-      </template>
       <template #notification>
         <NotAuthWarning v-if="!isAuthenticated" />
       </template>
@@ -46,12 +45,7 @@
         />
       </template>
       <template #text>
-        <main
-          v-scroll="onScroll"
-          :class="
-            $vuetify.theme.global.current.dark ? 'neutral-glass' : 'light-glass'
-          "
-        >
+        <main v-scroll="onScroll">
           <FilmDrawerContent
             v-if="$vuetify.display.smAndDown"
             :general-info="generalInfo"
@@ -78,6 +72,7 @@
                   :gallery="film?.gallery || []"
                   :entity-name="film?.name || ''"
                   :loading="loading"
+                  :with-avatar="false"
                   @editor:open="openGalleryEditor"
                 />
               </v-expansion-panel-text>
@@ -217,13 +212,11 @@ import FilmForm from "~/components/Forms/FilmForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
-import FilmAssessments from "~/components/FilmSubComponents/FilmAssessments.vue";
-import FilmDrawerContent from "~/components/FilmSubComponents/FilmDrawerContent.vue";
-import FilmDetailMenu from "~/components/FilmSubComponents/FilmDetailMenu.vue";
+import FilmAssessments from "~/components/FilmPartials/FilmAssessments.vue";
+import FilmDrawerContent from "~/components/FilmPartials/FilmDrawerContent.vue";
+import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
-
 import watchScrolling from "~/utils/watchScrolling";
-
 
 const GALLERY_CARD_HEIGHT: number = 200;
 
@@ -505,6 +498,11 @@ const submitDescriptionEdit = async (text: string) => {
   await editFilm(locale.value);
   await fetchData();
   editDescriptionMode.value = false;
+};
+
+const handleContentClick = (section: string): void => {
+  activeSection.value = section;
+  scrollOnContentItemClick(section, mainAccordion, activeSection);
 };
 
 watch(

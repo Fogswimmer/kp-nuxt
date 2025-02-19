@@ -10,35 +10,36 @@
       {{ $t("auth.sign_in") }}
     </v-btn>
 
-    <v-list-item
-      v-if="$vuetify.display.mdAndUp"
-      density="compact"
-      rounded="lg"
-      lines="one"
-      :title="currentUser?.displayName || currentUser?.username || ''"
-      :subtitle="currentUser?.email"
-      to="/profile"
-    >
-      <template #prepend>
-        <v-avatar v-if="isAuthenticated">
-          <v-img
-            v-if="currentUser?.avatar"
-            :src="currentUser?.avatar || ''"
-            @click="navigateTo('/profile')"
-          />
-          <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
-        </v-avatar>
-      </template>
-    </v-list-item>
-    <v-avatar v-else class="cursor-pointer">
-      <v-img
-        v-if="currentUser?.avatar"
-        :src="currentUser?.avatar || ''"
-        @click="navigateTo('/profile')"
-      />
-      <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
-    </v-avatar>
-
+    <template v-else>
+      <v-list-item
+        v-if="$vuetify.display.mdAndUp"
+        density="compact"
+        rounded="lg"
+        lines="one"
+        :title="currentUser?.displayName || currentUser?.username || ''"
+        :subtitle="currentUser?.email"
+        to="/profile"
+      >
+        <template #prepend>
+          <v-avatar v-if="isAuthenticated">
+            <v-img
+              v-if="currentUser?.avatar"
+              :src="currentUser?.avatar || ''"
+              @click="navigateTo('/profile')"
+            />
+            <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
+          </v-avatar>
+        </template>
+      </v-list-item>
+      <v-avatar v-else class="cursor-pointer">
+        <v-img
+          v-if="currentUser?.avatar"
+          :src="currentUser?.avatar || ''"
+          @click="navigateTo('/profile')"
+        />
+        <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
+      </v-avatar>
+    </template>
     <ConfirmDialog
       v-model="showConfirmDialog"
       :text="$t('auth.logout_confirm')"

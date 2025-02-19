@@ -34,7 +34,7 @@
         @submit="$emit('assession:submit')"
       />
     </v-scroll-y-transition>
-    <v-card v-if="assessments.length > 0" rounded="lg" >
+    <v-card v-if="assessments.length > 0" rounded="lg">
       <v-data-iterator
         :items="assessments"
         :page="page"

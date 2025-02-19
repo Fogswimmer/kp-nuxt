@@ -219,10 +219,10 @@ const computedGeneralInfo = computed((): Detail[] => {
     },
   ];
 });
+
 definePageMeta({
   title: "Profile",
   middleware: ["auth"],
-  key: (route) => route.fullPath,
 });
 </script>
 

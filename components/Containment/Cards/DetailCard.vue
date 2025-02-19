@@ -27,26 +27,17 @@
         <slot name="notification" location="start" />
       </div>
     </v-app-bar>
-
-    <v-navigation-drawer
-      v-if="$vuetify.display.mdAndUp"
-      location="start"
-      width="350"
-    >
-      <slot name="left-drawer" />
-    </v-navigation-drawer>
-    <v-navigation-drawer v-if="$vuetify.display.mdAndUp" location="end">
-      <slot name="right-drawer" />
-      <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
-    </v-navigation-drawer>
-
-    <v-card v-scroll="onScroll" class="mx-auto">
+    <v-card class="mx-auto">
       <template v-if="loading" #loader>
         <v-progress-linear indeterminate color="primary" />
       </template>
       <v-card>
         <template #image>
-          <v-parallax height="500" :src="cover" cover class="img-blur" />
+          <v-parallax height="500" :src="cover" cover class="img-blur">
+            <template #placeholder>
+              <div class="default-cover" height="500" />
+            </template>
+          </v-parallax>
         </template>
         <v-img v-if="cover" :src="cover" cover height="350">
           <template #placeholder>
@@ -67,8 +58,6 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
-import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
-import scrollTop from "~/utils/scrollTop";
 
 defineEmits(["drawer:toggle"]);
 defineProps<{
@@ -79,13 +68,6 @@ defineProps<{
   drawer?: boolean;
   notification?: boolean;
 }>();
-
-const showScrollFab = ref<boolean>(false);
-
-const onScroll = () => {
-  const scrollPosition = window.scrollY;
-  showScrollFab.value = scrollPosition > 100;
-};
 </script>
 
 <style>

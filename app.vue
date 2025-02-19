@@ -63,8 +63,8 @@ p {
 
 .glassed {
   background: rgba(0, 0, 0, 0.3) !important;
-  -webkit-backdrop-filter: blur(10px)  !important;
-  backdrop-filter: blur(10px)  !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  backdrop-filter: blur(10px) !important;
 }
 
 .bg-gradient {

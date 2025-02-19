@@ -17,11 +17,10 @@
               :title="link.title"
               :value="link.value"
               :prepend-icon="link.icon"
-              :href="`/#${link.value}`"
-              @click="activeSection = link.value"
+              @click="scrollToSectionOnClick(link.value as string)"
             />
           </v-list>
-          <ScrollTopBtn :show="showScrollFab" @scroll:top="scrollTop" />
+          <ScrollTopFab :show="showScrollFab" @scroll:top="scrollTop" />
         </v-navigation-drawer>
       </client-only>
       <main v-scroll="onScroll" class="d-flex flex-column ga-6 overflow-y-auto">
@@ -60,7 +59,7 @@
         </MasonrySection>
       </main>
     </template>
-    <template v-else>
+    <template v-else-if="!filmLoading && !personLoading">
       <EmptyPage>
         <template #default>
           <v-empty-state
@@ -80,7 +79,7 @@
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 import EmptyPage from "~/components/Templates/EmptyPage.vue";
-import ScrollTopBtn from "~/components/Containment/Btns/ScrollTopBtn.vue";
+import ScrollTopFab from "~/components/Containment/Btns/ScrollTopFab.vue";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
@@ -111,8 +110,6 @@ const fetchData = async (): Promise<void> => {
   }
   if (personsPresent.value) {
     await listPopularActors();
-  } else if (!filmsPresent.value && !personsPresent.value) {
-    navigateTo("/no-content");
   }
 };
 
@@ -136,6 +133,14 @@ const pageContents: Partial<Detail>[] = [
 const onScroll = async () => {
   watchScrolling("content-item", activeSection, showScrollFab);
 };
+
+const scrollToSectionOnClick = (section: string): void => {
+  const element = document.getElementById(section);
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+    activeSection.value = section;
+  }
+}
 
 onMounted(async (): Promise<void> => {
   await fetchData();

@@ -220,6 +220,8 @@ export default {
     edit_cover: "Modifier la couverture",
     delete_cover: "Supprimer la couverture",
     edit_avatar: "Modifier l'avatar",
+    set_avatar: "Mettre comme avatar",
+    set_cover: "Mettre comme couverture",
   },
   state: {
     all: "Toutes",

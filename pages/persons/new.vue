@@ -200,7 +200,6 @@ definePageMeta({
   name: "newPerson",
   path: "/persons/new",
   middleware: ["auth"],
-  key: (route) => route.fullPath,
 });
 </script>
 

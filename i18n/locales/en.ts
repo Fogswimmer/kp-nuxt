@@ -219,6 +219,8 @@ export default {
     edit_cover: "Edit cover",
     delete_cover: "Delete cover",
     edit_avatar: "Edit avatar",
+    set_avatar: "Set as avatar",
+    set_cover: "Set as cover",
   },
   state: {
     all: "All",

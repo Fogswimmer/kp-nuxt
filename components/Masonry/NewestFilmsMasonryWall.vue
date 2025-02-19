@@ -1,5 +1,5 @@
 <template>
-  <masonry-wall :items="latestFilms" :max-columns="2" :gap="32">
+  <masonry-wall :items="latestFilms" :gap="32">
     <template #default="{ item, index }">
       <MasonryCard
         :loading="loading"
@@ -33,14 +33,10 @@
             </template>
             <v-card-text>
               <div class="d-flex flex-column ga-1">
-                <v-list-item
-                  :subtitle="item?.description"
-                  lines="three"
-                />
+                <v-list-item :subtitle="item?.description" lines="three" />
               </div>
             </v-card-text>
           </v-card>
-
           <v-card
             :subtitle="
               $t('pages.films.last_comments') +
@@ -52,8 +48,8 @@
             variant="plain"
             class="ma-2"
           >
-            <template #append>
-              <v-icon size="x-small">mdi-comment-outline</v-icon>
+            <template #prepend>
+              <v-icon size="small">mdi-comment-outline</v-icon>
             </template>
             <v-card-text v-if="item.assessments.length > 0">
               <v-list :nav="sidebar">
@@ -108,10 +104,6 @@ defineProps<{
   loading: boolean;
   sidebar?: boolean;
 }>();
-
-
-
-
 </script>
 
 <style></style>

@@ -16,7 +16,7 @@
               class="my-2"
               :to="detail.to"
             >
-              <v-list-item-title :class="{ 'text-primary': detail.to }">
+              <v-list-item-title :class="{ 'text-secondary': detail.to }">
                 {{ detail.value || $t("general.no_data") }}
               </v-list-item-title>
             </v-list-item>
@@ -42,7 +42,7 @@
             :title="actor.value"
             :value="index"
             :to="actor.to"
-            base-color="primary"
+            base-color="secondary"
           >
             <template #prepend>
               <v-avatar>
@@ -68,7 +68,7 @@
             :prepend-icon="person.avatar || 'mdi-account'"
             :prepend-avatar="person.avatar"
             :to="person.to"
-            base-color="primary"
+            base-color="secondary"
           />
         </v-list>
       </v-expansion-panel-text>

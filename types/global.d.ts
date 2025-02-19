@@ -99,6 +99,7 @@ declare global {
     specialtyNames: string[];
     specialtyIds: number[];
     actedInFilms: Partial<IFilm>[];
+    directedFilms: Partial<IFilm>[];
     producedFilms: Partial<IFilm>[];
     writtenFilms: Partial<IFilm>[];
     bio: string;

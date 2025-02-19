@@ -1,34 +1,34 @@
-import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, useSession, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, readBody, getQuery as getQuery$1, getResponseStatusText } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/h3@1.15.0/node_modules/h3/dist/index.mjs';
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import { mkdirSync } from 'node:fs';
 import { Server } from 'node:http';
-import { mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parentPort, threadId } from 'node:worker_threads';
-import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/vue-bundle-renderer@2.1.1/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { stringify, uneval } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/devalue@5.1.1/node_modules/devalue/index.js';
-import destr from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/destr@2.0.3/node_modules/destr/dist/index.mjs';
-import { renderToString } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue/server-renderer/index.mjs';
-import { propsToString, renderSSRHead } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/@unhead+ssr@1.11.18/node_modules/@unhead/ssr/dist/index.mjs';
-import { createHooks } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
-import { createFetch as createFetch$1, Headers as Headers$1 } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/ofetch@1.4.1/node_modules/ofetch/dist/node.mjs';
-import { createCall, createFetch } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/unenv@1.10.0/node_modules/unenv/runtime/fetch/index.mjs';
-import { klona } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
-import defu, { defuFn, defu as defu$1 } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/defu@6.1.4/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/unstorage@1.14.4_db0@0.2.3_ioredis@5.5.0/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/unstorage@1.14.4_db0@0.2.3_ioredis@5.5.0/node_modules/unstorage/drivers/fs.mjs';
-import { toRouteMatcher, createRouter } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
-import { getContext } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/unctx@2.4.1/node_modules/unctx/dist/index.mjs';
+import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, useSession, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, readBody, getQuery as getQuery$1, getResponseStatusText } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/h3@1.15.0/node_modules/h3/dist/index.mjs';
+import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/vue-bundle-renderer@2.1.1/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { stringify, uneval } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/devalue@5.1.1/node_modules/devalue/index.js';
+import destr from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/destr@2.0.3/node_modules/destr/dist/index.mjs';
+import { renderToString } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue/server-renderer/index.mjs';
+import { propsToString, renderSSRHead } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/@unhead+ssr@1.11.19/node_modules/@unhead/ssr/dist/index.mjs';
+import { createServerHead as createServerHead$1, CapoPlugin } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unhead@1.11.19/node_modules/unhead/dist/index.mjs';
+import { klona } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/klona@2.0.6/node_modules/klona/dist/index.mjs';
+import defu, { defuFn, defu as defu$1 } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/defu@6.1.4/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/scule@1.3.0/node_modules/scule/dist/index.mjs';
+import { createHooks } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/hookable@5.5.3/node_modules/hookable/dist/index.mjs';
+import { createFetch as createFetch$1, Headers as Headers$1 } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/ofetch@1.4.1/node_modules/ofetch/dist/node.mjs';
+import { createCall, createFetch } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unenv@1.10.0/node_modules/unenv/runtime/fetch/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { consola } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/consola@3.4.0/node_modules/consola/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
-import { isVNode, unref, version } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue/index.mjs';
+import { consola } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/consola@3.4.0/node_modules/consola/dist/index.mjs';
+import { getContext } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unctx@2.4.1/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
+import { isVNode, unref, version } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue/index.mjs';
 import { fileURLToPath } from 'node:url';
-import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/ipx@2.1.0_db0@0.2.3_ioredis@5.5.0/node_modules/ipx/dist/index.mjs';
-import { isAbsolute } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/pathe@2.0.2/node_modules/pathe/dist/index.mjs';
-import { hash } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/ohash@1.1.4/node_modules/ohash/dist/index.mjs';
-import { createServerHead as createServerHead$1, CapoPlugin } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/unhead@1.11.18/node_modules/unhead/dist/index.mjs';
-import { defineHeadPlugin } from 'file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/node_modules/.pnpm/@unhead+shared@1.11.18/node_modules/@unhead/shared/dist/index.mjs';
+import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/ipx@2.1.0_db0@0.2.4_ioredis@5.5.0/node_modules/ipx/dist/index.mjs';
+import { isAbsolute } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
+import { hash } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/ohash@1.1.4/node_modules/ohash/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unstorage@1.14.4_db0@0.2.4_ioredis@5.5.0/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unstorage@1.14.4_db0@0.2.4_ioredis@5.5.0/node_modules/unstorage/drivers/fs.mjs';
+import { toRouteMatcher, createRouter } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
+import { defineHeadPlugin } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/@unhead+shared@1.11.19/node_modules/@unhead/shared/dist/index.mjs';
 
 const HASH_RE = /#/g;
 const AMPERSAND_RE = /&/g;
@@ -412,13 +412,13 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _smPkbaq80J = (function(nitro) {
+const _EXvQv57Lcs = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
-const rootDir = "/home/nebelschwimmer/Документы/Projects/kp-nuxt";
+const rootDir = "C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt";
 
 const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"hid":"description","name":"description","content":"Kinopoisk Lite"},{"hid":"og:title","name":"og:title","content":"Kinopoisk Lite"},{"hid":"og:description","name":"og:description","content":"Kinopoisk Lite"},{}],"link":[],"style":[],"script":[],"noscript":[],"title":"Kinopoisk Lite","charset":"utf-8","viewport":"width=device-width, initial-scale=1"};
 
@@ -437,7 +437,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _c8Dsyuw2Wf = (nitroApp) => {
+const _aHE2ZuIqW7 = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -506,7 +506,7 @@ function onConsoleLog(callback) {
   consola.wrapConsole();
 }
 
-const _g6VAsbqG8c = defineNitroPlugin((nitroApp) => {
+const _nWyLyEzBuX = defineNitroPlugin((nitroApp) => {
   if (process.env.NUXT_OAUTH_FACEBOOK_CLIENT_ID && process.env.NUXT_OAUTH_FACEBOOK_CLIENT_SECRET || process.env.NUXT_OAUTH_INSTAGRAM_CLIENT_ID && process.env.NUXT_OAUTH_INSTAGRAM_CLIENT_SECRET) {
     nitroApp.hooks.hook("render:html", (html) => {
       html.head.unshift(`
@@ -523,9 +523,9 @@ const _g6VAsbqG8c = defineNitroPlugin((nitroApp) => {
 });
 
 const plugins = [
-  _smPkbaq80J,
-_c8Dsyuw2Wf,
-_g6VAsbqG8c
+  _EXvQv57Lcs,
+_aHE2ZuIqW7,
+_nWyLyEzBuX
 ];
 
 const inlineAppConfig = {
@@ -602,7 +602,7 @@ const _inlineRuntimeConfig = {
   "public": {
     "apiBase": "https://nebelschwimmer.site/api",
     "i18n": {
-      "baseUrl": "https://nebelschwimmer.site",
+      "baseUrl": "https://nebelschwimmer.site/",
       "defaultLocale": "ru",
       "defaultDirection": "ltr",
       "strategy": "prefix_except_default",
@@ -651,7 +651,7 @@ const _inlineRuntimeConfig = {
   },
   "session": {
     "name": "nuxt-session",
-    "password": "883485f6e3c24b3cb3e153aeaafe3a05",
+    "password": "ffd1361722d548e3afc6440fc3043ef3",
     "cookie": {
       "sameSite": "lax"
     }
@@ -881,7 +881,7 @@ const _inlineRuntimeConfig = {
     "alias": {},
     "fs": {
       "dir": [
-        "/home/nebelschwimmer/Документы/Projects/kp-nuxt/public"
+        "C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/public"
       ]
     },
     "http": {
@@ -939,7 +939,7 @@ function defineNitroPlugin(def) {
   return def;
 }
 
-const serverAssets = [{"baseName":"server","dir":"/home/nebelschwimmer/Документы/Projects/kp-nuxt/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/server/assets"}];
 
 const assets = createStorage();
 
@@ -951,11 +951,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/nebelschwimmer/Документы/Projects/kp-nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/home/nebelschwimmer/Документы/Projects/kp-nuxt/server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/nebelschwimmer/Документы/Projects/kp-nuxt/.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/home/nebelschwimmer/Документы/Projects/kp-nuxt/.nuxt/cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/home/nebelschwimmer/Документы/Projects/kp-nuxt/.data/kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\server","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\.data\\kv","ignore":["**/node_modules/**","**/.git/**"]}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -1392,11 +1392,6 @@ function getRouteRulesForPath(path) {
   return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
 }
 
-getContext("nitro-app", {
-  asyncContext: false,
-  AsyncLocalStorage: void 0
-});
-
 const r=Object.create(null),i=e=>globalThis.process?.env||globalThis._importMeta_.env||globalThis.Deno?.env.toObject()||globalThis.__env__||(e?r:globalThis),s=new Proxy(r,{get(e,o){return i()[o]??r[o]},has(e,o){const E=i();return o in E||o in r},set(e,o,E){const b=i(true);return b[o]=E,true},deleteProperty(e,o){if(!o)return  false;const E=i(true);return delete E[o],true},ownKeys(){const e=i(true);return Object.keys(e)}}),t=typeof process<"u"&&process.env&&"development"||"",B=[["APPVEYOR"],["AWS_AMPLIFY","AWS_APP_ID",{ci:true}],["AZURE_PIPELINES","SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"],["AZURE_STATIC","INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN"],["APPCIRCLE","AC_APPCIRCLE"],["BAMBOO","bamboo_planKey"],["BITBUCKET","BITBUCKET_COMMIT"],["BITRISE","BITRISE_IO"],["BUDDY","BUDDY_WORKSPACE_ID"],["BUILDKITE"],["CIRCLE","CIRCLECI"],["CIRRUS","CIRRUS_CI"],["CLOUDFLARE_PAGES","CF_PAGES",{ci:true}],["CODEBUILD","CODEBUILD_BUILD_ARN"],["CODEFRESH","CF_BUILD_ID"],["DRONE"],["DRONE","DRONE_BUILD_EVENT"],["DSARI"],["GITHUB_ACTIONS"],["GITLAB","GITLAB_CI"],["GITLAB","CI_MERGE_REQUEST_ID"],["GOCD","GO_PIPELINE_LABEL"],["LAYERCI"],["HUDSON","HUDSON_URL"],["JENKINS","JENKINS_URL"],["MAGNUM"],["NETLIFY"],["NETLIFY","NETLIFY_LOCAL",{ci:false}],["NEVERCODE"],["RENDER"],["SAIL","SAILCI"],["SEMAPHORE"],["SCREWDRIVER"],["SHIPPABLE"],["SOLANO","TDDIUM"],["STRIDER"],["TEAMCITY","TEAMCITY_VERSION"],["TRAVIS"],["VERCEL","NOW_BUILDER"],["VERCEL","VERCEL",{ci:false}],["VERCEL","VERCEL_ENV",{ci:false}],["APPCENTER","APPCENTER_BUILD_ID"],["CODESANDBOX","CODESANDBOX_SSE",{ci:false}],["STACKBLITZ"],["STORMKIT"],["CLEAVR"],["ZEABUR"],["CODESPHERE","CODESPHERE_APP_ID",{ci:true}],["RAILWAY","RAILWAY_PROJECT_ID"],["RAILWAY","RAILWAY_SERVICE_ID"],["DENO-DEPLOY","DENO_DEPLOYMENT_ID"],["FIREBASE_APP_HOSTING","FIREBASE_APP_HOSTING",{ci:true}]];function p(){if(globalThis.process?.env)for(const e of B){const o=e[1]||e[0];if(globalThis.process?.env[o])return {name:e[0].toLowerCase(),...e[2]}}return globalThis.process?.env?.SHELL==="/bin/jsh"&&globalThis.process?.versions?.webcontainer?{name:"stackblitz",ci:false}:{name:"",ci:false}}const l=p(),d=l.name;function n(e){return e?e!=="false":false}const I=globalThis.process?.platform||"",T=n(s.CI)||l.ci!==false,R=n(globalThis.process?.stdout&&globalThis.process?.stdout.isTTY);n(s.DEBUG);const A=t==="test"||n(s.TEST);n(s.MINIMAL)||T||A||!R;const _=/^win/i.test(I);!n(s.NO_COLOR)&&(n(s.FORCE_COLOR)||(R||_)&&s.TERM!=="dumb"||T);const C=(globalThis.process?.versions?.node||"").replace(/^v/,"")||null;Number(C?.split(".")[0])||null;const y=globalThis.process||Object.create(null),c={versions:{}};new Proxy(y,{get(e,o){if(o==="env")return s;if(o in e)return e[o];if(o in c)return c[o]}});const L=globalThis.process?.release?.name==="node",a=!!globalThis.Bun||!!globalThis.process?.versions?.bun,D=!!globalThis.Deno,O=!!globalThis.fastly,S=!!globalThis.Netlify,N=!!globalThis.EdgeRuntime,P=globalThis.navigator?.userAgent==="Cloudflare-Workers",F=[[S,"netlify"],[N,"edge-light"],[P,"workerd"],[O,"fastly"],[D,"deno"],[a,"bun"],[L,"node"]];function G(){const e=F.find(o=>o[0]);if(e)return {name:e[1]}}const u=G();u?.name||"";
 
 const scheduledTasks = false;
@@ -1473,12 +1468,12 @@ function _useSession(event, config = {}) {
   return useSession(event, finalConfig);
 }
 
-const _CHa7pa = eventHandler(async (event) => {
+const _WYHmox = eventHandler(async (event) => {
   await clearUserSession(event);
   return { loggedOut: true };
 });
 
-const _5UTJZR = eventHandler(async (event) => {
+const _wU0nyU = eventHandler(async (event) => {
   const session = await getUserSession(event);
   if (Object.keys(session).length > 0) {
     await sessionHooks.callHookParallel("fetch", session, event);
@@ -1487,7 +1482,7 @@ const _5UTJZR = eventHandler(async (event) => {
   return data;
 });
 
-const _wUCPqF = lazyEventHandler(() => {
+const _uMFlFT = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : void 0;
   const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : void 0;
@@ -1505,14 +1500,14 @@ const _wUCPqF = lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler);
 });
 
-const _lazy_ZzUsvJ = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_M7WPK5 = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_ZzUsvJ, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_auth/session', handler: _CHa7pa, lazy: false, middleware: false, method: "delete" },
-  { route: '/api/_auth/session', handler: _5UTJZR, lazy: false, middleware: false, method: "get" },
-  { route: '/_ipx/**', handler: _wUCPqF, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_ZzUsvJ, lazy: true, middleware: false, method: undefined }
+  { route: '/__nuxt_error', handler: _lazy_M7WPK5, lazy: true, middleware: false, method: undefined },
+  { route: '/api/_auth/session', handler: _WYHmox, lazy: false, middleware: false, method: "delete" },
+  { route: '/api/_auth/session', handler: _wU0nyU, lazy: false, middleware: false, method: "get" },
+  { route: '/_ipx/**', handler: _uMFlFT, lazy: false, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_M7WPK5, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -1777,8 +1772,8 @@ const renderSSRHeadOptions = {"omitLineBreaks":false};
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;
-const getClientManifest = () => import('file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
-const getServerEntry = () => import('file:///home/nebelschwimmer/%D0%94%D0%BE%D0%BA%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/Projects/kp-nuxt/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
+const getClientManifest = () => import('file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/.nuxt/dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getServerEntry = () => import('file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/.nuxt/dist/server/server.mjs').then((r) => r.default || r);
 const getSSRStyles = lazyCachedFunction(() => Promise.resolve().then(function () { return styles$1; }).then((r) => r.default || r));
 const getSSRRenderer = lazyCachedFunction(async () => {
   const manifest = await getClientManifest();

@@ -12,7 +12,7 @@
       <template #activator="{ props }">
         <v-btn
           v-bind="props"
-		  :active="computedActiveNavBtn.films"
+          :active="computedActiveNavBtn.films"
           prepend-icon="mdi-filmstrip"
           append-icon="mdi-chevron-down"
         >
@@ -21,7 +21,7 @@
       </template>
       <v-list nav density="compact">
         <v-list-item
-		  :active="computedActiveNavBtn.films"
+          :active="computedActiveNavBtn.films"
           prepend-icon="mdi-list-box"
           :title="$t('nav.films_list')"
           to="/films"
@@ -35,7 +35,7 @@
             <v-list-item
               v-bind="props"
               :disabled="!currentUser"
-			  :active="$route.name === 'newFilm'"
+              :active="$route.name === 'newFilm'"
               prepend-icon="mdi-plus"
               :title="$t('nav.films_add')"
               to="/films/new"
@@ -49,7 +49,7 @@
       <template #activator="{ props }">
         <v-btn
           v-bind="props"
-		  :active="computedActiveNavBtn.persons"
+          :active="computedActiveNavBtn.persons"
           prepend-icon="mdi-account"
           append-icon="mdi-chevron-down"
         >
@@ -92,13 +92,11 @@ const { currentUser } = storeToRefs(useAuthStore());
 const computedActiveNavBtn = computed(() => {
   const route = useRoute();
   const routeName = route.name as string;
-  const routeNames = {
+  return {
     home: routeName.startsWith("home"),
     films: routeName.startsWith("films"),
     persons: routeName.startsWith("persons"),
   };
-
-  return routeNames;
 }) as ComputedRef<{ [key: string]: boolean }>;
 </script>
 

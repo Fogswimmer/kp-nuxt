@@ -110,6 +110,14 @@
             :title="$t('pages.persons.bio')"
           >
             <v-expansion-panel-text>
+              <div class="d-flex justify-end">
+                <v-btn
+                  icon="mdi-pencil"
+                  variant="tonal"
+                  :disabled="!isAuthenticated"
+                  @click="handleBioEdit"
+                />
+              </div>
               <IndentedEditableText
                 v-if="person?.bio"
                 :edit-mode="bioEditMode"
@@ -130,56 +138,7 @@
             :title="$t('pages.persons.filmography')"
           >
             <v-expansion-panel-text>
-              <v-card
-                v-if="person?.actedInFilms?.length"
-                :title="$t('pages.persons.featuredInFilms')"
-                prepend-icon="mdi-format-list-bulleted"
-                variant="elevated"
-              >
-                <v-divider />
-                <v-table>
-                  <thead>
-                    <tr>
-                      <th style="width: 20%">
-                        {{ $t("pages.films.release_year") }}
-                      </th>
-                      <th>
-                        {{ $t("pages.films.name") }}
-                      </th>
-                      <th>
-                        {{ $t("pages.persons.role") }}
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="film in person?.actedInFilms" :key="film.id">
-                      <td>{{ film.releaseYear || $t("general.no_data") }}</td>
-                      <td>
-                        <nuxt-link
-                          :to="`/films/${film.id}`"
-                          class="text-accent"
-                        >
-                          {{ film.name }}</nuxt-link
-                        >
-                      </td>
-                      <td>
-                        {{
-                          film.roleNames
-                            ? film.roleNames.join(", ")
-                            : $t("general.no_data")
-                        }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </v-table>
-              </v-card>
-              <v-empty-state
-                v-else
-                :title="$t('empty_states.filmography')"
-                icon="mdi-note-off"
-                :action-text="$t('empty_states.actions.to_films')"
-                @click:action="navigateTo('/films')"
-              />
+              <Filmography :person="person" />
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel
@@ -196,6 +155,7 @@
                 :gallery="person?.photos || []"
                 :entity-name="personFullName"
                 :loading="loading"
+                with-avatar
                 @editor:open="photoEditMode = true"
               />
             </v-expansion-panel-text>
@@ -287,7 +247,7 @@ import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
-
+import Filmography from "~/components/PersonPartials/Filmography.vue";
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
 
