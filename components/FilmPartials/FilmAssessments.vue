@@ -132,7 +132,8 @@
 </template>
 
 <script lang="ts" setup>
-import AssessmentForm from "../Forms/AssessmentForm.vue";
+import AssessmentForm from '../Forms/AssessmentForm.vue';
+
 const page = ref(1);
 defineEmits([
   "assession:submit",
