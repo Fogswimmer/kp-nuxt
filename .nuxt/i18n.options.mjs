@@ -65,7 +65,7 @@ export const nuxtI18nOptions = {
   "routesNameSeparator": "___",
   "trailingSlash": false,
   "defaultLocaleRouteNameSuffix": "default",
-  "strategy": "prefix_except_default",
+  "strategy": "prefix_and_default",
   "lazy": false,
   "langDir": "locales",
   "detectBrowserLanguage": {

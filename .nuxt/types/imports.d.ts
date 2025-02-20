@@ -90,7 +90,6 @@ declare global {
   const resolveComponent: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['resolveComponent']
   const scrollOnContentItemClick: typeof import('../../utils/scrollOnContentItemClick')['default']
   const scrollTop: typeof import('../../utils/scrollTop')['default']
-  const setInterval: typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/compat/interval')['setInterval']
   const setPageLayout: typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/router')['setPageLayout']
   const setResponseStatus: typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']
   const shallowReactive: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['shallowReactive']
@@ -140,6 +139,7 @@ declare global {
   const useModel: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['useModel']
   const useNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']
+  const useNuxtDevTools: typeof import('../../node_modules/.pnpm/@nuxt+devtools@1.7.0_rollup@4.34.8_vite@6.1.0_@types+node@22.13.4_jiti@2.4.2_sass-embed_c5df3ce2d6e998eb457384ab46a3a88e/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
   const usePersonStore: typeof import('../../stores/personStore')['usePersonStore']
   const usePinia: typeof import('../../node_modules/.pnpm/@pinia+nuxt@0.9.0_magicast@0.3.5_pinia@2.3.1_typescript@5.7.3_vue@3.5.13_typescript@5.7.3__/node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']
   const usePreviewMode: typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']
@@ -304,7 +304,6 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['resolveComponent']>
     readonly scrollOnContentItemClick: UnwrapRef<typeof import('../../utils/scrollOnContentItemClick')['default']>
     readonly scrollTop: UnwrapRef<typeof import('../../utils/scrollTop')['default']>
-    readonly setInterval: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/compat/interval')['setInterval']>
     readonly setPageLayout: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/router')['setPageLayout']>
     readonly setResponseStatus: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']>
     readonly shallowReactive: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['shallowReactive']>
@@ -354,6 +353,7 @@ declare module 'vue' {
     readonly useModel: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['useModel']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
+    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/.pnpm/@nuxt+devtools@1.7.0_rollup@4.34.8_vite@6.1.0_@types+node@22.13.4_jiti@2.4.2_sass-embed_c5df3ce2d6e998eb457384ab46a3a88e/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePersonStore: UnwrapRef<typeof import('../../stores/personStore')['usePersonStore']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/.pnpm/@pinia+nuxt@0.9.0_magicast@0.3.5_pinia@2.3.1_typescript@5.7.3_vue@3.5.13_typescript@5.7.3__/node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>

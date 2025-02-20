@@ -3,7 +3,6 @@ export { isVue2, isVue3 } from 'vue-demi';
 export { defineNuxtLink } from '#app/components/nuxt-link';
 export { useNuxtApp, tryUseNuxtApp, defineNuxtPlugin, definePayloadPlugin, useRuntimeConfig, defineAppConfig } from '#app/nuxt';
 export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callback';
-export { setInterval } from '#app/compat/interval';
 export { useAppConfig, updateAppConfig } from '#app/config';
 export { defineNuxtComponent } from '#app/composables/component';
 export { useAsyncData, useLazyAsyncData, useNuxtData, refreshNuxtData, clearNuxtData } from '#app/composables/asyncData';
@@ -45,4 +44,5 @@ export { defineStore, acceptHMRUpdate, usePinia, storeToRefs } from '../node_mod
 export { useImage } from '../node_modules/.pnpm/@nuxt+image@1.9.0_db0@0.2.4_ioredis@5.5.0_magicast@0.3.5/node_modules/@nuxt/image/dist/runtime/composables';
 export { useDate, useLocale, useDefaults, useDisplay, useLayout, useRtl, useTheme, useGoTo } from 'vuetify';
 export { useUserSession } from '../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/app/composables/session';
+export { useNuxtDevTools } from '../node_modules/.pnpm/@nuxt+devtools@1.7.0_rollup@4.34.8_vite@6.1.0_@types+node@22.13.4_jiti@2.4.2_sass-embed_c5df3ce2d6e998eb457384ab46a3a88e/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/pages/runtime/composables';

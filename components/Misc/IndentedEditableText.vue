@@ -1,5 +1,8 @@
 <template>
-  <v-card rounded="lg" class="pa-2" >
+  <v-card rounded="lg" class="pa-2" variant="text">
+    <template #image>
+      <v-img gradient="to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)"></v-img>
+    </template>
     <div v-if="!editMode" class="text-body-1 pa-2">
       <div v-if="text" :class="['text-container', { expanded: !collapsed }]">
         <p v-for="(paragraph, index) in text ? text?.split('\n') : []" :key="index">

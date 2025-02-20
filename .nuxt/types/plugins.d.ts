@@ -8,23 +8,29 @@ type InjectionType<A extends Plugin> = A extends {default: Plugin<infer T>} ? De
 type NuxtAppInjections = 
   InjectionType<typeof import("../../node_modules/.pnpm/@pinia+nuxt@0.9.0_magicast@0.3.5_pinia@2.3.1_typescript@5.7.3_vue@3.5.13_typescript@5.7.3__/node_modules/@pinia/nuxt/dist/runtime/payload-plugin.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/revive-payload.client.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/vuetify-nuxt-module@0.18.3_magicast@0.3.5_typescript@5.7.3_vite@6.1.0_@types+node@22.13_749cac4892c7389b79c02f2b62ee0a40/node_modules/vuetify-nuxt-module/dist/runtime/plugins/vuetify-i18n-date.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/vuetify-nuxt-module@0.18.3_magicast@0.3.5_typescript@5.7.3_vite@6.1.0_@types+node@22.13_749cac4892c7389b79c02f2b62ee0a40/node_modules/vuetify-nuxt-module/dist/runtime/plugins/vuetify-i18n.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/vuetify-nuxt-module@0.18.3_magicast@0.3.5_typescript@5.7.3_vite@6.1.0_@types+node@22.13_749cac4892c7389b79c02f2b62ee0a40/node_modules/vuetify-nuxt-module/dist/runtime/plugins/vuetify-icons.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/head/runtime/plugins/unhead.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/pages/runtime/plugins/router.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/app/plugins/session.server.js")> &
-  InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/payload.client.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/browser-devtools-timing.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/navigation-repaint.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/check-outdated-build.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/revive-payload.server.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/chunk-reload.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@pinia+nuxt@0.9.0_magicast@0.3.5_pinia@2.3.1_typescript@5.7.3_vue@3.5.13_typescript@5.7.3__/node_modules/@pinia/nuxt/dist/runtime/plugin.vue3.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/pages/runtime/plugins/prefetch.client.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/pages/runtime/plugins/check-if-page-unused.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/@nuxt+devtools@1.7.0_rollup@4.34.8_vite@6.1.0_@types+node@22.13.4_jiti@2.4.2_sass-embed_c5df3ce2d6e998eb457384ab46a3a88e/node_modules/@nuxt/devtools/dist/runtime/plugins/devtools.server.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/@nuxt+devtools@1.7.0_rollup@4.34.8_vite@6.1.0_@types+node@22.13.4_jiti@2.4.2_sass-embed_c5df3ce2d6e998eb457384ab46a3a88e/node_modules/@nuxt/devtools/dist/runtime/plugins/devtools.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/app/plugins/session.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/vuetify-nuxt-module@0.18.3_magicast@0.3.5_typescript@5.7.3_vite@6.1.0_@types+node@22.13_749cac4892c7389b79c02f2b62ee0a40/node_modules/vuetify-nuxt-module/dist/runtime/plugins/vuetify-no-client-hints.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.2.0_@vue+compiler-dom@3.5.13_eslint@9.20.1_jiti@2.4.2__magicast@0.3.5_ro_4b98a2cd7ce8855a61f0d5e88a1deb54/node_modules/@nuxtjs/i18n/dist/runtime/plugins/switch-locale-path-ssr.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.2.0_@vue+compiler-dom@3.5.13_eslint@9.20.1_jiti@2.4.2__magicast@0.3.5_ro_4b98a2cd7ce8855a61f0d5e88a1deb54/node_modules/@nuxtjs/i18n/dist/runtime/plugins/route-locale-detect.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.2.0_@vue+compiler-dom@3.5.13_eslint@9.20.1_jiti@2.4.2__magicast@0.3.5_ro_4b98a2cd7ce8855a61f0d5e88a1deb54/node_modules/@nuxtjs/i18n/dist/runtime/plugins/i18n.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/dev-server-logs.js")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.15.4_@parcel+watcher@2.5.1_@types+node@22.13.4_db0@0.2.4_eslint@9.20.1_jiti@2.4._73766d223bf0d851446b6d0574740b5c/node_modules/nuxt/dist/app/plugins/check-if-layout-used.js")> &
   InjectionType<typeof import("../../plugins/vue-masonry-wall")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.2.0_@vue+compiler-dom@3.5.13_eslint@9.20.1_jiti@2.4.2__magicast@0.3.5_ro_4b98a2cd7ce8855a61f0d5e88a1deb54/node_modules/@nuxtjs/i18n/dist/runtime/plugins/ssg-detect.js")>
 
@@ -32,7 +38,7 @@ declare module '#app' {
   interface NuxtApp extends NuxtAppInjections { }
 
   interface NuxtAppLiterals {
-    pluginName: 'nuxt:revive-payload:client' | 'vuetify:i18n:plugin' | 'vuetify:icons:plugin' | 'nuxt:head' | 'nuxt:router' | 'session-fetch-plugin' | 'nuxt:payload' | 'nuxt:revive-payload:server' | 'nuxt:chunk-reload' | 'pinia' | 'nuxt:global-components' | 'nuxt:prefetch' | 'i18n:plugin:switch-locale-path-ssr' | 'i18n:plugin:route-locale-detect' | 'i18n:plugin' | 'i18n:plugin:ssg-detect' | 'vuetify:nuxt:server:plugin' | 'vuetify:nuxt:client:plugin'
+    pluginName: 'nuxt:revive-payload:client' | 'vuetify:date-i18n:plugin' | 'vuetify:i18n:plugin' | 'vuetify:icons:plugin' | 'nuxt:head' | 'nuxt:router' | 'session-fetch-plugin' | 'nuxt:browser-devtools-timing' | 'nuxt:revive-payload:server' | 'nuxt:chunk-reload' | 'pinia' | 'nuxt:global-components' | 'nuxt:prefetch' | 'nuxt:checkIfPageUnused' | 'i18n:plugin:switch-locale-path-ssr' | 'i18n:plugin:route-locale-detect' | 'i18n:plugin' | 'nuxt:checkIfLayoutUsed' | 'i18n:plugin:ssg-detect' | 'vuetify:nuxt:server:plugin' | 'vuetify:nuxt:client:plugin'
   }
 }
 
