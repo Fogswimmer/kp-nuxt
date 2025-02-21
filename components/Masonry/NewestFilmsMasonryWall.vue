@@ -21,75 +21,48 @@
         </template>
 
         <template #default>
-          <v-card
-            v-if="!sidebar"
-            :subtitle="$t('pages.films.description')"
-            variant="plain"
-            rounded="lg"
-            class="ma-2 glassed"
+          <v-list-item
+            :subtitle="item?.description"
+            prepend-icon="mdi-text"
+            lines="three"
+          />
+          <v-list v-if="item.assessments.length > 0" :nav="sidebar">
+            <v-list-subheader>{{
+              $t("pages.films.last_comments")
+            }}</v-list-subheader>
+            <v-list-item
+              v-for="(comment, i) in item.assessments.slice(0, 5)"
+              :key="i"
+              :title="comment?.authorName ? comment?.authorName : 'Anonymous'"
+              :prepend-avatar="
+                comment?.authorAvatar ? comment?.authorAvatar : undefined
+              "
+              :subtitle="comment.comment"
+            >
+              <template #append>
+                <v-chip
+                  color="warning"
+                  density="compact"
+                  prepend-icon="mdi-star"
+                >
+                  {{ comment.rating }}
+                </v-chip>
+              </template>
+            </v-list-item>
+          </v-list>
+          <div
+            v-if="item.assessments.length > 2"
+            class="d-flex flex-column justify-center align-center"
           >
-            <template #prepend>
-              <v-icon size="x-small">mdi-text</v-icon>
-            </template>
-            <v-card-text>
-              <div class="d-flex flex-column ga-1">
-                <v-list-item :subtitle="item?.description" lines="three" />
-              </div>
-            </v-card-text>
-          </v-card>
-          <v-card
-            :subtitle="
-              $t('pages.films.last_comments') +
-              ' (' +
-              item.assessments.length +
-              ')'
-            "
-            rounded="lg"
-            variant="plain"
-            class="ma-2"
-          >
-            <template #prepend>
-              <v-icon size="small">mdi-comment-outline</v-icon>
-            </template>
-            <v-card-text v-if="item.assessments.length > 0">
-              <v-list :nav="sidebar">
-                <v-list-item
-                  v-for="(comment, i) in item.assessments.slice(0, 5)"
-                  :key="i"
-                  :title="
-                    comment?.authorName ? comment?.authorName : 'Anonymous'
-                  "
-                  :prepend-avatar="
-                    comment?.authorAvatar ? comment?.authorAvatar : undefined
-                  "
-                  :subtitle="comment.comment"
-                >
-                  <template #append>
-                    <v-chip
-                      color="warning"
-                      density="compact"
-                      prepend-icon="mdi-star"
-                    >
-                      {{ comment.rating }}
-                    </v-chip>
-                  </template>
-                </v-list-item>
-              </v-list>
-              <div
-                v-if="item.assessments.length > 2"
-                class="d-flex flex-column justify-center align-center"
-              >
-                <span class="text-h6 mb-2">...</span>
-                <v-btn
-                  prepend-icon="mdi-arrow-right"
-                  variant="plain"
-                  @click="navigateTo(`/films/${item?.id}`)"
-                >
-                  {{ $t("actions.to_page") }}</v-btn
-                >
-              </div>
-            </v-card-text>
-          </v-card>
+            <span class="text-h6 mb-2">...</span>
+            <v-btn
+              prepend-icon="mdi-arrow-right"
+              variant="plain"
+              @click="navigateTo(`/films/${item?.id}`)"
+            >
+              {{ $t("actions.to_page") }}</v-btn
+            >
+          </div>
         </template>
       </MasonryCard>
     </template>

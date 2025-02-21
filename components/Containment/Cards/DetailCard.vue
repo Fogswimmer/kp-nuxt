@@ -1,33 +1,19 @@
 <template>
   <div>
-    <v-app-bar order="1" scroll-behavior="fade-image" class="glassed">
-      <template #image>
-        <v-img gradient="to top right, rgba(0,0,0,.5), rgba(0,0,0,.5)" />
-      </template>
-      <template #prepend>
-        <v-app-bar-nav-icon
-          v-if="drawer && $vuetify.display.smAndDown"
-          @click="$emit('drawer:toggle')"
-        />
-        <BackBtn v-else />
-      </template>
-      <v-app-bar-title>
-        <span class="font-weight-bold"> {{ pageName }} </span>
-      </v-app-bar-title>
+    <v-card rounded="lg">
+      <v-toolbar order="1" scroll-behavior="fade-image" class="glassed">
+        <template #image>
+          <v-img gradient="to top right, rgba(0,0,0,.5), rgba(0,0,0,.5)" />
+        </template>
+        <template #prepend>
+          <BackBtn />
+        </template>
+        <v-toolbar-title>
+          <span class="font-weight-bold"> {{ pageName }} </span>
+        </v-toolbar-title>
 
-      <slot name="menu" />
-    </v-app-bar>
-    <v-app-bar
-      v-if="notification"
-      :location="$vuetify.display.smAndDown ? 'top' : 'bottom'"
-      height="36"
-      order="2"
-    >
-      <div class="d-flex justify-center w-100">
-        <slot name="notification" location="start" />
-      </div>
-    </v-app-bar>
-    <v-card class="mx-auto">
+        <slot name="menu" />
+      </v-toolbar>
       <template v-if="loading" #loader>
         <v-progress-linear indeterminate color="primary" />
       </template>
@@ -47,12 +33,29 @@
               </div>
             </v-sheet>
           </template>
+          <template #error>
+            <v-sheet height="100%">
+              <div class="d-flex align-center justify-center h-100">
+                <v-icon color="error" icon="mdi-image-broken" />
+              </div>
+            </v-sheet>
+          </template>
         </v-img>
         <div v-else class="default-cover" height="250" />
         <slot name="general_info" />
         <slot name="text" />
       </v-card>
     </v-card>
+    <v-app-bar
+      v-if="notification"
+      :location="$vuetify.display.smAndDown ? 'top' : 'bottom'"
+      height="36"
+      order="2"
+    >
+      <div class="d-flex justify-center w-100">
+        <slot name="notification" location="start" />
+      </div>
+    </v-app-bar>
   </div>
 </template>
 

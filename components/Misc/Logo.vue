@@ -1,12 +1,19 @@
 <template>
-  <nuxt-link to="/" class="d-flex align-center font-weight-bold text-lg-h5 ga-2 text-primary">
-    <v-icon  icon="mdi-movie" />
-    Kinopoisk Lite
-  </nuxt-link>
+  <v-list-item variant="flat">
+    <template  #prepend>
+      <v-icon>mdi-movie</v-icon>
+    </template>
+    <v-list-item-title
+      class="d-flex align-center font-weight-bold text-lg-h5 text-h6 ga-2 text-primary"
+    >
+      <nuxt-link to="/"> KP-Lite</nuxt-link>
+    </v-list-item-title>
+    <v-list-item-subtitle v-if="$vuetify.display.mdAndUp">
+      {{ $t("logo_description") }}
+    </v-list-item-subtitle>
+  </v-list-item>
 </template>
 
 <script lang="ts" setup></script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

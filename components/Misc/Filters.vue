@@ -81,7 +81,7 @@ const limitOptions = [
   { value: 5, title: "5" },
   { value: 10, title: "10" },
   { value: 15, title: "15" },
-  { value: "all", title: t("filters.sort.all") },
+  { value: 0, title: t("filters.sort.all") },
 ];
 const selectedLimit = ref(limitOptions[0]);
 const selectedSortOption = ref(props.sortOptions[0]);

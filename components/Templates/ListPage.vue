@@ -31,18 +31,15 @@
     <client-only>
       <v-navigation-drawer v-model="showFilters" order="1" location="end">
         <div class="pa-4">
-          <v-combobox
-            v-model="activeSearchOption"
-            v-model:search="needle"
+          <v-text-field
+            v-model="needle"
             :label="$t('actions.search')"
-            :items="searchOptions"
             chips
             hide-details
             prepend-inner-icon="mdi-magnify"
             variant="outlined"
             density="comfortable"
-            @update:search="$emit('update:search', $event)"
-            @update:model-value="$emit('update:search-options', $event)"
+            @update:model-value="$emit('update:search', $event)"
           />
           <slot name="filters" />
         </div>
@@ -50,7 +47,7 @@
     </client-only>
 
     <div>
-      <v-list v-if="items.length > 0">
+      <v-list v-if="items.length > 0 && !loading">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -84,7 +81,7 @@
       </v-list>
       <v-skeleton-loader
         v-for="n in limit"
-        v-else-if="loading"
+        v-else
         :key="n"
         rounded="lg"
         class="my-3 stained-glass"
@@ -115,9 +112,8 @@ const emit = defineEmits([
   "update:search",
   "delete:item",
   "update:search",
-  "update:search-options",
 ]);
-const props = defineProps<{
+defineProps<{
   items: Detail[];
   totalPages: number;
   loading: boolean;
@@ -126,21 +122,11 @@ const props = defineProps<{
   newPageLink: string;
   listTitle?: string;
   limit?: number;
-  searchOptions: { value: string | number; title: string }[];
 }>();
 
 const currentPage = ref<number>(1);
 const showFilters = ref<boolean>(false);
-const activeSearchOption = ref<{ value: string | number; title: string }>(
-  props.searchOptions[0]
-);
 const needle = ref<string>("");
-
-/**
- * Handles pagination page change by updating the component's internal state
- * and emitting "update:page" event to notify parent components.
- * @param {number} page The new page number to navigate to.
- */
 
 const handlePageChange = (page: number): void => {
   currentPage.value = page;

@@ -98,10 +98,7 @@ declare global {
     birthday: string | null;
     specialtyNames: string[];
     specialtyIds: number[];
-    actedInFilms: Partial<IFilm>[];
-    directedFilms: Partial<IFilm>[];
-    producedFilms: Partial<IFilm>[];
-    writtenFilms: Partial<IFilm>[];
+    filmWorks: FilmWork;
     bio: string;
     age: number;
     cover: string | null;
@@ -110,6 +107,15 @@ declare global {
     updatedAt: string | null;
     publisherData: FilmPerson;
   }
+
+  interface FilmWork {
+    actedInfilms: [IFilm]
+    directedFilms: [IFilm]
+    producedFilms: [IFilm]
+    composedFilms: [IFilm]
+  }
+
+
   interface IPersonForm {
     id: number | null;
     firstname: string;

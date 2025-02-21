@@ -14,7 +14,7 @@
         />
       </v-list>
     </v-navigation-drawer>
-    <v-navigation-drawer location="start" width="400">
+    <v-navigation-drawer location="start" width="300">
       <FilmDrawerContent
         :general-info="generalInfo"
         :starring="starring"
@@ -41,7 +41,7 @@
           @edit:general="handleGeneralInfoEdit"
           @edit:description="handleEditDescription"
           @edit:gallery="openGalleryEditor"
-          @delete:film="handleFilmDelete"
+          @delete:film="showConfirmDialog = true"
         />
       </template>
       <template #text>
@@ -250,6 +250,7 @@ const {
   writers,
   directors,
   loading,
+  // similarGenreFilms
 } = storeToRefs(useFilmStore());
 const {
   editFilm,
@@ -262,6 +263,7 @@ const {
   assessFilmById,
   deleteFilm,
   fetchSpecialists,
+  // fetchFilmsWithSimilarGenres,
   GALLERY_SIZE,
 } = useFilmStore();
 const { locale, t } = useI18n();
@@ -378,6 +380,7 @@ const fetchData = async (): Promise<void> => {
     fetchFilmById(filmId, locale.value),
     fetchFilmForm(filmId, locale.value),
     fetchSpecialists(),
+    // fetchFilmsWithSimilarGenres(filmId),
   ]);
 };
 
@@ -400,6 +403,7 @@ const uploadCount = computed(() => {
 });
 
 const handleFilmDelete = async () => {
+  showDeleteWarning.value = false;
   const filmId = Number(useRoute().params.id);
   await deleteFilm(filmId);
   navigateTo("/films");

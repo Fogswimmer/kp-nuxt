@@ -1,5 +1,5 @@
 <template>
-  <section :id="id" class="content-item">
+  <section class="content-item">
     <div class="pa-2 d-flex flex-column ga-2 mb-2">
       <h4 class="text-h4 text-center">{{ title }}</h4>
       <span class="section-divider" />
@@ -33,7 +33,6 @@
 
 <script lang="ts" setup>
 defineProps<{
-  id: string;
   present: boolean;
   loading: boolean;
   title: string;

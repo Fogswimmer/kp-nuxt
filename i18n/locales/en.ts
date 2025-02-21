@@ -1,6 +1,13 @@
 export default {
   welcome: "Welcome",
+  logo_description:"Cinemalovers hub",
+  page_descriptions:{
+    home: "Best films and actors of all time",
+    films_list: "Best films of all time",
+    persons_list: "Best actors, directors, producers, composers, writers of all time",
+  },
   general: {
+    img_replacement_warning: "The current image will be replaced. Continue?",
     see_all:"See all",
     about: "About project",
     total: "Total",
@@ -421,7 +428,6 @@ export default {
     },
     person: {
       title: "Persons",
-
       add: "Add person",
       edit: "Edit person",
       add_specialty: "Add specialty",
@@ -436,8 +442,11 @@ export default {
       producer: "Producer",
       writer: "Writer",
       bio: "Biography",
-      actedInFilms: "Acted in films",
+      featuredInFilms: "Featured in films",
       directed_films: "Directed films",
+      produced_films: "Produced films",
+      composed_films: "Composed music for films",
+      written_filmns: "Written scripts for films",
       no_films: "No films",
       photo: "Photo",
       no_photo: "No photo",

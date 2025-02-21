@@ -1,28 +1,39 @@
 <template>
   <div>
-    <v-navigation-drawer location="start" width="400">
-      <PopularActorsMasonry
-        v-if="popularActors.length"
-        :popular-actors="popularActors"
-        :loading="loading"
-        sidebar
+    <Head>
+      <Title>{{ $t("nav.persons") }}</Title>
+      <Meta
+        name="description"
+        :content="$t('page_descriptions.persons_list')"
       />
-      <v-label v-else class="mt-12"> {{ $t("empty_states.title") }}</v-label>
+    </Head>
+    <v-navigation-drawer location="start" width="400">
+      <v-card
+        :title="$t('pages.home.popular_actors')"
+        class="text-center pa-4"
+        variant="text"
+      >
+        <PopularActorsMasonry
+          v-if="popularActors.length"
+          :popular-actors="popularActors"
+          :loading="loading"
+          sidebar
+        />
+        <span v-else class="text-disabled">{{ $t("general.no_data") }}</span>
+      </v-card>
     </v-navigation-drawer>
-    
+
     <ListPage
       v-if="personsPresent"
       :items="personItems || []"
       :loading="loading"
       :total-pages="totalPages"
-      :search-options="searchOptions"
       :page="currentPage"
       :limit="limit !== 'all' ? (limit as number) : 15"
       :list-title="$t('nav.persons')"
       new-page-link="/persons/new"
       @update:page="updateQueryParams"
       @update:search="search = $event"
-      @update:search-options="updateSpecialtySort($event.value)"
     >
       <template #filters>
         <Filters
@@ -66,30 +77,6 @@ const sortBy = ref<string>("firstname");
 const order = ref<string>("asc");
 const specialtySort = ref<string>("all");
 
-const searchOptions = [
-  { value: "all", title: t("filters.sort.all") },
-  { value: "actor", title: t("filters.sort.persons.specialties.actors") },
-  {
-    value: "director",
-    title: t("filters.sort.persons.specialties.directors"),
-  },
-  {
-    value: "producer",
-    title: t("filters.sort.persons.specialties.producers"),
-  },
-  {
-    value: "writer",
-    title: t("filters.sort.persons.specialties.writers"),
-  },
-  {
-    value: "composer",
-    title: t("filters.sort.persons.specialties.composers"),
-  },
-];
-const selectedSpecialtySort = ref({
-  value: "all",
-  title: t("filters.sort.all"),
-});
 const sortOptions = [
   { value: "firstname", title: t("filters.sort.persons.firstname") },
   { value: "age", title: t("filters.sort.persons.age") },
@@ -138,14 +125,6 @@ const updateQueryParams = (page: number): void => {
   if (limit.value !== "all") {
     offset.value = (page - 1) * Number(limit.value);
   }
-};
-
-const updateSpecialtySort = (event: string) => {
-  console.log(event);
-  selectedSpecialtySort.value = searchOptions.find(
-    (option) => option.value === event
-  ) || { value: "all", title: t("filters.sort.all") };
-  specialtySort.value = selectedSpecialtySort.value.value;
 };
 
 watch(

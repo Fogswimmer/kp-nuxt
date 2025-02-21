@@ -1,6 +1,13 @@
 export default {
   welcome: "Bienvenue",
+  logo_description:"Centre des cinéphiles",
+  page_descriptions:{
+    home: "Les meilleurs films et acteurs de tous les temps",
+    films_list: "Les meilleurs films de tous les temps",
+    persons_list: "Les meilleurs acteurs, directeurs, producteurs, compositeurs, auteurs de tous les temps",
+  },
   general: {
+    img_replacement_warning: "L'image actuelle sera remplacée. Continuer?",
     about: "A propos du projet",
     see_all:"Voir tout",
     created_at: "Créé",
@@ -427,8 +434,11 @@ export default {
     director: "Directeur",
     producer: "Producteur",
     writer: "Auteur",
-    actedInFilms: "Acté aux films",
+    featuredInFilms: "Acté aux films",
     directed_films: "Réalisé les films",
+    produced_films: "Produit les films",
+    composed_films: "Composé la musique pour les films",
+    written_filmns: "Auteur des scénarios aux films",
     no_films: "Aucuns films",
     photo: "Photo",
     no_photo: "Aucune photo",

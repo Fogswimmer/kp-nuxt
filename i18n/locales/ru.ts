@@ -1,6 +1,13 @@
 export default {
 	welcome: "Добро пожаловать",
+	logo_description:"Для киноманов",
+	page_descriptions:{
+		home: "Лучшие фильмы и актеры всех времен",
+		films_list: "Лучшие фильмы всех времен",
+		persons_list: "Лучшие актеры, режиссеры, продюсеры, композиторы, авторы всех времен",
+	  },
 	general: {
+		img_replacement_warning: "Текущее изображение будет заменено. Продолжить?",
 		about: "О проекте",
 		see_all:"Показать все",
 		created_at: "Создано",
@@ -329,7 +336,10 @@ export default {
 			birthday: "День рождения",
 			specialties: "Специальности",
 			featuredInFilms: "Актерские работы",
-			directed_films: "Срежиссировал",
+			directed_films: "Режиссерские работы",
+			produced_films: "Продюсерские работы",
+			composed_films: "Композиторские работы",
+			written_filmns: "Сценаристские работы",
 			no_films: "Нет фильмов",
 			no_specialties: "Нет специальностей",
 			photos: "Галерея",

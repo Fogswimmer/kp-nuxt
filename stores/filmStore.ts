@@ -22,6 +22,7 @@ export const useFilmStore = defineStore("films", () => {
 	const writers = ref<Partial<IPerson>[]>([]);
 	const composers = ref<Partial<IPerson>[]>([]);
 	const filmsPresent = ref<boolean>(false);
+	const similarGenreFilms = ref<IFilm[]>([]);
 	const authHeaders = computed(() => {
 		return {
 			Authorization: `Bearer ${authStore.token}`,
@@ -77,6 +78,20 @@ export const useFilmStore = defineStore("films", () => {
 				`${baseUrl}/films/latest`
 			);
 			latestFilms.value = response?.items || [];
+		} catch (error: unknown) {
+			networkError.value = error;
+		} finally {
+			loading.value = false;
+		}
+	};
+
+	const fetchFilmsWithSimilarGenres = async (id: number): Promise<void> => {
+		try {
+			loading.value = true;
+			const response = await $fetch<IFilmListResponse>(
+				`${baseUrl}/films/similar-genres/${id}`
+			);
+			similarGenreFilms.value = response?.items || [];
 		} catch (error: unknown) {
 			networkError.value = error;
 		} finally {
@@ -287,6 +302,7 @@ export const useFilmStore = defineStore("films", () => {
 		latestFilms,
 		GALLERY_SIZE,
 		filmsPresent,
+		similarGenreFilms,
 		fetchFilteredFilms,
 		fetchGenres,
 		addFilm,
@@ -301,5 +317,6 @@ export const useFilmStore = defineStore("films", () => {
 		checkFilmsPresence,
 		deleteFilm,
 		fetchSpecialists,
+		fetchFilmsWithSimilarGenres
 	};
 });

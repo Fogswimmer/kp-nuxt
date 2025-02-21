@@ -1,13 +1,15 @@
 <template>
   <div>
     <v-btn
-      v-if="!isAuthenticated"
-      block
+      v-if="!isAuthenticated && $vuetify.display.mdAndUp"
       prepend-icon="mdi-login"
       variant="tonal"
       to="/auth/sign-in"
     >
       {{ $t("auth.sign_in") }}
+    </v-btn>
+    <v-btn v-else-if="!$vuetify.display.mdAndUp" icon to="/auth/sign-in">
+      <v-icon>mdi-login</v-icon>
     </v-btn>
 
     <template v-else>

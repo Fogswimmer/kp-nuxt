@@ -54,10 +54,16 @@
     </DetailCard>
 
     <ConfirmDialog
-      v-model="showWarning"
-      :text="$t('pages.profile.avatar_replace_warning')"
-      @cancel="showWarning = false"
+      v-model="showAvatarWarning"
+      :text="$t('general.img_replacement_warning')"
+      @cancel="showAvatarWarning = false"
       @confirm="replaceAvatar"
+    />
+    <ConfirmDialog
+      v-model="showCoverWarning"
+      :text="$t('general.img_replacement_warning')"
+      @cancel="showCoverWarning = false"
+      @confirm="replaceCover"
     />
     <BaseDialog
       v-model:opened="showAvatarUploadDialog"
@@ -110,12 +116,19 @@
       @close="editMode = false"
     >
       <template #text>
-        <UserForm
-          v-model="currentUser"
-          :is-new="false"
-          @avatar:edit="showAvatarUploadDialog = true"
-          @cancel="editMode = false"
-        />
+        <v-card>
+          <v-card-text>
+            <UserForm :is-new="false" @cancel="editMode = false" />
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              prepend-icon="mdi-check"
+              color="primary"
+              @click="submitEdit"
+              >{{ $t("actions.submit") }}</v-btn
+            >
+          </v-card-actions>
+        </v-card>
       </template>
       ></BaseDialog
     >
@@ -135,10 +148,12 @@ const { t, locale } = useI18n();
 const { currentUser, loading, userForm } = storeToRefs(useAuthStore());
 const showConfirmLogoutDialog = ref<boolean>(false);
 const showCoverChooseDialog = ref<boolean>(false);
-const showWarning = ref<boolean>(false);
+const showAvatarWarning = ref<boolean>(false);
+const showCoverWarning = ref<boolean>(false);
 const showAvatarUploadDialog = ref<boolean>(false);
 const editMode = ref<boolean>(false);
 const avatarFile = ref<File>();
+const coverFile = ref<File>();
 const computedLastLogin = computed((): string => {
   const lastLogin = new Date(
     currentUser.value?.lastLogin || 0
@@ -151,6 +166,7 @@ const {
   uploadAvatar,
   uploadCover,
   fetchCurrentUser,
+  editUser,
   isAuthenticated,
 } = useAuthStore();
 
@@ -163,14 +179,23 @@ const handleUploadCover = async (files: File[]) => {
   const file = files[0];
   const id = Number(currentUser.value?.id);
   if (file) {
-    await uploadCover(file, id || 0);
+    if (!currentUser.value?.cover) {
+      await uploadCover(file, id || 0);
+    } else {
+      showCoverReplacementWarning(file);
+    }
   }
   showCoverChooseDialog.value = false;
 };
 
-const showReplacementWarning = (file: File): void => {
-  showWarning.value = true;
+const showAvatarReplacementWarning = (file: File): void => {
+  showAvatarWarning.value = true;
   avatarFile.value = file;
+};
+
+const showCoverReplacementWarning = (file: File): void => {
+  showCoverWarning.value = true;
+  coverFile.value = file;
 };
 
 const handleUploadAvatar = async (files: File[]): Promise<void> => {
@@ -180,7 +205,7 @@ const handleUploadAvatar = async (files: File[]): Promise<void> => {
     if (!currentUser.value?.avatar) {
       await uploadAvatar(file, id || 0);
     } else {
-      showReplacementWarning(file);
+      showAvatarReplacementWarning(file);
     }
   }
   showAvatarUploadDialog.value = false;
@@ -191,11 +216,23 @@ const handleEdit = () => {
   userForm.value = { ...currentUser.value };
 };
 
+const submitEdit = async () => {
+  await editUser();
+  editMode.value = false;
+};
+
 const replaceAvatar = async () => {
   const id = Number(currentUser.value?.id);
   await uploadAvatar(avatarFile.value as File, id || 0);
   await fetchCurrentUser();
-  showWarning.value = false;
+  showAvatarWarning.value = false;
+};
+
+const replaceCover = async () => {
+  const id = Number(currentUser.value?.id);
+  await uploadCover(coverFile.value as File, id || 0);
+  await fetchCurrentUser();
+  showCoverWarning.value = false;
 };
 
 const computedGeneralInfo = computed((): Detail[] => {

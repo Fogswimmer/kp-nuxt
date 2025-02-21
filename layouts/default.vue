@@ -18,12 +18,11 @@
         <NavBtns />
       </div>
 
-      <v-spacer />
-      <template  #append>
+      <v-spacer v-if="$vuetify.display.mdAndUp"/>
+      <template #append>
         <div class="d-flex ga-1 align-center">
           <ProfileNav />
-          <LanguageChangeBtn/>
-          <!-- <ToggleThemeBtn stacked /> -->
+          <LanguageChangeBtn />
         </div>
       </template>
     </v-app-bar>
@@ -98,16 +97,6 @@ watch(
   }
 );
 
-// const i18nHead = useLocaleHead({
-//   addSeoAttributes: true
-// })
-// useHead({
-//   htmlAttrs: {
-//     lang: i18nHead.value.htmlAttrs!.lang
-//   },
-//   link: [...(i18nHead.value.link || [])],
-//   meta: [...(i18nHead.value.meta || [])]
-// })
 </script>
 
-<style></style>
+

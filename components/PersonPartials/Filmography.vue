@@ -1,14 +1,12 @@
 <template>
   <v-list nav>
-    <div>
+    <div v-for="(value, key, index) in person?.filmWorks" :key="index">
       <v-card
-        v-if="person?.actedInFilms?.length"
-        :title="t('pages.persons.featuredInFilms')"
+        v-if="value && value.length > 0"
         prepend-icon="mdi-format-list-bulleted"
-        variant="elevated"
+        :title="defineCardTitle(key)"
       >
         <v-divider />
-
         <v-table hover>
           <thead class="text-primary glassed">
             <tr>
@@ -18,83 +16,20 @@
               <th>
                 {{ $t("pages.films.name") }}
               </th>
-              <!-- <th>
-                  {{ $t("pages.persons.role") }}
-                </th> -->
             </tr>
           </thead>
           <tbody>
-            <tr v-for="film in person?.actedInFilms" :key="film.id">
-              <td>{{ film.releaseYear || $t("general.no_data") }}</td>
+            <tr v-for="(item, i) in value" :key="i">
+              <td>{{ item.releaseYear || $t("general.no_data") }}</td>
               <td>
-                <nuxt-link :to="`/films/${film.id}`" class="text-accent">
-                  {{ film.name }}</nuxt-link
+                <nuxt-link :to="`/films/${item?.id}`" class="text-accent">
+                  {{ item?.name }}</nuxt-link
                 >
               </td>
-              <!-- <td>
-                  {{
-                    film.roleNames ? film.roleNames.join(", ") : $t("general.no_data")
-                  }}
-                </td> -->
             </tr>
           </tbody>
         </v-table>
       </v-card>
-      <v-empty-state
-        v-else-if="!person?.specialtyIds.includes(1)"
-        :title="$t('empty_states.filmography')"
-        icon="mdi-note-off"
-        :action-text="$t('empty_states.actions.to_films')"
-        @click:action="navigateTo('/films')"
-      />
-    </div>
-    <div>
-      <v-card
-        v-if="person?.directedFilms?.length"
-        :title="t('pages.persons.directedFilms')"
-        prepend-icon="mdi-format-list-bulleted"
-        variant="elevated"
-      >
-        <v-divider />
-
-        <v-table hover>
-          <thead class="text-primary glassed">
-            <tr>
-              <th style="width: 20%">
-                {{ $t("pages.films.release_year") }}
-              </th>
-              <th>
-                {{ $t("pages.films.name") }}
-              </th>
-              <!-- <th>
-                  {{ $t("pages.persons.role") }}
-                </th> -->
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="film in person?.directedFilms" :key="film.id">
-              <td>{{ film.releaseYear || $t("general.no_data") }}</td>
-              <td>
-                <nuxt-link :to="`/films/${film.id}`" class="text-accent">
-                  {{ film.name }}</nuxt-link
-                >
-              </td>
-              <!-- <td>
-                  {{
-                    film.roleNames ? film.roleNames.join(", ") : $t("general.no_data")
-                  }}
-                </td> -->
-            </tr>
-          </tbody>
-        </v-table>
-      </v-card>
-      <v-empty-state
-        v-else-if="!person?.specialtyIds.includes(1)"
-        :title="$t('empty_states.filmography')"
-        icon="mdi-note-off"
-        :action-text="$t('empty_states.actions.to_films')"
-        @click:action="navigateTo('/films')"
-      />
     </div>
   </v-list>
 </template>
@@ -105,6 +40,25 @@ defineProps<{
 }>();
 
 const { t } = useI18n();
+
+const defineCardTitle = (key: string) => {
+  switch (key) {
+    case "actedInFilms":
+      return t("pages.persons.featuredInFilms");
+    case "directedFilms":
+      return t("pages.persons.directed_films");
+    case "writtenFilms":
+      return t("pages.persons.written_films");
+    case "actedFilms":
+      return t("pages.persons.acted_films");
+    case "producedFilms":
+      return t("pages.persons.produced_films");
+    case "composedFilms":
+      return t("pages.persons.composed_films");
+    default:
+      return key;
+  }
+};
 </script>
 
 <style></style>

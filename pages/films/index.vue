@@ -1,36 +1,49 @@
 <template>
-  <ListPage
-    v-if="filmsPresent"
-    :items="filmItems || []"
-    :loading="loading"
-    :total-pages="totalPages"
-    :page="currentPage"
-    :search-options="genresOptions"
-    :limit="computedLimitProp"
-    :list-title="$t('nav.films_list')"
-    new-page-link="/films/new"
-    @update:page="updateQueryParams"
-    @update:search="search = $event"
-  >
-    <template #sidebar>
-      <v-card class="pa-4" :title="$t('pages.home.newest')">
-        <NewestFilmsMasonryWall
-          :latest-films="latestFilms"
-          :loading="loading"
-          sidebar
+  <div>
+    <Head>
+      <Title>{{ $t("nav.films_list") }}</Title>
+      <Meta name="description" :content="$t('page_descriptions.films_list')" />
+    </Head>
+    <ClientOnly>
+      <v-navigation-drawer location="start" width="400">
+        <v-card
+          class="pa-4 text-center"
+          :title="$t('pages.home.newest')"
+          variant="text"
+        >
+          <NewestFilmsMasonryWall
+            v-if="latestFilms.length"
+            :latest-films="latestFilms"
+            :loading="loading"
+            sidebar
+          />
+          <span v-else class="text-disabled">{{ $t("general.no_data") }}</span>
+        </v-card>
+      </v-navigation-drawer>
+    </ClientOnly>
+    <ListPage
+      v-if="filmsPresent"
+      :items="filmItems || []"
+      :loading="loading"
+      :total-pages="totalPages"
+      :page="currentPage"
+      :limit="computedLimitProp"
+      :list-title="$t('nav.films_list')"
+      new-page-link="/films/new"
+      @update:page="updateQueryParams"
+      @update:search="search = $event"
+    >
+      <template #filters>
+        <Filters
+          :sort-options="sortOptions"
+          @update:limit="limit = $event.value"
+          @update:order="order = $event.value"
+          @update:search="search = $event.value"
+          @update:sort="sortBy = $event.value"
         />
-      </v-card>
-    </template>
-    <template #filters>
-      <Filters
-        :sort-options="sortOptions"
-        @update:limit="limit = $event.value"
-        @update:order="order = $event.value"
-        @update:search="search = $event.value"
-        @update:sort="sortBy = $event.value"
-      />
-    </template>
-  </ListPage>
+      </template>
+    </ListPage>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -43,14 +56,12 @@ const {
   films,
   loading,
   totalPages,
-  genres,
   currentPage,
   filmsPresent,
   latestFilms,
 } = storeToRefs(useFilmStore());
 const {
   fetchFilteredFilms,
-  fetchGenres,
   checkFilmsPresence,
   fetchLatestFilms,
 } = useFilmStore();
@@ -61,27 +72,10 @@ const search = ref<string>("");
 const order = ref<string>("asc");
 const sortBy = ref<string>("name");
 
-const transformedGenres = computed((): IOption[] => {
-  return genres.value.map((genre: IGenre) => {
-    return { value: genre.value || "", title: genre.name || "" };
-  }) as IOption[];
-});
-const genresOptions = [
-  { value: "all", title: t("filters.sort.all") },
-  ...transformedGenres.value,
-] as IOption[];
-
 const sortOptions = [
   { value: "name", title: t("forms.film.name") },
   { value: "year_of_release", title: t("forms.film.release_year") },
 ] as IOption[];
-
-/**
- * Fetches all necessary data for the films list page.
- * Checks if films are present, if they are, fetches the films list and genres.
- * If not, navigates to the empty films page.
- * @returns {Promise<void>}
- */
 
 const fetchData = async (): Promise<void> => {
   await checkFilmsPresence();
@@ -95,7 +89,6 @@ const fetchData = async (): Promise<void> => {
         sortBy.value,
         locale.value
       ),
-      fetchGenres(locale.value),
       fetchLatestFilms(),
     ]);
   } else {
@@ -123,24 +116,19 @@ const filmItems = computed((): Detail[] => {
 
 const computedLimitProp = computed((): number => {
   return typeof limit.value === "number" ? limit.value : 15;
-})
-
-/**
- * Updates query parameters when the page changes.
- * @param page - The new page number.
- */
+});
 
 const updateQueryParams = (page: number): void => {
   offset.value = (page - 1) * limit.value;
 };
 
 watch(
-  [limit, offset, order, sortBy, locale],
-  async ([newLimit, newOffset, newOrder, newSortBy, newLocale]) => {
+  [limit, offset, search, order, sortBy, locale],
+  async ([newLimit, newOffset, newSearch, newOrder, newSortBy, newLocale]) => {
     await fetchFilteredFilms(
       newLimit,
       newOffset,
-      "",
+      newSearch,
       newOrder,
       newSortBy,
       newLocale
@@ -149,19 +137,6 @@ watch(
   {
     immediate: true,
   }
-);
-
-watch(search, () =>
-  debounce(async (newVal: string | number): Promise<void> => {
-    await fetchFilteredFilms(
-      limit.value,
-      0,
-      newVal as string,
-      order.value,
-      sortBy.value,
-      locale.value
-    );
-  }, 1000)
 );
 
 onMounted(async () => {

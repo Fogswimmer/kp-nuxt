@@ -131,6 +131,7 @@
             </v-expansion-panel-text>
           </v-expansion-panel>
           <v-expansion-panel
+            v-if="person?.filmWorks"
             id="filmography"
             tag="section"
             value="filmography"
