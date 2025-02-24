@@ -46,16 +46,13 @@
         <slot name="text" />
       </v-card>
     </v-card>
-    <v-app-bar
+    <v-footer
       v-if="notification"
-      :location="$vuetify.display.smAndDown ? 'top' : 'bottom'"
-      height="36"
-      order="2"
     >
       <div class="d-flex justify-center w-100">
         <slot name="notification" location="start" />
       </div>
-    </v-app-bar>
+    </v-footer>
   </div>
 </template>
 

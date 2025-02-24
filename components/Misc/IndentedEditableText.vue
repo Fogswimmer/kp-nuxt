@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" class="pa-2" variant="text">
+  <v-card rounded="lg" class="pa-2" variant="text" border>
     <div v-if="!editMode" class="text-body-1 pa-2">
       <div v-if="text" :class="['text-container', { expanded: !collapsed }]">
         <p v-for="(paragraph, index) in text ? text?.split('\n') : []" :key="index">

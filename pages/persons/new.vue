@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Head>
+      <Title>{{ definePageTitle($t("forms.person.add")) }}</Title>
+    </Head>
     <v-card class="mx-auto" style="max-width: 800px" :loading="loading">
       <v-toolbar :title="$t('forms.person.add')">
         <template #prepend>
@@ -82,7 +85,7 @@
     <v-snackbar v-model="showThirdStepSnackbar" color="success">
       {{ $t("toast.messages.success.edit") }}
     </v-snackbar>
-	<v-snackbar v-model="showErrorSnackbar" color="error">
+    <v-snackbar v-model="showErrorSnackbar" color="error">
       {{ $t("toast.messages.error.add") }}
     </v-snackbar>
   </div>
@@ -94,8 +97,11 @@ import PersonForm from "~/components/Forms/PersonForm.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
+import definePageTitle from "~/utils/definePageTitle";
 
 const { locale } = useI18n();
+const localeRoute = useLocaleRoute();
+
 const step = ref<number>(0);
 const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
@@ -128,14 +134,13 @@ const {
   uploadPhotos,
   clearPersonForm,
   uploadCover,
-  GALLERY_SIZE
+  GALLERY_SIZE,
 } = usePersonStore();
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
   if (await addPerson()) {
     nextStep();
-  }
-  else if (networkError.value) {
+  } else if (networkError.value) {
     showErrorSnackbar.value = true;
   }
 };
@@ -145,17 +150,16 @@ const handlePhotoSubmit = async (files: File[]): Promise<void> => {
   if (id) {
     await uploadPhotos(files, id || 0);
     nextStep();
-  }
-  else if (networkError.value) {
+  } else if (networkError.value) {
     showErrorSnackbar.value = true;
   }
 };
 
 const handleFinish = (): void => {
   if (step.value <= 2) {
-    navigateTo(`/persons`);
+    navigateTo(localeRoute(`/persons`));
   } else {
-    navigateTo(`/persons/${personForm.value.id}`);
+    navigateTo(localeRoute(`/persons/${personForm.value.id}`));
   }
 };
 const handleCoverSubmit = async (files: File[]): Promise<void> => {
@@ -164,9 +168,8 @@ const handleCoverSubmit = async (files: File[]): Promise<void> => {
   await uploadCover(coverFile, id || 0);
   if (networkError.value) {
     showErrorSnackbar.value = true;
-  }
-  else {
-    navigateTo(`/persons/${personForm.value.id}`);
+  } else {
+    navigateTo(localeRoute(`/persons/${personForm.value.id}`));
   }
 };
 

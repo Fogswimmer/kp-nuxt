@@ -14,7 +14,7 @@
               :subtitle="$t(detail.title)"
               :prepend-icon="detail.icon"
               class="my-2"
-              :to="detail.to"
+              :to="localeRoute(detail.to || '/')"
             >
               <v-list-item-title :class="{ 'text-secondary': detail.to }">
                 {{ detail.value || $t("general.no_data") }}
@@ -41,7 +41,7 @@
             :key="index"
             :title="actor.value"
             :value="index"
-            :to="actor.to"
+            :to="localeRoute(actor.to || '/')"
             base-color="secondary"
           >
             <template #prepend>
@@ -67,7 +67,7 @@
             :value="index"
             :prepend-icon="person.avatar || 'mdi-account'"
             :prepend-avatar="person.avatar"
-            :to="person.to"
+            :to="localeRoute(person.to || '/')"
             base-color="secondary"
           />
         </v-list>
@@ -83,6 +83,8 @@ defineProps<{
   team: Detail[];
 }>();
 const leftColumnAccordion = ref(["info", "starring", "team"]);
+
+const localeRoute = useLocaleRoute();
 </script>
 
 <style></style>

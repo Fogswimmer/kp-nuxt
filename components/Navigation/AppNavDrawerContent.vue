@@ -7,7 +7,7 @@
       :title="$t('nav.home')"
       prepend-icon="mdi-home"
       value="home"
-      to="/"
+      :to="localeRoute('/')"
     />
     <v-list-group>
       <template #activator="{ props }">
@@ -26,7 +26,7 @@
         :base-color="activeRoute === '/films' ? 'primary' : ''"
         :active="activeRoute === '/films'"
         :title="$t('nav.films_list')"
-        to="/films"
+        :to="localeRoute('/films')"
       />
       <v-list-item
         prepend-icon="mdi-plus"
@@ -34,7 +34,7 @@
         :base-color="activeRoute === '/films/new' ? 'primary' : ''"
         :active="activeRoute === '/films/new'"
         :title="$t('nav.films_add')"
-        to="/films/new"
+        :to="localeRoute('/films/new')"
       />
     </v-list-group>
     <v-list-group>
@@ -54,7 +54,7 @@
         :active="activeRoute === '/persons'"
         :base-color="activeRoute === '/persons' ? 'primary' : ''"
         :title="$t('nav.persons_list')"
-        to="/persons"
+      :to="localeRoute('/persons')"
       />
       <v-list-item
         prepend-icon="mdi-plus"
@@ -62,15 +62,12 @@
         :active="activeRoute === '/persons/new'"
         :base-color="activeRoute === '/persons/new' ? 'primary' : ''"
         :title="$t('nav.persons_add')"
-        to="/persons/new"
+        :to="localeRoute('/persons/new')"
       />
     </v-list-group>
 
     <template v-if="$vuetify.display.smAndDown">
       <v-divider />
-      <!-- <v-list-subheader> {{ $t("nav.account") }}</v-list-subheader>
-      <div class="ma-2"><ProfileNav /></div>
-      <v-divider /> -->
       <v-list-subheader> {{ $t("nav.settings") }}</v-list-subheader>
 
       <v-select
@@ -93,6 +90,8 @@ const activeRoute = computed((): string => route.path);
 const changeLanguage = (lang: Language) => {
   setLocale(lang);
 };
+
+const localeRoute = useLocaleRoute();
 
 const languageOptions: { title: string; value: string; flag: string }[] = [
   {

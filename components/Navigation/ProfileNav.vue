@@ -4,11 +4,11 @@
       v-if="!isAuthenticated && $vuetify.display.mdAndUp"
       prepend-icon="mdi-login"
       variant="tonal"
-      to="/auth/sign-in"
+      :to="localeRoute('/auth/sign-in')"
     >
       {{ $t("auth.sign_in") }}
     </v-btn>
-    <v-btn v-else-if="!$vuetify.display.mdAndUp" icon to="/auth/sign-in">
+    <v-btn v-else-if="!$vuetify.display.mdAndUp" icon :to="localeRoute('/auth/sign-in')">
       <v-icon>mdi-login</v-icon>
     </v-btn>
 
@@ -20,16 +20,16 @@
         lines="one"
         :title="currentUser?.displayName || currentUser?.username || ''"
         :subtitle="currentUser?.email"
-        to="/profile"
+       :to="localeRoute('/profile')"
       >
         <template #prepend>
           <v-avatar v-if="isAuthenticated">
             <v-img
               v-if="currentUser?.avatar"
               :src="currentUser?.avatar || ''"
-              @click="navigateTo('/profile')"
+              @click="navigateTo(localeRoute('/profile'))"
             />
-            <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
+            <v-icon v-else @click="navigateTo(localeRoute('/profile'))"> mdi-account</v-icon>
           </v-avatar>
         </template>
       </v-list-item>
@@ -37,9 +37,9 @@
         <v-img
           v-if="currentUser?.avatar"
           :src="currentUser?.avatar || ''"
-          @click="navigateTo('/profile')"
+          @click="navigateTo(localeRoute('/profile'))"
         />
-        <v-icon v-else @click="navigateTo('/profile')"> mdi-account</v-icon>
+        <v-icon v-else @click="navigateTo(localeRoute('/profile'))"> mdi-account</v-icon>
       </v-avatar>
     </template>
     <ConfirmDialog
@@ -55,10 +55,11 @@
 import { useAuthStore } from "~/stores/authStore";
 import ConfirmDialog from "../Dialogs/ConfirmDialog.vue";
 
-const showConfirmDialog = ref<boolean>(false);
 const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());
 const { signOut, fetchCurrentUser } = useAuthStore();
 
+const showConfirmDialog = ref<boolean>(false);
+const localeRoute = useLocaleRoute();
 const handleSignOut = async (): Promise<void> => {
   await signOut();
   showConfirmDialog.value = false;

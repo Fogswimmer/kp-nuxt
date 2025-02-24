@@ -43,12 +43,12 @@ export default defineNuxtConfig({
     vuetifyOptions: './vuetify.config.ts'
   },
   imports: {
-    dirs: ["types/*.ts", "store/*.ts", "types/**/*.ts"],
+    dirs: ["types/*.ts", "store/*.ts", "types/**/*.ts", "utils/**/*.ts"],
   },
   i18n: {
     vueI18n: "./i18n.config.ts",
-    defaultLocale: "ru",
     strategy: 'prefix_and_default',
+    defaultLocale: "ru",
     baseUrl: process.env.BASE_URL,
     locales: [
       {
@@ -63,7 +63,12 @@ export default defineNuxtConfig({
         code: 'fr',
         iso: 'fr-FR'
       }
-    ]
+    ],
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root' // recommended
+    }
   },
   image: {
     domains: [process.env.DOMAIN_NAME as string],
@@ -81,7 +86,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.API_BASE_URL,
+      appName: process.env.APP_NAME,
     },
+    recaptcha: {
+      // siteKey: process.env.RECAPTCHA_SITE_KEY,
+      version: 3,
+      size: 'compact'
+    }
   },
 
   vite: {

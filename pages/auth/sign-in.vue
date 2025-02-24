@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Head>
+      <Title>{{ definePageTitle($t("auth.sign_in")) }}</Title>
+    </Head>
     <v-card class="mt-15 mx-auto" style="max-width: 600px">
       <v-toolbar>
         <template #prepend>
@@ -79,6 +82,7 @@
 <script lang="ts" setup>
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import { useAuthStore } from "~/stores/authStore";
+
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
 const { t } = useI18n();
 const loginFormRef = ref();

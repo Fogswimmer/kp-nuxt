@@ -1,5 +1,5 @@
 <template>
-  <masonry-wall :items="latestFilms" :gap="32">
+  <masonry-wall :items="latestFilms" :min-columns="1" :max-columns="3" :gap="16">
     <template #default="{ item, index }">
       <MasonryCard
         :loading="loading"
@@ -76,7 +76,11 @@ defineProps<{
   latestFilms: IFilm[];
   loading: boolean;
   sidebar?: boolean;
+  link?: string;
 }>();
+
+
+
 </script>
 
 <style></style>

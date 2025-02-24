@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Head>
+      <Title>{{ definePageTitle($t("pages.profile.title")) }}</Title>
+    </Head>
     <DetailCard
       display-avatar
       :page-name="$t('pages.profile.title')"
@@ -136,13 +139,15 @@
 </template>
 
 <script lang="ts" setup>
-import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import { useAuthStore } from "~/stores/authStore";
+
+import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import UserForm from "~/components/Forms/UserForm.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
+import definePageTitle from "~/utils/definePageTitle";
 
 const { t, locale } = useI18n();
 const { currentUser, loading, userForm } = storeToRefs(useAuthStore());
@@ -160,6 +165,8 @@ const computedLastLogin = computed((): string => {
   ).toLocaleString();
   return t("pages.profile.last_login", { time: lastLogin });
 });
+
+
 
 const {
   signOut,

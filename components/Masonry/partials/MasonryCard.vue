@@ -19,7 +19,7 @@
       cover
       rounded="lg"
       class="cursor-pointer ma-2"
-      @click="navigateTo(link)"
+      @click="navigateTo(localeRoute(link))"
     >
       <template #placeholder>
         <v-card height="100%" variant="plain" rounded="lg" class="glassed">
@@ -41,6 +41,8 @@ defineProps<{
   item: IFilm | IPerson;
   link: string;
 }>();
+
+const localeRoute = useLocaleRoute();
 </script>
 
 <style></style>

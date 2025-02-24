@@ -1,19 +1,17 @@
 <template>
   <div>
     <Head>
-      <Title>{{ $t("nav.home") }}</Title>
+      <Title>{{ definePageTitle($t("pages.home.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
-    <v-card class="mx-auto" max-width="1200" variant="text">
+    <v-card class="mx-auto" max-width="1300" variant="text">
       <template v-if="filmsPresent && personsPresent">
-        <main
-          v-scroll="onScroll"
-          class="d-flex flex-column ga-6 overflow-y-auto"
-        >
+        <main class="d-flex flex-column ga-6 overflow-y-auto">
           <MasonrySection
             v-if="latestFilms.length > 0"
             :present="filmsPresent"
             :loading="filmLoading"
+            
             :dark-accent-color="darkAccentColors[0]"
             :title="$t('pages.home.newest')"
           >
@@ -66,7 +64,7 @@ import EmptyPage from "~/components/Templates/EmptyPage.vue";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
-
+import definePageTitle from "~/utils/definePageTitle";
 const {
   loading: filmLoading,
   filmsPresent,
@@ -79,10 +77,6 @@ const {
   personsPresent,
   popularActors,
 } = storeToRefs(usePersonStore());
-
-const activeSection = ref<string | undefined>("newest_films");
-const scrollPosition = ref<number>(0);
-const showScrollFab = ref<boolean>(false);
 
 const fetchData = async (): Promise<void> => {
   await checkFilmsPresence();
@@ -99,20 +93,9 @@ const darkAccentColors = Array.from({ length: 2 }, () =>
   randomColorGenerator()
 );
 
-const onScroll = async () => {
-  watchScrolling("content-item", activeSection, showScrollFab);
-};
-
 onMounted(async (): Promise<void> => {
   await fetchData();
 });
-
-watch(
-  () => scrollPosition.value,
-  () => {
-    showScrollFab.value = scrollPosition.value > 100;
-  }
-);
 
 definePageMeta({
   name: "home",

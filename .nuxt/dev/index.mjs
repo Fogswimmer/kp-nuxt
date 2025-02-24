@@ -3,7 +3,7 @@ import { Server } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { parentPort, threadId } from 'node:worker_threads';
-import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, useSession, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, readBody, getQuery as getQuery$1, getResponseStatusText } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/h3@1.15.0/node_modules/h3/dist/index.mjs';
+import { getRequestHeader, splitCookiesString, setResponseStatus, setResponseHeader, send, getRequestHeaders, defineEventHandler, handleCacheHeaders, createEvent, fetchWithEvent, isEvent, eventHandler, getResponseStatus, setResponseHeaders, setHeaders, sendRedirect, proxyRequest, createError, useSession, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, readBody, getQuery as getQuery$1, getResponseStatusText } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/h3@1.15.1/node_modules/h3/dist/index.mjs';
 import { getRequestDependencies, getPreloadLinks, getPrefetchLinks, createRenderer } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/vue-bundle-renderer@2.1.1/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { stringify, uneval } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/devalue@5.1.1/node_modules/devalue/index.js';
 import destr from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/destr@2.0.3/node_modules/destr/dist/index.mjs';
@@ -25,8 +25,8 @@ import { fileURLToPath } from 'node:url';
 import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/ipx@2.1.0_db0@0.2.4_ioredis@5.5.0/node_modules/ipx/dist/index.mjs';
 import { isAbsolute } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
 import { hash } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/ohash@1.1.4/node_modules/ohash/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unstorage@1.14.4_db0@0.2.4_ioredis@5.5.0/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unstorage@1.14.4_db0@0.2.4_ioredis@5.5.0/node_modules/unstorage/drivers/fs.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unstorage@1.15.0_db0@0.2.4_ioredis@5.5.0/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/unstorage@1.15.0_db0@0.2.4_ioredis@5.5.0/node_modules/unstorage/drivers/fs.mjs';
 import { toRouteMatcher, createRouter } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
 import { defineHeadPlugin } from 'file://C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/@unhead+shared@1.11.19/node_modules/@unhead/shared/dist/index.mjs';
 
@@ -412,7 +412,7 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _EXvQv57Lcs = (function(nitro) {
+const _N1cdI3jRyp = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
@@ -437,7 +437,7 @@ const devReducers = {
   URL: (data) => data instanceof URL ? data.toString() : void 0
 };
 const asyncContext = getContext("nuxt-dev", { asyncContext: true, AsyncLocalStorage });
-const _aHE2ZuIqW7 = (nitroApp) => {
+const _LW0v1hZoYe = (nitroApp) => {
   const handler = nitroApp.h3App.handler;
   nitroApp.h3App.handler = (event) => {
     return asyncContext.callAsync({ logs: [], event }, () => handler(event));
@@ -523,8 +523,8 @@ const _nWyLyEzBuX = defineNitroPlugin((nitroApp) => {
 });
 
 const plugins = [
-  _EXvQv57Lcs,
-_aHE2ZuIqW7,
+  _N1cdI3jRyp,
+_LW0v1hZoYe,
 _nWyLyEzBuX
 ];
 
@@ -601,6 +601,7 @@ const _inlineRuntimeConfig = {
   },
   "public": {
     "apiBase": "http://kinopoisk.light/api",
+    "appName": "",
     "i18n": {
       "baseUrl": "http://kinopoisk.light",
       "defaultLocale": "ru",
@@ -649,9 +650,13 @@ const _inlineRuntimeConfig = {
       "multiDomainLocales": false
     }
   },
+  "recaptcha": {
+    "version": 3,
+    "size": "compact"
+  },
   "session": {
     "name": "nuxt-session",
-    "password": "1904926752cf404487cd840ab2ea2296",
+    "password": "0c74f223ff80429f8044829c2f13e459",
     "cookie": {
       "sameSite": "lax"
     }
@@ -951,11 +956,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\server","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\.nuxt","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\.nuxt\\cache","ignore":["**/node_modules/**","**/.git/**"]}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:\\Users\\das\\Documents\\Dyakov\\Training_projects\\kp-nuxt\\.data\\kv","ignore":["**/node_modules/**","**/.git/**"]}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt"}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/server"}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -1500,14 +1505,14 @@ const _uMFlFT = lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler);
 });
 
-const _lazy_M7WPK5 = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_frYJ64 = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
-  { route: '/__nuxt_error', handler: _lazy_M7WPK5, lazy: true, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_frYJ64, lazy: true, middleware: false, method: undefined },
   { route: '/api/_auth/session', handler: _WYHmox, lazy: false, middleware: false, method: "delete" },
   { route: '/api/_auth/session', handler: _wU0nyU, lazy: false, middleware: false, method: "get" },
   { route: '/_ipx/**', handler: _uMFlFT, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_M7WPK5, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_frYJ64, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {

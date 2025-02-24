@@ -57,7 +57,7 @@ export default {
   },
   search: {
     title: "Search",
-    request_result: "results found",
+    request_result: "{count} results found",
     no_result: "No results found",
   },
   empty_states: {
@@ -79,8 +79,11 @@ export default {
       to_persons: "To Persons List",
       add: "Add",
       add_persons: "Add persons",
+      home: "Go back home",
     },
     no_persons_found:"Before you can add a film, you need to add actors and other film crew memebers first",
+    error_404: "Page not found",
+    error_500: "Something went wrong",
   },
   auth: {
     not_auth: "Please, log in to use actions",

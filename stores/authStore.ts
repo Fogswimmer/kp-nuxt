@@ -2,7 +2,11 @@ export const useAuthStore = defineStore("authStore", () => {
   const currentUser = ref<CurrentUser | null>();
   const loading = ref(false);
   const authError = ref<Error | unknown>();
-  const tokenCookie = useCookie("auth_token");
+  const tokenCookie = useCookie("auth_token", {
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 7,
+    secure: true,
+  });
   const token = ref<string | null>(tokenCookie.value || null || "");
   const isAuthenticated = computed(() => {
     return !!token.value && !!currentUser.value;

@@ -1,20 +1,10 @@
 <template>
   <div>
-    <v-navigation-drawer location="end">
-      <v-list rounded="lg">
-        <v-list-item
-          v-for="(link, index) in pageContents"
-          :key="index"
-          :active="link.value === activeSection"
-          :title="link.title"
-          :value="link.value"
-          :prepend-icon="link.icon"
-          nav
-          @click="handleContentClick(link.value as string)"
-        />
-      </v-list>
-    </v-navigation-drawer>
-    <v-navigation-drawer location="start" width="300">
+    <Head>
+      <Title>{{ definePageTitle($t("pages.films.details")) }}</Title>
+      <Meta name="description" :content="film?.description" />
+    </Head>
+    <v-navigation-drawer location="start" width="400">
       <FilmDrawerContent
         :general-info="generalInfo"
         :starring="starring"
@@ -45,7 +35,7 @@
         />
       </template>
       <template #text>
-        <main v-scroll="onScroll">
+        <main>
           <FilmDrawerContent
             v-if="$vuetify.display.smAndDown"
             :general-info="generalInfo"
@@ -121,13 +111,15 @@
             </v-expansion-panel>
           </v-expansion-panels>
         </main>
-        <v-footer class="d-flex align-center ga-2 text-caption mt-4">
+        <v-footer class="glassed">
           <v-spacer />
-          <span>{{ $t("general.published_by") }}</span>
-          <nuxt-link>{{
-            film?.publisherData ? film?.publisherData.name : ""
-          }}</nuxt-link>
-          {{ film?.createdAt || "" }}
+          <div class="d-flex align-center text-caption ga-1">
+            <span>{{ $t("general.published_by") }}</span>
+            <nuxt-link class="text-secondary">{{
+              film?.publisherData ? film?.publisherData.name : ""
+            }}</nuxt-link>
+            {{ film?.createdAt || "" }}
+          </div>
         </v-footer>
       </template>
     </DetailCard>
@@ -204,6 +196,7 @@
 <script lang="ts" setup>
 import { useFilmStore } from "~/stores/filmStore";
 import { useAuthStore } from "~/stores/authStore";
+
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import FilmGalleryEdit from "~/components/Gallery/FilmGalleryEdit.vue";
@@ -216,9 +209,11 @@ import FilmAssessments from "~/components/FilmPartials/FilmAssessments.vue";
 import FilmDrawerContent from "~/components/FilmPartials/FilmDrawerContent.vue";
 import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
-import watchScrolling from "~/utils/watchScrolling";
 
 const GALLERY_CARD_HEIGHT: number = 200;
+
+const localeRoute = useLocaleRoute();
+const { locale, t } = useI18n();
 
 const showDeleteWarning = ref<boolean>(false);
 const editDescriptionMode = ref<boolean>(false);
@@ -230,13 +225,12 @@ const isFormValid = ref<boolean>(true);
 const isAssessing = ref<boolean>(false);
 const showAssessDialog = ref<boolean>(false);
 const showLeftDrawer = ref<boolean>(true);
-const showScrollFab = ref<boolean>(false);
 
 const comment = ref<string>("");
 const rating = ref<number>(0);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const activeSection = ref<string | undefined>("gallery");
+
 const mainAccordion = ref<string[]>(["gallery", "rating", "description"]);
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
@@ -266,7 +260,6 @@ const {
   // fetchFilmsWithSimilarGenres,
   GALLERY_SIZE,
 } = useFilmStore();
-const { locale, t } = useI18n();
 
 const imagesToDelete = computed(() => {
   return film.value?.gallery
@@ -279,24 +272,6 @@ const imagesToDelete = computed(() => {
       return fileName ? fileName.split(".")[0] : "";
     });
 }) as ComputedRef<string[]>;
-
-const pageContents: Partial<Detail>[] = [
-  {
-    title: t("pages.films.gallery"),
-    value: "gallery",
-    icon: "mdi-image",
-  },
-  {
-    title: t("pages.films.rating"),
-    value: "rating",
-    icon: "mdi-star",
-  },
-  {
-    title: t("pages.films.description"),
-    value: "description",
-    icon: "mdi-text",
-  },
-];
 
 const generalInfo = computed((): Detail[] => {
   const info = [
@@ -384,10 +359,6 @@ const fetchData = async (): Promise<void> => {
   ]);
 };
 
-const onScroll = () => {
-  watchScrolling("content-item", activeSection, showScrollFab);
-};
-
 const sliderGalleryArr = computed((): string[] => {
   const initialArr = Array.from({ length: GALLERY_SIZE }, (_, i) => i);
 
@@ -406,7 +377,7 @@ const handleFilmDelete = async () => {
   showDeleteWarning.value = false;
   const filmId = Number(useRoute().params.id);
   await deleteFilm(filmId);
-  navigateTo("/films");
+  navigateTo(localeRoute("/films"));
 };
 
 const handleGeneralInfoEdit = () => {
@@ -502,11 +473,6 @@ const submitDescriptionEdit = async (text: string) => {
   await editFilm(locale.value);
   await fetchData();
   editDescriptionMode.value = false;
-};
-
-const handleContentClick = (section: string): void => {
-  activeSection.value = section;
-  scrollOnContentItemClick(section, mainAccordion, activeSection);
 };
 
 watch(

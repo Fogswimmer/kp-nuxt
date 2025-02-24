@@ -18,7 +18,7 @@
         <NavBtns />
       </div>
 
-      <v-spacer v-if="$vuetify.display.mdAndUp"/>
+      <v-spacer v-if="$vuetify.display.mdAndUp" />
       <template #append>
         <div class="d-flex ga-1 align-center">
           <ProfileNav />
@@ -34,7 +34,7 @@
     </v-main>
 
     <v-bottom-navigation
-      v-if="$vuetify.display.smAndDown"
+      v-if="$vuetify.display.smAndDown && !error"
       v-model="activeBottomBtn"
       color="primary"
       grow
@@ -44,36 +44,19 @@
       <v-btn value="persons" to="/persons" icon="mdi-account-group" />
       <v-btn value="menu" icon="mdi-menu" @click="drawer = !drawer" />
     </v-bottom-navigation>
-    <BaseError
-      v-model:show="showErrorMessage"
-      :message="filmNetworkError?.message || personNetworkError?.message || ''"
-      @close="showErrorMessage = false"
-    />
   </v-layout>
 </template>
 
 <script lang="ts" setup>
-import NavBtns from "~/components/Containment/Btns/NavBtns.vue";
+import NavBtns from "~/components/Navigation/NavBtns.vue";
 import Logo from "~/components/Misc/Logo.vue";
-import LanguageChangeBtn from "~/components/Containment/Btns/LanguageChangeBtn.vue";
-import BaseError from "~/components/Misc/BaseError.vue";
-import { useFilmStore } from "~/stores/filmStore";
-import { usePersonStore } from "~/stores/personStore";
+import LanguageChangeBtn from "~/components/Containment/Btns/LocaleHandleBtn.vue";
 import ProfileNav from "~/components/Navigation/ProfileNav.vue";
 import NavDrawerContent from "~/components/Navigation/AppNavDrawerContent.vue";
 
-interface NetworkError {
-  message: string;
-}
-
+const error = useError();
 const route = useRoute();
-const { networkError: filmNetworkError } = storeToRefs(useFilmStore()) as {
-  networkError: Ref<NetworkError | null>;
-};
-const { networkError: personNetworkError } = storeToRefs(usePersonStore()) as {
-  networkError: Ref<NetworkError | null>;
-};
-const showErrorMessage = ref(false);
+
 const drawer = ref(false);
 const activeBottomBtn = ref("home");
 
@@ -84,19 +67,10 @@ const checkBrowserHistory = () => {
   }
 };
 
-watch([filmNetworkError, personNetworkError], () => {
-  if (filmNetworkError.value || personNetworkError.value) {
-    showErrorMessage.value = true;
-  }
-});
-
 watch(
   () => route.path,
   () => {
     checkBrowserHistory();
   }
 );
-
 </script>
-
-

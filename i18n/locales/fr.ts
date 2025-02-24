@@ -78,8 +78,11 @@ export default {
       to_persons: "Aller à la liste des personnes",
       add: "Ajouter",
       add_persons: "Ajouter des personnes",
+      home: "Retourner a la page d'accueil",
     },
     no_persons_found:"Avant vous pouvez ajouter un film, vous devez ajouter des acteurs et d'autres membres du film crew",
+    error_404: "Page non trouvée",
+    error_500: "Une erreur s'est produite",
   },
   auth: {
     not_auth: "Connectez-vous pour utiliser les actions",

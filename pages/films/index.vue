@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head>
-      <Title>{{ $t("nav.films_list") }}</Title>
+      <Title>{{ definePageTitle($t("pages.films.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.films_list')" />
     </Head>
     <ClientOnly>
@@ -29,7 +29,7 @@
       :page="currentPage"
       :limit="computedLimitProp"
       :list-title="$t('nav.films_list')"
-      new-page-link="/films/new"
+      :new-page-link="localeRoute('/films/new')"
       @update:page="updateQueryParams"
       @update:search="search = $event"
     >
@@ -51,7 +51,9 @@ import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import { useFilmStore } from "~/stores/filmStore";
+import definePageTitle from "~/utils/definePageTitle";
 
+const localeRoute = useLocaleRoute();
 const {
   films,
   loading,
@@ -128,7 +130,7 @@ watch(
     await fetchFilteredFilms(
       newLimit,
       newOffset,
-      newSearch,
+      newSearch === null ? "" : newSearch,
       newOrder,
       newSortBy,
       newLocale

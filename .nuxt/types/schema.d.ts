@@ -185,6 +185,12 @@ declare module 'nuxt/schema' {
       cdnURL: string,
    },
 
+   recaptcha: {
+      version: number,
+
+      size: string,
+   },
+
    nitro: {
       envPrefix: string,
    },
@@ -553,6 +559,8 @@ declare module 'nuxt/schema' {
   }
   interface PublicRuntimeConfig {
    apiBase: string,
+
+   appName: string,
 
    i18n: {
       baseUrl: string,

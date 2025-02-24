@@ -4,6 +4,14 @@ declare global {
     EN = "en",
     FR = "fr",
   }
+
+  interface FetchError {
+    code: number;
+    message: string;
+    status?: string;
+  }
+
+
   interface IFilm {
     id: number | null;
     name: string;

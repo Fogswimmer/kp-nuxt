@@ -9,7 +9,32 @@
           {{ listTitle }}</span
         >
       </v-app-bar-title>
+      <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
+        <v-text-field
+          v-model="needle"
+          :label="$t('actions.search')"
+          chips
+          hide-details
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
+          density="comfortable"
+          clearable
+          @click:clear="needle = ''"
+          @update:model-value="$emit('update:search', $event)"
+        />
+      </v-responsive>
       <template #append>
+        <v-btn
+          v-if="$vuetify.display.smAndDown"
+          icon
+          :color="showSearch ? 'primary' : ''"
+          @click="showSearch = !showSearch"
+        >
+          <v-icon>mdi-magnify</v-icon>
+          <v-tooltip activator="parent" location="bottom">
+            {{ $t("filters.title") }}</v-tooltip
+          >
+        </v-btn>
         <v-btn
           icon
           :color="showFilters ? 'primary' : ''"
@@ -29,29 +54,58 @@
       </template>
     </v-app-bar>
     <client-only>
-      <v-navigation-drawer v-model="showFilters" order="1" location="end">
-        <div class="pa-4">
-          <v-text-field
-            v-model="needle"
-            :label="$t('actions.search')"
-            chips
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            variant="outlined"
-            density="comfortable"
-            @update:model-value="$emit('update:search', $event)"
-          />
-          <slot name="filters" />
+      <v-navigation-drawer
+        v-if="$vuetify.display.smAndDown"
+        v-model="showSearch"
+        order="1"
+        width="300"
+        temporary
+      >
+        <div class="pa-2 flex flex-column ga-4">
+          <div class="d-flex ga-2">
+            <v-text-field
+              v-model="needle"
+              :label="$t('actions.search')"
+              chips
+              hide-details
+              prepend-inner-icon="mdi-magnify"
+              variant="outlined"
+              :loading="loading"
+              clearable
+              @click:clear="needle = ''"
+              @update:model-value="$emit('update:search', $event)"
+            />
+            <v-btn icon variant="plain" @click="closeMobileSearch">
+              <v-icon>mdi-close</v-icon></v-btn
+            >
+          </div>
+          <v-label v-if="needle && !loading" class="mt-2">
+            <span v-if="items.length">{{
+              $t("search.request_result", { count: items.length })
+            }}</span>
+            <span v-else>{{ $t("search.no_result") }}</span>
+          </v-label>
         </div>
+      </v-navigation-drawer>
+      <v-navigation-drawer v-model="showFilters" order="1" location="end">
+        <slot name="filters" />
       </v-navigation-drawer>
     </client-only>
 
-    <div>
+    <div class="d-flex flex-column ga-2">
+      <v-label
+        v-if="needle && !loading && $vuetify.display.mdAndUp"
+        class="mt-2"
+      >
+        <span v-if="items.length">{{
+          $t("search.request_result", { count: items.length })
+        }}</span>
+      </v-label>
       <v-list v-if="items.length > 0 && !loading">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
-          :to="item.to"
+          :to="localeRoute(item.to || '/')"
           rounded="lg"
           elevation="5"
           lines="two"
@@ -81,11 +135,16 @@
       </v-list>
       <v-skeleton-loader
         v-for="n in limit"
-        v-else
+        v-else-if="items.length != 0"
         :key="n"
         rounded="lg"
         class="my-3 stained-glass"
         type="list-item-avatar-three-line"
+      />
+      <v-empty-state
+        v-else
+        :title="$t('empty_states.title')"
+        icon="mdi-alert-rhombus"
       />
     </div>
     <v-app-bar location="bottom" order="1">
@@ -106,6 +165,8 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Containment/Btns/BackBtn.vue";
+
+const localeRoute = useLocaleRoute();
 const emit = defineEmits([
   "update:page",
   "form:open",
@@ -126,11 +187,16 @@ defineProps<{
 
 const currentPage = ref<number>(1);
 const showFilters = ref<boolean>(false);
+const showSearch = ref<boolean>(false);
 const needle = ref<string>("");
-
 const handlePageChange = (page: number): void => {
   currentPage.value = page;
   emit("update:page", page);
+};
+
+const closeMobileSearch = (): void => {
+  showSearch.value = false;
+  needle.value = "";
 };
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column ga-2">
     <transition-group>
-      <v-card v-if="!isAssessing" rounded="lg" elevation="2">
+      <v-card v-if="!isAssessing" rounded="lg" elevation="2" variant="text" border>
         <v-card-text>
           <div class="d-flex flex-column justify-center ga-1 align-center">
             <div class="d-flex ga-1 align-center">
@@ -34,7 +34,7 @@
         @submit="$emit('assession:submit')"
       />
     </v-scroll-y-transition>
-    <v-card v-if="assessments.length > 0" rounded="lg">
+    <v-card v-if="assessments.length > 0" rounded="lg" variant="text" border>
       <v-data-iterator
         :items="assessments"
         :page="page"

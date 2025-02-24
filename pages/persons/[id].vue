@@ -1,239 +1,223 @@
 <template>
   <div>
-    <DetailCard
-      display-avatar
-      :page-name="$t('pages.persons.details')"
-      :cover="person?.cover || ''"
-      :is-auth="isAuthenticated"
-      :loading="loading"
-      :notification="!isAuthenticated"
-    >
-      <template #right-drawer>
-        <v-list nav class="ma-2">
-          <v-list-item
-            v-for="(link, index) in pageContents"
-            :key="index"
-            :active="link.value === activeSection"
-            :title="link.title"
-            :value="link.value"
-            :prepend-icon="link.icon"
-            :href="`/persons/${person?.id}#${link.value}`"
-            @click="handleContentClick(link.value as string)"
-          />
-        </v-list>
-      </template>
-      <template #general_info>
-        <TopInfo
-          :loading="loading"
-          :general-info="computedPersonDetails"
-          :avatar="person?.avatar || ''"
-          :title="personFullName"
-          :subtitle="specialtyNames"
-        />
-      </template>
-      <template #notification>
-        <NotAuthWarning v-if="!isAuthenticated" />
-      </template>
-      <template #menu>
-        <v-menu location="bottom end">
-          <template #activator="{ props }">
-            <v-btn icon :disabled="!currentUser" v-bind="props">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-          <v-list density="compact">
-            <v-list-item
-              :title="$t('actions.choose_cover')"
-              prepend-icon="mdi-image"
-              value="cover"
-              @click="chooseCover"
-            />
-            <v-list-item
-              :title="$t('actions.edit_avatar')"
-              prepend-icon="mdi-account"
-              value="avatar"
-              @click="chooseAvatar"
-            />
-            <v-list-item
-              :title="$t('actions.edit')"
-              prepend-icon="mdi-pencil"
-              value="edit"
-            >
-              <template #append>
-                <v-icon icon="mdi-menu-right" size="x-small" />
-              </template>
-              <v-menu activator="parent" submenu open-on-hover>
-                <v-list density="compact">
-                  <v-list-item
-                    :title="$t('pages.general_info')"
-                    prepend-icon="mdi-information"
-                    value="info"
-                    @click="generalInfoEdit = true"
-                  />
-                  <v-list-item
-                    :title="$t('pages.detailed_info')"
-                    prepend-icon="mdi-details"
-                    value="details"
-                    @click="handleBioEdit"
-                  />
-                  <v-list-item
-                    :title="$t('pages.gallery')"
-                    prepend-icon="mdi-view-gallery"
-                    value="gallery"
-                    @click="photoEditMode = true"
-                  />
-                </v-list>
-              </v-menu>
-            </v-list-item>
-            <v-list-item
-              :title="$t('actions.remove')"
-              prepend-icon="mdi-delete"
-              value="remove"
-              base-color="error"
-              @click="showDeleteWarning = true"
-            />
-          </v-list>
-        </v-menu>
-      </template>
-
-      <template #text>
-        <v-expansion-panels
-          v-model="mainAccordion"
-          variant="accordion"
-          multiple
-        >
-          <v-expansion-panel
-            id="bio"
-            value="bio"
-            class="content-item"
-            tag="section"
-            :title="$t('pages.persons.bio')"
-          >
-            <v-expansion-panel-text>
-              <div class="d-flex justify-end">
-                <v-btn
-                  icon="mdi-pencil"
-                  variant="tonal"
-                  :disabled="!isAuthenticated"
-                  @click="handleBioEdit"
-                />
-              </div>
-              <IndentedEditableText
-                v-if="person?.bio"
-                :edit-mode="bioEditMode"
-                :messages="$t('pages.persons.edit_bio')"
-                :text="person?.bio || ''"
-                @sumbit:edit="submitBioEdit"
-              />
-              <div v-else class="w-100 text-center">
-                <span>{{ $t("general.no_data") }}</span>
-              </div>
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-          <v-expansion-panel
-            v-if="person?.filmWorks"
-            id="filmography"
-            tag="section"
-            value="filmography"
-            class="content-item"
-            :title="$t('pages.persons.filmography')"
-          >
-            <v-expansion-panel-text>
-              <Filmography :person="person" />
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-          <v-expansion-panel
-            id="gallery"
-            tag="section"
-            class="content-item"
-            value="gallery"
-            :title="$t('pages.persons.photos')"
-          >
-            <v-expansion-panel-text>
-              <GalleryViewer
-                :slider-arr="sliderGalleryArr || []"
-                :disabled="!isAuthenticated"
-                :gallery="person?.photos || []"
-                :entity-name="personFullName"
-                :loading="loading"
-                with-avatar
-                @editor:open="photoEditMode = true"
-              />
-            </v-expansion-panel-text>
-          </v-expansion-panel>
-        </v-expansion-panels>
-      </template>
-    </DetailCard>
-    <BaseDialog
-      v-model:opened="generalInfoEdit"
-      :max-width="1000"
-      :title="$t('actions.edit_person') + ' ' + personFullName"
-      :loading="loading"
-      @close="generalInfoEdit = false"
-    >
-      <template #text>
-        <div class="pa-4">
-          <PersonForm
+    <Head>
+      <Title>{{ definePageTitle($t("pages.persons.details")) }}</Title>
+      <Meta name="description" :content="person?.bio" />
+    </Head>
+    <v-sheet max-width="1200" class="mx-auto" rounded="lg">
+      <DetailCard
+        display-avatar
+        :page-name="$t('pages.persons.details')"
+        :cover="person?.cover || ''"
+        :is-auth="isAuthenticated"
+        :loading="loading"
+        :notification="!isAuthenticated"
+      >
+        <template #general_info>
+          <TopInfo
             :loading="loading"
-            :person-form="personForm"
-            :genders="genders"
-            :specialties="specialties"
-            @validate="isFormValid = $event"
-            @form:submit="submitGeneralInfoEdit"
-            @update:model-value="personForm = $event"
+            :general-info="computedPersonDetails"
+            :avatar="person?.avatar || ''"
+            :title="personFullName"
+            :subtitle="specialtyNames"
           />
-        </div>
-      </template>
-    </BaseDialog>
-    <SuccessSnackbar
-      v-model:show="showSnackbar"
-      @close="showSnackbar = false"
-    />
+        </template>
+        <template #notification>
+          <NotAuthWarning v-if="!isAuthenticated" />
+        </template>
+        <template #menu>
+          <v-menu location="bottom end">
+            <template #activator="{ props }">
+              <v-btn icon :disabled="!currentUser" v-bind="props">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list density="compact">
+              <v-list-item
+                :title="$t('actions.choose_cover')"
+                prepend-icon="mdi-image"
+                value="cover"
+                @click="chooseCover"
+              />
+              <v-list-item
+                :title="$t('actions.edit_avatar')"
+                prepend-icon="mdi-account"
+                value="avatar"
+                @click="chooseAvatar"
+              />
+              <v-list-item
+                :title="$t('actions.edit')"
+                prepend-icon="mdi-pencil"
+                value="edit"
+              >
+                <template #append>
+                  <v-icon icon="mdi-menu-right" size="x-small" />
+                </template>
+                <v-menu activator="parent" submenu open-on-hover>
+                  <v-list density="compact">
+                    <v-list-item
+                      :title="$t('pages.general_info')"
+                      prepend-icon="mdi-information"
+                      value="info"
+                      @click="generalInfoEdit = true"
+                    />
+                    <v-list-item
+                      :title="$t('pages.detailed_info')"
+                      prepend-icon="mdi-details"
+                      value="details"
+                      @click="handleBioEdit"
+                    />
+                    <v-list-item
+                      :title="$t('pages.gallery')"
+                      prepend-icon="mdi-view-gallery"
+                      value="gallery"
+                      @click="photoEditMode = true"
+                    />
+                  </v-list>
+                </v-menu>
+              </v-list-item>
+              <v-list-item
+                :title="$t('actions.remove')"
+                prepend-icon="mdi-delete"
+                value="remove"
+                base-color="error"
+                @click="showDeleteWarning = true"
+              />
+            </v-list>
+          </v-menu>
+        </template>
 
-    <BaseDialog
-      v-model:opened="photoEditMode"
-      :loading="loading"
-      :title="computedGalleryEditTitle"
-      :max-width="1200"
-      @close="photoEditMode = false"
-    >
-      <template #text>
-        <PersonGalleryEdit
-          v-model:selected="selectedImagesIndices"
-          :active-tab="activeTab"
-          :person="person"
-          :slider-arr="sliderGalleryArr || []"
-          :upload-count="uploadCount"
-          :edit-mode="photoEditMode"
-          :upload-disabled="uploadCount === 0"
-          :remove-disabled="!person?.photos.length"
-          @avatar:change="handleChangeAvatar"
-          @update:selected="selectedImagesIndices = $event"
-          @delete:selected="showConfirmDialog = true"
-          @cover:change="handleCoverChange"
-          @upload="handlePhotosUpload"
-        />
-      </template>
-    </BaseDialog>
-    <ConfirmDialog
-      v-model="showConfirmDialog"
-      type="error"
-      :text="$t('forms.film.gallery_item_delete_confirm')"
-      :loading="loading"
-      @confirm="handlePhotosDelete"
-    />
-    <ConfirmDialog
-      v-model="showCoverReplacementWarning"
-      :text="$t('general.file_replacement_warning')"
-      @cancel="showCoverReplacementWarning = false"
-      @confirm="replaceCover"
-    />
-    <ConfirmDialog
-      v-model="showDeleteWarning"
-      :text="$t('general.entity_delete_warning')"
-      @cancel="showDeleteWarning = false"
-      @confirm="handlePersonDelete"
-    />
+        <template #text>
+          <v-expansion-panels
+            v-model="mainAccordion"
+            variant="accordion"
+            multiple
+          >
+            <v-expansion-panel
+              id="bio"
+              value="bio"
+              class="content-item"
+              tag="section"
+              :title="$t('pages.persons.bio')"
+            >
+              <v-expansion-panel-text>
+                <IndentedEditableText
+                  v-if="person?.bio"
+                  :edit-mode="bioEditMode"
+                  :messages="$t('pages.persons.edit_bio')"
+                  :text="person?.bio || ''"
+                  @sumbit:edit="submitBioEdit"
+                />
+                <div v-else class="w-100 text-center">
+                  <span>{{ $t("general.no_data") }}</span>
+                </div>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel
+              v-if="person?.filmWorks"
+              id="filmography"
+              tag="section"
+              value="filmography"
+              class="content-item"
+              :title="$t('pages.persons.filmography')"
+            >
+              <v-expansion-panel-text>
+                <Filmography :person="person" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel
+              id="gallery"
+              tag="section"
+              class="content-item"
+              value="gallery"
+              :title="$t('pages.persons.photos')"
+            >
+              <v-expansion-panel-text>
+                <GalleryViewer
+                  :slider-arr="sliderGalleryArr || []"
+                  :disabled="!isAuthenticated"
+                  :gallery="person?.photos || []"
+                  :entity-name="personFullName"
+                  :loading="loading"
+                  with-avatar
+                  @editor:open="photoEditMode = true"
+                />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
+        </template>
+      </DetailCard>
+      <BaseDialog
+        v-model:opened="generalInfoEdit"
+        :max-width="1000"
+        :title="$t('actions.edit_person') + ' ' + personFullName"
+        :loading="loading"
+        @close="generalInfoEdit = false"
+      >
+        <template #text>
+          <div class="pa-4">
+            <PersonForm
+              :loading="loading"
+              :person-form="personForm"
+              :genders="genders"
+              :specialties="specialties"
+              @validate="isFormValid = $event"
+              @form:submit="submitGeneralInfoEdit"
+              @update:model-value="personForm = $event"
+            />
+          </div>
+        </template>
+      </BaseDialog>
+      <SuccessSnackbar
+        v-model:show="showSnackbar"
+        @close="showSnackbar = false"
+      />
+
+      <BaseDialog
+        v-model:opened="photoEditMode"
+        :loading="loading"
+        :title="computedGalleryEditTitle"
+        :max-width="1200"
+        @close="photoEditMode = false"
+      >
+        <template #text>
+          <PersonGalleryEdit
+            v-model:selected="selectedImagesIndices"
+            :active-tab="activeTab"
+            :person="person"
+            :slider-arr="sliderGalleryArr || []"
+            :upload-count="uploadCount"
+            :edit-mode="photoEditMode"
+            :upload-disabled="uploadCount === 0"
+            :remove-disabled="!person?.photos.length"
+            @avatar:change="handleChangeAvatar"
+            @update:selected="selectedImagesIndices = $event"
+            @delete:selected="showConfirmDialog = true"
+            @cover:change="handleCoverChange"
+            @upload="handlePhotosUpload"
+          />
+        </template>
+      </BaseDialog>
+      <ConfirmDialog
+        v-model="showConfirmDialog"
+        type="error"
+        :text="$t('forms.film.gallery_item_delete_confirm')"
+        :loading="loading"
+        @confirm="handlePhotosDelete"
+      />
+      <ConfirmDialog
+        v-model="showCoverReplacementWarning"
+        :text="$t('general.file_replacement_warning')"
+        @cancel="showCoverReplacementWarning = false"
+        @confirm="replaceCover"
+      />
+      <ConfirmDialog
+        v-model="showDeleteWarning"
+        :text="$t('general.entity_delete_warning')"
+        @cancel="showDeleteWarning = false"
+        @confirm="handlePersonDelete"
+      />
+    </v-sheet>
   </div>
 </template>
 
@@ -251,6 +235,10 @@ import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import Filmography from "~/components/PersonPartials/Filmography.vue";
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
+import definePageTitle from "~/utils/definePageTitle";
+
+const localeRoute = useLocaleRoute();
+const { locale, t } = useI18n();
 
 const isFormValid = ref<boolean>(false);
 const showSnackbar = ref<boolean>(false);
@@ -265,7 +253,6 @@ const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>(["bio", "gallery", "filmography"]);
 const coverFile = ref<File>();
-const activeSection = ref<string | undefined>(mainAccordion.value[0]);
 
 const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());
 const { person, genders, specialties, personForm, loading } =
@@ -281,25 +268,6 @@ const {
   removePerson,
   GALLERY_SIZE,
 } = usePersonStore();
-const { locale, t } = useI18n();
-
-const pageContents: Partial<Detail>[] = [
-  {
-    title: t("pages.persons.bio"),
-    value: "bio",
-    icon: "mdi-text",
-  },
-  {
-    title: t("pages.persons.filmography"),
-    value: "filmography",
-    icon: "mdi-format-list-bulleted",
-  },
-  {
-    title: t("pages.persons.photos"),
-    value: "gallery",
-    icon: "mdi-image",
-  },
-];
 
 const chooseCover = (): void => {
   photoEditMode.value = true;
@@ -426,7 +394,7 @@ const handlePhotosDelete = async () => {};
 
 const handlePersonDelete = async (): Promise<void> => {
   await removePerson(Number(useRoute().params.id));
-  navigateTo("/persons");
+  navigateTo(localeRoute("/persons"));
 };
 
 const fetchData = async (): Promise<void> => {
@@ -438,12 +406,6 @@ const fetchData = async (): Promise<void> => {
     fetchGenders(locale.value),
     fetchSpecialties(locale.value),
   ]);
-};
-
-const handleContentClick = async (section: string): Promise<void> => {
-  await nextTick(() => {
-    activeSection.value = section;
-  });
 };
 
 onMounted(async (): Promise<void> => {

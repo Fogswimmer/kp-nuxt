@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head>
-      <Title>{{ $t("nav.persons") }}</Title>
+      <Title>{{ definePageTitle($t("pages.persons.title")) }}</Title>
       <Meta
         name="description"
         :content="$t('page_descriptions.persons_list')"
@@ -31,7 +31,7 @@
       :page="currentPage"
       :limit="limit !== 'all' ? (limit as number) : 15"
       :list-title="$t('nav.persons')"
-      new-page-link="/persons/new"
+      :new-page-link="localeRoute('/persons/new')"
       @update:page="updateQueryParams"
       @update:search="search = $event"
     >
@@ -53,8 +53,11 @@ import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import { usePersonStore } from "~/stores/personStore";
+import definePageTitle from "~/utils/definePageTitle";
 
+const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
+
 const {
   loading,
   totalPages,
