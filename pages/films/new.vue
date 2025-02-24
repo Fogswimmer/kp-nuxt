@@ -84,7 +84,7 @@ const { personsPresent } = storeToRefs(usePersonStore());
 const { checkPersonsPresence } = usePersonStore();
 const localeRoute = useLocaleRoute();
 const step = ref(0);
-
+const error = useError();
 const { locale } = useI18n();
 const {
   genres,
@@ -95,7 +95,6 @@ const {
   producers,
   writers,
   directors,
-  networkError,
 } = storeToRefs(useFilmStore());
 const {
   addFilm,
@@ -117,7 +116,7 @@ const fetchData = async (): Promise<void> => {
 };
 
 const nextStep = (): void => {
-  if (!networkError.value) {
+  if (!error) {
     step.value++;
   }
 };

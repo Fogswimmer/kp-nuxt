@@ -420,7 +420,7 @@ const _N1cdI3jRyp = (function(nitro) {
 
 const rootDir = "C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt";
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"},{"hid":"description","name":"description","content":"Kinopoisk Lite"},{"hid":"og:title","name":"og:title","content":"Kinopoisk Lite"},{"hid":"og:description","name":"og:description","content":"Kinopoisk Lite"},{}],"link":[],"style":[],"script":[],"noscript":[],"title":"Kinopoisk Lite","charset":"utf-8","viewport":"width=device-width, initial-scale=1"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"KP-Lite","charset":"utf-8","viewport":"width=device-width, initial-scale=1"};
 
 const appRootTag = "div";
 
@@ -600,10 +600,10 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "http://kinopoisk.light/api",
-    "appName": "",
+    "apiBase": "https://nebelschwimmer.site/api",
+    "appName": "KP-Lite",
     "i18n": {
-      "baseUrl": "http://kinopoisk.light",
+      "baseUrl": "https://nebelschwimmer.site",
       "defaultLocale": "ru",
       "defaultDirection": "ltr",
       "strategy": "prefix_and_default",
@@ -656,7 +656,7 @@ const _inlineRuntimeConfig = {
   },
   "session": {
     "name": "nuxt-session",
-    "password": "0c74f223ff80429f8044829c2f13e459",
+    "password": "810322940231431fa020a2e5d493007d",
     "cookie": {
       "sameSite": "lax"
     }
@@ -891,7 +891,7 @@ const _inlineRuntimeConfig = {
     },
     "http": {
       "domains": [
-        "kinopoisk.light"
+        "nebelschwimmer.site"
       ]
     }
   }

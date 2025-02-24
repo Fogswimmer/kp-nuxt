@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils/module",
     "nuxt-auth-utils",
   ],
-  css: ['@/assets/css/globals.scss'],
+  css: ["@/assets/css/globals.scss"],
   app: {
     pageTransition: {
       name: "page",
@@ -16,59 +16,41 @@ export default defineNuxtConfig({
     },
     layoutTransition: { name: "layout", mode: "out-in" },
     head: {
-      title: "Kinopoisk Lite",
+      title: process.env.APP_NAME,
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: "Kinopoisk Lite",
-        },
-        {
-          hid: "og:title",
-          name: "og:title",
-          content: "Kinopoisk Lite",
-        },
-        {
-          hid: "og:description",
-          name: "og:description",
-          content: "Kinopoisk Lite",
-        },
-        {},
-      ],
     },
   },
   vuetify: {
-    vuetifyOptions: './vuetify.config.ts'
+    vuetifyOptions: "./vuetify.config.ts",
   },
   imports: {
     dirs: ["types/*.ts", "store/*.ts", "types/**/*.ts", "utils/**/*.ts"],
   },
   i18n: {
     vueI18n: "./i18n.config.ts",
-    strategy: 'prefix_and_default',
+    strategy: "prefix_and_default",
     defaultLocale: "ru",
     baseUrl: process.env.BASE_URL,
     locales: [
       {
-        code: 'ru',
-        iso: 'ru-RU'
+        code: "ru",
+        iso: "ru-RU",
       },
       {
-        code: 'en',
-        iso: 'en-US'
+        code: "en",
+        iso: "en-US",
       },
       {
-        code: 'fr',
-        iso: 'fr-FR'
-      }
+        code: "fr",
+        iso: "fr-FR",
+      },
     ],
     detectBrowserLanguage: {
       useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root' // recommended
-    }
+      cookieKey: "i18n_redirected",
+      redirectOn: "root", // recommended
+    },
   },
   image: {
     domains: [process.env.DOMAIN_NAME as string],
@@ -91,8 +73,8 @@ export default defineNuxtConfig({
     recaptcha: {
       // siteKey: process.env.RECAPTCHA_SITE_KEY,
       version: 3,
-      size: 'compact'
-    }
+      size: "compact",
+    },
   },
 
   vite: {

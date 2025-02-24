@@ -441,7 +441,7 @@ export default {
     directed_films: "Réalisé les films",
     produced_films: "Produit les films",
     composed_films: "Composé la musique pour les films",
-    written_filmns: "Auteur des scénarios aux films",
+    written_films: "Auteur des scénarios aux films",
     no_films: "Aucuns films",
     photo: "Photo",
     no_photo: "Aucune photo",

@@ -79,7 +79,7 @@ export const nuxtI18nOptions = {
     "useCookie": true
   },
   "differentDomains": false,
-  "baseUrl": "http://kinopoisk.light",
+  "baseUrl": "https://nebelschwimmer.site",
   "customRoutes": "page",
   "pages": {},
   "skipSettingLocaleOnNavigate": false,

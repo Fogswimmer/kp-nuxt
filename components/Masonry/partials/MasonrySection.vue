@@ -1,34 +1,30 @@
 <template>
-  <section class="content-item">
-    <div class="pa-2 d-flex flex-column ga-2 mb-2">
-      <h4 class="text-h4 text-center">{{ title }}</h4>
-      <span class="section-divider" />
-    </div>
-
-    <v-card
-      v-if="present"
-      :loading="loading"
-      variant="text"
-      :style="
-        $vuetify.theme.global.current.dark
-          ? `background-image: radial-gradient(
-        ellipse at center center,
+  <v-card
+    v-if="present"
+    tag:section
+    :style="`background-image: radial-gradient(
+        circle at center center,
         ${darkAccentColor} 5%,
-        transparent 70%
-      ) !important;`
-          : ''
-      "
-    >
-      <v-card-text v-if="!loading">
-        <slot />
-      </v-card-text>
-      <v-row v-else>
-        <v-col v-for="i in 2" :key="i">
-          <v-skeleton-loader type="card" height="100vh" />
-        </v-col>
-      </v-row>
-    </v-card>
-  </section>
+        transparent 50%
+      ) !important;
+       background-attachment: fixed;
+      `"
+  >
+    <v-card-title>
+      <div class="pa-2 d-flex flex-column ga-2 mb-2">
+        <h4 class="text-h4 text-center">{{ title }}</h4>
+        <span class="section-divider" />
+      </div>
+    </v-card-title>
+    <v-card-text v-if="!loading">
+      <slot />
+    </v-card-text>
+    <v-row v-else>
+      <v-col v-for="i in 2" :key="i">
+        <v-skeleton-loader type="card" height="100vh" />
+      </v-col>
+    </v-row>
+  </v-card>
 </template>
 
 <script lang="ts" setup>
@@ -41,15 +37,6 @@ defineProps<{
 </script>
 
 <style lang="scss">
-.content-item {
-  &_light {
-    background-image: radial-gradient(
-      circle at center center,
-      rgb(226, 226, 226),
-      rgb(255, 255, 255)
-    ) !important;
-  }
-}
 .section-divider {
   width: 100%;
   height: 2px;

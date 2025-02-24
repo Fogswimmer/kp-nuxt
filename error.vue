@@ -3,7 +3,9 @@
     <v-app>
       <Head>
         <Title>{{
-          definePageTitle($t(`toast.messages.server_errors.${error?.statusCode}`))
+          definePageTitle(
+            $t(`toast.messages.server_errors.${error?.statusCode}`)
+          )
         }}</Title>
       </Head>
       <v-empty-state

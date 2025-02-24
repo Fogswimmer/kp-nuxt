@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head>
-      <Title>{{ definePageTitle($t("pages.films.details")) }}</Title>
+      <Title>{{ definePageTitle(film?.name || "") }}</Title>
       <Meta name="description" :content="film?.description" />
     </Head>
     <v-navigation-drawer location="start" width="400">
@@ -31,7 +31,7 @@
           @edit:general="handleGeneralInfoEdit"
           @edit:description="handleEditDescription"
           @edit:gallery="openGalleryEditor"
-          @delete:film="showConfirmDialog = true"
+          @delete:film="showDeleteWarning = true"
         />
       </template>
       <template #text>

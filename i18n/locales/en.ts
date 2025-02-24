@@ -449,7 +449,7 @@ export default {
       directed_films: "Directed films",
       produced_films: "Produced films",
       composed_films: "Composed music for films",
-      written_filmns: "Written scripts for films",
+      written_films: "Written scripts for films",
       no_films: "No films",
       photo: "Photo",
       no_photo: "No photo",

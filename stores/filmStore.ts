@@ -15,7 +15,6 @@ export const useFilmStore = defineStore("films", () => {
   const loading = ref<boolean>(false);
   const total = ref<number>(0);
   const latestFilms = ref<IFilm[]>([]);
-  const networkError = ref<Error | null | unknown>(null);
   const directors = ref<Partial<IPerson>[]>([]);
   const actors = ref<Partial<IPerson>[]>([]);
   const producers = ref<Partial<IPerson>[]>([]);
@@ -65,7 +64,7 @@ export const useFilmStore = defineStore("films", () => {
       currentPage.value = response?.currentPage || 1;
       totalPages.value = response?.totalPages || 0;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -93,7 +92,7 @@ export const useFilmStore = defineStore("films", () => {
       );
       similarGenreFilms.value = response?.items || [];
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -107,7 +106,7 @@ export const useFilmStore = defineStore("films", () => {
       );
       film.value = response;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -120,7 +119,7 @@ export const useFilmStore = defineStore("films", () => {
       );
       filmForm.value = response || {};
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -134,7 +133,7 @@ export const useFilmStore = defineStore("films", () => {
       );
       genres.value = response || [];
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -152,7 +151,7 @@ export const useFilmStore = defineStore("films", () => {
       producers.value = response?.producers.items || [];
       writers.value = response?.writers.items || [];
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -169,7 +168,7 @@ export const useFilmStore = defineStore("films", () => {
       filmForm.value = response || {};
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
     } finally {
       loading.value = false;
@@ -189,7 +188,7 @@ export const useFilmStore = defineStore("films", () => {
       film.value = response;
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
     } finally {
       loading.value = false;
@@ -211,7 +210,7 @@ export const useFilmStore = defineStore("films", () => {
       film.value = response;
       filmForm.value = response;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -228,7 +227,7 @@ export const useFilmStore = defineStore("films", () => {
       filmForm.value = response || {};
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
     } finally {
       loading.value = false;
@@ -252,7 +251,7 @@ export const useFilmStore = defineStore("films", () => {
         body: JSON.stringify({ rating, comment }),
       });
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     }
   };
 
@@ -264,7 +263,7 @@ export const useFilmStore = defineStore("films", () => {
       );
       filmsPresent.value = response?.present || false;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
     } finally {
       loading.value = false;
@@ -278,7 +277,7 @@ export const useFilmStore = defineStore("films", () => {
         method: "DELETE",
       });
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -291,7 +290,6 @@ export const useFilmStore = defineStore("films", () => {
     genres,
     directors,
     loading,
-    networkError,
     actors,
     producers,
     writers,

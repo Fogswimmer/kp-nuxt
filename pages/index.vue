@@ -5,13 +5,15 @@
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
     <v-card class="mx-auto" max-width="1300" variant="text">
+      <template v-if="filmLoading || personLoading" #loader>
+        <v-progress-linear indeterminate color="primary" />
+      </template>
       <template v-if="filmsPresent && personsPresent">
         <main class="d-flex flex-column ga-6 overflow-y-auto">
           <MasonrySection
             v-if="latestFilms.length > 0"
             :present="filmsPresent"
             :loading="filmLoading"
-            
             :dark-accent-color="darkAccentColors[0]"
             :title="$t('pages.home.newest')"
           >

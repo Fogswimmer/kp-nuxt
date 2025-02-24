@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head>
-      <Title>{{ definePageTitle($t("pages.persons.details")) }}</Title>
+      <Title>{{ definePageTitle(personFullName) }}</Title>
       <Meta name="description" :content="person?.bio" />
     </Head>
     <v-sheet max-width="1200" class="mx-auto" rounded="lg">

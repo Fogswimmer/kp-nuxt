@@ -1,5 +1,5 @@
 <template>
-  <masonry-wall :items="latestFilms" :min-columns="1" :max-columns="3" :gap="16">
+  <masonry-wall :items="latestFilms" :gap="16">
     <template #default="{ item, index }">
       <MasonryCard
         :loading="loading"

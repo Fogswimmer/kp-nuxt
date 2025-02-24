@@ -7,14 +7,13 @@
   >
     <v-expansion-panel :title="$t('pages.general_info')" value="info">
       <v-expansion-panel-text>
-        <v-list rounded="lg" nav variant="tonal">
+        <v-list rounded="lg" nav border>
           <div v-for="(detail, index) in generalInfo" :key="index">
             <v-list-item
               :key="index"
               :subtitle="$t(detail.title)"
               :prepend-icon="detail.icon"
               class="my-2"
-              :to="localeRoute(detail.to || '/')"
             >
               <v-list-item-title :class="{ 'text-secondary': detail.to }">
                 {{ detail.value || $t("general.no_data") }}
@@ -22,7 +21,7 @@
             </v-list-item>
             <v-tooltip
               v-if="
-                typeof detail.value === 'string' && detail.value.length > 12
+                typeof detail.value === 'string' && detail.value.length > 50
               "
               activator="parent"
             >
@@ -35,7 +34,7 @@
 
     <v-expansion-panel :title="$t('pages.films.starring')" value="starring">
       <v-expansion-panel-text>
-        <v-list rounded="lg" nav variant="tonal">
+        <v-list rounded="lg" nav border>
           <v-list-item
             v-for="(actor, index) in starring"
             :key="index"
@@ -57,7 +56,7 @@
 
     <v-expansion-panel value="team" :title="$t('pages.films.team')">
       <v-expansion-panel-text>
-        <v-list rounded="lg" nav variant="tonal">
+        <v-list rounded="lg" nav border>
           <v-list-item
             v-for="(person, index) in team"
             :key="index"
