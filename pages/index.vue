@@ -9,37 +9,49 @@
         <v-progress-linear indeterminate color="primary" />
       </template>
       <template v-if="filmsPresent && personsPresent">
-        <main>
-          <MasonrySection
-            v-if="latestFilms.length > 0"
-            :present="filmsPresent"
-            :loading="filmLoading"
-            :dark-accent-color="darkAccentColors[0]"
-            :title="$t('pages.home.newest')"
-          >
-            <template #default>
-              <NewestFilmsMasonryWall
-                :latest-films="latestFilms"
-                :loading="filmLoading"
-                :sidebar="false"
-              />
-            </template>
-          </MasonrySection>
-          <MasonrySection
-            v-if="popularActors.length > 0"
-            :present="personsPresent"
-            :loading="personLoading"
-            :dark-accent-color="darkAccentColors[1]"
-            :title="$t('pages.home.popular_actors')"
-          >
-            <template #default>
-              <PopularActorsMasonry
-                :popular-actors="popularActors"
+        <main
+          v-scroll="onScroll"
+          class="d-flex flex-column ga-6 overflow-y-hidden"
+        >
+          <section class="masonry-section">
+            <MasonrySection
+              v-if="latestFilms.length > 0"
+              :present="filmsPresent"
+              :loading="filmLoading"
+              :dark-accent-color="darkAccentColors[0]"
+              :title="$t('pages.home.newest')"
+            >
+              <template #default>
+                <NewestFilmsMasonryWall
+                  :latest-films="latestFilms"
+                  :loading="filmLoading"
+                  :sidebar="false"
+                />
+              </template>
+            </MasonrySection>
+          </section>
+
+          <transition-group name="fade">
+            <section v-if="showSection">
+              <MasonrySection
+                v-if="popularActors.length > 0"
+                :present="personsPresent"
                 :loading="personLoading"
-                :sidebar="false"
-              />
-            </template>
-          </MasonrySection>
+                :dark-accent-color="darkAccentColors[1]"
+                :title="$t('pages.home.popular_actors')"
+              >
+                <template #default>
+                  <PopularActorsMasonry
+                    :popular-actors="popularActors"
+                    :loading="personLoading"
+                    :sidebar="false"
+                  />
+                </template>
+              </MasonrySection>
+              <AppFooter v-if="!filmLoading && !personLoading" />
+            </section>
+            <SectionDivider extended />
+          </transition-group>
         </main>
       </template>
       <template v-else-if="!filmLoading && !personLoading">
@@ -55,7 +67,6 @@
           </template>
         </EmptyPage>
       </template>
-      <AppFooter v-if="!filmLoading && !personLoading" />
     </v-card>
   </div>
 </template>
@@ -69,6 +80,7 @@ import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import AppFooter from "~/components/Navigation/AppFooter.vue";
+import SectionDivider from "~/components/Misc/SectionDivider.vue";
 const {
   loading: filmLoading,
   filmsPresent,
@@ -96,6 +108,16 @@ const fetchData = async (): Promise<void> => {
 const darkAccentColors = Array.from({ length: 2 }, () =>
   randomColorGenerator()
 );
+
+const showSection = ref(false);
+
+const onScroll = (): void => {
+  if (window.scrollY > 0) {
+    showSection.value = true;
+  } else {
+    showSection.value = false;
+  }
+};
 
 onMounted(async (): Promise<void> => {
   await fetchData();

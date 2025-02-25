@@ -21,6 +21,9 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   },
+  experimental: {
+    viewTransition: true,
+  },
   vuetify: {
     vuetifyOptions: "./vuetify.config.ts",
   },
