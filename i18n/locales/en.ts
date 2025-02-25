@@ -1,19 +1,20 @@
 export default {
   welcome: "Welcome",
-  logo_description:"Cinemalovers hub",
-  page_descriptions:{
+  logo_description: "Cinemalovers hub",
+  page_descriptions: {
     home: "Best films and actors of all time",
     films_list: "Best films of all time",
-    persons_list: "Best actors, directors, producers, composers, writers of all time",
+    persons_list:
+      "Best actors, directors, producers, composers, writers of all time",
   },
   general: {
     img_replacement_warning: "The current image will be replaced. Continue?",
-    see_all:"See all",
+    see_all: "See all",
     about: "About project",
     total: "Total",
     published_by: "Published by",
     created_at: "Created at",
-		updated_at: "Updated at",
+    updated_at: "Updated at",
     year: "Year",
     years: "Years",
     years_old: "y.o.",
@@ -53,7 +54,7 @@ export default {
     filters: "Filters",
     file_replacement_warning: "The current file will be replaced. Continue?",
     entity_delete_warning:
-    "Are you sure you want to delete this entity? All associated files will also be deleted",
+      "Are you sure you want to delete this entity? All associated files will also be deleted",
   },
   search: {
     title: "Search",
@@ -72,7 +73,8 @@ export default {
     bio: "Biography is empty",
     items: "No items found",
     no_content: "No content",
-		no_content_notice: "Before you can add a film, you need to add actors and other film crew memebers first",
+    no_content_notice:
+      "Before you can add a film, you need to add actors and other film crew memebers first",
     actions: {
       navigate: "Navigate to page",
       to_films: "To Films List",
@@ -81,7 +83,8 @@ export default {
       add_persons: "Add persons",
       home: "Go back home",
     },
-    no_persons_found:"Before you can add a film, you need to add actors and other film crew memebers first",
+    no_persons_found:
+      "Before you can add a film, you need to add actors and other film crew memebers first",
     error_404: "Page not found",
     error_500: "Something went wrong",
   },
@@ -161,7 +164,7 @@ export default {
     password: "Password",
     save: "Save",
     logout: "Logout",
-    avatar_replace_warning:"Current avatar will be replaced. Continue?"
+    avatar_replace_warning: "Current avatar will be replaced. Continue?",
   },
   menu: {
     title: "Menu",
@@ -354,21 +357,51 @@ export default {
       edit_bio: "Edit Biography",
     },
     profile: {
-			title: "My account",
+      title: "My account",
       settings: "Settings",
-      edit: "Edit account", 
+      edit: "Edit account",
       logout: "Logout",
       change_cover: "Change cover",
-			upload_cover: "Upload cover",
-			personal_info: "Personal info",
-			avatar: "Avatar",
-			change_avatar: "Change avatar",
+      upload_cover: "Upload cover",
+      personal_info: "Personal info",
+      avatar: "Avatar",
+      change_avatar: "Change avatar",
       upload_avatar: "Upload avatar",
       age: "Age",
       last_login: "Last login: {time}",
       about: "About",
       delete_account: "Delete account",
-		},
+    },
+    about: {
+      title: "About project",
+      subtitle: "Technical information",
+      stack: "Stack",
+      table_headers: {
+        frontend: "Frontend",
+        backend: "Backend",
+        language: "Programming language",
+        main_framework: "Main framework",
+        additional_framework: "Additional framework",
+        important_packages: "Important packages",
+        internationalization: "Internationalization",
+      },
+      dev_prod: {
+        title: "Development and production",
+        table_headers: {
+          os: "Operating systems",
+          editor: "Editor",
+          pipeline: "Pipeline",
+          containerisation: "Containerization",
+          notice: "Notice",
+        },
+      },
+      author: {
+        title: "Author",
+        subtitle: "Contacts",
+        name: "Andrey Diakov, fullstack developer",
+        stack: "My stack",
+      },
+    },
   },
   forms: {
     rules: {
@@ -427,7 +460,8 @@ export default {
       preview_delete_confirm: "Are you sure you want to delete the preview?",
       preview_replace_warning:
         "The current preview will be replaced. Continue?",
-      gallery_item_delete_confirm: "Are you sure you want to delete these images?",
+      gallery_item_delete_confirm:
+        "Are you sure you want to delete these images?",
     },
     person: {
       title: "Persons",
@@ -479,39 +513,39 @@ export default {
     avatar_upload: "Upload avatar",
   },
   filters: {
-		title: "Filters",
-		records: "Records",
-		display: "Display",
-		order: {
-			title: "Order",
-			asc: "New first",
-			desc: "Old first",
-		},
-		sort: {
-			title: "Sort",
-			name: "By title",
-			all: "All",
-			films: {
-				year_of_release: "Year of release",
-				rating: "Rating",
-				duration: "Duration",
-			},
-			persons: {
+    title: "Filters",
+    records: "Records",
+    display: "Display",
+    order: {
+      title: "Order",
+      asc: "New first",
+      desc: "Old first",
+    },
+    sort: {
+      title: "Sort",
+      name: "By title",
+      all: "All",
+      films: {
+        year_of_release: "Year of release",
+        rating: "Rating",
+        duration: "Duration",
+      },
+      persons: {
         name: "Name",
         firstname: "Firstname",
-				lastname: "Lastname",
-				birthday: "Birthday",
-				age: "Age",
+        lastname: "Lastname",
+        birthday: "Birthday",
+        age: "Age",
         specialties: {
-					title: "Specialties",
-					actors: "Actors",
-					directors: "Directors",
+          title: "Specialties",
+          actors: "Actors",
+          directors: "Directors",
           crew_members: "Crew members",
           producers: "Producers",
-					writers: "Writers",
-					composers: "Composers",
-				}
-			}
-		}
-	}
+          writers: "Writers",
+          composers: "Composers",
+        },
+      },
+    },
+  },
 };

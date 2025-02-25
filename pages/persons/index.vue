@@ -31,7 +31,7 @@
       :page="currentPage"
       :limit="limit !== 'all' ? (limit as number) : 15"
       :list-title="$t('nav.persons')"
-      :new-page-link="localeRoute('/persons/new')"
+      new-page-link="/persons/new"
       @update:page="updateQueryParams"
       @update:search="search = $event"
     >
@@ -55,7 +55,6 @@ import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue"
 import { usePersonStore } from "~/stores/personStore";
 import definePageTitle from "~/utils/definePageTitle";
 
-const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
 
 const {

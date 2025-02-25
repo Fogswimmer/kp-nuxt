@@ -364,6 +364,36 @@ export default {
       avatar_replace_warning: "L'avatar actuel sera remplacé. Continuer?",
       last_login: "Dernière connexion: {time}",
 		},
+    about: {
+      title: "A propos",
+      subtitle: "Informations techniques",
+      stack: "Stack technique",
+      table_headers: {
+        frontend: "Frontend",
+        backend: "Backend",
+        language: "Langue de programmation",
+        main_framework: "Framework principal",
+        additional_framework: "Framework supplémentaire",
+        important_packages: "Packages indispensables",
+        internationalization: "Internationalisation",
+      },
+      dev_prod: {
+        title: "Développement et production",
+        table_headers: {
+          os: "Systèmes d'exploitation",
+          editor: "Editeur",
+          pipeline: "Pipeline",
+          containerisation: "Conteneurisation",
+          notice: "Remarque",
+        },
+      },
+      author: {
+        title: "Auteur",
+        subtitle: "Contacts",
+        name: "André Diakov, fullstack developer",
+        stack: "Mon stack",
+      },
+    },
   },
   forms: {
     rules: {

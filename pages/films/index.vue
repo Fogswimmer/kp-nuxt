@@ -29,7 +29,7 @@
       :page="currentPage"
       :limit="computedLimitProp"
       :list-title="$t('nav.films_list')"
-      :new-page-link="localeRoute('/films/new')"
+      new-page-link="/films/new"
       @update:page="updateQueryParams"
       @update:search="search = $event"
     >
@@ -53,20 +53,10 @@ import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.
 import { useFilmStore } from "~/stores/filmStore";
 import definePageTitle from "~/utils/definePageTitle";
 
-const localeRoute = useLocaleRoute();
-const {
-  films,
-  loading,
-  totalPages,
-  currentPage,
-  filmsPresent,
-  latestFilms,
-} = storeToRefs(useFilmStore());
-const {
-  fetchFilteredFilms,
-  checkFilmsPresence,
-  fetchLatestFilms,
-} = useFilmStore();
+const { films, loading, totalPages, currentPage, filmsPresent, latestFilms } =
+  storeToRefs(useFilmStore());
+const { fetchFilteredFilms, checkFilmsPresence, fetchLatestFilms } =
+  useFilmStore();
 const { locale, t } = useI18n();
 const limit = ref<number>(5);
 const offset = ref<number>(0);

@@ -600,10 +600,10 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "https://nebelschwimmer.site/api",
+    "apiBase": "http://kinopoisk.light/api",
     "appName": "KP-Lite",
     "i18n": {
-      "baseUrl": "https://nebelschwimmer.site",
+      "baseUrl": "http://kinopoisk.light",
       "defaultLocale": "ru",
       "defaultDirection": "ltr",
       "strategy": "prefix_and_default",
@@ -656,7 +656,7 @@ const _inlineRuntimeConfig = {
   },
   "session": {
     "name": "nuxt-session",
-    "password": "810322940231431fa020a2e5d493007d",
+    "password": "0c74f223ff80429f8044829c2f13e459",
     "cookie": {
       "sameSite": "lax"
     }
@@ -891,7 +891,7 @@ const _inlineRuntimeConfig = {
     },
     "http": {
       "domains": [
-        "nebelschwimmer.site"
+        "kinopoisk.light"
       ]
     }
   }

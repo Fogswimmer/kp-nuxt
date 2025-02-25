@@ -9,7 +9,7 @@
         <v-progress-linear indeterminate color="primary" />
       </template>
       <template v-if="filmsPresent && personsPresent">
-        <main class="d-flex flex-column ga-6 overflow-y-auto">
+        <main>
           <MasonrySection
             v-if="latestFilms.length > 0"
             :present="filmsPresent"
@@ -55,6 +55,7 @@
           </template>
         </EmptyPage>
       </template>
+      <AppFooter v-if="!filmLoading && !personLoading" />
     </v-card>
   </div>
 </template>
@@ -67,6 +68,7 @@ import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import definePageTitle from "~/utils/definePageTitle";
+import AppFooter from "~/components/Navigation/AppFooter.vue";
 const {
   loading: filmLoading,
   filmsPresent,

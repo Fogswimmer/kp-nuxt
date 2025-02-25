@@ -8,10 +8,6 @@
     >
       {{ $t("auth.sign_in") }}
     </v-btn>
-    <v-btn v-else-if="!$vuetify.display.mdAndUp" icon :to="localeRoute('/auth/sign-in')">
-      <v-icon>mdi-login</v-icon>
-    </v-btn>
-
     <template v-else>
       <v-list-item
         v-if="$vuetify.display.mdAndUp"
@@ -20,7 +16,7 @@
         lines="one"
         :title="currentUser?.displayName || currentUser?.username || ''"
         :subtitle="currentUser?.email"
-       :to="localeRoute('/profile')"
+        :to="localeRoute('/profile')"
       >
         <template #prepend>
           <v-avatar v-if="isAuthenticated">
@@ -28,8 +24,16 @@
               v-if="currentUser?.avatar"
               :src="currentUser?.avatar || ''"
               @click="navigateTo(localeRoute('/profile'))"
-            />
-            <v-icon v-else @click="navigateTo(localeRoute('/profile'))"> mdi-account</v-icon>
+            >
+              <template #error>
+                <v-avatar border>
+                  <v-icon color="error" size="x-small">mdi-image-broken</v-icon>
+                </v-avatar>
+              </template>
+            </v-img>
+            <v-icon v-else @click="navigateTo(localeRoute('/profile'))">
+              mdi-account</v-icon
+            >
           </v-avatar>
         </template>
       </v-list-item>
@@ -38,8 +42,16 @@
           v-if="currentUser?.avatar"
           :src="currentUser?.avatar || ''"
           @click="navigateTo(localeRoute('/profile'))"
-        />
-        <v-icon v-else @click="navigateTo(localeRoute('/profile'))"> mdi-account</v-icon>
+        >
+          <template #error>
+            <v-avatar border>
+              <v-icon color="error" size="x-small">mdi-image-broken</v-icon>
+            </v-avatar>
+          </template>
+        </v-img>
+        <v-icon v-else @click="navigateTo(localeRoute('/profile'))">
+          mdi-account</v-icon
+        >
       </v-avatar>
     </template>
     <ConfirmDialog

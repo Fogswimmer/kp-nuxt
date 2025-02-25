@@ -1,7 +1,7 @@
 <template>
  <div>
     <Head>
-      <Title>{{ definePageTitle($t("empty_states.no_content")) }}</Title>
+      <Title>{{ definePageTitle('') }}</Title>
     </Head>
     <v-sheet
       class="d-flex align-center justify-center"

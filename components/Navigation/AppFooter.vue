@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="d-flex flex-column text-subtitle-2 my-4">
+  <v-footer class="d-flex flex-column text-subtitle-2 pt-4" border rounded="lg">
     <span>© Nebelschwimmer, {{ currentYear }}</span>
     <nuxt-link style="text-decoration: underline" to="/about">{{
       $t("general.about")

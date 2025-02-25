@@ -3,16 +3,257 @@
     <Head>
       <Title>{{ definePageTitle($t("pages.about.title")) }}</Title>
     </Head>
-    About page
+    <v-card max-width="800" class="mx-auto">
+      <v-toolbar>
+        <template #prepend>
+          <BackBtn />
+        </template>
+        <v-toolbar-title>
+          {{ $t("pages.about.title") }}
+        </v-toolbar-title>
+      </v-toolbar>
+      <v-card
+        :title="$t('pages.about.stack')"
+        prepend-icon="mdi-hammer-wrench"
+        class="my-2"
+        variant="tonal"
+        color="primary"
+      >
+        <v-table hover>
+          <thead>
+            <tr>
+              <th />
+              <th class="text-center">
+                {{ $t("pages.about.table_headers.language") }}
+              </th>
+              <th class="text-center">
+                {{ $t("pages.about.table_headers.main_framework") }}
+              </th>
+              <th class="text-center">
+                {{ $t("pages.about.table_headers.additional_framework") }}
+              </th>
+              <th class="text-center">
+                {{ $t("pages.about.table_headers.internationalization") }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr>
+              <td>{{ $t("pages.about.table_headers.frontend") }}</td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }">
+                    <v-icon v-bind="props" size="x-large" color="blue"
+                      >mdi-language-typescript</v-icon
+                    >
+                  </template>
+                  Typescript
+                </v-tooltip>
+              </td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }"
+                    ><v-icon
+                      v-bind="props"
+                      size="x-large"
+                      color="green-accent-3"
+                      >mdi-nuxt</v-icon
+                    ></template
+                  >
+                  Nuxt 3
+                </v-tooltip>
+              </td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }"
+                    ><v-icon
+                      v-bind="props"
+                      size="x-large"
+                      color="light-blue-accent-4"
+                      >mdi-vuetify</v-icon
+                    ></template
+                  >
+                  Vuetify 3
+                </v-tooltip>
+              </td>
+              <td>
+                <v-icon color="green">mdi-check</v-icon>
+              </td>
+            </tr>
+            <tr>
+              <td>{{ $t("pages.about.table_headers.backend") }}</td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }">
+                    <v-icon
+                      v-bind="props"
+                      size="x-large"
+                      color="deep-purple-lighten-3"
+                      >mdi-language-php
+                    </v-icon>
+                  </template>
+                  Php 8.3
+                </v-tooltip>
+              </td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }"
+                    ><v-icon v-bind="props" size="x-large" color="purple"
+                      >mdi-symfony</v-icon
+                    ></template
+                  >
+                  Symfony 7
+                </v-tooltip>
+              </td>
+              <td>-</td>
+              <td>
+                <v-icon color="green">mdi-check</v-icon>
+              </td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-card>
+      <v-card
+        :title="$t('pages.about.dev_prod.title')"
+        prepend-icon="mdi-code-tags"
+        class="my-2"
+        variant="tonal"
+        color="secondary"
+      >
+        <v-table hover>
+          <thead>
+            <tr>
+              <th class="text-center">
+                {{ $t("pages.about.dev_prod.table_headers.os") }}
+              </th>
+              <th class="text-center">
+                {{ $t("pages.about.dev_prod.table_headers.editor") }}
+              </th>
+              <th class="text-center">
+                {{ $t("pages.about.dev_prod.table_headers.pipeline") }}
+              </th>
+              <th class="text-center">
+                {{ $t("pages.about.dev_prod.table_headers.containerisation") }}
+              </th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr>
+              <td>
+                <div class="d-flex ga-2 justify-center">
+                  <v-tooltip>
+                    <template #activator="{ props }">
+                      <v-icon
+                        v-bind="props"
+                        size="x-large"
+                        color="blue-lighten-2"
+                        >mdi-microsoft</v-icon
+                      ></template
+                    >
+                    MS Windows 10 - Development
+                  </v-tooltip>
+                  <v-tooltip>
+                    <template #activator="{ props }">
+                      <v-icon
+                        v-bind="props"
+                        size="x-large"
+                        color="blue-darken-2"
+                        >mdi-fedora</v-icon
+                      ></template
+                    >
+                    Fedora Linux Workstation 41 - Development
+                  </v-tooltip>
+                  <v-tooltip>
+                    <template #activator="{ props }">
+                      <v-icon
+                        v-bind="props"
+                        size="x-large"
+                        color="orange-darken-2"
+                        >mdi-ubuntu</v-icon
+                      ></template
+                    >
+                    Ubuntu 22.04 - Server
+                  </v-tooltip>
+                </div>
+              </td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }">
+                    <v-icon v-bind="props" size="x-large" color="blue-darken-4"
+                      >mdi-microsoft-visual-studio-code</v-icon
+                    ></template
+                  >
+                  MS VS Code 1.97.2
+                </v-tooltip>
+              </td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }">
+                    <v-icon v-bind="props" size="x-large"
+                      >mdi-github</v-icon
+                    ></template
+                  >
+                  GitHub Actions: CI & CD
+                </v-tooltip>
+              </td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }">
+                    <v-icon v-bind="props" size="x-large" color="blue"
+                      >mdi-docker</v-icon
+                    ></template
+                  >
+                  Docker + Docker Compose
+                </v-tooltip>
+              </td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-card>
+      <v-card
+        :title="$t('pages.about.author.title')"
+        class="my-2"
+        variant="tonal"
+      >
+        <v-card-text>
+          <v-list rounded="lg">
+            <v-list-item
+              href="https://github.com/Nebelschwimmer"
+              target="_blank"
+              lines="two"
+            >
+              <template #prepend>
+                <v-avatar size="x-large">
+                  <v-img
+                    src="public/img/nebelschwimmer_avatar.jpg"
+                    alt="fd"
+                    height="64"
+                    width="64"
+                  />
+                </v-avatar>
+              </template>
+              <v-list-item-title>{{
+                $t("pages.about.author.name")
+              }}</v-list-item-title>
+              <v-list-item-subtitle
+                >{{ $t("pages.about.author.stack") }}: JS, TS, PHP: React, Vue
+                3, Nuxt 3, Node JS (Express), Symfony. DB: Mongo, Postgres</v-list-item-subtitle
+              >
+              <template #append>
+                <v-icon size="x-large">mdi-github</v-icon></template
+              >
+            </v-list-item>
+          </v-list>
+        </v-card-text>
+      </v-card>
+    </v-card>
   </div>
 </template>
 
 <script lang="ts" setup>
 // const localeRoute = useLocaleRoute();
-
-import definePageTitle from '~/utils/definePageTitle';
-
-
+import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
+import definePageTitle from "~/utils/definePageTitle";
 </script>
 
 <style></style>

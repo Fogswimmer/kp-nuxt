@@ -5,6 +5,7 @@
     :title="item?.name"
     class="glassed"
     rounded="lg"
+    height="100%"
     elevation="5"
   >
     <template #image>

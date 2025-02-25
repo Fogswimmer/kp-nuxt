@@ -23,8 +23,11 @@
         <template #default>
           <v-list-item
             :subtitle="item?.description"
-            prepend-icon="mdi-text"
-            lines="three"
+            border
+            rounded="lg"
+            class="ma-2"
+            density="compact"
+            lines="two"
           />
           <v-list v-if="item.assessments.length > 0" :nav="sidebar">
             <v-list-subheader>{{
@@ -78,9 +81,6 @@ defineProps<{
   sidebar?: boolean;
   link?: string;
 }>();
-
-
-
 </script>
 
 <style></style>

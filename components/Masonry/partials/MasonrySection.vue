@@ -2,17 +2,14 @@
   <v-card
     v-if="present"
     tag:section
-    :style="`background-image: radial-gradient(
-        circle at center center,
-        ${darkAccentColor} 5%,
-        transparent 50%
-      ) !important;
-       background-attachment: fixed;
-      `"
+    class="my-3"
+    rounded="lg"
+    :color="darkAccentColor"
+    border
   >
     <v-card-title>
       <div class="pa-2 d-flex flex-column ga-2 mb-2">
-        <h4 class="text-h4 text-center">{{ title }}</h4>
+        <h4 class="text-lg-h4 text-h5 text-center text-uppercase">{{ title }}</h4>
         <span class="section-divider" />
       </div>
     </v-card-title>

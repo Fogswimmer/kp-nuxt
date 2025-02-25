@@ -12,7 +12,7 @@
       <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
         <v-text-field
           v-model="needle"
-          :label="$t('actions.search')"
+          :placeholder="$t('actions.search')"
           chips
           hide-details
           prepend-inner-icon="mdi-magnify"
@@ -45,7 +45,7 @@
             {{ $t("filters.title") }}</v-tooltip
           >
         </v-btn>
-        <v-btn icon :to="newPageLink">
+        <v-btn icon :to="localeRoute(newPageLink)">
           <v-icon>mdi-plus</v-icon>
           <v-tooltip activator="parent" location="bottom">
             {{ $t("actions.add") }}
@@ -65,7 +65,7 @@
           <div class="d-flex ga-2">
             <v-text-field
               v-model="needle"
-              :label="$t('actions.search')"
+              :placeholder="$t('actions.search')"
               chips
               hide-details
               prepend-inner-icon="mdi-magnify"
@@ -101,7 +101,7 @@
           $t("search.request_result", { count: items.length })
         }}</span>
       </v-label>
-      <v-list v-if="items.length > 0 && !loading">
+      <v-list v-if="items.length > 0 && !loading" height="75vh">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -109,6 +109,8 @@
           rounded="lg"
           elevation="5"
           lines="two"
+          variant="tonal"
+          class="ma-2 glassed"
           :title="item.title"
           :subtitle="item.value"
           :value="item"
@@ -142,7 +144,7 @@
         type="list-item-avatar-three-line"
       />
       <v-empty-state
-        v-else
+        v-else-if="!loading"
         :title="$t('empty_states.title')"
         icon="mdi-alert-rhombus"
       />

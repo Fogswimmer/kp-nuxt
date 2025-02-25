@@ -370,6 +370,36 @@ export default {
       about: "О себе",
       delete_account: "Удалить аккаунт",
     },
+    about: {
+      title: "О проекте",
+      subtitle: "Техническая информация",
+      stack: "Стек технологий",
+      table_headers: {
+        frontend: "Frontend",
+        backend: "Backend",
+        language: "Язык программирования",
+        main_framework: "Основной фреймворк",
+        additional_framework: "Дополнительный фреймворк",
+        important_packages: "Важные пакеты",
+        internationalization: "Интернационализация",
+      },
+      dev_prod: {
+        title: "Разработка и продакшн",
+        table_headers: {
+          os: "Операционные системы",
+          editor: "Редактор",
+          pipeline: "Пайплайн",
+          containerisation: "Контейнеризация",
+          notice: "Примечание",
+        },
+      },
+      author: {
+        title: "Автор",
+        subtitle: "Контакты",
+        name: "Андрей Дьяков, фулстек-разработчик",
+        stack: "Мой стек",
+      },
+    },
   },
   forms: {
     rules: {
