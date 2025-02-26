@@ -1,14 +1,14 @@
 <template>
   <div>
-    <v-app-bar order="1">
+    <v-toolbar>
       <template #prepend>
         <BackBtn />
       </template>
-      <v-app-bar-title>
+      <v-toolbar-title>
         <span class="text-h6 text-lg-h5 font-weight-bold">
           {{ listTitle }}</span
         >
-      </v-app-bar-title>
+      </v-toolbar-title>
       <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
         <v-text-field
           v-model="needle"
@@ -52,7 +52,7 @@
           </v-tooltip>
         </v-btn>
       </template>
-    </v-app-bar>
+    </v-toolbar>
     <client-only>
       <v-navigation-drawer
         v-if="$vuetify.display.smAndDown"

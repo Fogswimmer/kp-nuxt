@@ -9,6 +9,8 @@ export default {
   },
   general: {
     img_replacement_warning: "The current image will be replaced. Continue?",
+    img_delete_warning: "The current image will be deleted. Continue?",
+    img_broken: "Broken image",
     see_all: "See all",
     about: "About project",
     total: "Total",
@@ -22,7 +24,6 @@ export default {
     no_cover: "No cover",
     no_avatar: "No avatar",
     data_transfer: "Transferring data",
-    preview: "Preview",
     items_per_page: "Items per page",
     ordering: "Ordering",
     search: "Search",
@@ -313,8 +314,6 @@ export default {
       no_description: "No description",
       duration: "Duration",
       genre: "Genre",
-      preview: "Preview",
-      no_preview: "No Preview",
       gallery: "Gallery",
       no_gallery: "Gallery is empty",
       add: "Add Film",
@@ -432,8 +431,6 @@ export default {
       genres_hint: "Pick genres",
       actors_hint: "Pick actors",
       director_hint: "Pick director",
-      preview: "Poster",
-      new_preview: "New poster",
       gallery: "Gallery",
       new_gallery: "New gallery",
       update_poster: "Update poster",
@@ -447,19 +444,11 @@ export default {
         optional: "Optional",
         error: "Error",
       },
-      preview_max_size: "Preview size should be less than 2 MB!",
-      preview_restrictions:
-        "Allowed formats: jpg, png, webp, jpeg. Maximum size - 2 MB.",
       gallery_max_count: "Gallery count should be not more than 6",
       gallery_restrictions:
         "Allowed formats: jpg, png, webp, jpeg. Maximum size - 4 MB.",
-      preview_empty_warning:
-        "You didn't upload a preview, but you can do it later. Continue?",
       gallerY_empty_warning:
         "You didn't upload any images for gallery, but you can do it later. Continue?",
-      preview_delete_confirm: "Are you sure you want to delete the preview?",
-      preview_replace_warning:
-        "The current preview will be replaced. Continue?",
       gallery_item_delete_confirm:
         "Are you sure you want to delete these images?",
     },

@@ -20,9 +20,7 @@
                 </div>
               </template>
               <template #error>
-                <div class="d-flex align-center justify-center fill-height">
-                  <v-icon color="error">mdi-image-broken</v-icon>
-                </div>
+                <ErrorPlaceHolder />
               </template>
             </v-img>
             <v-sheet
@@ -35,9 +33,11 @@
               <div
                 class="d-flex flex-column align-center justify-center fill-height"
               >
-                <span class="text-caption"
-                  >{{ $t("general.available_for_upload") }}
-                </span>
+                <v-list-item lines="two">
+                  <v-list-item-subtitle class="text-caption text-center">{{
+                    $t("general.available_for_upload")
+                  }}</v-list-item-subtitle>
+                </v-list-item>
               </div>
             </v-sheet>
           </template>
@@ -52,14 +52,20 @@
       :no-content-label="$t('pages.films.no_gallery')"
       :with-avatar="withAvatar"
       @close="fullscreenMode = false"
+      @avatar:set="handleSetAvatar"
+      @cover:set="handleSetCover"
+      @delete:img="handleDeleteImg"
     />
   </div>
 </template>
 
 <script lang="ts" setup>
 import GalleryFullscreenViewer from "./GalleryFullscreenViewer.vue";
-
-const emit = defineEmits(["editor:open"]);
+import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
+const emit = defineEmits<{
+  (event: "editor:open"): void;
+  (event: "avatar:set" | "cover:set" | "delete:img", index: number): void;
+}>();
 const props = defineProps<{
   sliderArr: string[];
   gallery: string[];
@@ -81,5 +87,19 @@ const openFullScreenModeOnClick = (index: number): void => {
   else {
     emit("editor:open");
   }
+};
+const handleSetAvatar = (index: number): void => {
+  emit("avatar:set", index);
+  fullscreenMode.value = false;
+};
+
+const handleSetCover = (index: number): void => {
+  emit("cover:set", index);
+  fullscreenMode.value = false;
+};
+
+const handleDeleteImg = (index: number): void => {
+  emit("delete:img", index);
+  fullscreenMode.value = false;
 };
 </script>

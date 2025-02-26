@@ -14,6 +14,11 @@
 
         <slot name="menu" />
       </v-toolbar>
+      <template v-if="notification">
+        <div class="d-flex justify-center w-100 glassed pa-2">
+          <slot name="notification" location="start" />
+        </div>
+      </template>
       <template v-if="loading" #loader>
         <v-progress-linear indeterminate color="primary" />
       </template>
@@ -34,31 +39,20 @@
             </v-sheet>
           </template>
           <template #error>
-            <v-sheet height="100%">
-              <div class="d-flex align-center justify-center h-100">
-                <v-icon color="error" icon="mdi-image-broken" />
-              </div>
-            </v-sheet>
+            <ErrorPlaceHolder show-label />
           </template>
         </v-img>
-        <div v-else class="default-cover" height="250" />
+        <div v-else class="default-cover img-blur" height="250" />
         <slot name="general_info" />
         <slot name="text" />
       </v-card>
     </v-card>
-    <v-footer
-      v-if="notification"
-    >
-      <div class="d-flex justify-center w-100">
-        <slot name="notification" location="start" />
-      </div>
-    </v-footer>
   </div>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
-
+import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
 defineEmits(["drawer:toggle"]);
 defineProps<{
   pageName?: string;

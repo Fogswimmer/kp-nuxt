@@ -3,58 +3,60 @@
     <Head>
       <Title>{{ definePageTitle($t("pages.profile.title")) }}</Title>
     </Head>
-    <DetailCard
-      display-avatar
-      :page-name="$t('pages.profile.title')"
-      :cover="currentUser?.cover || ''"
-      :loading="loading"
-      :is-auth="isAuthenticated"
-    >
-      <template #menu>
-        <v-menu location="bottom end">
-          <template #activator="{ props }">
-            <v-btn icon v-bind="props">
-              <v-icon>mdi-dots-vertical</v-icon>
-            </v-btn>
-          </template>
-          <v-list density="compact">
-            <v-list-item
-              :title="$t('actions.choose_cover')"
-              prepend-icon="mdi-image"
-              value="cover"
-              @click="showCoverChooseDialog = true"
-            />
-            <v-list-item
-              :title="$t('actions.edit_avatar')"
-              prepend-icon="mdi-account"
-              value="avatar"
-              @click="showAvatarUploadDialog = true"
-            />
-            <v-list-item
-              :title="$t('actions.edit')"
-              prepend-icon="mdi-pencil"
-              value="edit"
-              @click="handleEdit"
-            />
-            <v-list-item
-              :title="$t('auth.sign_out')"
-              prepend-icon="mdi-logout"
-              value="logout"
-              @click="showConfirmLogoutDialog = true"
-            />
-          </v-list>
-        </v-menu>
-      </template>
-      <template #general_info>
-        <TopInfo
-          :loading="loading"
-          :general-info="computedGeneralInfo"
-          :avatar="currentUser?.avatar || ''"
-          :title="currentUser?.displayName || ''"
-          :subtitle="computedLastLogin"
-        />
-      </template>
-    </DetailCard>
+    <v-sheet max-width="1200" class="mx-auto" rounded="lg">
+      <DetailCard
+        display-avatar
+        :page-name="$t('pages.profile.title')"
+        :cover="currentUser?.cover || ''"
+        :loading="loading"
+        :is-auth="isAuthenticated"
+      >
+        <template #menu>
+          <v-menu location="bottom end">
+            <template #activator="{ props }">
+              <v-btn icon v-bind="props">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list density="compact">
+              <v-list-item
+                :title="$t('actions.choose_cover')"
+                prepend-icon="mdi-image"
+                value="cover"
+                @click="showCoverChooseDialog = true"
+              />
+              <v-list-item
+                :title="$t('actions.edit_avatar')"
+                prepend-icon="mdi-account"
+                value="avatar"
+                @click="showAvatarUploadDialog = true"
+              />
+              <v-list-item
+                :title="$t('actions.edit')"
+                prepend-icon="mdi-pencil"
+                value="edit"
+                @click="handleEdit"
+              />
+              <v-list-item
+                :title="$t('auth.sign_out')"
+                prepend-icon="mdi-logout"
+                value="logout"
+                @click="showConfirmLogoutDialog = true"
+              />
+            </v-list>
+          </v-menu>
+        </template>
+        <template #general_info>
+          <TopInfo
+            :loading="loading"
+            :general-info="computedGeneralInfo"
+            :avatar="currentUser?.avatar || ''"
+            :title="currentUser?.displayName || ''"
+            :subtitle="computedLastLogin"
+          />
+        </template>
+      </DetailCard>
+    </v-sheet>
 
     <ConfirmDialog
       v-model="showAvatarWarning"
@@ -165,8 +167,6 @@ const computedLastLogin = computed((): string => {
   ).toLocaleString();
   return t("pages.profile.last_login", { time: lastLogin });
 });
-
-
 
 const {
   signOut,

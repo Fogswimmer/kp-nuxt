@@ -64,6 +64,8 @@
                   :loading="loading"
                   :with-avatar="false"
                   @editor:open="openGalleryEditor"
+                  @cover:set="handleChangeCover"
+                  @delete:img="handleDeleteImg"
                 />
               </v-expansion-panel-text>
             </v-expansion-panel>
@@ -314,7 +316,7 @@ const generalInfo = computed((): Detail[] => {
 
 const starring = computed((): Detail[] => {
   return film.value
-    ? film.value.actorsData.map((person: FilmPerson): Detail => {
+    ? film.value?.actorsData.map((person: FilmPerson): Detail => {
         return {
           title: "",
           value: person?.name || "",
@@ -433,7 +435,6 @@ const sumbitEdit = async () => {
 };
 
 const handleGalleryItemsDelete = async () => {
-  console.log(imagesToDelete.value);
   await deleteGalleryItems(imagesToDelete.value);
   await fetchData();
   await nextTick(() => {
@@ -441,6 +442,11 @@ const handleGalleryItemsDelete = async () => {
     showConfirmDialog.value = false;
     editGalleryMode.value = false;
   });
+};
+
+const handleDeleteImg = async (index: number) => {
+  selectedImagesIndices.value = [index];
+  await handleGalleryItemsDelete();
 };
 
 const chooseCover = (): void => {
@@ -459,6 +465,7 @@ const handleGalleryUpload = async (files: File[]) => {
 };
 
 const handleChangeCover = async (index: number) => {
+  console.log(index);
   filmForm.value.cover = film.value?.gallery[index - 1] || "";
   await editFilm(locale.value);
   editGalleryMode.value = false;

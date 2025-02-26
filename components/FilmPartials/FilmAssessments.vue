@@ -1,17 +1,20 @@
 <template>
   <div class="d-flex flex-column ga-2">
     <transition-group>
-      <v-card v-if="!isAssessing" rounded="lg" elevation="2" variant="text" border>
+      <v-card
+        v-if="!isAssessing"
+        rounded="lg"
+        elevation="2"
+        variant="text"
+        border
+      >
         <v-card-text>
           <div class="d-flex flex-column justify-center ga-1 align-center">
             <div class="d-flex ga-1 align-center">
               <v-icon icon="mdi-star" size="x-large" color="warning" />
               <span class="text-h4">{{ currentRating }}</span>
             </div>
-            <v-label>{{
-              assessments.length + " " + $t("pages.films.assessments") ||
-              $t("pages.films.no_assessments")
-            }}</v-label>
+            <v-label>{{ computedAssessmentNumber }}</v-label>
             <v-btn
               :disabled="!isAuthenticated"
               color="secondary"
@@ -132,9 +135,8 @@
 </template>
 
 <script lang="ts" setup>
-import AssessmentForm from '../Forms/AssessmentForm.vue';
+import AssessmentForm from "../Forms/AssessmentForm.vue";
 
-const page = ref(1);
 defineEmits([
   "assession:submit",
   "assession:enable",
@@ -150,12 +152,26 @@ const props = defineProps<{
   rating: number;
   comment: string;
 }>();
-
+const page = ref<number>(1);
 const itemsPerPage = ref<number>(5);
 
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;
 };
+
+const { t, locale } = useI18n();
+
+const computedAssessmentNumber = computed(() => {
+  const label =
+    locale.value == "ru"
+      ? declineInRussian(props.assessments.length, [
+          "оценка",
+          "оценки",
+          "оценок",
+        ])
+      : t("pages.films.assessments");
+  return label || t("pages.films.no_assessments");
+});
 </script>
 
 <style></style>

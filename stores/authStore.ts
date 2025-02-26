@@ -79,11 +79,15 @@ export const useAuthStore = defineStore("authStore", () => {
     }
   };
   const signOut = async () => {
-    await $fetch<CurrentUser>(`${baseUrl}/logout`, {
-      method: "POST",
-    });
-    currentUser.value = null;
-    token.value = null;
+    try {
+      await $fetch<CurrentUser>(`${baseUrl}/logout`, {
+        method: "POST",
+      });
+      currentUser.value = null;
+      token.value = null;
+    } catch (error: unknown) {
+      handleError(error);
+    }
   };
   const uploadAvatar = async (avatar: File, id: number) => {
     try {
@@ -100,8 +104,7 @@ export const useAuthStore = defineStore("authStore", () => {
       );
       currentUser.value = response;
     } catch (error: unknown) {
-      authError.value = error;
-      showErrorMessage.value = true;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -122,8 +125,7 @@ export const useAuthStore = defineStore("authStore", () => {
       );
       currentUser.value = response;
     } catch (error: unknown) {
-      authError.value = error;
-      showErrorMessage.value = true;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -142,8 +144,7 @@ export const useAuthStore = defineStore("authStore", () => {
       );
       currentUser.value = response;
     } catch (error: unknown) {
-      authError.value = error;
-      showErrorMessage.value = true;
+      handleError(error);
     } finally {
       loading.value = false;
     }

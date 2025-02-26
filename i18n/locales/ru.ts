@@ -9,6 +9,8 @@ export default {
   },
   general: {
     img_replacement_warning: "Текущее изображение будет заменено. Продолжить?",
+    img_delete_warning: "Текущее изображение будет удалено. Продолжить?",
+    img_broken: "Поврежденное изображение",
     about: "О проекте",
     see_all: "Показать все",
     created_at: "Создано",
@@ -22,7 +24,6 @@ export default {
     no_cover: "Без обложки",
     no_avatar: "Без аватара",
     data_transfer: "Передача данных",
-    preview: "Предпросмотр",
     items_per_page: "Элементов на странице",
     ordering: "Сортировка",
     search: "Поиск",
@@ -307,7 +308,6 @@ export default {
       description: "Описание",
       duration: "Продолжительность",
       genre: "Жанр",
-      no_preview: "Нет постера",
       gallery: "Галерея",
       no_gallery: "Галерея пуста",
       add: "Добавить Фильм",
@@ -423,8 +423,6 @@ export default {
       description: "Описание",
       duration: "Продолжительность",
       genres: "Жанры",
-      preview: "Постер",
-      new_preview: "Новый постер",
       gallery: "Галерея",
       new_gallery: "Новая галерея",
       producer: "Продюсер",
@@ -443,18 +441,6 @@ export default {
         optional: "Необязательно",
         error: "Ошибка",
       },
-      preview_max_size: "Размер постера не должен превышать 2 МБ!",
-      preview_restrictions:
-        "Загрузите файл в формате jpg, png, webp, jpeg. Максимальный размер - 2 MB.",
-      gallery_max_count: "Максимальное количество картинок - 6",
-      gallery_restrictions:
-        "Загрузите файлы в количество не более 6. Допустимые форматы: jpg, png, jpeg, webp. Максимальный общий размер - 4 MB.",
-      preview_empty_warning:
-        "Вы не загрузили постер, но вы сможете сделать это позже. Завершить?",
-      gallery_empty_warning:
-        "Вы не загрузили файлы для галереи, но вы сможете сделать это позже. Завершить?",
-      preview_delete_confirm: "Вы уверены, что хотите удалить постер?",
-      preview_replace_warning: "Текущий постер будет заменен. Продолжить?",
       gallery_item_delete_confirm:
         "Вы уверены, что хотите удалить эти изображения?",
     },

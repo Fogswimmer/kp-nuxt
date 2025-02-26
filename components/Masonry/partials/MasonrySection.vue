@@ -20,7 +20,7 @@
     </v-card-text>
     <v-row v-else>
       <v-col v-for="i in 2" :key="i">
-        <v-skeleton-loader type="card" height="100%" />
+        <v-skeleton-loader type="card" height="100vh" />
       </v-col>
     </v-row>
   </v-card>

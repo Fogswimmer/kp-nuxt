@@ -45,7 +45,14 @@
           >
             <template #prepend>
               <v-avatar>
-                <v-img v-if="actor.avatar" :src="actor.avatar" />
+                <v-img v-if="actor.avatar" :src="actor.avatar">
+                  <template #placeholder>
+                    <v-icon size="x-small">mdi-account</v-icon>
+                  </template>
+                  <template #error>
+                    <ErrorPlaceHolder />
+                  </template>
+                </v-img>
                 <v-icon v-else icon="mdi-account" />
               </v-avatar>
             </template>
@@ -64,11 +71,22 @@
             :subtitle="$t(person.title)"
             :title="person.value"
             :value="index"
-            :prepend-icon="person.avatar || 'mdi-account'"
-            :prepend-avatar="person.avatar"
             :to="localeRoute(person.to || '/')"
             base-color="secondary"
-          />
+          >
+            <template #prepend>
+              <v-avatar>
+                <v-img :src="person.avatar">
+                  <template #placeholder>
+                    <v-icon size="x-small">mdi-account</v-icon>
+                  </template>
+                  <template #error>
+                    <ErrorPlaceHolder />
+                  </template>
+                </v-img>
+              </v-avatar>
+            </template>
+          </v-list-item>
         </v-list>
       </v-expansion-panel-text>
     </v-expansion-panel>
@@ -76,6 +94,8 @@
 </template>
 
 <script lang="ts" setup>
+import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
+
 defineProps<{
   generalInfo: Detail[];
   starring: Detail[];

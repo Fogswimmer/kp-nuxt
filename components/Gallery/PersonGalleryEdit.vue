@@ -26,9 +26,16 @@
       <v-tabs-window v-model="active">
         <v-tabs-window-item value="avatar">
           <SingleImgSelector
+            v-if="person?.photos.length"
             :cover-index="selectedAvatarIndex"
             :gallery="person?.photos || []"
             @img:select="$emit('avatar:change', $event)"
+          />
+          <GalleryUploader
+            v-else
+            :upload-count="1"
+            :upload-error="uploadError"
+            @files:upload="$emit('avatar:upload', $event)"
           />
         </v-tabs-window-item>
         <v-tabs-window-item value="cover">
@@ -67,6 +74,7 @@ defineEmits([
   "delete:selected",
   "upload",
   "avatar:change",
+  "avatar:upload",
   "cover:change",
 ]);
 const props = defineProps<{

@@ -600,10 +600,10 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "apiBase": "http://kinopoisk.light/api",
+    "apiBase": "https://nebelschwimmer.site/api",
     "appName": "KP-Lite",
     "i18n": {
-      "baseUrl": "http://kinopoisk.light",
+      "baseUrl": "https://nebelschwimmer.site",
       "defaultLocale": "ru",
       "defaultDirection": "ltr",
       "strategy": "prefix_and_default",
@@ -891,7 +891,7 @@ const _inlineRuntimeConfig = {
     },
     "http": {
       "domains": [
-        "kinopoisk.light"
+        "nebelschwimmer.site"
       ]
     }
   }

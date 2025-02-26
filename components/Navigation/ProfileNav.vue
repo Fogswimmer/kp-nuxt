@@ -83,9 +83,4 @@ watch(isAuthenticated, () => {
   }
 });
 
-// onMounted(async (): Promise<void> => {
-//   if (isAuthenticated.value) {
-//     await fetchCurrentUser();
-//   }
-// });
 </script>

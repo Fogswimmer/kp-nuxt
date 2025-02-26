@@ -100,8 +100,8 @@ const computedActiveNavBtn = computed(() => {
   console.log(routeName)
   return {
     home: routeName.startsWith("home"),
-    films: routeName.startsWith("films"),
-    persons: routeName.startsWith("persons"),
+    films: routeName.startsWith("film") || routeName.startsWith("newFilm"),
+    persons: routeName.startsWith("person") || routeName.startsWith("newPerson"),
   };
 }) as ComputedRef<{ [key: string]: boolean }>;
 

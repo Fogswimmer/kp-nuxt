@@ -8,6 +8,8 @@ export default {
   },
   general: {
     img_replacement_warning: "L'image actuelle sera remplacée. Continuer?",
+    img_delete_warning: "L'image actuelle sera supprimée. Continuer?",
+    img_broken: "Image corrompue",
     about: "A propos du projet",
     see_all:"Voir tout",
     created_at: "Créé",
@@ -307,7 +309,7 @@ export default {
       description: "Description",
       duration: "Durée",
       genre: "Genre",
-      preview: "Poster",
+
       no_preview: "Aucun poster",
       gallery: "Galerie",
       no_gallery: "Galerie vide",
@@ -417,7 +419,6 @@ export default {
       description: "Description",
       duration: "Durée",
       genres: "Genres",
-      preview: "Poster",
       new_preview: "Nouveau poster",
       gallery: "Galerie",
       new_gallery: "Nouvelle galerie",
@@ -437,21 +438,12 @@ export default {
       optional: "Optional",
       error: "Error",
     },
-    preview_max_size: "La taille du poster ne doit pas dépasser 2 MB!",
-    preview_restrictions:
-      "Formats acceptés: jpg, png, jpeg, webp. Taille maximale - 2 MB.",
     gallery_max_count: "Le nombre de fichiers ne doit pas dépasser 6.",
     gallery_restrictions:
       "Formats acceptés: jpg, png, jpeg, webp. Taille maximale - 4 MB.",
-    preview_empty_warning:
-      "Vous n'avez pas chargé de poster, mais vous pouvez le faire plus tard. Continuer?",
+
     gallery_empty_warning:
       "Vous n'avez pas chargé de fichier pour la galerie, mais vous pouvez le faire plus tard. Continuer?",
-    preview_delete_confirm: "Voulez-vous vraiment supprimer le poster?",
-    preview_replace_warning:
-      "Le poster actuel sera remplacé par le nouveau. Continuer?",
-      gallery_item_delete_confirm: "Voulez-vous vraiment supprimer ces fichiers?",
-      
   },
   person: {
     add: "Ajouter personne",

@@ -20,6 +20,7 @@
             :avatar="person?.avatar || ''"
             :title="personFullName"
             :subtitle="specialtyNames"
+            @avatar:edit="chooseAvatar"
           />
         </template>
         <template #notification>
@@ -141,6 +142,9 @@
                   :loading="loading"
                   with-avatar
                   @editor:open="photoEditMode = true"
+                  @cover:set="handleCoverChange"
+                  @avatar:set="handleChangeAvatar"
+                  @delete:img="handleDeleteImg"
                 />
               </v-expansion-panel-text>
             </v-expansion-panel>
@@ -151,7 +155,7 @@
         v-model:opened="generalInfoEdit"
         :max-width="1000"
         :title="$t('actions.edit_person') + ' ' + personFullName"
-        :loading="loading"
+       
         @close="generalInfoEdit = false"
       >
         <template #text>
@@ -172,10 +176,8 @@
         v-model:show="showSnackbar"
         @close="showSnackbar = false"
       />
-
       <BaseDialog
         v-model:opened="photoEditMode"
-        :loading="loading"
         :title="computedGalleryEditTitle"
         :max-width="1200"
         @close="photoEditMode = false"
@@ -191,6 +193,7 @@
             :upload-disabled="uploadCount === 0"
             :remove-disabled="!person?.photos.length"
             @avatar:change="handleChangeAvatar"
+            @avatar:upload="handleAvatarUpload"
             @update:selected="selectedImagesIndices = $event"
             @delete:selected="showConfirmDialog = true"
             @cover:change="handleCoverChange"
@@ -253,7 +256,7 @@ const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>(["bio", "gallery", "filmography"]);
 const coverFile = ref<File>();
-
+const avatarFile = ref<File | null>(null);
 const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());
 const { person, genders, specialties, personForm, loading } =
   storeToRefs(usePersonStore());
@@ -266,8 +269,21 @@ const {
   uploadPhotos,
   uploadCover,
   removePerson,
+  deleteGalleryItems,
   GALLERY_SIZE,
 } = usePersonStore();
+
+const imagesToDelete = computed(() => {
+  return person.value?.photos
+    .filter((_: string, index: number): boolean =>
+      selectedImagesIndices.value.includes(index)
+    )
+    .map((imageName: string): string => {
+      const fileName = imageName ? imageName.split("/").at(-1) : "";
+
+      return fileName ? fileName.split(".")[0] : "";
+    });
+}) as ComputedRef<string[]>;
 
 const chooseCover = (): void => {
   photoEditMode.value = true;
@@ -352,9 +368,25 @@ const handleChangeAvatar = async (index: number): Promise<void> => {
   showSnackbar.value = !showSnackbar.value;
 };
 
+const handleAvatarUpload = async (files: File[]): Promise<void> => {
+  avatarFile.value = files[0];
+  const personId: number = Number(useRoute().params.id);
+  await uploadPhotos([avatarFile.value], personId);
+  personForm.value.avatar = person.value?.photos[0] || "";
+  await editPerson();
+  photoEditMode.value = false;
+  await fetchData();
+  showSnackbar.value = !showSnackbar.value;
+};
+
 const chooseAvatar = (): void => {
-  photoEditMode.value = true;
-  activeTab.value = 0;
+  if (person.value?.avatar) {
+    photoEditMode.value = true;
+    activeTab.value = 0;
+  } else {
+    photoEditMode.value = true;
+    activeTab.value = 2;
+  }
 };
 
 const handlePhotosUpload = async (files: File[]): Promise<void> => {
@@ -395,6 +427,20 @@ const handlePhotosDelete = async () => {};
 const handlePersonDelete = async (): Promise<void> => {
   await removePerson(Number(useRoute().params.id));
   navigateTo(localeRoute("/persons"));
+};
+
+const handleGalleryItemsDelete = async () => {
+  await deleteGalleryItems(imagesToDelete.value);
+  await fetchData();
+  await nextTick(() => {
+    showSnackbar.value = true;
+    showConfirmDialog.value = false;
+  });
+};
+
+const handleDeleteImg = async (index: number) => {
+  selectedImagesIndices.value = [index];
+  await handleGalleryItemsDelete();
 };
 
 const fetchData = async (): Promise<void> => {

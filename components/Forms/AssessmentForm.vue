@@ -19,7 +19,7 @@
         :label="$t('pages.films.comment')"
         counter
         rows="5"
-        :rules="[(v: string) => v.length <= 255 || t('forms.rules.max_chars')]"
+        :rules="[(v: string) => v.length <= 255 || t('forms.rules.max_chars') + ' - 255']"
         @update:model-value="$emit('update:comment', $event)"
       />
     </v-card-text>

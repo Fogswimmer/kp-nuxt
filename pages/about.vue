@@ -3,7 +3,7 @@
     <Head>
       <Title>{{ definePageTitle($t("pages.about.title")) }}</Title>
     </Head>
-    <v-card max-width="800" class="mx-auto">
+    <v-card max-width="860" class="mx-auto">
       <v-toolbar>
         <template #prepend>
           <BackBtn />
@@ -17,7 +17,7 @@
         prepend-icon="mdi-hammer-wrench"
         class="my-2"
         variant="tonal"
-        color="primary"
+        color="blue"
       >
         <v-table hover>
           <thead>
@@ -30,7 +30,7 @@
                 {{ $t("pages.about.table_headers.main_framework") }}
               </th>
               <th class="text-center">
-                {{ $t("pages.about.table_headers.additional_framework") }}
+                {{ $t("pages.about.table_headers.additional_framework") }} / DB
               </th>
               <th class="text-center">
                 {{ $t("pages.about.table_headers.internationalization") }}
@@ -105,7 +105,19 @@
                   Symfony 7
                 </v-tooltip>
               </td>
-              <td>-</td>
+              <td>
+                <v-tooltip>
+                  <template #activator="{ props }"
+                    ><v-icon
+                      v-bind="props"
+                      size="x-large"
+                      color="blue-lighten-2"
+                      >mdi-elephant</v-icon
+                    ></template
+                  >
+                  Postresql 16
+                </v-tooltip>
+              </td>
               <td>
                 <v-icon color="green">mdi-check</v-icon>
               </td>
@@ -223,21 +235,21 @@
               lines="two"
             >
               <template #prepend>
-                <v-avatar size="x-large">
+                <v-avatar size="164">
                   <v-img
                     src="public/img/nebelschwimmer_avatar.jpg"
                     alt="fd"
-                    height="64"
-                    width="64"
+                    height="164"
+                    width="164"
                   />
                 </v-avatar>
               </template>
-              <v-list-item-title>{{
+              <v-list-item-title class="text-lg-h5">{{
                 $t("pages.about.author.name")
               }}</v-list-item-title>
               <v-list-item-subtitle
-                >{{ $t("pages.about.author.stack") }}: JS, TS, PHP: React, Vue
-                3, Nuxt 3, Node JS (Express), Symfony. DB: Mongo, Postgres</v-list-item-subtitle
+                >JS, TS, PHP: React, Vue 3, Nuxt 3, Node JS (Express), Symfony.
+                DB: Mongo, Postgres</v-list-item-subtitle
               >
               <template #append>
                 <v-icon size="x-large">mdi-github</v-icon></template

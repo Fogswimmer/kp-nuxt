@@ -3,7 +3,6 @@
     :key="index"
     :loading="loading"
     :title="item?.name"
-    class="glassed"
     rounded="lg"
     height="100%"
     elevation="5"
@@ -29,12 +28,16 @@
           </div>
         </v-card>
       </template>
+      <template #error>
+        <ErrorPlaceHolder />
+      </template>
     </v-img>
     <slot />
   </v-card>
 </template>
 
 <script lang="ts" setup>
+import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 defineProps<{
   loading: boolean;
   img: string;
