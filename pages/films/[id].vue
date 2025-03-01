@@ -69,7 +69,22 @@
                 />
               </v-expansion-panel-text>
             </v-expansion-panel>
-
+            <v-expansion-panel
+              id="description"
+              :title="$t('pages.films.description')"
+              tag="section"
+              class="content-item"
+              value="description"
+            >
+              <v-expansion-panel-text>
+                <IndentedEditableText
+                  :edit-mode="editDescriptionMode"
+                  :messages="$t('pages.films.edit_description')"
+                  :text="film?.description || ''"
+                  @sumbit:edit="submitDescriptionEdit"
+                />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
             <v-expansion-panel
               id="rating"
               tag="section"
@@ -93,22 +108,6 @@
                     @rating:update="rating = $event"
                   />
                 </div>
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            <v-expansion-panel
-              id="description"
-              :title="$t('pages.films.description')"
-              tag="section"
-              class="content-item"
-              value="description"
-            >
-              <v-expansion-panel-text>
-                <IndentedEditableText
-                  :edit-mode="editDescriptionMode"
-                  :messages="$t('pages.films.edit_description')"
-                  :text="film?.description || ''"
-                  @sumbit:edit="submitDescriptionEdit"
-                />
               </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>

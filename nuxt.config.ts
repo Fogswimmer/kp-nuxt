@@ -73,11 +73,6 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE_URL,
       appName: process.env.APP_NAME,
     },
-    recaptcha: {
-      // siteKey: process.env.RECAPTCHA_SITE_KEY,
-      version: 3,
-      size: "compact",
-    },
   },
 
   vite: {

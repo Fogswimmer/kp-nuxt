@@ -28,6 +28,7 @@
           <SingleImgSelector
             v-if="person?.photos.length"
             :cover-index="selectedAvatarIndex"
+            :card-height="cardHeight"
             :gallery="person?.photos || []"
             @img:select="$emit('avatar:change', $event)"
           />
@@ -55,6 +56,7 @@
         <v-tabs-window-item value="remove">
           <MultipleImgSelector
             :slider-gallery-arr="sliderArr || []"
+            :card-height="cardHeight"
             @delete:selected="$emit('delete:selected', $event)"
             @update:selected="$emit('update:selected', $event)"
             @gallery:clear="clearGalleryFiles"
@@ -85,6 +87,7 @@ const props = defineProps<{
   uploadDisabled: boolean;
   removeDisabled: boolean;
   sliderArr?: string[];
+  cardHeight?: number;
 }>();
 const active = ref(props.activeTab || 0);
 const galleryFiles = ref<File[]>([]);

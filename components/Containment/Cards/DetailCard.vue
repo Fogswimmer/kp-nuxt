@@ -24,11 +24,7 @@
       </template>
       <v-card>
         <template #image>
-          <v-parallax height="500" :src="cover" cover class="img-blur">
-            <template #placeholder>
-              <div class="default-cover" height="500" />
-            </template>
-          </v-parallax>
+          <v-parallax height="500" :src="cover" class="img-blur" />
         </template>
         <v-img v-if="cover" :src="cover" cover height="350">
           <template #placeholder>
@@ -42,7 +38,7 @@
             <ErrorPlaceHolder show-label />
           </template>
         </v-img>
-        <div v-else class="default-cover img-blur" height="250" />
+        <v-sheet v-else class="default-cover img-blur" height="350" />
         <slot name="general_info" />
         <slot name="text" />
       </v-card>

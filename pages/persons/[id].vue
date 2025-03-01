@@ -192,6 +192,7 @@
             :edit-mode="photoEditMode"
             :upload-disabled="uploadCount === 0"
             :remove-disabled="!person?.photos.length"
+            :card-height="GALLERY_CARD_HEIGHT"
             @avatar:change="handleChangeAvatar"
             @avatar:upload="handleAvatarUpload"
             @update:selected="selectedImagesIndices = $event"
@@ -252,6 +253,7 @@ const showCoverReplacementWarning = ref<boolean>(false);
 const generalInfoEdit = ref<boolean>(false);
 const bioEditMode = ref<boolean>(false);
 
+const GALLERY_CARD_HEIGHT: number = 200;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>(["bio", "gallery", "filmography"]);

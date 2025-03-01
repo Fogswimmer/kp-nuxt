@@ -32,9 +32,6 @@
               <th class="text-center">
                 {{ $t("pages.about.table_headers.additional_framework") }} / DB
               </th>
-              <th class="text-center">
-                {{ $t("pages.about.table_headers.internationalization") }}
-              </th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -76,9 +73,6 @@
                   Vuetify 3
                 </v-tooltip>
               </td>
-              <td>
-                <v-icon color="green">mdi-check</v-icon>
-              </td>
             </tr>
             <tr>
               <td>{{ $t("pages.about.table_headers.backend") }}</td>
@@ -106,20 +100,16 @@
                 </v-tooltip>
               </td>
               <td>
-                <v-tooltip>
-                  <template #activator="{ props }"
-                    ><v-icon
+                <v-tooltip location="bottom">
+                  <template #activator="{ props }">
+                    <v-img
                       v-bind="props"
-                      size="x-large"
-                      color="blue-lighten-2"
-                      >mdi-elephant</v-icon
-                    ></template
-                  >
+                      height="32"
+                      src="/img/psql.svg"
+                    ></v-img>
+                  </template>
                   Postresql 16
                 </v-tooltip>
-              </td>
-              <td>
-                <v-icon color="green">mdi-check</v-icon>
               </td>
             </tr>
           </tbody>
@@ -136,12 +126,6 @@
           <thead>
             <tr>
               <th class="text-center">
-                {{ $t("pages.about.dev_prod.table_headers.os") }}
-              </th>
-              <th class="text-center">
-                {{ $t("pages.about.dev_prod.table_headers.editor") }}
-              </th>
-              <th class="text-center">
                 {{ $t("pages.about.dev_prod.table_headers.pipeline") }}
               </th>
               <th class="text-center">
@@ -151,53 +135,6 @@
           </thead>
           <tbody class="text-center">
             <tr>
-              <td>
-                <div class="d-flex ga-2 justify-center">
-                  <v-tooltip>
-                    <template #activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        size="x-large"
-                        color="blue-lighten-2"
-                        >mdi-microsoft</v-icon
-                      ></template
-                    >
-                    MS Windows 10 - Development
-                  </v-tooltip>
-                  <v-tooltip>
-                    <template #activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        size="x-large"
-                        color="blue-darken-2"
-                        >mdi-fedora</v-icon
-                      ></template
-                    >
-                    Fedora Linux Workstation 41 - Development
-                  </v-tooltip>
-                  <v-tooltip>
-                    <template #activator="{ props }">
-                      <v-icon
-                        v-bind="props"
-                        size="x-large"
-                        color="orange-darken-2"
-                        >mdi-ubuntu</v-icon
-                      ></template
-                    >
-                    Ubuntu 22.04 - Server
-                  </v-tooltip>
-                </div>
-              </td>
-              <td>
-                <v-tooltip>
-                  <template #activator="{ props }">
-                    <v-icon v-bind="props" size="x-large" color="blue-darken-4"
-                      >mdi-microsoft-visual-studio-code</v-icon
-                    ></template
-                  >
-                  MS VS Code 1.97.2
-                </v-tooltip>
-              </td>
               <td>
                 <v-tooltip>
                   <template #activator="{ props }">
@@ -235,9 +172,9 @@
               lines="two"
             >
               <template #prepend>
-                <v-avatar size="164">
+                <v-avatar size="64">
                   <v-img
-                    src="public/img/nebelschwimmer_avatar.jpg"
+                    src="/img/nebelschwimmer_avatar.jpg"
                     alt="fd"
                     height="164"
                     width="164"
@@ -263,7 +200,6 @@
 </template>
 
 <script lang="ts" setup>
-// const localeRoute = useLocaleRoute();
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import definePageTitle from "~/utils/definePageTitle";
 </script>
