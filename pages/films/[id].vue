@@ -501,10 +501,3 @@ definePageMeta({
   middleware: ["content-present"],
 });
 </script>
-
-<style>
-.content-item {
-  scroll-margin-top: 100px;
-  background-color: rgba(0, 0, 0, 0.031) !important;
-}
-</style>

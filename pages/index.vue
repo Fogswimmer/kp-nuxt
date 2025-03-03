@@ -19,7 +19,7 @@
                 <NewestFilmsMasonryWall
                   :latest-films="latestFilms"
                   :loading="filmLoading"
-                  :sidebar="false"
+                  :sidebar="false" 
                 />
               </template>
             </MasonrySection>
