@@ -11,7 +11,6 @@ declare global {
     status?: string;
   }
 
-
   interface IFilm {
     id: number | null;
     name: string;
@@ -19,7 +18,7 @@ declare global {
     genreIds: number[] | [];
     genreNames: string[] | [];
     releaseYear: number | null;
-    preview: string | null;
+    poster: string | null;
     gallery: string[] | [];
     description: string;
     rating: string | null;

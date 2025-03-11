@@ -185,12 +185,6 @@ declare module 'nuxt/schema' {
       cdnURL: string,
    },
 
-   recaptcha: {
-      version: number,
-
-      size: string,
-   },
-
    nitro: {
       envPrefix: string,
    },
