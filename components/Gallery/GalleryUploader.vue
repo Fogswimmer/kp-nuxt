@@ -22,7 +22,7 @@
       clearable
       multiple
       :density="$vuetify.display.mdAndUp ? 'default' : 'comfortable'"
-      accept="image/*"
+      :accept="acceptVideos ? 'video/*' : 'image/*'"
       divider-text="general.or"
       browse-text="general.browse_files"
       :title="$vuetify.display.mdAndUp ? 'general.drag_and_drop' : ''"
@@ -62,6 +62,7 @@ const emit = defineEmits(["files:preupload", "files:upload"]);
 const previews = ref<File[]>([]);
 const props = defineProps<{
   uploadCount: number;
+  acceptVideos?: boolean;
 }>();
 
 const uploadError = computed((): boolean => {

@@ -8,6 +8,7 @@ export default {
       "Лучшие актеры, режиссеры, продюсеры, композиторы, авторы всех времен",
   },
   general: {
+    youtube_link: "Ссылка на ютуб",
     img_replacement_warning: "Текущее изображение будет заменено. Продолжить?",
     img_delete_warning: "Текущее изображение будет удалено. Продолжить?",
     img_broken: "Поврежденное изображение",
@@ -205,6 +206,10 @@ export default {
     set_avatar: "Установить как аватар",
     set_cover: "Установить как обложку",
     set_poster: "Установить как постер",
+    upload_trailer: "Загрузить трейлер",
+    delete_trailer: "Удалить трейлер",
+    upload_gallery: "Загрузить галерею",
+    link_trailer: "Ссылка на трейлер",
   },
   search: {
     title: "Поиск",
@@ -300,6 +305,7 @@ export default {
     films: {
       title: "Фильмы",
       poster: "Постер",
+      trailer: "Трейлер",
       List: "Список фильмов",
       edit_description: "Редактировать описание",
       edit_gallery: "Редактировать галерею",

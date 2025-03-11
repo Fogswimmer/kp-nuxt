@@ -4,8 +4,11 @@
       <Title>{{ definePageTitle($t("pages.home.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
+    <ClientOnly >
+      <v-navigation-drawer location="start" floating color="transparent"/>
+      <v-navigation-drawer location="end" floating color="transparent"/>
+    </ClientOnly>
     <v-app id="home">
-      
       <v-main>
         <template v-if="filmsPresent && personsPresent">
           <main class="d-flex flex-column ga-6 overflow-y-hidden">
@@ -25,8 +28,7 @@
                   />
                 </template>
               </MasonrySection>
-            </section>
-  
+            </section> 
             <MasonrySection
               v-if="popularActors.length > 0"
               :present="personsPresent"

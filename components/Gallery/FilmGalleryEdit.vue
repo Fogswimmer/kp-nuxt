@@ -1,18 +1,15 @@
 <template>
   <v-card rounded="lg" class="pa-2 mb-3">
     <v-tabs v-model="active">
-      <v-tab value="cover" prepend-icon="mdi-image" color="primary">{{
-        $t("actions.edit_cover")
-      }}</v-tab>
-       <v-tab value="poster" prepend-icon="mdi-post" color="primary">{{
+      <v-tab value="poster" prepend-icon="mdi-post" color="primary">{{
         $t("actions.edit_poster")
       }}</v-tab>
       <v-tab
-        value="upload"
+        value="upload-gallery"
         prepend-icon="mdi-upload"
         :disabled="uploadDisabled"
         color="primary"
-        >{{ $t("actions.upload") }}</v-tab
+        >{{ $t("actions.upload_gallery") }}</v-tab
       >
       <v-tab
         value="remove"
@@ -24,14 +21,6 @@
     </v-tabs>
     <v-card-text>
       <v-tabs-window v-model="active">
-        <v-tabs-window-item value="cover">
-          <SingleImgSelector
-            :cover-index="selectedCoverIndex"
-            :gallery="film?.gallery || []"
-            :card-height="cardHeight"
-            @img:select="$emit('cover:change', $event)"
-          />
-        </v-tabs-window-item>
         <v-tabs-window-item value="poster">
           <SingleImgSelector
             :cover-index="selectedPosterIndex"
@@ -40,11 +29,11 @@
             @img:select="$emit('poster:change', $event)"
           />
         </v-tabs-window-item>
-        <v-tabs-window-item value="upload">
+        <v-tabs-window-item value="upload-gallery">
           <GalleryUploader
             :upload-count="uploadCount"
             :upload-error="uploadError"
-            @files:upload="$emit('upload', $event)"
+            @files:upload="$emit('upload:gallery', $event)"
           />
         </v-tabs-window-item>
         <v-tabs-window-item value="remove">
@@ -66,7 +55,12 @@ import GalleryUploader from "./GalleryUploader.vue";
 import MultipleImgSelector from "./Partials/MultipleImgSelector.vue";
 import SingleImgSelector from "./Partials/SingleImgSelector.vue";
 
-defineEmits(["update:selected", "delete:selected", "upload", "cover:change", "poster:change"]);
+defineEmits([
+  "update:selected",
+  "delete:selected",
+  "upload:gallery",
+  "poster:change",
+]);
 
 const props = defineProps<{
   activeTab?: number;
@@ -80,15 +74,6 @@ const props = defineProps<{
 }>();
 const active = ref(props.activeTab || 0);
 const galleryFiles = ref<File[]>([]);
-const selectedCoverIndex = ref(
-  props.film?.gallery?.findIndex(
-    (item: string) => item === props.film?.cover
-  ) === -1
-    ? 0
-    : (props.film?.gallery?.findIndex(
-        (item: string) => item === props.film?.cover
-      ) ?? 0) + 1
-);
 
 const selectedPosterIndex = ref(
   props.film?.gallery?.findIndex(

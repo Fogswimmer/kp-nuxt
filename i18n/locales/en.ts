@@ -8,6 +8,7 @@ export default {
       "Best actors, directors, producers, composers, writers of all time",
   },
   general: {
+    youtube_link: "Youtube link",
     img_replacement_warning: "The current image will be replaced. Continue?",
     img_delete_warning: "The current image will be deleted. Continue?",
     img_broken: "Broken image",
@@ -238,6 +239,10 @@ export default {
     set_avatar: "Set as avatar",
     set_cover: "Set as cover",
     set_poster: "Set as poster",
+    upload_trailer: "Upload trailer",
+    delete_trailer: "Delete trailer",
+    upload_gallery: "Upload gallery",
+    link_trailer: "Link to trailer",
   },
   state: {
     all: "All",
@@ -419,6 +424,7 @@ export default {
     },
     film: {
       slogan: "Slogan",
+      trailer: "Trailer",
       add: "Add Film",
       edit: "Edit Film",
       name: "Name",

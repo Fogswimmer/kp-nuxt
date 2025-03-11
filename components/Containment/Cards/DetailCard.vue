@@ -25,11 +25,24 @@
         </template>
         <v-card>
           <template #image>
-            <v-parallax height="500" :src="cover" class="img-blur" />
+            <v-img
+              v-if="cover"
+              :src="cover"
+              class="img-blur"
+              :height="$vuetify.display.mdAndUp ? '800px' : '600px'"
+            />
+            <v-sheet v-else height="300" width="100%" class="default-cover" />
           </template>
-          <v-img v-if="cover" :src="cover" cover height="350">
+          <v-parallax
+            v-if="cover || filmVariant"
+            :src="cover"
+            scale="1.3"
+            min-height="300"
+            :height="$vuetify.display.mdAndUp ? '550px' : ''"
+            class="position-relative"
+          >
             <template #placeholder>
-              <v-sheet height="100%">
+              <v-sheet v-if="loading" height="100%">
                 <div class="fill-height d-flex align-center justify-center">
                   <v-progress-circular indeterminate />
                 </div>
@@ -38,8 +51,11 @@
             <template #error>
               <ErrorPlaceHolder show-label />
             </template>
-          </v-img>
-          <div v-else class="default-cover img-blur" />
+            <template v-if="poster">
+              <slot name="poster" />
+            </template>
+          </v-parallax>
+          <v-sheet v-else height="300" width="100%" class="default-cover" />
           <slot name="general_info" />
           <slot name="text" />
         </v-card>
@@ -59,50 +75,21 @@ defineProps<{
   cover?: string;
   drawer?: boolean;
   notification?: boolean;
+  poster?: boolean;
+  filmVariant?: boolean;
 }>();
 </script>
 
 <style>
 .default-cover {
-  height: 250px;
-  width: 100%;
   background-image:
-    linear-gradient(
-      306deg,
-      rgba(54, 54, 54, 0.05) 0%,
-      rgba(54, 54, 54, 0.05) 33.333%,
-      rgba(85, 85, 85, 0.05) 33.333%,
-      rgba(85, 85, 85, 0.05) 66.666%,
-      rgba(255, 255, 255, 0.05) 66.666%,
-      rgba(255, 255, 255, 0.05) 99.999%
+    repeating-linear-gradient(
+      45deg,
+      rgba(214, 13, 13, 0.973) 0px,
+      rgba(226, 226, 226, 0.06) 2px,
+      transparent 2px,
+      transparent 4px
     ),
-    linear-gradient(
-      353deg,
-      rgba(81, 81, 81, 0.05) 0%,
-      rgba(81, 81, 81, 0.05) 33.333%,
-      rgba(238, 238, 238, 0.05) 33.333%,
-      rgba(238, 238, 238, 0.05) 66.666%,
-      rgba(32, 32, 32, 0.05) 66.666%,
-      rgba(32, 32, 32, 0.05) 99.999%
-    ),
-    linear-gradient(
-      140deg,
-      rgba(192, 192, 192, 0.05) 0%,
-      rgba(192, 192, 192, 0.05) 33.333%,
-      rgba(109, 109, 109, 0.05) 33.333%,
-      rgba(109, 109, 109, 0.05) 66.666%,
-      rgba(30, 30, 30, 0.05) 66.666%,
-      rgba(30, 30, 30, 0.05) 99.999%
-    ),
-    linear-gradient(
-      189deg,
-      rgba(77, 77, 77, 0.05) 0%,
-      rgba(77, 77, 77, 0.05) 33.333%,
-      rgba(55, 55, 55, 0.05) 33.333%,
-      rgba(55, 55, 55, 0.05) 66.666%,
-      rgba(145, 145, 145, 0.05) 66.666%,
-      rgba(145, 145, 145, 0.05) 99.999%
-    ),
-    linear-gradient(90deg, rgb(110, 90, 23), rgba(3, 117, 211, 0.603)) !important;
+    linear-gradient(90deg, rgb(33, 33, 33,), rgb(255, 255, 255)) !important;
 }
 </style>

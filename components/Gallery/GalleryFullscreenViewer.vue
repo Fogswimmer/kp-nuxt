@@ -28,8 +28,7 @@
                 prepend-icon="mdi-post"
                 @click="$emit('poster:set', activeImg)"
               />
-
-              <v-list-item
+            <v-list-item
                 :title="$t('actions.set_cover')"
                 prepend-icon="mdi-image"
                 @click="$emit('cover:set', activeImg)"
@@ -55,11 +54,13 @@
             v-else
             :disabled="!isAuthenticated"
             prepend-icon="mdi-post"
-            @click="$emit('poster:set', activeImg)"
+            @click="$emit('poster:set', activeImg )"
           >
             {{ $t("actions.set_poster") }}
           </v-btn>
+    
           <v-btn
+            v-if="withAvatar"
             prepend-icon="mdi-image"
             :disabled="!isAuthenticated"
             @click="$emit('cover:set', activeImg)"

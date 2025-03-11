@@ -5,7 +5,7 @@
     </Head>
     <v-sheet max-width="1200" class="mx-auto" rounded="lg">
       <DetailCard
-        display-avatar
+        :film-variant="false"
         :page-name="$t('pages.profile.title')"
         :cover="currentUser?.cover || ''"
         :loading="loading"

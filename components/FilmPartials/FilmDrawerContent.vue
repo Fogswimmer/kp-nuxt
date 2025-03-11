@@ -5,24 +5,6 @@
     bg-color="transparent"
     multiple
   >
-    <v-expansion-panel :title="$t('pages.films.poster')" value="poster">
-      <v-expansion-panel-text>
-       <v-responsive height="500">
-          <v-img :src="poster || ''" cover height="100%">
-            <template #placeholder>
-              <v-sheet height="100%">
-                <div class="fill-height d-flex align-center justify-center">
-                  <v-progress-circular indeterminate />
-                </div>
-              </v-sheet>
-            </template>
-            <template #error>
-              <ErrorPlaceHolder />
-            </template>
-          </v-img>
-       </v-responsive>
-      </v-expansion-panel-text>
-    </v-expansion-panel>
     <v-expansion-panel :title="$t('pages.general_info')" value="info">
       <v-expansion-panel-text>
         <v-list rounded="lg" nav border>
@@ -115,7 +97,6 @@
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
 defineProps<{
-  poster: string;
   generalInfo: Detail[];
   starring: Detail[];
   team: Detail[];

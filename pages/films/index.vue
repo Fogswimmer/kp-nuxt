@@ -98,7 +98,7 @@ const filmItems = computed((): Detail[] => {
             (film?.releaseYear ? film.releaseYear.toString() : "") +
             ")",
           value: film.description || "",
-          avatar: film.cover || film.gallery[0] || "",
+          avatar: film.poster || film.gallery[0] || "",
           to: "/films/" + film.id,
           createdAt: film.createdAt || "",
         };

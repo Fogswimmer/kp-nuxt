@@ -203,6 +203,7 @@ declare global {
   const withMemo: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['withMemo']
   const withModifiers: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['withModifiers']
   const withScopeId: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['withScopeId']
+  const youtubeUrlToEmbed: typeof import('../../utils/youtubeUrlToEmbed')['default']
 }
 // for type re-export
 declare global {
@@ -416,5 +417,6 @@ declare module 'vue' {
     readonly withMemo: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['withMemo']>
     readonly withModifiers: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['withModifiers']>
     readonly withScopeId: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.7.3/node_modules/vue')['withScopeId']>
+    readonly youtubeUrlToEmbed: UnwrapRef<typeof import('../../utils/youtubeUrlToEmbed')['default']>
   }
 }

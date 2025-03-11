@@ -6,13 +6,12 @@
     </Head>
     <main>
       <DetailCard
+        film-variant
         :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
         :loading="loading"
-        :display-avatar="false"
-        :cover="film?.cover || ''"
-        :is-auth="isAuthenticated"
-        left-drawer
+        :cover="film?.poster || ''"
         :notification="!isAuthenticated"
+        :poster="true"
         @drawer:toggle="showLeftDrawer = !showLeftDrawer"
       >
         <template #sidebar>
@@ -30,6 +29,75 @@
         <template #notification>
           <NotAuthWarning v-if="!isAuthenticated" />
         </template>
+        <template #poster>
+          <v-sheet height="100%">
+            <v-container>
+              <v-row>
+                <v-col cols="12" lg="3" sm="12">
+                  <v-sheet height="100%" width="100%" min-height="500">
+                    <v-img
+                      v-if="film?.poster"
+                      :src="film?.poster || ''"
+                      height="100%"
+                    >
+                      <template #placeholder>
+                        <v-sheet height="100%">
+                          <div
+                            v-if="loading"
+                            class="fill-height d-flex align-center justify-center"
+                          >
+                            <v-progress-circular indeterminate />
+                          </div>
+                        </v-sheet>
+                      </template>
+                      <template #error>
+                        <ErrorPlaceHolder show-label />
+                      </template>
+                    </v-img>
+                    <div
+                      v-else
+                      class="fill-height d-flex align-center justify-center"
+                    >
+                      <div class="d-flex flex-column ga-2 align-center">
+                        <v-icon>mdi-image-off</v-icon>
+                        <v-btn
+                          :disabled="!isAuthenticated"
+                          @click="choosePoster"
+                          >{{ $t("actions.choose_poster") }}</v-btn
+                        >
+                      </div>
+                    </div>
+                  </v-sheet>
+                </v-col>
+                <v-col cols="12" lg="9" sm="12">
+                  <iframe
+                    v-if="film?.trailer"
+                    width="100%"
+                    :height="$vuetify.display.mdAndUp ? '100%' : '300px'"
+                    :src="film?.trailer || ''"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  />
+                  <v-sheet v-else height="100%" width="100%">
+                    <div class="fill-height d-flex align-center justify-center">
+                      <div class="d-flex flex-column ga-2 align-center">
+                        <v-icon size="64">mdi-video-off</v-icon>
+                        <v-btn
+                          prepend-icon="mdi-youtube"
+                          @click="showLinkTrailerDialog = true"
+                          >{{ $t("actions.link_trailer") }}</v-btn
+                        >
+                      </div>
+                    </div>
+                  </v-sheet>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-sheet>
+        </template>
         <template #menu>
           <FilmDetailMenu
             :is-authenticated="isAuthenticated"
@@ -38,6 +106,7 @@
             @edit:general="handleGeneralInfoEdit"
             @edit:description="handleEditDescription"
             @edit:gallery="openGalleryEditor"
+            @edit:trailer="showLinkTrailerDialog = true"
             @delete:film="showDeleteWarning = true"
           />
         </template>
@@ -73,7 +142,6 @@
                     :with-avatar="false"
                     @poster:set="handleChangePoster"
                     @editor:open="openGalleryEditor"
-                    @cover:set="handleChangeCover"
                     @delete:img="handleDeleteImg"
                   />
                 </v-expansion-panel-text>
@@ -184,11 +252,11 @@
           :upload-disabled="uploadCount === 0"
           :remove-disabled="!film?.gallery.length"
           :card-height="GALLERY_CARD_HEIGHT"
-          @cover:change="handleChangeCover"
           @poster:change="handleChangePoster"
           @update:selected="selectedImagesIndices = $event"
           @delete:selected="showConfirmDialog = true"
-          @upload="handleGalleryUpload"
+          @upload:gallery="handleGalleryUpload"
+          @upload:trailer="handleTrailerUpload"
         />
       </template>
     </BaseDialog>
@@ -202,6 +270,35 @@
       @cancel="showDeleteWarning = false"
       @confirm="handleFilmDelete"
     />
+    <BaseDialog
+      v-model:opened="showLinkTrailerDialog"
+      :loading="loading"
+      :title="$t('actions.link_trailer')"
+      :max-width="600"
+      @close="showLinkTrailerDialog = false"
+    >
+      <template #text>
+        <v-card>
+          <v-card-text>
+            <v-form ref="linkFormRef" @submit.prevent>
+              <v-text-field
+                v-model="filmForm.trailer"
+                prepend-icon="mdi-youtube"
+                :label="$t('general.youtube_link')"
+                clearable
+                @update:model-value="
+                  filmForm.trailer = youtubeUrlToEmbed($event)
+                "
+              />
+            </v-form>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <SubmitBtn :loading="loading" @click="handleEditTrailerLink" />
+          </v-card-actions>
+        </v-card>
+      </template>
+    </BaseDialog>
   </div>
 </template>
 
@@ -221,7 +318,7 @@ import FilmAssessments from "~/components/FilmPartials/FilmAssessments.vue";
 import FilmDrawerContent from "~/components/FilmPartials/FilmDrawerContent.vue";
 import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
-
+import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
 
 const GALLERY_CARD_HEIGHT: number = 200;
 
@@ -238,6 +335,7 @@ const isFormValid = ref<boolean>(true);
 const isAssessing = ref<boolean>(false);
 const showAssessDialog = ref<boolean>(false);
 const showLeftDrawer = ref<boolean>(true);
+const showLinkTrailerDialog = ref<boolean>(false);
 
 const comment = ref<string>("");
 const rating = ref<number>(0);
@@ -257,7 +355,6 @@ const {
   writers,
   directors,
   loading,
-  // similarGenreFilms
 } = storeToRefs(useFilmStore());
 const {
   editFilm,
@@ -270,7 +367,6 @@ const {
   assessFilmById,
   deleteFilm,
   fetchSpecialists,
-  // fetchFilmsWithSimilarGenres,
   GALLERY_SIZE,
 } = useFilmStore();
 
@@ -435,6 +531,11 @@ const handleEditDescription = async () => {
   });
 };
 
+const handleEditTrailerLink = async () => {
+  await sumbitEdit();
+  showLinkTrailerDialog.value = false;
+};
+
 const sumbitEdit = async () => {
   await editFilm(locale.value);
   await fetchData();
@@ -480,10 +581,10 @@ const handleGalleryUpload = async (files: File[]) => {
   });
 };
 
-const handleChangeCover = async (index: number) => {
-  filmForm.value.cover = film.value?.gallery[index - 1] || "";
-  await editFilm(locale.value);
-  editGalleryMode.value = false;
+const handleTrailerUpload = async (files: File[]) => {
+  const id = Number(useRoute().params.id);
+  const file = files[0];
+  await uploadTrailer(file, id);
   await fetchData();
   await nextTick(() => {
     showSnackbar.value = true;
@@ -492,7 +593,7 @@ const handleChangeCover = async (index: number) => {
 
 const handleChangePoster = async (index: number) => {
   console.log(index);
-  filmForm.value.poster = film.value?.gallery[index - 1] || "";
+  filmForm.value.poster = film.value?.gallery[index] || "";
   await editFilm(locale.value);
   editGalleryMode.value = false;
   await fetchData();

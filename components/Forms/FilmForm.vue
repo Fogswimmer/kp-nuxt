@@ -117,6 +117,7 @@
           prepend-inner-icon="mdi-account"
           @update:model-value="handleUpdateModelValue"
         />
+        v-t
 
         <v-textarea
           v-if="showDescription"

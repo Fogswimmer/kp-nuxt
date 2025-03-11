@@ -1,5 +1,5 @@
 <template>
-  <masonry-wall :items="latestFilms" :gap="16" :max-columns="2">
+  <masonry-wall :items="latestFilms" :gap="16" :max-columns="3">
     <template #default="{ item, index }">
       <MasonryCard
         :loading="loading"
@@ -34,7 +34,7 @@
             :subtitle="item?.description"
             elevation="5"
             rounded="lg"
-            class="ma-2"
+            class="ma-2 glassed"
             density="compact"
             lines="three"
           />
@@ -51,6 +51,22 @@
               "
               :subtitle="comment.comment"
             >
+              <template #prepend>
+                <v-avatar border>
+                  <v-img :src="comment?.authorAvatar || ''">
+                    <template #placeholder>
+                      <div
+                        class="d-flex fill-height align-center justify-center"
+                      >
+                        <v-icon size="x-small">mdi-account</v-icon>
+                      </div>
+                    </template>
+                    <template #error>
+                      <ErrorPlaceHolder />
+                    </template>
+                  </v-img>
+                </v-avatar>
+              </template>
               <template #append>
                 <v-chip
                   color="warning"
@@ -72,7 +88,8 @@
               variant="plain"
               @click="navigateTo(`/films/${item?.id}`)"
             >
-              {{ $t("actions.to_page") }}</v-btn>
+              {{ $t("actions.to_page") }}</v-btn
+            >
           </div>
         </template>
       </MasonryCard>
@@ -82,6 +99,7 @@
 
 <script lang="ts" setup>
 import MasonryCard from "./partials/MasonryCard.vue";
+import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
 defineProps<{
   latestFilms: IFilm[];

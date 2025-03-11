@@ -1,14 +1,5 @@
 <template>
-  <v-card
-    :key="index"
-    :loading="loading"
-    :title="item?.name"
-    rounded="lg"
-    
-  >
-    <template #image>
-      <v-img :src="img" class="img-blur" cover />
-    </template>
+  <v-card :key="index" :loading="loading" :title="item?.name" rounded="lg">
     <template #append>
       <slot name="append" />
     </template>
@@ -48,6 +39,4 @@ defineProps<{
 const localeRoute = useLocaleRoute();
 </script>
 
-<style>
-
-</style>
+<style></style>

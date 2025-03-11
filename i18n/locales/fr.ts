@@ -7,6 +7,7 @@ export default {
     persons_list: "Les meilleurs acteurs, directeurs, producteurs, compositeurs, auteurs de tous les temps",
   },
   general: {
+    youtube_link: "Lien youtube",
     img_replacement_warning: "L'image actuelle sera remplacée. Continuer?",
     img_delete_warning: "L'image actuelle sera supprimée. Continuer?",
     img_broken: "Image corrompue",
@@ -237,6 +238,10 @@ export default {
     set_avatar: "Mettre comme avatar",
     set_cover: "Mettre comme couverture",
     set_poster: "Mettre comme affiche",
+    upload_trailer: "Télécharger le trailer",
+    delete_trailer: "Supprimer le trailer",
+    upload_gallery: "Télécharger la galerie",
+    link_trailer: "Lien vers le trailer",
   },
   state: {
     all: "Toutes",
@@ -298,6 +303,7 @@ export default {
     },
     films: {
       title: "Films",
+      trailer: "Trailer",
       poster: "Poster",
       edit_description: "Modifier la description",
       edit_gallery: "Modifier la galerie",

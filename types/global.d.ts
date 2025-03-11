@@ -27,7 +27,6 @@ declare global {
     assessments: IAssessment[];
     slogan: string | null;
     roleNames: string[] | [];
-    cover: string | null;
     createdAt: string | null;
     updatedAt: string | null;
     publisherData: FilmPerson;
@@ -43,6 +42,7 @@ declare global {
     writerId: number | null;
     teamData: FilmPerson[];
     actorsData: FilmPerson[];
+    trailer: string | null;
   }
 
   interface IAssessment {

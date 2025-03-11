@@ -6,7 +6,7 @@
     </Head>
     <v-sheet max-width="1200" class="mx-auto" rounded="lg">
       <DetailCard
-        display-avatar
+        :film-variant="false"
         :page-name="$t('pages.persons.details')"
         :cover="person?.cover || ''"
         :is-auth="isAuthenticated"

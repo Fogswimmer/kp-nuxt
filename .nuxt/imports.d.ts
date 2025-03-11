@@ -34,6 +34,7 @@ export { default as definePageTitle } from '../utils/definePageTitle';
 export { default as getDefaultBirthday } from '../utils/getDefaultBirthday';
 export { default as handleError } from '../utils/handleError';
 export { default as randomColorGenerator } from '../utils/randomColorGenerator';
+export { default as youtubeUrlToEmbed } from '../utils/youtubeUrlToEmbed';
 export { useAuthStore } from '../stores/authStore';
 export { useFilmStore } from '../stores/filmStore';
 export { usePersonStore } from '../stores/personStore';
