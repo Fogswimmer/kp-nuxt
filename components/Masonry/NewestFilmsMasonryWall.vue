@@ -1,15 +1,17 @@
 <template>
-  <masonry-wall :items="latestFilms" :gap="16" :max-columns="3">
+  <masonry-wall :items="latestFilms" :gap="16" :max-columns="3" >
     <template #default="{ item, index }">
       <MasonryCard
         :loading="loading"
         :index="index"
         :item="item"
         :img="item?.poster || ''"
+        :variant="sidebar ? 'plain' : 'elevated'"
+        elevation="5"
         :link="`/films/${item?.id}`"
       >
         <template #append>
-          <ClientOnly>
+          <ClientOnly v-if="!sidebar">
             <v-rating
               v-if="$vuetify.display.mdAndUp"
               :model-value="item?.rating || 0"
@@ -27,13 +29,21 @@
               {{ item?.rating || 0 }}
             </v-chip>
           </ClientOnly>
+          <v-chip
+            v-else
+            color="warning"
+            density="compact"
+            prepend-icon="mdi-star"
+          >
+            {{ item.rating }}
+          </v-chip>
         </template>
-
         <template #default>
           <v-list-item
             :subtitle="item?.description"
             elevation="5"
             rounded="lg"
+            variant="plain"
             class="ma-2 glassed"
             density="compact"
             lines="three"
@@ -46,9 +56,6 @@
               v-for="(comment, i) in item.assessments.slice(0, 5)"
               :key="i"
               :title="comment?.authorName ? comment?.authorName : 'Anonymous'"
-              :prepend-avatar="
-                comment?.authorAvatar ? comment?.authorAvatar : undefined
-              "
               :subtitle="comment.comment"
             >
               <template #prepend>

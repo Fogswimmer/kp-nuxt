@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-list v-if="computedFilmographyDispay" nav>
-      <div v-for="(value, key, index) in person?.filmWorks" :key="index">
+      <div v-for="(value, key, index) in person?.filmWorks" :key="index" class="ma-2">
         <v-card
           v-if="value && value.length > 0"
           prepend-icon="mdi-format-list-bulleted"

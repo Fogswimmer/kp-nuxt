@@ -59,7 +59,7 @@
         />
       </v-list>
     </v-menu>
-    <div v-else>
+    <client-only v-else>
       <v-btn
         prepend-icon="mdi-post"
         :disabled="!isAuthenticated"
@@ -109,7 +109,7 @@
         @click="$emit('delete:film')"
         >{{ $t("actions.remove") }}</v-btn
       >
-    </div>
+    </client-only>
   </div>
 </template>
 

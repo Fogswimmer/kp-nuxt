@@ -20,7 +20,7 @@
               <FilmDrawerContent
                 :poster="film?.poster || ''"
                 :general-info="generalInfo"
-                :starring="starring"
+                :starring="starring || []"
                 :team="team"
               />
             </v-navigation-drawer>
@@ -256,7 +256,6 @@
           @update:selected="selectedImagesIndices = $event"
           @delete:selected="showConfirmDialog = true"
           @upload:gallery="handleGalleryUpload"
-          @upload:trailer="handleTrailerUpload"
         />
       </template>
     </BaseDialog>
@@ -299,6 +298,12 @@
         </v-card>
       </template>
     </BaseDialog>
+    <ConfirmDialog
+      v-model="showPosterSetDialog"
+      :text="$t('actions.set_poster') + '?'"
+      @cancel="showPosterSetDialog = false"
+      @confirm="setAsPosterAfterUpload"
+    />
   </div>
 </template>
 
@@ -319,6 +324,7 @@ import FilmDrawerContent from "~/components/FilmPartials/FilmDrawerContent.vue";
 import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
+import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 
 const GALLERY_CARD_HEIGHT: number = 200;
 
@@ -336,6 +342,7 @@ const isAssessing = ref<boolean>(false);
 const showAssessDialog = ref<boolean>(false);
 const showLeftDrawer = ref<boolean>(true);
 const showLinkTrailerDialog = ref<boolean>(false);
+const showPosterSetDialog = ref<boolean>(false);
 
 const comment = ref<string>("");
 const rating = ref<number>(0);
@@ -376,11 +383,12 @@ const imagesToDelete = computed(() => {
       selectedImagesIndices.value.includes(index)
     )
     .map((imageName: string): string => {
-      const fileName = imageName ? imageName.split("/").at(-1) : "";
-
-      return fileName ? fileName.split(".")[0] : "";
+      if (!imageName) return "";
+      const fileName = imageName.split(/[/\\]/).at(-1) || "";
+      return fileName.split(".")[0];
     });
 }) as ComputedRef<string[]>;
+
 
 const generalInfo = computed((): Detail[] => {
   const info = [
@@ -422,8 +430,8 @@ const generalInfo = computed((): Detail[] => {
 });
 
 const starring = computed((): Detail[] => {
-  return film.value
-    ? film.value?.actorsData.map((person: FilmPerson): Detail => {
+  return film?.value
+    ? film.value.actorsData?.map((person: FilmPerson): Detail => {
         return {
           title: "",
           value: person?.name || "",
@@ -464,7 +472,6 @@ const fetchData = async (): Promise<void> => {
     fetchFilmById(filmId, locale.value),
     fetchFilmForm(filmId, locale.value),
     fetchSpecialists(),
-    // fetchFilmsWithSimilarGenres(filmId),
   ]);
 };
 
@@ -547,6 +554,7 @@ const sumbitEdit = async () => {
 };
 
 const handleGalleryItemsDelete = async () => {
+  console.log(imagesToDelete.value);
   await deleteGalleryItems(imagesToDelete.value);
   await fetchData();
   await nextTick(() => {
@@ -557,7 +565,7 @@ const handleGalleryItemsDelete = async () => {
 };
 
 const handleDeleteImg = async (index: number) => {
-  selectedImagesIndices.value = [index];
+  selectedImagesIndices.value.push(index);
   await handleGalleryItemsDelete();
 };
 
@@ -577,26 +585,24 @@ const handleGalleryUpload = async (files: File[]) => {
   editGalleryMode.value = false;
   await fetchData();
   await nextTick(() => {
-    showSnackbar.value = true;
-  });
-};
-
-const handleTrailerUpload = async (files: File[]) => {
-  const id = Number(useRoute().params.id);
-  const file = files[0];
-  await uploadTrailer(file, id);
-  await fetchData();
-  await nextTick(() => {
-    showSnackbar.value = true;
+    showPosterSetDialog.value = true;
   });
 };
 
 const handleChangePoster = async (index: number) => {
-  console.log(index);
   filmForm.value.poster = film.value?.gallery[index] || "";
   await editFilm(locale.value);
   editGalleryMode.value = false;
   await fetchData();
+  await nextTick(() => {
+    showPosterSetDialog.value = true;
+  });
+};
+
+const setAsPosterAfterUpload = async () => {
+  filmForm.value.poster = film.value?.gallery.at(-1) || "";
+  await editFilm(locale.value);
+  showPosterSetDialog.value = false;
   await nextTick(() => {
     showSnackbar.value = true;
   });

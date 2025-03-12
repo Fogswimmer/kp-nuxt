@@ -37,8 +37,7 @@
             v-if="cover || filmVariant"
             :src="cover"
             scale="1.3"
-            min-height="300"
-            :height="$vuetify.display.mdAndUp ? '550px' : ''"
+            :height="computedParallaxHeight"
             class="position-relative"
           >
             <template #placeholder>
@@ -68,7 +67,7 @@
 import BackBtn from "../Btns/BackBtn.vue";
 import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
 defineEmits(["drawer:toggle"]);
-defineProps<{
+const props = defineProps<{
   pageName?: string;
   title?: string;
   loading: boolean;
@@ -78,6 +77,11 @@ defineProps<{
   poster?: boolean;
   filmVariant?: boolean;
 }>();
+const display = useDisplay();
+
+const computedParallaxHeight = computed((): string => {
+  return props.filmVariant ? (display.mdAndUp.value ? "550" : "") : "300";
+});
 </script>
 
 <style>
@@ -90,6 +94,6 @@ defineProps<{
       transparent 2px,
       transparent 4px
     ),
-    linear-gradient(90deg, rgb(33, 33, 33,), rgb(255, 255, 255)) !important;
+    linear-gradient(90deg, rgb(33, 33, 33), rgb(255, 255, 255)) !important;
 }
 </style>

@@ -77,9 +77,9 @@ const handleSignOut = async (): Promise<void> => {
   showConfirmDialog.value = false;
 };
 
-watch(isAuthenticated, async () => {
+onMounted(() => {
   if (!isAuthenticated.value) {
-    await fetchCurrentUser();
+    fetchCurrentUser();
   }
 });
 </script>

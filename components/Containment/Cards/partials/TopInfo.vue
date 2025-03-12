@@ -15,11 +15,11 @@
                   <ErrorPlaceHolder />
                 </template>
                 <template #error>
-                  <v-sheet height="100%">
-                    <div class="d-flex align-center justify-center h-100">
-                      <v-icon color="error" icon="mdi-image-broken" />
-                    </div>
-                  </v-sheet>
+                  <div
+                    class="d-flex align-center justify-center h-100 bg-surface"
+                  >
+                    <v-icon color="error" icon="mdi-image-broken" />
+                  </div>
                 </template>
               </v-img>
             </v-avatar>

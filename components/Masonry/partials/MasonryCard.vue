@@ -1,5 +1,10 @@
 <template>
-  <v-card :key="index" :loading="loading" :title="item?.name" rounded="lg">
+  <v-card 
+  :key="index" 
+  :loading="loading" 
+  :title="item?.name" 
+  rounded="lg"
+  >
     <template #append>
       <slot name="append" />
     </template>

@@ -96,6 +96,10 @@ const uploadError = computed((): boolean => {
 const clearGalleryFiles = () => {
   galleryFiles.value = [];
 };
+
+onMounted(()=>{
+  galleryFiles.value = [];
+})
 </script>
 
 <style lang="scss">

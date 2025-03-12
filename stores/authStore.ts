@@ -7,7 +7,16 @@ export const useAuthStore = defineStore("authStore", () => {
     maxAge: 60 * 60 * 24 * 7,
     secure: true,
   });
-  const token = ref<string | null>(tokenCookie.value || null || "");
+
+  const token = ref<string | null | undefined>(tokenCookie.value || null || "");
+  if (import.meta.server) {
+    const headers = useRequestHeaders(["cookie"]);
+    const cookieHeader = headers?.cookie || "";
+    const match = cookieHeader.match(/auth_token=([^;]+)/);
+    token.value = match ? match[1] : tokenCookie?.value;
+  } else {
+    token.value = tokenCookie.value;
+  }
   const isAuthenticated = computed(() => {
     return !!token.value && !!currentUser.value;
   });

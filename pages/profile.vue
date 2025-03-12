@@ -12,7 +12,7 @@
         :is-auth="isAuthenticated"
       >
         <template #menu>
-          <v-menu location="bottom end">
+          <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
             <template #activator="{ props }">
               <v-btn icon v-bind="props">
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -45,6 +45,27 @@
               />
             </v-list>
           </v-menu>
+          <div v-else>
+            <v-btn
+              prepend-icon="mdi-image"
+              @click="showCoverChooseDialog = true"
+              >{{ $t("actions.choose_cover") }}</v-btn
+            >
+            <v-btn
+              prepend-icon="mdi-account"
+              @click="showAvatarUploadDialog = true"
+              >{{ $t("actions.edit_avatar") }}</v-btn
+            >
+            <v-btn prepend-icon="mdi-pencil" @click="handleEdit">{{
+              $t("actions.edit")
+            }}</v-btn>
+            <v-btn
+              prepend-icon="mdi-logout"
+              base-color="warning"
+              @click="showConfirmLogoutDialog = true"
+              >{{ $t("auth.sign_out") }}</v-btn
+            >
+          </div>
         </template>
         <template #general_info>
           <TopInfo

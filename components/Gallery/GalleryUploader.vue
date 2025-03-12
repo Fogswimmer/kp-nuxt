@@ -83,6 +83,9 @@ const computedUploadCount = computed((): number => {
 const clearPreviews = () => {
   previews.value = [];
 };
+onBeforeUnmount(() => {
+  clearPreviews();
+});
 </script>
 
 <style></style>

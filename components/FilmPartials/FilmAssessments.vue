@@ -15,13 +15,15 @@
               <span class="text-h4">{{ currentRating }}</span>
             </div>
             <v-label>{{ computedAssessmentNumber }}</v-label>
-            <v-btn
-              :disabled="!isAuthenticated"
-              color="secondary"
-              @click="$emit('assession:enable')"
-            >
-              {{ $t("pages.films.assess") }}
-            </v-btn>
+            <Client-Only>
+              <v-btn
+                :disabled="!isAuthenticated"
+                color="secondary"
+                @click="$emit('assession:enable')"
+              >
+                {{ $t("pages.films.assess") }}
+              </v-btn>
+            </Client-Only>
           </div>
         </v-card-text>
       </v-card>
@@ -88,11 +90,24 @@
               class="rounded-lg ma-2"
               lines="two"
               :title="item.raw.authorName ? item.raw.authorName : 'Anonymous'"
-              :prepend-avatar="
-                item.raw.authorAvatar ? item.raw.authorAvatar : undefined
-              "
               :subtitle="item.raw.comment"
             >
+              <template #prepend>
+                <v-avatar border>
+                  <v-img :src="item?.authorAvatar || ''">
+                    <template #placeholder>
+                      <div
+                        class="d-flex fill-height align-center justify-center"
+                      >
+                        <v-icon size="x-small">mdi-account</v-icon>
+                      </div>
+                    </template>
+                    <template #error>
+                      <ErrorPlaceHolder />
+                    </template>
+                  </v-img>
+                </v-avatar>
+              </template>
               <template #append>
                 <ClientOnly>
                   <v-rating
@@ -136,6 +151,7 @@
 
 <script lang="ts" setup>
 import AssessmentForm from "../Forms/AssessmentForm.vue";
+import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
 defineEmits([
   "assession:submit",
