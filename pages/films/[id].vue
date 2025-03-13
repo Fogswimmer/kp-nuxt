@@ -389,7 +389,6 @@ const imagesToDelete = computed(() => {
     });
 }) as ComputedRef<string[]>;
 
-
 const generalInfo = computed((): Detail[] => {
   const info = [
     {

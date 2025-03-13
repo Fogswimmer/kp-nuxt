@@ -43,7 +43,7 @@ export const useFilmStore = defineStore("films", () => {
     age: 0,
     duration: "",
     gallery: [],
-    cover: "",
+    poster: "",
   };
   const filmForm = ref<Partial<IFilm>>({ ...defaultFilmValues });
   const GALLERY_SIZE: number = 8;
@@ -84,19 +84,6 @@ export const useFilmStore = defineStore("films", () => {
     }
   };
 
-  const fetchFilmsWithSimilarGenres = async (id: number): Promise<void> => {
-    try {
-      loading.value = true;
-      const response = await $fetch<IFilmListResponse>(
-        `${baseUrl}/films/similar-genres/${id}`
-      );
-      similarGenreFilms.value = response?.items || [];
-    } catch (error: unknown) {
-      handleError(error);
-    } finally {
-      loading.value = false;
-    }
-  };
 
   const fetchFilmById = async (id: number, locale: string): Promise<void> => {
     try {
@@ -315,6 +302,5 @@ export const useFilmStore = defineStore("films", () => {
     checkFilmsPresence,
     deleteFilm,
     fetchSpecialists,
-    fetchFilmsWithSimilarGenres,
   };
 });

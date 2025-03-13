@@ -13,7 +13,7 @@
         :title="$t(`toast.messages.server_errors.${error?.statusCode}`)"
         icon="mdi-alert-rhombus"
         :action-text="$t('empty_states.actions.home')"
-        @click:action="handleError"
+        @click:action="clearError({ redirect: '/' })"
       />
     </v-app>
   </NuxtLayout>
@@ -22,9 +22,4 @@
 <script setup lang="ts">
 const error = useError();
 
-const handleError = () => {
-  clearError({
-    redirect: "/",
-  });
-};
 </script>
