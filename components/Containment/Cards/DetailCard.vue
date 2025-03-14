@@ -87,13 +87,21 @@ const computedParallaxHeight = computed((): string => {
 <style>
 .default-cover {
   background-image:
+    linear-gradient(90deg, rgb(12, 21, 28) 0%, transparent 59%),
     repeating-linear-gradient(
       45deg,
-      rgba(214, 13, 13, 0.973) 0px,
-      rgba(226, 226, 226, 0.06) 2px,
-      transparent 2px,
-      transparent 4px
+      rgb(44, 33, 33) 0px,
+      rgb(44, 33, 33) 1px,
+      transparent 1px,
+      transparent 13px
     ),
-    linear-gradient(90deg, rgb(33, 33, 33), rgb(255, 255, 255)) !important;
+    repeating-linear-gradient(
+      135deg,
+      rgb(44, 33, 33) 0px,
+      rgb(44, 33, 33) 1px,
+      transparent 1px,
+      transparent 13px
+    ),
+    linear-gradient(90deg, rgb(12, 21, 28), rgb(12, 21, 28)) !important;
 }
 </style>

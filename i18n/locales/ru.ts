@@ -148,6 +148,7 @@ export default {
   },
   actions: {
     title: "Действия",
+    read_all: "Читать полностью",
     login_required: "Требуется авторизация",
     confirm: "Подтвердить",
     choose_cover: "Выбрать обложку",
@@ -425,6 +426,7 @@ export default {
     },
     film: {
       slogan: "Слоган",
+      trailer: "Трейлер",
       add: "Добавить фильм",
       edit: "Изменить фильм",
       name: "Название",

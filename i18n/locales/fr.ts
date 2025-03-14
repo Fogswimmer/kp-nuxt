@@ -178,6 +178,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    read_all: "Lire tout",
     login_required: "Autorisation requise",
     choose_cover: "Choisir une couverture",
     choose_poster: "Choisir un affiche",
@@ -420,6 +421,7 @@ export default {
     },
     film: {
       slogan: "Slogan",
+      trailer: "Trailer",
       add: "Ajouter Film",
       edit: "Modifier Film",
       name: "Nom",

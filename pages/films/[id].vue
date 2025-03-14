@@ -33,7 +33,7 @@
           <v-sheet height="100%">
             <v-container>
               <v-row>
-                <v-col cols="12" lg="3" sm="12">
+                <v-col cols="12" lg="3" md="12" sm="12">
                   <v-sheet height="100%" width="100%" min-height="500">
                     <v-img
                       v-if="film?.poster"
@@ -69,7 +69,7 @@
                     </div>
                   </v-sheet>
                 </v-col>
-                <v-col cols="12" lg="9" sm="12">
+                <v-col cols="12" lg="9" md="12" sm="12">
                   <iframe
                     v-if="film?.trailer"
                     width="100%"
@@ -283,7 +283,8 @@
               <v-text-field
                 v-model="filmForm.trailer"
                 prepend-icon="mdi-youtube"
-                :label="$t('general.youtube_link')"
+                :label="$t('forms.film.trailer')"
+                :hint="$t('general.youtube_link')"
                 clearable
                 @update:model-value="
                   filmForm.trailer = youtubeUrlToEmbed($event)

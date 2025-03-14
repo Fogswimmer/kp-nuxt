@@ -1,9 +1,10 @@
 <template>
-  <v-card 
-  :key="index" 
-  :loading="loading" 
-  :title="item?.name" 
-  rounded="lg"
+  <v-card
+    :key="index"
+    :loading="loading"
+    :title="item?.name"
+    rounded="lg"
+    :style="style"
   >
     <template #append>
       <slot name="append" />
@@ -13,6 +14,7 @@
       min-height="400"
       cover
       rounded="lg"
+      :variant="variant"
       class="cursor-pointer ma-2"
       @click="navigateTo(localeRoute(link))"
     >
@@ -39,6 +41,8 @@ defineProps<{
   index: number;
   item: IFilm | IPerson;
   link: string;
+  variant: string;
+  style: string;
 }>();
 
 const localeRoute = useLocaleRoute();

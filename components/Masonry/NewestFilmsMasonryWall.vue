@@ -1,119 +1,70 @@
 <template>
-  <masonry-wall :items="latestFilms" :gap="16" :max-columns="3" >
-    <template #default="{ item, index }">
-      <MasonryCard
-        :loading="loading"
-        :index="index"
-        :item="item"
-        :img="item?.poster || ''"
-        :variant="sidebar ? 'plain' : 'elevated'"
-        elevation="5"
-        :link="`/films/${item?.id}`"
-      >
-        <template #append>
-          <ClientOnly v-if="!sidebar">
-            <v-rating
-              v-if="$vuetify.display.mdAndUp"
-              :model-value="item?.rating || 0"
-              density="compact"
-              size="small"
-              readonly
-              active-color="yellow-darken-3"
-            />
-            <v-chip
-              v-else
-              color="warning"
-              density="compact"
-              prepend-icon="mdi-star"
-            >
-              {{ item?.rating || 0 }}
-            </v-chip>
-          </ClientOnly>
-          <v-chip
-            v-else
-            color="warning"
-            density="compact"
-            prepend-icon="mdi-star"
+  <div>
+    <masonry-wall :items="latestFilms" :gap="32" :max-columns="3">
+      <template #default="{ item, index }">
+        <div
+          v-intersect="onIntersect(index)"
+          class="masonry-item"
+          :class="{ 'fade-in': visibleItems.has(index) }"
+        >
+          <MasonryCard
+            :loading="loading"
+            :index="index"
+            :item="item"
+            :img="item?.poster || ''"
+            :variant="sidebar ? 'plain' : 'elevated'"
+            :style="`box-shadow: 1px 2px 26px 2px ${darkAccentColors[index]};`"
+            :link="`/films/${item?.id}`"
           >
-            {{ item.rating }}
-          </v-chip>
-        </template>
-        <template #default>
-          <v-list-item
-            :subtitle="item?.description"
-            elevation="5"
-            rounded="lg"
-            variant="plain"
-            class="ma-2 glassed"
-            density="compact"
-            lines="three"
-          />
-          <v-list v-if="item.assessments.length > 0" :nav="sidebar">
-            <v-list-subheader>{{
-              $t("pages.films.last_comments")
-            }}</v-list-subheader>
-            <v-list-item
-              v-for="(comment, i) in item.assessments.slice(0, 5)"
-              :key="i"
-              :title="comment?.authorName ? comment?.authorName : 'Anonymous'"
-              :subtitle="comment.comment"
-            >
-              <template #prepend>
-                <v-avatar border>
-                  <v-img :src="comment?.authorAvatar || ''">
-                    <template #placeholder>
-                      <div
-                        class="d-flex fill-height align-center justify-center"
-                      >
-                        <v-icon size="x-small">mdi-account</v-icon>
-                      </div>
-                    </template>
-                    <template #error>
-                      <ErrorPlaceHolder />
-                    </template>
-                  </v-img>
-                </v-avatar>
-              </template>
-              <template #append>
-                <v-chip
-                  color="warning"
-                  density="compact"
-                  prepend-icon="mdi-star"
-                >
-                  {{ comment.rating }}
-                </v-chip>
-              </template>
-            </v-list-item>
-          </v-list>
-          <div
-            v-if="item.assessments.length > 2"
-            class="d-flex flex-column justify-center align-center"
-          >
-            <span class="text-h6 mb-2">...</span>
-            <v-btn
-              prepend-icon="mdi-arrow-right"
-              variant="plain"
-              @click="navigateTo(`/films/${item?.id}`)"
-            >
-              {{ $t("actions.to_page") }}</v-btn
-            >
-          </div>
-        </template>
-      </MasonryCard>
-    </template>
-  </masonry-wall>
+            <template #append>
+              <v-chip color="warning" density="compact" prepend-icon="mdi-star">
+                {{ item.rating }}
+              </v-chip>
+            </template>
+            <template #default>
+              <FilmExpansionPanels :film="item" />
+            </template>
+          </MasonryCard>
+        </div>
+      </template>
+    </masonry-wall>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import MasonryCard from "./partials/MasonryCard.vue";
-import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
+import FilmExpansionPanels from "./partials/FilmExpansionPanels.vue";
+
+const visibleItems = ref(new Set<number>());
+
+const onIntersect = (index: number) => (isVisible: boolean) => {
+  if (isVisible) {
+    visibleItems.value.add(index);
+  } else {
+    visibleItems.value.delete(index);
+  }
+};
 
 defineProps<{
   latestFilms: IFilm[];
   loading: boolean;
   sidebar?: boolean;
   link?: string;
+  darkAccentColors: string[];
 }>();
 </script>
 
-<style></style>
+<style scoped>
+.masonry-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.masonry-item.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>

@@ -50,7 +50,7 @@
               :composers="composers"
               show-description
               @form:submit="handleGeneralInfoSubmit"
-              @update:model-value="filmForm = $event"
+              @update:model-value="updateForm"
             />
           </v-stepper-window-item>
           <v-stepper-window-item value="2">
@@ -62,7 +62,7 @@
           <v-stepper-window-item value="3">
             <SingleImgSelector
               :gallery="filmForm.gallery || []"
-              @img:select="handleSetCover"
+              @img:select="handleSetPoster"
             />
           </v-stepper-window-item>
         </v-stepper-window>
@@ -75,17 +75,15 @@
 import FilmForm from "~/components/Forms/FilmForm.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
-import { useFilmStore } from "~/stores/filmStore";
-import { usePersonStore } from "~/stores/personStore";
 import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
 import definePageTitle from "~/utils/definePageTitle";
+import { useFilmStore } from "~/stores/filmStore";
+import { usePersonStore } from "~/stores/personStore";
 
+
+const { locale } = useI18n();
 const { personsPresent } = storeToRefs(usePersonStore());
 const { checkPersonsPresence } = usePersonStore();
-const localeRoute = useLocaleRoute();
-const step = ref(0);
-const error = useError();
-const { locale } = useI18n();
 const {
   genres,
   filmForm,
@@ -105,6 +103,11 @@ const {
   editFilm,
   GALLERY_SIZE,
 } = useFilmStore();
+
+const error = useError();
+const localeRoute = useLocaleRoute();
+
+const step = ref<number>(0);
 
 const fetchData = async (): Promise<void> => {
   await checkPersonsPresence();
@@ -132,14 +135,25 @@ const handleGallerySubmit = async (files: File[]): Promise<void> => {
   nextStep();
 };
 
-const handleSetCover = async (id: number): Promise<void> => {
-  filmForm.value.cover =
+const handleSetPoster = async (id: number): Promise<void> => {
+  filmForm.value.poster =
     (filmForm.value.gallery && filmForm.value?.gallery[id - 1]) || "";
-  console.log(filmForm.value.cover);
+  console.log(filmForm.value.poster);
 
   await editFilm(locale.value);
   navigateTo(localeRoute(`/films/${filmForm.value.id}`));
 };
+
+const updateForm = (value: IFilm) => {
+  // for (const key in value) {
+  //   console.log(key)
+  //   // if (key === 'trailer') {
+
+  //   // }
+  //   filmForm.value[key as keyof IFilm] = value[key];
+  // }
+  filmForm.value = value;
+}
 
 onMounted(async (): Promise<void> => {
   await fetchData();

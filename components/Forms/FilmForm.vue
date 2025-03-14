@@ -117,7 +117,14 @@
           prepend-inner-icon="mdi-account"
           @update:model-value="handleUpdateModelValue"
         />
-        v-t
+        <v-text-field
+          v-model="form.trailer"
+          prepend-inner-icon="mdi-youtube"
+          :label="$t('forms.film.trailer')"
+          :hint="$t('general.youtube_link')"
+          clearable
+          @update:model-value="handleUpdateModelValue"
+        />
 
         <v-textarea
           v-if="showDescription"
@@ -185,7 +192,7 @@ const releaseYearRules = [
 const yearsOfReleaseItems = Array.from(
   { length: currentYear - startYear + 1 },
   (_, index) => startYear + index
-);
+).sort((a, b) => b - a);
 const MAX_NAME_LENGHT = 50;
 const MIN_NAME_LENGHT = 2;
 const nameRules = [
@@ -211,11 +218,11 @@ const validate = async (): Promise<void> => {
   } else {
     isFormValid.value = true;
   }
-
 };
 
-const handleUpdateModelValue = (): void =>
+const handleUpdateModelValue = (): void => {
   emit("update:modelValue", form.value);
+};
 
 const handleValidationAndSubmit = async (): Promise<void> => {
   await validate();

@@ -4,36 +4,35 @@
       <Title>{{ definePageTitle($t("pages.home.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
-    <ClientOnly >
-      <v-navigation-drawer location="start" floating color="transparent"/>
-      <v-navigation-drawer location="end" floating color="transparent"/>
+    <ClientOnly>
+      <v-navigation-drawer location="start" rail floating color="transparent" />
+      <v-navigation-drawer location="end" rail floating color="transparent" />
     </ClientOnly>
     <v-app id="home">
       <v-main>
         <template v-if="filmsPresent && personsPresent">
           <main class="d-flex flex-column ga-6 overflow-y-hidden">
-            <section class="masonry-section">
+            <section>
               <MasonrySection
                 v-if="latestFilms.length > 0"
                 :present="filmsPresent"
                 :loading="filmLoading"
-                :dark-accent-color="darkAccentColors[0]"
                 :title="$t('pages.home.newest')"
               >
                 <template #default>
                   <NewestFilmsMasonryWall
                     :latest-films="latestFilms"
                     :loading="filmLoading"
-                    :sidebar="false" 
+                    :sidebar="false"
+                    :dark-accent-colors="darkAccentColors"
                   />
                 </template>
               </MasonrySection>
-            </section> 
+            </section>
             <MasonrySection
               v-if="popularActors.length > 0"
               :present="personsPresent"
               :loading="personLoading"
-              :dark-accent-color="darkAccentColors[1]"
               :title="$t('pages.home.popular_actors')"
             >
               <template #default>
@@ -41,10 +40,10 @@
                   :popular-actors="popularActors"
                   :loading="personLoading"
                   :sidebar="false"
+                  :dark-accent-colors="darkAccentColors"
                 />
               </template>
             </MasonrySection>
-        
           </main>
         </template>
         <template v-else-if="!filmLoading && !personLoading">
@@ -80,6 +79,7 @@ import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import AppFooter from "~/components/Navigation/AppFooter.vue";
+
 const {
   loading: filmLoading,
   filmsPresent,
@@ -104,7 +104,7 @@ const fetchData = async (): Promise<void> => {
   }
 };
 
-const darkAccentColors = Array.from({ length: 2 }, () =>
+const darkAccentColors = Array.from({ length: latestFilms.value.length }, () =>
   randomColorGenerator()
 );
 

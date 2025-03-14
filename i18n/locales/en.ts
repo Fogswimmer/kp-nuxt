@@ -181,6 +181,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    read_all: "Read all",
     login_required: "Login required",
     choose_cover: "Choose cover",
     choose_poster: "Choose poster",

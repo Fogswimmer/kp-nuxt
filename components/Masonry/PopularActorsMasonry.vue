@@ -5,6 +5,8 @@
         :loading="loading"
         :item="item"
         :index="index"
+        variant="sidebar ? 'plain' : 'elevated'"
+        :style="`${darkAccentColors ? 'box-shadow: 1px 2px 16px 2px' + darkAccentColors[index] : ''};`"
         :img="item?.avatar || ''"
         :link="`/persons/${item?.id}`"
       />
@@ -13,12 +15,13 @@
 </template>
 
 <script lang="ts" setup>
-import MasonryCard from './partials/MasonryCard.vue';
+import MasonryCard from "./partials/MasonryCard.vue";
 
 defineProps<{
   popularActors: IPerson[];
   loading: boolean;
   sidebar: boolean;
+  darkAccentColors?: string[];
 }>();
 </script>
 

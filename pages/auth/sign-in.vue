@@ -3,7 +3,7 @@
     <Head>
       <Title>{{ definePageTitle($t("auth.sign_in")) }}</Title>
     </Head>
-    <v-card class="mt-15 mx-auto" style="max-width: 600px">
+    <v-card variant="tonal">
       <v-toolbar>
         <template #prepend>
           <BackBtn />
@@ -13,7 +13,7 @@
         </v-toolbar-title>
       </v-toolbar>
 
-      <v-card-text>
+      <v-card-text class="pa-4">
         <v-form ref="loginFormRef" class="mt-4">
           <div class="d-flex flex-column ga-2">
             <v-text-field
@@ -85,6 +85,7 @@ import { useAuthStore } from "~/stores/authStore";
 
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
 const { t } = useI18n();
+
 const loginFormRef = ref();
 const { login, fetchCurrentUser } = useAuthStore();
 const requiredRules = [
@@ -108,6 +109,7 @@ definePageMeta({
   name: "signIn",
   path: "/auth/sign-in",
   middleware: "auth",
+  layout: "auth",
 });
 
 const visible = ref(false);
