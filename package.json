@@ -66,6 +66,7 @@
 		"@vueuse/motion": "^3.0.3",
 		"@yeger/vue-masonry-wall": "^5.0.18",
 		"babel-eslint": "^10.1.0",
+		"dotenv": "^16.4.7",
 		"eslint": "^9.21.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-nuxt": "^4.0.0",
@@ -75,6 +76,7 @@
 		"postcss": "^8.5.3",
 		"prettier": "^3.5.2",
 		"ress": "^5.0.2",
+		"vue-demi": "^0.14.10",
 		"vue-recaptcha-v3": "^2.0.1"
 	},
 	"packageManager": "pnpm@10.2.1+sha512.398035c7bd696d0ba0b10a688ed558285329d27ea994804a52bad9167d8e3a72bcb993f9699585d3ca25779ac64949ef422757a6c31102c12ab932e5cbe5cc92"

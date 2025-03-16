@@ -1,6 +1,6 @@
 <template>
   <div>
-    <masonry-wall :items="latestFilms" :gap="32" :max-columns="3">
+    <masonry-wall :items="latestFilms" :gap="32">
       <template #default="{ item, index }">
         <div
           v-intersect="onIntersect(index)"
@@ -12,13 +12,13 @@
             :index="index"
             :item="item"
             :img="item?.poster || ''"
-            :variant="sidebar ? 'plain' : 'elevated'"
-            :style="`box-shadow: 1px 2px 26px 2px ${darkAccentColors[index]};`"
+            :sidebar="sidebar"
+            :style="`box-shadow: 1px 2px 8px 2px ${darkAccentColors ? darkAccentColors[index] : 'black'};`"
             :link="`/films/${item?.id}`"
           >
             <template #append>
               <v-chip color="warning" density="compact" prepend-icon="mdi-star">
-                {{ item.rating }}
+                {{ Number(item.rating).toFixed(1) }}
               </v-chip>
             </template>
             <template #default>
@@ -50,7 +50,7 @@ defineProps<{
   loading: boolean;
   sidebar?: boolean;
   link?: string;
-  darkAccentColors: string[];
+  darkAccentColors?: string[];
 }>();
 </script>
 

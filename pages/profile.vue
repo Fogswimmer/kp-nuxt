@@ -74,6 +74,7 @@
             :avatar="currentUser?.avatar || ''"
             :title="currentUser?.displayName || ''"
             :subtitle="computedLastLogin"
+            @avatar:edit="showAvatarUploadDialog = true"
           />
         </template>
       </DetailCard>

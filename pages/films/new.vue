@@ -35,7 +35,7 @@
             value="3"
             :complete="step > 3"
             color="primary"
-            :title="$t('stepper.cover')"
+            :title="$t('stepper.poster')"
           />
         </v-stepper-header>
         <v-stepper-window>
@@ -119,9 +119,7 @@ const fetchData = async (): Promise<void> => {
 };
 
 const nextStep = (): void => {
-  if (!error) {
     step.value++;
-  }
 };
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
@@ -138,21 +136,17 @@ const handleGallerySubmit = async (files: File[]): Promise<void> => {
 const handleSetPoster = async (id: number): Promise<void> => {
   filmForm.value.poster =
     (filmForm.value.gallery && filmForm.value?.gallery[id - 1]) || "";
-  console.log(filmForm.value.poster);
 
   await editFilm(locale.value);
   navigateTo(localeRoute(`/films/${filmForm.value.id}`));
 };
 
 const updateForm = (value: IFilm) => {
-  // for (const key in value) {
-  //   console.log(key)
-  //   // if (key === 'trailer') {
-
-  //   // }
-  //   filmForm.value[key as keyof IFilm] = value[key];
-  // }
-  filmForm.value = value;
+  const transformedValue = { 
+    ...value, 
+    trailer: youtubeUrlToEmbed(value.trailer)
+  };
+  filmForm.value = transformedValue;
 }
 
 onMounted(async (): Promise<void> => {

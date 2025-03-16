@@ -125,7 +125,6 @@
           clearable
           @update:model-value="handleUpdateModelValue"
         />
-
         <v-textarea
           v-if="showDescription"
           v-model="form.description"
@@ -211,12 +210,10 @@ const multipleSelectRules = [(v: string) => !!v || t("forms.rules.required")];
 const ageRules = [(v: number) => !!v || t("forms.rules.required")];
 const ageItems = [0, 3, 12, 16, 18];
 const validate = async (): Promise<void> => {
-  if (!formRef.value) return;
-  const { valid } = await formRef.value.validate();
-  if (!valid) {
-    isFormValid.value = false;
-  } else {
-    isFormValid.value = true;
+  const { valid } = await formRef.value?.validate() || { valid: false };
+  console.log(valid)
+  if (valid) {
+    emit("form:submit");
   }
 };
 

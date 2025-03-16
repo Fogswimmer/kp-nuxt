@@ -5,11 +5,11 @@
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
     <ClientOnly>
-      <v-navigation-drawer location="start" rail floating color="transparent" />
-      <v-navigation-drawer location="end" rail floating color="transparent" />
+      <v-navigation-drawer location="start"  floating color="transparent" />
+      <v-navigation-drawer location="end"  floating color="transparent" />
     </ClientOnly>
-    <v-app id="home">
-      <v-main>
+
+      <main>
         <template v-if="filmsPresent && personsPresent">
           <main class="d-flex flex-column ga-6 overflow-y-hidden">
             <section>
@@ -65,9 +65,9 @@
           </div>
         </template>
         <AppFooter v-if="!filmLoading && !personLoading" />
-      </v-main>
-    </v-app>
-  </div>
+      </main>
+    </div>
+
 </template>
 
 <script lang="ts" setup>
@@ -80,6 +80,7 @@ import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue"
 import definePageTitle from "~/utils/definePageTitle";
 import AppFooter from "~/components/Navigation/AppFooter.vue";
 
+const darkAccentColors = ref<string[]>([]);
 const {
   loading: filmLoading,
   filmsPresent,
@@ -104,12 +105,17 @@ const fetchData = async (): Promise<void> => {
   }
 };
 
-const darkAccentColors = Array.from({ length: latestFilms.value.length }, () =>
-  randomColorGenerator()
-);
+
+
+const generateRandomColor = (): string => {
+  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+}
 
 onMounted(async (): Promise<void> => {
   await fetchData();
+  darkAccentColors.value = Array.from({ length: latestFilms.value.length }, () =>
+    generateRandomColor()
+  );
 });
 
 definePageMeta({

@@ -47,8 +47,9 @@ export const useAuthStore = defineStore("authStore", () => {
       });
       currentUser.value = response;
     } catch (error: unknown) {
-      authError.value = error;
-      showErrorMessage.value = true;
+      console.log(error);
+      // authError.value = error;
+      // showErrorMessage.value = true;
     } finally {
       loading.value = false;
     }

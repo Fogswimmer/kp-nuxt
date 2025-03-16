@@ -5,7 +5,7 @@
         :loading="loading"
         :item="item"
         :index="index"
-        variant="sidebar ? 'plain' : 'elevated'"
+        :sidebar="sidebar"
         :style="`${darkAccentColors ? 'box-shadow: 1px 2px 16px 2px' + darkAccentColors[index] : ''};`"
         :img="item?.avatar || ''"
         :link="`/persons/${item?.id}`"

@@ -33,32 +33,34 @@
       </v-container>
     </v-main>
 
-    <v-bottom-navigation
-      v-if="$vuetify.display.smAndDown && !error"
-      v-model="activeBottomBtn"
-      color="primary"
-      grow
-    >
-      <v-btn value="home" :to="localeRoute('/')" icon="mdi-home" />
-      <v-btn value="films" :to="localeRoute('/films')" icon="mdi-filmstrip" />
-      <v-btn
-        value="persons"
-        :to="localeRoute('/persons')"
-        icon="mdi-account-group"
-      />
-      <v-btn
-        v-if="isAuthenticated"
-        value="profile"
-        icon="mdi-account"
-        :to="localeRoute('/profile')"
-      />
-      <v-btn
-        v-else
-        value="profile"
-        :to="localeRoute('/auth/sign-in')"
-        icon="mdi-login"
-      />
-    </v-bottom-navigation>
+    <client-only>
+      <v-bottom-navigation
+        v-if="$vuetify.display.smAndDown && !error"
+        v-model="activeBottomBtn"
+        color="primary"
+        grow
+      >
+        <v-btn value="home" :to="localeRoute('/')" icon="mdi-home" />
+        <v-btn value="films" :to="localeRoute('/films')" icon="mdi-filmstrip" />
+        <v-btn
+          value="persons"
+          :to="localeRoute('/persons')"
+          icon="mdi-account-group"
+        />
+        <v-btn
+          v-if="isAuthenticated"
+          value="profile"
+          icon="mdi-account"
+          :to="localeRoute('/profile')"
+        />
+        <v-btn
+          v-else
+          value="profile"
+          :to="localeRoute('/auth/sign-in')"
+          icon="mdi-login"
+        />
+      </v-bottom-navigation>
+    </client-only>
   </v-layout>
 </template>
 

@@ -88,7 +88,10 @@
         </div>
       </v-navigation-drawer>
       <v-navigation-drawer v-model="showFilters" order="1" location="end">
-        <slot name="filters" />
+        <div class="pa-2 flex flex-column ga-4">
+          <CloseBtn @close="showFilters = false" />
+          <slot name="filters" />
+        </div>
       </v-navigation-drawer>
     </client-only>
 
@@ -101,7 +104,7 @@
           $t("search.request_result", { count: items.length })
         }}</span>
       </v-label>
-      <v-list v-if="items.length > 0 && !loading" height="75vh">
+      <v-list v-if="items.length > 0 && !loading">
         <v-list-item
           v-for="(item, i) in items"
           :key="i"
@@ -109,7 +112,6 @@
           rounded="lg"
           elevation="5"
           lines="two"
-          variant="tonal"
           class="ma-2 glassed"
           :title="item.title"
           :subtitle="item.value"
@@ -134,6 +136,16 @@
             >
           </template>
         </v-list-item>
+        <v-footer class="d-flex justify-center ma-2">
+          <v-pagination
+            v-model="currentPage"
+            :length="totalPages"
+            rounded="lg"
+            color="primary"
+            :total-visible="3"
+            @update:model-value="handlePageChange"
+          />
+        </v-footer>
       </v-list>
       <v-skeleton-loader
         v-for="n in limit"
@@ -149,24 +161,16 @@
         icon="mdi-alert-rhombus"
       />
     </div>
-    <v-app-bar location="bottom" order="1">
-      <v-footer class="d-flex justify-center">
-        <v-pagination
-          v-model="currentPage"
-          :length="totalPages"
-          rounded="lg"
-          color="primary"
-          :total-visible="3"
-          @update:model-value="handlePageChange"
-        />
-      </v-footer>
-    </v-app-bar>
+    <!-- <v-app-bar location="bottom" order="1">
+      
+    </v-app-bar> -->
     <slot name="empty-state" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Containment/Btns/BackBtn.vue";
+import CloseBtn from "../Containment/Btns/CloseBtn.vue";
 
 const localeRoute = useLocaleRoute();
 const emit = defineEmits([

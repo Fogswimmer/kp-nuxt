@@ -3,7 +3,8 @@
     <Head>
       <Title>{{ definePageTitle($t("auth.sign_in")) }}</Title>
     </Head>
-    <v-card variant="tonal">
+
+    <v-card variant="tonal" class="mx-auto" max-width="600">
       <v-toolbar>
         <template #prepend>
           <BackBtn />
@@ -109,7 +110,6 @@ definePageMeta({
   name: "signIn",
   path: "/auth/sign-in",
   middleware: "auth",
-  layout: "auth",
 });
 
 const visible = ref(false);

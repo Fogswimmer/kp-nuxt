@@ -77,7 +77,7 @@ const emit = defineEmits<{
   (event: "avatar:edit"): void;
 }>();
 
-const handleEditAvatar = () => {
+const handleEditAvatar = (): void => {
   emit("avatar:edit");
   showAvatarEditBtns.value = false;
 };

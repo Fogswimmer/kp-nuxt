@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="persons">
     <Head>
       <Title>{{ definePageTitle($t("pages.persons.title")) }}</Title>
       <Meta

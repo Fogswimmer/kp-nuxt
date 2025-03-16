@@ -66,6 +66,7 @@
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
 import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
+
 defineEmits(["drawer:toggle"]);
 const props = defineProps<{
   pageName?: string;
@@ -80,7 +81,8 @@ const props = defineProps<{
 const display = useDisplay();
 
 const computedParallaxHeight = computed((): string => {
-  return props.filmVariant ? (display.mdAndUp.value ? "550" : "") : "300";
+  if (!props.filmVariant) return "300";
+  return display.mdAndUp.value ? "600" : "800";
 });
 </script>
 

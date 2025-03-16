@@ -21,6 +21,9 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   },
+  build: {
+    transpile: ['vuetify', 'vue-demi'],
+  },
   experimental: {
     viewTransition: true,
   },
@@ -73,6 +76,9 @@ export default defineNuxtConfig({
       apiBase: process.env.API_BASE_URL,
       appName: process.env.APP_NAME,
     },
+    private: {
+      nitroSecret: process.env.NITRO_SECRET,
+    }
   },
 
   vite: {
@@ -110,5 +116,5 @@ export default defineNuxtConfig({
     },
   },
   compatibilityDate: "2024-04-03",
-  devtools: { enabled: true },
+  devtools: { enabled: false },
 });

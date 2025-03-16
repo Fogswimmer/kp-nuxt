@@ -1,9 +1,10 @@
 <template>
   <div>
-	<Head>
-      <Title>{{ definePageTitle($t("auth.sign_up")) }}</Title>
+    <Head>
+      <Title>{{ definePageTitle($t("auth.register")) }}</Title>
     </Head>
-    <v-card class="pa-4" variant="tonal">
+
+    <v-card class="pa-4 mx-auto" variant="tonal" max-width="600">
       <v-toolbar>
         <template #prepend>
           <BackBtn />
@@ -75,7 +76,6 @@ const submit = async () => {
 definePageMeta({
   name: "signUp",
   path: "/auth/sign-up",
-  layout: "auth",
 });
 </script>
 

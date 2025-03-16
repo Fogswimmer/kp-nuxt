@@ -7,7 +7,7 @@
     <v-sheet max-width="1200" class="mx-auto" rounded="lg">
       <DetailCard
         :film-variant="false"
-        :page-name="$t('pages.persons.details')"
+        :page-name="personFullName"
         :cover="person?.cover || ''"
         :is-auth="isAuthenticated"
         :loading="loading"
@@ -92,7 +92,6 @@
           <v-expansion-panels
             v-model="mainAccordion"
             variant="accordion"
-            multiple
           >
             <v-expansion-panel
               id="bio"
@@ -253,10 +252,10 @@ const showCoverReplacementWarning = ref<boolean>(false);
 const generalInfoEdit = ref<boolean>(false);
 const bioEditMode = ref<boolean>(false);
 
-const GALLERY_CARD_HEIGHT: number = 200;
+const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const mainAccordion = ref<string[]>(["bio", "gallery", "filmography"]);
+const mainAccordion = ref<string[]>([]);
 const coverFile = ref<File>();
 const avatarFile = ref<File | null>(null);
 const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());

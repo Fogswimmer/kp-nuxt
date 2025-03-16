@@ -12,7 +12,6 @@
         :cover="film?.poster || ''"
         :notification="!isAuthenticated"
         :poster="true"
-        @drawer:toggle="showLeftDrawer = !showLeftDrawer"
       >
         <template #sidebar>
           <client-only>
@@ -70,29 +69,37 @@
                   </v-sheet>
                 </v-col>
                 <v-col cols="12" lg="9" md="12" sm="12">
-                  <iframe
-                    v-if="film?.trailer"
-                    width="100%"
-                    :height="$vuetify.display.mdAndUp ? '100%' : '300px'"
-                    :src="film?.trailer || ''"
-                    title="YouTube video player"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allowfullscreen
-                  />
-                  <v-sheet v-else height="100%" width="100%">
-                    <div class="fill-height d-flex align-center justify-center">
-                      <div class="d-flex flex-column ga-2 align-center">
-                        <v-icon size="64">mdi-video-off</v-icon>
-                        <v-btn
-                          prepend-icon="mdi-youtube"
-                          @click="showLinkTrailerDialog = true"
-                          >{{ $t("actions.link_trailer") }}</v-btn
-                        >
-                      </div>
-                    </div>
-                  </v-sheet>
+                  <v-responsive>
+                    <iframe
+                      v-if="film?.trailer && !iframeError"
+                      width="100%"
+                      :height="$vuetify.display.mdAndUp ? '500' : '300px'"
+                      :src="film?.trailer"
+                      title="YouTube video player"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen
+                      @error="iframeError = true"
+                    />
+                    <v-sheet
+                      v-else
+                      height="100%"
+                      :min-height="$vuetify.display.mdAndUp ? '500px' : '200px'"
+                      width="100%"
+                      class="d-flex align-center justify-center flex-column pa-4"
+                    >
+                      <v-icon size="64" color="grey">mdi-video-off</v-icon>
+                      <v-btn
+                        prepend-icon="mdi-youtube"
+                        variant="outlined"
+                        color="primary"
+                        @click="showLinkTrailerDialog = true"
+                      >
+                        {{ $t("actions.link_trailer") }}
+                      </v-btn>
+                    </v-sheet>
+                  </v-responsive>
                 </v-col>
               </v-row>
             </v-container>
@@ -122,30 +129,9 @@
             <v-expansion-panels
               v-model="mainAccordion"
               variant="accordion"
-              bg-color="transparent"
-              multiple
+              :multiple="$vuetify.display.mdAndUp"
               border
             >
-              <v-expansion-panel
-                id="gallery"
-                value="gallery"
-                tag="section"
-                :title="$t('pages.films.gallery')"
-              >
-                <v-expansion-panel-text>
-                  <GalleryViewer
-                    :slider-arr="sliderGalleryArr || []"
-                    :disabled="!isAuthenticated"
-                    :gallery="film?.gallery || []"
-                    :entity-name="film?.name || ''"
-                    :loading="loading"
-                    :with-avatar="false"
-                    @poster:set="handleChangePoster"
-                    @editor:open="openGalleryEditor"
-                    @delete:img="handleDeleteImg"
-                  />
-                </v-expansion-panel-text>
-              </v-expansion-panel>
               <v-expansion-panel
                 id="description"
                 :title="$t('pages.films.description')"
@@ -185,6 +171,26 @@
                       @rating:update="rating = $event"
                     />
                   </div>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel
+                id="gallery"
+                value="gallery"
+                tag="section"
+                :title="$t('pages.films.gallery')"
+              >
+                <v-expansion-panel-text>
+                  <GalleryViewer
+                    :slider-arr="sliderGalleryArr || []"
+                    :disabled="!isAuthenticated"
+                    :gallery="film?.gallery || []"
+                    :entity-name="film?.name || ''"
+                    :loading="loading"
+                    :with-avatar="false"
+                    @poster:set="handleChangePoster"
+                    @editor:open="openGalleryEditor"
+                    @delete:img="handleDeleteImg"
+                  />
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
@@ -327,11 +333,11 @@ import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 
-const GALLERY_CARD_HEIGHT: number = 200;
+const GALLERY_CARD_HEIGHT: number = 300;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
-
+const iframeError = ref<boolean>(false);
 const showDeleteWarning = ref<boolean>(false);
 const editDescriptionMode = ref<boolean>(false);
 const showConfirmDialog = ref<boolean>(false);
@@ -350,7 +356,7 @@ const rating = ref<number>(0);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 
-const mainAccordion = ref<string[]>(["gallery", "rating", "description"]);
+const mainAccordion = ref<string[]>([]);
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
@@ -483,35 +489,35 @@ const sliderGalleryArr = computed((): string[] => {
   });
 }) as ComputedRef<string[]>;
 
-const uploadCount = computed(() => {
+const uploadCount = computed((): number => {
   return film.value?.gallery.length
     ? sliderGalleryArr.value.filter((item: string) => item === "").length
     : GALLERY_SIZE;
 });
 
-const handleFilmDelete = async () => {
+const handleFilmDelete = async (): Promise<void> => {
   showDeleteWarning.value = false;
   const filmId = Number(useRoute().params.id);
   await deleteFilm(filmId);
   navigateTo(localeRoute("/films"));
 };
 
-const handleGeneralInfoEdit = () => {
+const handleGeneralInfoEdit = (): void => {
   generalInfoEdit.value = true;
 };
 
-const openGalleryEditor = () => {
+const openGalleryEditor = (): void => {
   editGalleryMode.value = true;
   activeTab.value = 1;
 };
-const cancelAssessment = () => {
+const cancelAssessment = (): void => {
   showAssessDialog.value = false;
   isAssessing.value = false;
   rating.value = 0;
   comment.value = "";
 };
 
-const submitAssessment = async () => {
+const submitAssessment = async (): Promise<void> => {
   await assessFilmById(
     Number(useRoute().params.id),
     rating.value,
@@ -525,7 +531,7 @@ const submitAssessment = async () => {
   });
 };
 
-const handleEditDescription = async () => {
+const handleEditDescription = async (): Promise<void> => {
   editDescriptionMode.value = true;
   if (mainAccordion.value.indexOf("description") === -1) {
     mainAccordion.value.push("description");
@@ -538,12 +544,12 @@ const handleEditDescription = async () => {
   });
 };
 
-const handleEditTrailerLink = async () => {
+const handleEditTrailerLink = async (): Promise<void> => {
   await sumbitEdit();
   showLinkTrailerDialog.value = false;
 };
 
-const sumbitEdit = async () => {
+const sumbitEdit = async (): Promise<void> => {
   await editFilm(locale.value);
   await fetchData();
   await nextTick(() => {
@@ -553,8 +559,7 @@ const sumbitEdit = async () => {
   });
 };
 
-const handleGalleryItemsDelete = async () => {
-  console.log(imagesToDelete.value);
+const handleGalleryItemsDelete = async (): Promise<void> => {
   await deleteGalleryItems(imagesToDelete.value);
   await fetchData();
   await nextTick(() => {
@@ -564,7 +569,7 @@ const handleGalleryItemsDelete = async () => {
   });
 };
 
-const handleDeleteImg = async (index: number) => {
+const handleDeleteImg = async (index: number): Promise<void> => {
   selectedImagesIndices.value.push(index);
   await handleGalleryItemsDelete();
 };
@@ -579,7 +584,7 @@ const choosePoster = (): void => {
   activeTab.value = 1;
 };
 
-const handleGalleryUpload = async (files: File[]) => {
+const handleGalleryUpload = async (files: File[]): Promise<void> => {
   const id = Number(useRoute().params.id);
   await uploadGallery(files, id);
   editGalleryMode.value = false;
@@ -589,17 +594,19 @@ const handleGalleryUpload = async (files: File[]) => {
   });
 };
 
-const handleChangePoster = async (index: number) => {
+const handleChangePoster = async (index: number): Promise<void> => {
   filmForm.value.poster = film.value?.gallery[index] || "";
   await editFilm(locale.value);
   editGalleryMode.value = false;
   await fetchData();
   await nextTick(() => {
-    showPosterSetDialog.value = true;
+    if (!film.value?.poster) {
+      showPosterSetDialog.value = true;
+    }
   });
 };
 
-const setAsPosterAfterUpload = async () => {
+const setAsPosterAfterUpload = async (): Promise<void> => {
   filmForm.value.poster = film.value?.gallery.at(-1) || "";
   await editFilm(locale.value);
   showPosterSetDialog.value = false;
@@ -608,7 +615,7 @@ const setAsPosterAfterUpload = async () => {
   });
 };
 
-const submitDescriptionEdit = async (text: string) => {
+const submitDescriptionEdit = async (text: string): Promise<void> => {
   filmForm.value.description = text;
   await editFilm(locale.value);
   await fetchData();
@@ -617,14 +624,14 @@ const submitDescriptionEdit = async (text: string) => {
 
 watch(
   locale,
-  async (newVal) => {
+  async (newVal): Promise<void> => {
     const filmId = Number(useRoute().params.id);
     await fetchFilmById(filmId, newVal);
   },
   { immediate: true }
 );
 
-onMounted(async () => {
+onMounted(async (): Promise<void> => {
   clearFilmForm();
   await fetchData();
 });

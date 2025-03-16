@@ -78,7 +78,8 @@ const handleSignOut = async (): Promise<void> => {
 };
 
 onMounted(async (): Promise<void> => {
-  if (!isAuthenticated.value) {
+  const route = useRoute();
+  if (!isAuthenticated.value && !["signIn", "signUp"].includes(route.name as string)) {
     await fetchCurrentUser();
   }
 });

@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panels v-model="opened" variant="accordion" >
+  <v-expansion-panels variant="accordion" bg-color="transparent">
     <v-expansion-panel
       value="description"
       :title="$t('pages.films.description')"
@@ -64,9 +64,7 @@
 
 <script lang="ts" setup>
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
-defineProps<{ film: IFilm,}>();
-
-const opened = ref("description");
+defineProps<{ film: IFilm }>();
 </script>
 
 <style></style>

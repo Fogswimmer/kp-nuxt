@@ -3,8 +3,9 @@
     :key="index"
     :loading="loading"
     :title="item?.name"
-    rounded="lg"
+      rounded="lg"
     :style="style"
+    :variant="sidebar ? 'plain' : 'text'"
   >
     <template #append>
       <slot name="append" />
@@ -14,7 +15,6 @@
       min-height="400"
       cover
       rounded="lg"
-      :variant="variant"
       class="cursor-pointer ma-2"
       @click="navigateTo(localeRoute(link))"
     >
@@ -41,8 +41,8 @@ defineProps<{
   index: number;
   item: IFilm | IPerson;
   link: string;
-  variant: string;
   style: string;
+  sidebar?: boolean;
 }>();
 
 const localeRoute = useLocaleRoute();

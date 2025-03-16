@@ -4,45 +4,51 @@
       <Title>{{ definePageTitle($t("pages.films.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.films_list')" />
     </Head>
-    <ClientOnly>
-      <v-navigation-drawer location="start" width="400">
-        <v-card
-          class="pa-4 text-center"
-          :title="$t('pages.home.newest')"
-          variant="text"
-        >
-          <NewestFilmsMasonryWall
-            v-if="latestFilms.length"
-            :latest-films="latestFilms"
-            :loading="loading"
-            sidebar
-          />
-          <span v-else class="text-disabled">{{ $t("general.no_data") }}</span>
-        </v-card>
-      </v-navigation-drawer>
-    </ClientOnly>
-    <ListPage
-      v-if="filmsPresent"
-      :items="filmItems || []"
-      :loading="loading"
-      :total-pages="totalPages"
-      :page="currentPage"
-      :limit="computedLimitProp"
-      :list-title="$t('nav.films_list')"
-      new-page-link="/films/new"
-      @update:page="updateQueryParams"
-      @update:search="search = $event"
-    >
-      <template #filters>
-        <Filters
-          :sort-options="sortOptions"
-          @update:limit="limit = $event.value"
-          @update:order="order = $event.value"
-          @update:search="search = $event.value"
-          @update:sort="sortBy = $event.value"
+    <v-navigation-drawer location="start" width="400">
+      <v-card
+        class="pa-4 text-center"
+        :title="$t('pages.home.newest')"
+        variant="text"
+      >
+        <NewestFilmsMasonryWall
+          v-if="latestFilms.length"
+          :latest-films="latestFilms"
+          :loading="loading"
+          sidebar
         />
-      </template>
-    </ListPage>
+        <span v-else-if="!loading" class="text-disabled">{{
+          $t("general.no_data")
+        }}</span>
+        <v-sheet v-else height="100%">
+          <div class="fill-height d-flex align-center justify-center">
+            <v-progress-circular indeterminate />
+          </div>
+        </v-sheet>
+      </v-card>
+    </v-navigation-drawer>
+      <ListPage
+        v-if="filmsPresent"
+        :items="filmItems || []"
+        :loading="loading"
+        :total-pages="totalPages"
+        :page="currentPage"
+        :limit="computedLimitProp"
+        :list-title="$t('nav.films_list')"
+        new-page-link="/films/new"
+        @update:page="updateQueryParams"
+        @update:search="search = $event"
+      >
+        <template #filters>
+          <Filters
+            :sort-options="sortOptions"
+            @update:limit="limit = $event.value"
+            @update:order="order = $event.value"
+            @update:search="search = $event.value"
+            @update:sort="sortBy = $event.value"
+          />
+        </template>
+      </ListPage>
+   
   </div>
 </template>
 

@@ -44,6 +44,7 @@ export const useFilmStore = defineStore("films", () => {
     duration: "",
     gallery: [],
     poster: "",
+    trailer: "",
   };
   const filmForm = ref<Partial<IFilm>>({ ...defaultFilmValues });
   const GALLERY_SIZE: number = 8;
@@ -153,13 +154,12 @@ export const useFilmStore = defineStore("films", () => {
         body: filmForm.value,
       });
       filmForm.value = response || {};
+      loading.value = false;
       return true;
     } catch (error: unknown) {
       handleError(error);
       return false;
-    } finally {
-      loading.value = false;
-    }
+    } 
   };
 
   const editFilm = async (locale: string): Promise<boolean> => {
@@ -173,12 +173,11 @@ export const useFilmStore = defineStore("films", () => {
         }
       );
       film.value = response;
+      loading.value = false;
       return true;
     } catch (error: unknown) {
       handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -212,12 +211,11 @@ export const useFilmStore = defineStore("films", () => {
         body: JSON.stringify({ fileNames: fileNames }),
       });
       filmForm.value = response || {};
+      loading.value = false;
       return true;
     } catch (error: unknown) {
       handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -251,9 +249,8 @@ export const useFilmStore = defineStore("films", () => {
       filmsPresent.value = response?.present || false;
     } catch (error: unknown) {
       handleError(error);
-      return false;
-    } finally {
       loading.value = false;
+      return false;
     }
   };
 
