@@ -43,6 +43,7 @@ declare global {
     teamData: FilmPerson[];
     actorsData: FilmPerson[];
     trailer: string | null;
+    slug: string | null;
   }
 
   interface IAssessment {
@@ -218,6 +219,7 @@ declare global {
     favorites: number[];
     about: string;
     lastLogin: Date;
+    roles: ERole[]|[];
     assessments: IAssessment[];
   }
   interface IListItems {
@@ -231,5 +233,7 @@ declare global {
     value: string;
     title: string;
   }
+
+
 }
 export {};

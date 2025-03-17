@@ -202,6 +202,11 @@
 <script lang="ts" setup>
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import definePageTitle from "~/utils/definePageTitle";
+
+definePageMeta({
+  name: "about",
+  title: "About",
+});
 </script>
 
 <style></style>

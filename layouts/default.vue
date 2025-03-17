@@ -1,15 +1,5 @@
 <template>
   <v-layout class="bg-gradient">
-    <client-only>
-      <v-navigation-drawer
-        v-if="$vuetify.display.smAndDown"
-        v-model="drawer"
-        order="1"
-        :location="$vuetify.display.smAndDown ? 'end' : 'start'"
-      >
-        <NavDrawerContent />
-      </v-navigation-drawer>
-    </client-only>
     <v-app-bar order="0">
       <v-app-bar-title>
         <Logo />
@@ -32,7 +22,6 @@
         <slot />
       </v-container>
     </v-main>
-
     <client-only>
       <v-bottom-navigation
         v-if="$vuetify.display.smAndDown && !error"
@@ -70,10 +59,8 @@ import NavBtns from "~/components/Navigation/NavBtns.vue";
 import Logo from "~/components/Misc/Logo.vue";
 import LocaleHandleBtn from "~/components/Containment/Btns/LocaleHandleBtn.vue";
 import ProfileNav from "~/components/Navigation/ProfileNav.vue";
-import NavDrawerContent from "~/components/Navigation/AppNavDrawerContent.vue";
-
 const { isAuthenticated } = storeToRefs(useAuthStore());
-const drawer = ref<boolean>(false);
+
 const activeBottomBtn = ref<string>("home");
 const showBackBtn = ref<boolean>(false);
 

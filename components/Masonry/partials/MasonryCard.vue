@@ -3,9 +3,9 @@
     :key="index"
     :loading="loading"
     :title="item?.name"
-      rounded="lg"
-    :style="style"
-    :variant="sidebar ? 'plain' : 'text'"
+    rounded="lg"
+    
+    :variant="sidebar ? 'plain' : 'outlined'"
   >
     <template #append>
       <slot name="append" />
@@ -41,7 +41,6 @@ defineProps<{
   index: number;
   item: IFilm | IPerson;
   link: string;
-  style: string;
   sidebar?: boolean;
 }>();
 

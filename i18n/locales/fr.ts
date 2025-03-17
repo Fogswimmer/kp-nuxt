@@ -88,6 +88,7 @@ export default {
     error_500: "Une erreur s'est produite",
   },
   auth: {
+    admin: "Admin",
     not_auth: "Connectez-vous pour utiliser les actions",
     login_to_continue: "Connectez-vous pour continuer",
     error: "Erreur",
@@ -243,6 +244,7 @@ export default {
     delete_trailer: "Supprimer le trailer",
     upload_gallery: "Télécharger la galerie",
     link_trailer: "Lien vers le trailer",
+    delete_assessment_warning: "Etes-vous certain de vouloir supprimer cette évaluation?",
   },
   state: {
     all: "Toutes",

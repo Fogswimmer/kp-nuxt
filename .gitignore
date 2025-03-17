@@ -3,7 +3,7 @@ dist
 manifest
 schema
 types
-nuxt
+.nuxt
 .output
 tsconfig.json
 *.env
@@ -11,4 +11,3 @@ tsconfig.json
 *.env.local
 *.env.staging
 .eslintcache
-.qodo

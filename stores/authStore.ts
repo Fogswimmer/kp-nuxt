@@ -1,4 +1,9 @@
 export const useAuthStore = defineStore("authStore", () => {
+  enum ERole {
+    USER = "ROLE_USER",
+    ADMIN = "ROLE_ADMIN",
+  }
+
   const currentUser = ref<CurrentUser | null>();
   const loading = ref(false);
   const authError = ref<Error | unknown>();
@@ -25,6 +30,9 @@ export const useAuthStore = defineStore("authStore", () => {
       Authorization: `Bearer ${token.value}`,
     };
   });
+  const isAdmin = computed(() => {
+    return !!currentUser.value?.roles?.find((role) => role === ERole.ADMIN);
+  })
   const baseUrl = useRuntimeConfig().public.apiBase;
   const defaultUserValues: Partial<CurrentUser> = {
     id: null,
@@ -48,8 +56,6 @@ export const useAuthStore = defineStore("authStore", () => {
       currentUser.value = response;
     } catch (error: unknown) {
       console.log(error);
-      // authError.value = error;
-      // showErrorMessage.value = true;
     } finally {
       loading.value = false;
     }
@@ -175,5 +181,6 @@ export const useAuthStore = defineStore("authStore", () => {
     uploadCover,
     fetchCurrentUser,
     editUser,
+    isAdmin
   };
 });

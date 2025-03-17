@@ -9,7 +9,6 @@
         :page-name="$t('pages.profile.title')"
         :cover="currentUser?.cover || ''"
         :loading="loading"
-        :is-auth="isAuthenticated"
       >
         <template #menu>
           <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
@@ -74,7 +73,16 @@
             :avatar="currentUser?.avatar || ''"
             :title="currentUser?.displayName || ''"
             :subtitle="computedLastLogin"
+            :is-admin="isAdmin"
             @avatar:edit="showAvatarUploadDialog = true"
+          />
+        </template>
+        <template #text>
+         <IndentedEditableText
+            :text="currentUser?.about || ''"
+            :edit-mode="editMode"
+            :messages="$t('pages.profile.edit_bio')"
+            @sumbit:edit="submitEdit"
           />
         </template>
       </DetailCard>
@@ -172,6 +180,7 @@ import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import UserForm from "~/components/Forms/UserForm.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import definePageTitle from "~/utils/definePageTitle";
+import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 
 const { t, locale } = useI18n();
 const { currentUser, loading, userForm } = storeToRefs(useAuthStore());
@@ -196,7 +205,7 @@ const {
   uploadCover,
   fetchCurrentUser,
   editUser,
-  isAuthenticated,
+  isAdmin,
 } = useAuthStore();
 
 const handleSignOut = async (): Promise<void> => {
@@ -238,6 +247,7 @@ const handleUploadAvatar = async (files: File[]): Promise<void> => {
     }
   }
   showAvatarUploadDialog.value = false;
+  await fetchCurrentUser();
 };
 
 const handleEdit = () => {
@@ -288,6 +298,7 @@ const computedGeneralInfo = computed((): Detail[] => {
 
 definePageMeta({
   title: "Profile",
+  name: "profile",
   middleware: ["auth"],
 });
 </script>

@@ -91,6 +91,7 @@ export default {
     error_500: "Something went wrong",
   },
   auth: {
+    admin: "Admin",
     not_auth: "Please, log in to use actions",
     login_to_continue: "Login to continue",
     error: "Error",
@@ -244,6 +245,7 @@ export default {
     delete_trailer: "Delete trailer",
     upload_gallery: "Upload gallery",
     link_trailer: "Link to trailer",
+    delete_assessment_warning: "Are you sure you want to delete this assessment?",
   },
   state: {
     all: "All",

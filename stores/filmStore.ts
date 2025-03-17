@@ -75,7 +75,7 @@ export const useFilmStore = defineStore("films", () => {
     try {
       loading.value = true;
       const response = await $fetch<IFilmListResponse>(
-        `${baseUrl}/films/latest`
+        `${baseUrl}/films-latest`
       );
       latestFilms.value = response?.items || [];
     } catch (error: unknown) {
@@ -85,12 +85,12 @@ export const useFilmStore = defineStore("films", () => {
     }
   };
 
-
-  const fetchFilmById = async (id: number, locale: string): Promise<void> => {
+  const fetchFilmDetails = async (slug: string, locale: string): Promise<void> => {
     try {
+      console.log(slug)
       loading.value = true;
       const response = await $fetch<IFilm>(
-        `${baseUrl}/films/${id}?locale=${locale}`
+        `${baseUrl}/films/get/${slug}?locale=${locale}`
       );
       film.value = response;
     } catch (error: unknown) {
@@ -99,11 +99,11 @@ export const useFilmStore = defineStore("films", () => {
       loading.value = false;
     }
   };
-  const fetchFilmForm = async (id: number, locale: string): Promise<void> => {
+  const fetchFilmForm = async (slug: string, locale: string): Promise<void> => {
     try {
       loading.value = true;
       const response = await $fetch<Partial<IFilm>>(
-        `${baseUrl}/films/${id}/form?locale=${locale}`
+        `${baseUrl}/films/${slug}/form?locale=${locale}`
       );
       filmForm.value = response || {};
     } catch (error: unknown) {
@@ -159,7 +159,7 @@ export const useFilmStore = defineStore("films", () => {
     } catch (error: unknown) {
       handleError(error);
       return false;
-    } 
+    }
   };
 
   const editFilm = async (locale: string): Promise<boolean> => {
@@ -240,6 +240,17 @@ export const useFilmStore = defineStore("films", () => {
     }
   };
 
+  const deleteAssessmentById = async (filmId: number, assessmentID: number): Promise<void> => {
+    try {
+      await $fetch(`${baseUrl}/films/${filmId}/assess/${assessmentID}`, {
+        headers: authHeaders.value,
+        method: "DELETE",
+      });
+    } catch (error: unknown) {
+      handleError(error);
+    }
+  };
+
   const checkFilmsPresence = async () => {
     try {
       loading.value = true;
@@ -288,7 +299,7 @@ export const useFilmStore = defineStore("films", () => {
     fetchFilteredFilms,
     fetchGenres,
     addFilm,
-    fetchFilmById,
+    fetchFilmDetails,
     uploadGallery,
     fetchLatestFilms,
     fetchFilmForm,
@@ -299,5 +310,6 @@ export const useFilmStore = defineStore("films", () => {
     checkFilmsPresence,
     deleteFilm,
     fetchSpecialists,
+    deleteAssessmentById
   };
 });

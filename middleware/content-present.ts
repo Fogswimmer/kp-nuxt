@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware((to) => {
-    if (!to.params.id) {
+    if (!to.params.slug) {
         return navigateTo("/");
     }
 })

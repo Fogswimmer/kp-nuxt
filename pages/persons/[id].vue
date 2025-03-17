@@ -27,7 +27,7 @@
           <NotAuthWarning v-if="!isAuthenticated" />
         </template>
         <template #menu>
-          <v-menu location="bottom end">
+          <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
             <template #activator="{ props }">
               <v-btn icon :disabled="!currentUser" v-bind="props">
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -86,13 +86,51 @@
               />
             </v-list>
           </v-menu>
+          <div v-else class="d-flex ga-1">
+            <v-btn prepend-icon="mdi-image" @click="chooseCover">{{
+              $t("actions.choose_cover")
+            }}</v-btn>
+            <v-btn prepend-icon="mdi-account" @click="chooseAvatar">{{
+              $t("actions.edit_avatar")
+            }}</v-btn>
+            <v-menu>
+              <template #activator="{ props }">
+                <v-btn v-bind="props" prepend-icon="mdi-pencil">{{
+                  $t("actions.edit")
+                }}</v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  :title="$t('pages.general_info')"
+                  prepend-icon="mdi-information"
+                  value="info"
+                  @click="generalInfoEdit = true"
+                />
+                <v-list-item
+                  :title="$t('pages.detailed_info')"
+                  prepend-icon="mdi-details"
+                  value="details"
+                  @click="handleBioEdit"
+                />
+                <v-list-item
+                  :title="$t('pages.gallery')"
+                  prepend-icon="mdi-view-gallery"
+                  value="gallery"
+                  @click="photoEditMode = true"
+                />
+              </v-list>
+            </v-menu>
+            <v-btn
+              prepend-icon="mdi-delete"
+              base-color="error"
+              @click="showDeleteWarning = true"
+              >{{ $t("actions.remove") }}</v-btn
+            >
+          </div>
         </template>
 
         <template #text>
-          <v-expansion-panels
-            v-model="mainAccordion"
-            variant="accordion"
-          >
+          <v-expansion-panels v-model="mainAccordion" variant="accordion">
             <v-expansion-panel
               id="bio"
               value="bio"
@@ -154,7 +192,6 @@
         v-model:opened="generalInfoEdit"
         :max-width="1000"
         :title="$t('actions.edit_person') + ' ' + personFullName"
-       
         @close="generalInfoEdit = false"
       >
         <template #text>

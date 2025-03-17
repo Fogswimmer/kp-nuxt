@@ -101,7 +101,7 @@ defineProps<{
   starring: Detail[];
   team: Detail[];
 }>();
-const leftColumnAccordion = ref(["poster", "info", "starring", "team"]);
+const leftColumnAccordion = ref(["info", "starring"]);
 
 const localeRoute = useLocaleRoute();
 </script>

@@ -13,13 +13,11 @@
             :item="item"
             :img="item?.poster || ''"
             :sidebar="sidebar"
-            :style="`box-shadow: 1px 2px 8px 2px ${darkAccentColors ? darkAccentColors[index] : 'black'};`"
-            :link="`/films/${item?.id}`"
+            :style="`border: 1px solid ${darkAccentColors ? darkAccentColors[index] : 'white'};`"
+            :link="`/films/${item.slug?.toString()}`"
           >
             <template #append>
-              <v-chip color="warning" density="compact" prepend-icon="mdi-star">
-                {{ Number(item.rating).toFixed(1) }}
-              </v-chip>
+              <FilmRatingChip :rating="item.rating || '0'" />
             </template>
             <template #default>
               <FilmExpansionPanels :film="item" />
@@ -34,6 +32,7 @@
 <script lang="ts" setup>
 import MasonryCard from "./partials/MasonryCard.vue";
 import FilmExpansionPanels from "./partials/FilmExpansionPanels.vue";
+import FilmRatingChip from "../Misc/FilmRatingChip.vue";
 
 const visibleItems = ref(new Set<number>());
 

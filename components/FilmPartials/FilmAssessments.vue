@@ -51,7 +51,7 @@
             <v-btn
               class="me-8"
               variant="text"
-              :disabled="assessments.length > itemsPerPage"
+              :disabled="assessments.length < itemsPerPage"
               @click="seeAllOnClick"
             >
               <span
@@ -94,7 +94,7 @@
             >
               <template #prepend>
                 <v-avatar border>
-                  <v-img :src="item?.authorAvatar || ''">
+                  <v-img :src="item?.raw.authorAvatar || ''">
                     <template #placeholder>
                       <div
                         class="d-flex fill-height align-center justify-center"
@@ -109,15 +109,23 @@
                 </v-avatar>
               </template>
               <template #append>
-                <ClientOnly>
-                  <v-rating
-                    density="compact"
+                <div>
+                  <FilmRatingChip :rating="item.raw.rating || '0'" />
+                  <v-btn
+                    v-if="
+                      (isAuthenticated &&
+                        item.raw.authorId === currentUser?.id) ||
+                      isAdmin
+                    "
                     size="small"
-                    active-color="warning"
-                    :readonly="true"
-                    :model-value="item.raw.rating"
-                  />
-                </ClientOnly>
+                    icon
+                    variant="plain"
+                    color="error"
+                    @click="showDeleteConfirm = true"
+                  >
+                    <v-icon>mdi-delete</v-icon></v-btn
+                  >
+                </div>
               </template>
               <template #title>
                 <div class="d-flex ga-1 align-end">
@@ -132,6 +140,12 @@
                 </div>
               </template>
             </v-list-item>
+            <ConfirmDialog
+              v-model="showDeleteConfirm"
+              :text="$t('actions.delete_assessment_warning')"
+              @cancel="showDeleteConfirm = false"
+              @confirm="confirmDelete(item.raw.id)"
+            />
           </template>
         </template>
         <template #footer="{ pageCount }">
@@ -152,11 +166,17 @@
 <script lang="ts" setup>
 import AssessmentForm from "../Forms/AssessmentForm.vue";
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
+import FilmRatingChip from "../Misc/FilmRatingChip.vue";
+import ConfirmDialog from "../Dialogs/ConfirmDialog.vue";
+import { useAuthStore } from "~/stores/authStore";
 
-defineEmits([
+const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
+
+const emits = defineEmits([
   "assession:submit",
   "assession:enable",
   "assession:cancel",
+  "assession:delete",
   "comment:update",
   "rating:update",
 ]);
@@ -164,12 +184,12 @@ const props = defineProps<{
   currentRating: string | number;
   assessments: IAssessment[];
   isAssessing: boolean;
-  isAuthenticated: boolean;
   rating: number;
   comment: string;
 }>();
 const page = ref<number>(1);
 const itemsPerPage = ref<number>(5);
+const showDeleteConfirm = ref<boolean>(false);
 
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;
@@ -188,6 +208,11 @@ const computedAssessmentNumber = computed(() => {
       : t("pages.films.assessments");
   return label || t("pages.films.no_assessments");
 });
+
+const confirmDelete = (id: number) => {
+  emits("assession:delete", id);
+  showDeleteConfirm.value = false;
+};
 </script>
 
 <style></style>

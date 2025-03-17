@@ -149,11 +149,12 @@
       </v-list>
       <v-skeleton-loader
         v-for="n in limit"
-        v-else-if="items.length != 0"
+        v-else-if="items.length !== 0"
         :key="n"
         rounded="lg"
-        class="my-3 stained-glass"
-        type="list-item-avatar-three-line"
+        height="120"
+        class="ma-2 glassed"
+        type="list-item-avatar-two-line"
       />
       <v-empty-state
         v-else-if="!loading"

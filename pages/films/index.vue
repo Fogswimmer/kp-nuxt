@@ -105,7 +105,7 @@ const filmItems = computed((): Detail[] => {
             ")",
           value: film.description || "",
           avatar: film.poster || film.gallery[0] || "",
-          to: "/films/" + film.id,
+          to: "/films/" + film.slug,
           createdAt: film.createdAt || "",
         };
       })

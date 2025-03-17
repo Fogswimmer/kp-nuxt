@@ -67,7 +67,8 @@
 import { useAuthStore } from "~/stores/authStore";
 import ConfirmDialog from "../Dialogs/ConfirmDialog.vue";
 
-const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());
+const { currentUser, isAuthenticated, token
+ } = storeToRefs(useAuthStore());
 const { signOut, fetchCurrentUser } = useAuthStore();
 
 const showConfirmDialog = ref<boolean>(false);
@@ -79,7 +80,7 @@ const handleSignOut = async (): Promise<void> => {
 
 onMounted(async (): Promise<void> => {
   const route = useRoute();
-  if (!isAuthenticated.value && !["signIn", "signUp"].includes(route.name as string)) {
+  if (!isAuthenticated.value && token.value && !["signIn", "signUp"].includes(route.name as string)) {
     await fetchCurrentUser();
   }
 });

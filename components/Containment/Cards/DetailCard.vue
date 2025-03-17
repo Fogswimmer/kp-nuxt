@@ -29,6 +29,7 @@
               v-if="cover"
               :src="cover"
               class="img-blur"
+              cover
               :height="$vuetify.display.mdAndUp ? '800px' : '600px'"
             />
             <v-sheet v-else height="300" width="100%" class="default-cover" />
@@ -82,7 +83,8 @@ const display = useDisplay();
 
 const computedParallaxHeight = computed((): string => {
   if (!props.filmVariant) return "300";
-  return display.mdAndUp.value ? "600" : "800";
+  if (display.smAndDown.value) return "1100";
+  return "550";
 });
 </script>
 

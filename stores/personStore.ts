@@ -57,7 +57,7 @@ export const usePersonStore = defineStore("persons", () => {
       currentPage.value = response?.currentPage || 1;
       totalPages.value = response?.totalPages || 0;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -72,7 +72,7 @@ export const usePersonStore = defineStore("persons", () => {
       );
       person.value = response;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -87,7 +87,7 @@ export const usePersonStore = defineStore("persons", () => {
       );
       personForm.value = response || {};
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -102,7 +102,7 @@ export const usePersonStore = defineStore("persons", () => {
       );
       genders.value = response || [];
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -116,7 +116,7 @@ export const usePersonStore = defineStore("persons", () => {
       );
       specialties.value = response || [];
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -132,12 +132,11 @@ export const usePersonStore = defineStore("persons", () => {
         body: personForm.value,
       });
       personForm.value = response || {};
+      loading.value = false;
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -153,12 +152,11 @@ export const usePersonStore = defineStore("persons", () => {
         }
       );
       person.value = response;
+      loading.value = false;
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -179,12 +177,11 @@ export const usePersonStore = defineStore("persons", () => {
       );
       person.value = response;
       personForm.value = response || {};
+      loading.value = false;
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -200,12 +197,11 @@ export const usePersonStore = defineStore("persons", () => {
       });
       person.value = response;
       personForm.value = response || {};
+      loading.value = false;
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
@@ -216,16 +212,15 @@ export const usePersonStore = defineStore("persons", () => {
       await $fetch<IPerson>(`${baseUrl}/persons/${id}`, {
         method: "DELETE",
       });
+      loading.value = false;
       return true;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 
-  const checkPersonsPresence = async () => {
+  const checkPersonsPresence = async (): Promise<void> => {
     try {
       networkError.value = null;
       loading.value = true;
@@ -234,7 +229,7 @@ export const usePersonStore = defineStore("persons", () => {
       );
       personsPresent.value = response?.present || false;
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -249,7 +244,7 @@ export const usePersonStore = defineStore("persons", () => {
       );
       popularActors.value = response?.items || [];
     } catch (error: unknown) {
-      networkError.value = error;
+      handleError(error);
     } finally {
       loading.value = false;
     }
@@ -264,12 +259,11 @@ export const usePersonStore = defineStore("persons", () => {
         body: JSON.stringify({ fileNames: fileNames }),
       });
       personForm.value = response || {};
+      loading.value = false;
       return true;
     } catch (error: unknown) {
       handleError(error);
       return false;
-    } finally {
-      loading.value = false;
     }
   };
 

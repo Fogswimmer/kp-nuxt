@@ -22,9 +22,7 @@
 <script setup lang="ts">
 const error = useError();
 
-onMounted(() => {
-  navigateTo("/");
-});
-
-
+// onMounted(() => {
+//   navigateTo("/");
+// });
 </script>

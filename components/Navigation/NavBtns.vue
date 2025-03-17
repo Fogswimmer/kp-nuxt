@@ -1,5 +1,5 @@
 <template>
-  <ClientOnly >
+  <ClientOnly>
     <div class="d-flex align-center justify-center ga-1 pa-1">
       <v-btn
         key="home_nav"
@@ -83,6 +83,13 @@
           </v-tooltip>
         </v-list>
       </v-menu>
+      <v-btn
+        prepend-icon="mdi-information"
+        :to="localeRoute('/about')"
+        :active="$route.name === 'about'"
+      >
+        {{ $t("general.about") }}
+      </v-btn>
     </div>
   </ClientOnly>
 </template>
@@ -100,10 +107,10 @@ const computedActiveNavBtn = computed(() => {
   return {
     home: routeName.startsWith("home"),
     films: routeName.startsWith("film") || routeName.startsWith("newFilm"),
-    persons: routeName.startsWith("person") || routeName.startsWith("newPerson"),
+    persons:
+      routeName.startsWith("person") || routeName.startsWith("newPerson"),
   };
 }) as ComputedRef<{ [key: string]: boolean }>;
-
 </script>
 
 <style></style>

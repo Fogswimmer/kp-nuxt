@@ -7,7 +7,7 @@
             <v-avatar
               size="250"
               border
-              class="position-relative cursor-pointer"
+              class="cursor-pointer"
               @click="showAvatarEditBtns = !showAvatarEditBtns"
             >
               <v-img :src="avatar || ''" cover>
@@ -23,6 +23,16 @@
                 </template>
               </v-img>
             </v-avatar>
+            <v-chip
+              v-if="Boolean(isAdmin)"
+              color="primary"
+              prepend-icon="mdi-shield"
+              size="large"
+              class="position-absolute"
+              style="right: 0px"
+            >
+            {{ $t("auth.admin") }}
+            </v-chip>
             <v-fab
               :active="showAvatarEditBtns"
               :disabled="!isAuthenticated"
@@ -68,6 +78,7 @@ defineProps<{
   generalInfo: Detail[];
   avatar: string;
   loading: boolean;
+  isAdmin?: boolean;
 }>();
 
 const { isAuthenticated } = storeToRefs(useAuthStore());

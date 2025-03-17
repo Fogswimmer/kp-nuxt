@@ -1,12 +1,11 @@
 <template>
-  <masonry-wall :items="popularActors" :max-columns="4" :gap="16">
+  <masonry-wall :items="popularActors" :max-columns="4" :gap="32">
     <template #default="{ item, index }">
       <MasonryCard
         :loading="loading"
         :item="item"
         :index="index"
         :sidebar="sidebar"
-        :style="`${darkAccentColors ? 'box-shadow: 1px 2px 16px 2px' + darkAccentColors[index] : ''};`"
         :img="item?.avatar || ''"
         :link="`/persons/${item?.id}`"
       />
@@ -21,7 +20,6 @@ defineProps<{
   popularActors: IPerson[];
   loading: boolean;
   sidebar: boolean;
-  darkAccentColors?: string[];
 }>();
 </script>
 
