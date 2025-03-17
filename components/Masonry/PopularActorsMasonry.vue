@@ -7,7 +7,7 @@
         :index="index"
         :sidebar="sidebar"
         :img="item?.avatar || ''"
-        :link="`/persons/${item?.id}`"
+        :link="`/persons/${item?.slug || ''}`"
       />
     </template>
   </masonry-wall>

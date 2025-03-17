@@ -114,6 +114,7 @@ declare global {
     createdAt: string | null;
     updatedAt: string | null;
     publisherData: FilmPerson;
+    slug: string | null;
   }
 
   interface FilmWork {

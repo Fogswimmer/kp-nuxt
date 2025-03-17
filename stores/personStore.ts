@@ -63,12 +63,12 @@ export const usePersonStore = defineStore("persons", () => {
     }
   };
 
-  const fetchPersonDetails = async (id: number, locale: string) => {
+  const fetchPersonDetails = async (slug: string, locale: string) => {
     try {
       networkError.value = null;
       loading.value = true;
       const response = await $fetch<IPerson>(
-        `${baseUrl}/persons/${id}?locale=${locale}`
+        `${baseUrl}/persons/get/${slug}?locale=${locale}`
       );
       person.value = response;
     } catch (error: unknown) {
@@ -78,12 +78,12 @@ export const usePersonStore = defineStore("persons", () => {
     }
   };
 
-  const fetchPersonForm = async (id: number) => {
+  const fetchPersonForm = async (slug: string) => {
     try {
       networkError.value = null;
       loading.value = true;
       const response = await $fetch<Partial<IPerson>>(
-        `${baseUrl}/persons/${id}/form`
+        `${baseUrl}/persons/${slug}/form`
       );
       personForm.value = response || {};
     } catch (error: unknown) {
@@ -225,7 +225,7 @@ export const usePersonStore = defineStore("persons", () => {
       networkError.value = null;
       loading.value = true;
       const response = await $fetch<ICheckEmptyResponse>(
-        `${baseUrl}/persons/check`
+        `${baseUrl}/persons-check`
       );
       personsPresent.value = response?.present || false;
     } catch (error: unknown) {
@@ -240,7 +240,7 @@ export const usePersonStore = defineStore("persons", () => {
       networkError.value = null;
       loading.value = true;
       const response = await $fetch<IPersonListResponse>(
-        `${baseUrl}/persons/actors-popular`
+        `${baseUrl}/persons/actors/popular`
       );
       popularActors.value = response?.items || [];
     } catch (error: unknown) {
