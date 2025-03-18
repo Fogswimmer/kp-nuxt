@@ -11,6 +11,14 @@
           @update:model-value="handleUpdateModelValue"
         />
         <v-text-field
+          v-model="form.internationalName"
+          name="internationalName"
+          :rules="internationalNameRules"
+          :label="$t('forms.film.name_international')"
+          prepend-inner-icon="mdi-movie-play"
+          @update:model-value="handleUpdateModelValue"
+        />
+        <v-text-field
           v-model="form.slogan"
           name="slogan"
           :label="$t('forms.film.slogan')"
@@ -192,16 +200,16 @@ const yearsOfReleaseItems = Array.from(
   { length: currentYear - startYear + 1 },
   (_, index) => startYear + index
 ).sort((a, b) => b - a);
-const MAX_NAME_LENGHT = 50;
-const MIN_NAME_LENGHT = 2;
+const MAX_NAME_LENGTH = 50;
+const MIN_NAME_LENGTH = 2;
 const nameRules = [
   (v: string) => !!v || t("forms.rules.required"),
   (v: string) =>
-    v.length <= MAX_NAME_LENGHT ||
-    t("forms.rules.max_chars") + " " + MAX_NAME_LENGHT,
+    v.length <= MAX_NAME_LENGTH ||
+    t("forms.rules.max_chars") + " " + MAX_NAME_LENGTH,
   (v: string) =>
-    v.length >= MIN_NAME_LENGHT ||
-    t("forms.rules.min_chars") + " " + MIN_NAME_LENGHT,
+    v.length >= MIN_NAME_LENGTH ||
+    t("forms.rules.min_chars") + " " + MIN_NAME_LENGTH,
 ];
 const selectRules = [(v: string) => !!v || t("forms.rules.required")];
 const durationRules = [(v: string) => !!v || t("forms.rules.required")];
@@ -209,9 +217,21 @@ const descriptionRules = [(v: string) => !!v || t("forms.rules.required")];
 const multipleSelectRules = [(v: string) => !!v || t("forms.rules.required")];
 const ageRules = [(v: number) => !!v || t("forms.rules.required")];
 const ageItems = [0, 3, 12, 16, 18];
+
+const internationalNameRules = [
+  (v: string) => !!v || t("forms.rules.required"),
+  (v: string) =>
+    v.length <= MAX_NAME_LENGTH ||
+    t("forms.rules.max_chars") + " " + MAX_NAME_LENGTH,
+  (v: string) =>
+    v.length >= MIN_NAME_LENGTH ||
+    t("forms.rules.min_chars") + " " + MIN_NAME_LENGTH,
+  (v: string) =>  /^[A-Za-z\s\d]+$/.test(v) || t("forms.rules.only_latin_chars"),
+];
+
 const validate = async (): Promise<void> => {
-  const { valid } = await formRef.value?.validate() || { valid: false };
-  console.log(valid)
+  const { valid } = (await formRef.value?.validate()) || { valid: false };
+  console.log(valid);
   if (valid) {
     emit("form:submit");
   }

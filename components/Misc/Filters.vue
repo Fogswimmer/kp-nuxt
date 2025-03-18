@@ -68,23 +68,39 @@
 const props = defineProps<{
   sortOptions: { value: string; title: string }[];
 }>();
-defineEmits(["update:limit", "update:order", "update:sort"]);
+defineEmits<{
+  (e: "update:limit", value: number): void;
+  (e: "update:order" | "update:sort", value: string): void;
+}>();
+
+interface IStringValueOption {
+  value: string;
+  title: string;
+}
+
+interface INumberValueOption {
+  value: number;
+  title: string;
+}
 
 const { t } = useI18n();
-const orderOptions = [
+const orderOptions: IStringValueOption[] = [
   { value: "asc", title: t("actions.asc") },
   { value: "desc", title: t("actions.desc") },
 ];
-const selectedOrder = ref({ value: "asc", title: t("actions.asc") });
+const selectedOrder = ref<IStringValueOption>({
+  value: "asc",
+  title: t("actions.asc"),
+});
 
-const limitOptions = [
+const limitOptions: INumberValueOption[] = [
   { value: 5, title: "5" },
   { value: 10, title: "10" },
   { value: 15, title: "15" },
   { value: 0, title: t("filters.sort.all") },
 ];
-const selectedLimit = ref(limitOptions[0]);
-const selectedSortOption = ref(props.sortOptions[0]);
+const selectedLimit = ref<INumberValueOption>(limitOptions[0]);
+const selectedSortOption = ref<IStringValueOption>(props.sortOptions[0]);
 </script>
 
 <style></style>

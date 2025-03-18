@@ -13,13 +13,12 @@
         <NewestFilmsMasonryWall
           v-if="latestFilms.length"
           :latest-films="latestFilms"
-          :loading="loading"
           sidebar
         />
         <span v-else-if="!loading" class="text-disabled">{{
           $t("general.no_data")
         }}</span>
-        <v-sheet v-else height="100%">
+        <v-sheet v-else height="100vh">
           <div class="fill-height d-flex align-center justify-center">
             <v-progress-circular indeterminate />
           </div>
@@ -48,7 +47,6 @@
           />
         </template>
       </ListPage>
-   
   </div>
 </template>
 
@@ -122,7 +120,7 @@ const updateQueryParams = (page: number): void => {
 
 watch(
   [limit, offset, search, order, sortBy, locale],
-  async ([newLimit, newOffset, newSearch, newOrder, newSortBy, newLocale]) => {
+  async ([newLimit, newOffset, newSearch, newOrder, newSortBy, newLocale]): Promise<void> => {
     await fetchFilteredFilms(
       newLimit,
       newOffset,
@@ -137,12 +135,11 @@ watch(
   }
 );
 
-onMounted(async () => {
+onMounted(async (): Promise<void> => {
   await fetchData();
 });
 
 definePageMeta({
-  layout: "default",
   name: "films",
   path: "/films",
   key: (route) => route.fullPath,

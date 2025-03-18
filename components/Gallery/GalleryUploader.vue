@@ -58,7 +58,9 @@
 </template>
 
 <script lang="ts" setup>
-const emit = defineEmits(["files:preupload", "files:upload"]);
+const emit = defineEmits<{
+  (e: "files:preupload" | "files:upload", value: File[]): void;
+}>();
 const previews = ref<File[]>([]);
 const props = defineProps<{
   uploadCount: number;
@@ -69,21 +71,21 @@ const uploadError = computed((): boolean => {
   return previews.value.length > props.uploadCount;
 });
 
-const handlePreupload = () => {
+const handlePreupload = (): void => {
   if (previews.value.length > props.uploadCount) {
     return;
   }
 
-  emit("files:preupload", previews);
+  emit("files:preupload", previews.value);
 };
 const computedUploadCount = computed((): number => {
   return props.uploadCount - previews.value.length;
 });
 
-const clearPreviews = () => {
+const clearPreviews = (): void => {
   previews.value = [];
 };
-onBeforeUnmount(() => {
+onBeforeUnmount((): void => {
   clearPreviews();
 });
 </script>

@@ -65,9 +65,24 @@
               @img:select="handleSetPoster"
             />
           </v-stepper-window-item>
+          <v-btn :disabled="step === 0" block class="ma-4" @click="handleFinish">{{
+            $t("actions.finish")
+          }}</v-btn>
         </v-stepper-window>
       </v-stepper>
     </v-card>
+    <v-snackbar v-model="showFirstStepSnackbar" color="success">
+      {{ $t("toast.messages.success.add") }}
+    </v-snackbar>
+    <v-snackbar v-model="showSecondStepSnackbar" color="success">
+      {{ $t("toast.messages.success.files_added") }}
+    </v-snackbar>
+    <v-snackbar v-model="showThirdStepSnackbar" color="success">
+      {{ $t("toast.messages.success.edit") }}
+    </v-snackbar>
+    <v-snackbar v-model="showErrorSnackbar" color="error">
+      {{ $t("toast.messages.error.add") }}
+    </v-snackbar>
   </div>
 </template>
 
@@ -79,7 +94,6 @@ import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.v
 import definePageTitle from "~/utils/definePageTitle";
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
-
 
 const { locale } = useI18n();
 const { personsPresent } = storeToRefs(usePersonStore());
@@ -108,6 +122,10 @@ const error = useError();
 const localeRoute = useLocaleRoute();
 
 const step = ref<number>(0);
+const showFirstStepSnackbar = ref<boolean>(false);
+const showSecondStepSnackbar = ref<boolean>(false);
+const showThirdStepSnackbar = ref<boolean>(false);
+const showErrorSnackbar = ref<boolean>(false);
 
 const fetchData = async (): Promise<void> => {
   await checkPersonsPresence();
@@ -118,19 +136,39 @@ const fetchData = async (): Promise<void> => {
   }
 };
 
-const nextStep = (): void => {
+const nextStep = () => {
+  if (!error.value) {
     step.value++;
+    switch (step.value) {
+      case 1:
+        showFirstStepSnackbar.value = true;
+        break;
+      case 2:
+        showSecondStepSnackbar.value = true;
+        break;
+      case 3:
+        showThirdStepSnackbar.value = true;
+        break;
+    }
+  }
 };
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
-  await addFilm();
-  nextStep();
+  if(await addFilm()) {
+    nextStep();
+  } else if (error.value) {
+    showErrorSnackbar.value = true;
+  }
 };
 
 const handleGallerySubmit = async (files: File[]): Promise<void> => {
   const id = filmForm.value.id;
-  await uploadGallery(files, id || 0);
-  nextStep();
+  if (id) {
+    await uploadGallery(files, id || 0);
+    nextStep();
+  } else if (error.value) {
+    showErrorSnackbar.value = true;
+  }
 };
 
 const handleSetPoster = async (id: number): Promise<void> => {
@@ -149,9 +187,20 @@ const updateForm = (value: IFilm) => {
   filmForm.value = transformedValue;
 }
 
+const handleFinish = (): void => {
+  if (step.value <= 2) {
+    navigateTo(localeRoute(`/films`));
+  } else {
+    navigateTo(localeRoute(`/films/${filmForm.value.slug}`));
+  }
+};
+
+onBeforeUnmount((): void => {
+  clearFilmForm();
+})
+
 onMounted(async (): Promise<void> => {
   await fetchData();
-  clearFilmForm();
 });
 
 definePageMeta({

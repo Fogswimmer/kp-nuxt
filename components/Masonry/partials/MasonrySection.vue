@@ -5,6 +5,7 @@
     class="my-3"
     rounded="lg"
     variant="text"
+    :style="`background-image: radial-gradient(circle, ${darkAccentColor} 0%, transparent 60%)`"
   >
     <v-card-title>
       <div class="pa-2 d-flex flex-column ga-2 mb-2">
@@ -18,7 +19,7 @@
       <slot />
     </v-card-text>
     <v-row v-else>
-      <v-col>
+      <v-col v-for="i in 3" :key="i" cols="12" lg="4" md="6" sm="12">
         <v-skeleton-loader type="card" height="100vh" />
       </v-col>
     </v-row>
@@ -34,5 +35,3 @@ defineProps<{
   darkAccentColor?: string;
 }>();
 </script>
-
-

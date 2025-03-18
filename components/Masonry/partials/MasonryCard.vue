@@ -3,38 +3,33 @@
     :key="index"
     :loading="loading"
     :title="item?.name"
+    :subtitle="item?.internationalName || ''"
     rounded="lg"
-    
-    :variant="sidebar ? 'plain' : 'outlined'"
+    elevation="5"
+    :variant="sidebar ? 'plain' : 'text'"
+    class="masonry-card glassed"
   >
     <template #append>
       <slot name="append" />
     </template>
-    <v-img
-      :src="img"
-      min-height="400"
-      cover
-      rounded="lg"
-      class="cursor-pointer ma-2"
-      @click="navigateTo(localeRoute(link))"
-    >
-      <template #placeholder>
-        <v-card height="100%" variant="plain" rounded="lg" class="glassed">
-          <div class="d-flex align-center justify-center h-100">
-            <v-icon size="64">mdi-image-off</v-icon>
-          </div>
-        </v-card>
-      </template>
-      <template #error>
-        <ErrorPlaceHolder />
-      </template>
-    </v-img>
+    <v-card-text>
+      <NuxtImg
+        :src="img"
+        provider="myProvider"
+        placeholder
+        :modifiers="{ roundCorner: '0:100' }"
+        fit="cover"
+        loading="lazy"
+        class="cursor-pointer masonry-image"
+        @click="navigateTo(localeRoute(link))"
+      />
+    </v-card-text>
+
     <slot />
   </v-card>
 </template>
 
 <script lang="ts" setup>
-import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 defineProps<{
   loading: boolean;
   img: string;
@@ -47,4 +42,18 @@ defineProps<{
 const localeRoute = useLocaleRoute();
 </script>
 
-<style></style>
+<style>
+.masonry-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.masonry-image:hover {
+  transform: scale(1.05);
+}
+.masonry-card{
+ border: 1px solid rgba(128, 128, 128, 0.459);
+}
+</style>

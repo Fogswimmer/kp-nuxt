@@ -18,6 +18,14 @@
           :label="$t('forms.person.lastname')"
           @update:model-value="handleUpdateModelValue"
         />
+        <v-text-field
+          v-model="form.internationalName"
+          name="internationalName"
+          :rules="internationalNameRules"
+          :label="$t('forms.person.name_international')"
+          prepend-inner-icon="mdi-movie-play"
+          @update:model-value="handleUpdateModelValue"
+        />
         <v-select
           v-model="form.genderId"
           name="genderId"
@@ -95,18 +103,28 @@ const props = defineProps<{
 const isFormValid = ref<boolean>(false);
 const form = ref<Partial<IPerson>>({ ...props.personForm });
 
-const MAX_NAME_LENGHT: number = 50;
-const MIN_NAME_LENGHT: number = 2;
+const MAX_NAME_LENGTH: number = 50;
+const MIN_NAME_LENGTH: number = 2;
 const nameRules = [
   (v: string) => !!v || t("forms.rules.required"),
   (v: string) =>
-    v.length <= MAX_NAME_LENGHT ||
-    t("forms.rules.max_chars") + " " + MAX_NAME_LENGHT,
+    v.length <= MAX_NAME_LENGTH ||
+    t("forms.rules.max_chars") + " " + MAX_NAME_LENGTH,
   (v: string) =>
-    v.length >= MIN_NAME_LENGHT ||
-    t("forms.rules.min_chars") + " " + MIN_NAME_LENGHT,
+    v.length >= MIN_NAME_LENGTH ||
+    t("forms.rules.min_chars") + " " + MIN_NAME_LENGTH,
 ];
 const selectRules = [(v: string) => !!v || t("forms.rules.required")];
+const internationalNameRules = [
+  (v: string) => !!v || t("forms.rules.required"),
+  (v: string) =>
+    v.length <= MAX_NAME_LENGTH ||
+    t("forms.rules.max_chars") + " " + MAX_NAME_LENGTH,
+  (v: string) =>
+    v.length >= MIN_NAME_LENGTH ||
+    t("forms.rules.min_chars") + " " + MIN_NAME_LENGTH,
+  (v: string) =>  /^[A-Za-z\s\d]+$/.test(v) || t("forms.rules.only_latin_chars"),
+];
 
 const date = useDate();
 const MIN_BIRTHDAY: Date = new Date(1900, 0, 1);

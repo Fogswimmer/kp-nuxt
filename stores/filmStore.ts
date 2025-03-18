@@ -15,6 +15,7 @@ export const useFilmStore = defineStore("films", () => {
   const loading = ref<boolean>(false);
   const total = ref<number>(0);
   const latestFilms = ref<IFilm[]>([]);
+  const topFilms = ref<IFilm[]>([]);
   const directors = ref<Partial<IPerson>[]>([]);
   const actors = ref<Partial<IPerson>[]>([]);
   const producers = ref<Partial<IPerson>[]>([]);
@@ -33,7 +34,7 @@ export const useFilmStore = defineStore("films", () => {
     name: "",
     slogan: "",
     genreIds: [],
-    releaseYear: 0,
+    releaseYear: new Date().getFullYear(),
     actorIds: [],
     directorId: null,
     producerId: null,
@@ -78,6 +79,20 @@ export const useFilmStore = defineStore("films", () => {
         `${baseUrl}/films-latest`
       );
       latestFilms.value = response?.items || [];
+    } catch (error: unknown) {
+      handleError(error);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  const fetchTopFilms = async (): Promise<void> => {
+    try {
+      loading.value = true;
+      const response = await $fetch<IFilmListResponse>(
+        `${baseUrl}/films-top`
+      );
+      topFilms.value = response?.items || [];
     } catch (error: unknown) {
       handleError(error);
     } finally {
@@ -296,6 +311,7 @@ export const useFilmStore = defineStore("films", () => {
     GALLERY_SIZE,
     filmsPresent,
     similarGenreFilms,
+    topFilms,
     fetchFilteredFilms,
     fetchGenres,
     addFilm,
@@ -310,6 +326,7 @@ export const useFilmStore = defineStore("films", () => {
     checkFilmsPresence,
     deleteFilm,
     fetchSpecialists,
-    deleteAssessmentById
+    deleteAssessmentById,
+    fetchTopFilms
   };
 });

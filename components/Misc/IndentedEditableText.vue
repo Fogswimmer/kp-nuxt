@@ -48,7 +48,10 @@ const props = defineProps<{
   text: string;
   messages: string;
 }>();
-defineEmits(["sumbit:edit"]);
+
+defineEmits<{
+  (e: "sumbit:edit", value: string): void;
+}>();
 
 const editModeText = ref<string>(props.text);
 const collapsed = ref<boolean>(true);

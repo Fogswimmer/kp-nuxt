@@ -101,7 +101,7 @@ import { useAuthStore } from "~/stores/authStore";
 const { currentUser } = storeToRefs(useAuthStore());
 const localeRoute = useLocaleRoute();
 
-const computedActiveNavBtn = computed(() => {
+const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
   const route = useRoute();
   const routeName = (route.name as string) || "";
   return {
@@ -110,7 +110,7 @@ const computedActiveNavBtn = computed(() => {
     persons:
       routeName.startsWith("person") || routeName.startsWith("newPerson"),
   };
-}) as ComputedRef<{ [key: string]: boolean }>;
+});
 </script>
 
 <style></style>

@@ -75,7 +75,7 @@ const props = defineProps<{
   gallery: string[];
   cardHeight?: number;
 }>();
-const selectedCoverIndex = ref(props.coverIndex || 0);
+const selectedCoverIndex = ref<number>(props.coverIndex || 0);
 </script>
 
 <style></style>

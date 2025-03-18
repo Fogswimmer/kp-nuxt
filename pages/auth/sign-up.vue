@@ -53,6 +53,7 @@ import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import UserForm from "~/components/Forms/UserForm.vue";
 import { useAuthStore } from "~/stores/authStore";
 
+const { register } = useAuthStore();
 interface AuthError {
   message: string;
 }
@@ -65,7 +66,6 @@ const { loading, authError, showErrorMessage } = storeToRefs(
   showErrorMessage: Ref<boolean>;
 };
 
-const { register } = useAuthStore();
 
 const submit = async () => {
   await register();
@@ -76,6 +76,7 @@ const submit = async () => {
 definePageMeta({
   name: "signUp",
   path: "/auth/sign-up",
+  middleware: "guest",
 });
 </script>
 

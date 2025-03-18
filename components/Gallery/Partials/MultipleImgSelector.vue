@@ -60,7 +60,7 @@
       <v-btn
         prepend-icon="mdi-close"
         :disabled="!selectedItems.length"
-        @click="emit('gallery:clear')"
+        @click="$emit('gallery:clear')"
         >{{ $t("actions.clear") }}</v-btn
       >
       <v-btn
@@ -79,12 +79,11 @@ defineProps<{
   sliderGalleryArr: string[];
   cardHeight?: number;
 }>();
-const emit = defineEmits([
-  "update:selected",
-  "delete:selected",
-  "gallery:clear",
-]);
 
+defineEmits<{
+  (e: "update:selected" | "delete:selected", value: Array<number>): void;
+  (e: "gallery:clear"): void;
+}>();
 const selectedItems = ref<Array<number>>([]);
 </script>
 

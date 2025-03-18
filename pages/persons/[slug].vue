@@ -18,7 +18,7 @@
             :loading="loading"
             :general-info="computedPersonDetails"
             :avatar="person?.avatar || ''"
-            :title="personFullName"
+            :title="`${personFullName} ${person?.internationalName ? '(' + person?.internationalName + ')' : ''}`"
             :subtitle="specialtyNames"
             @avatar:edit="chooseAvatar"
           />
@@ -29,7 +29,7 @@
         <template #menu>
           <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
             <template #activator="{ props }">
-              <v-btn icon :disabled="!currentUser" v-bind="props">
+              <v-btn icon :disabled="!isAuthenticated" v-bind="props">
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
@@ -87,17 +87,26 @@
             </v-list>
           </v-menu>
           <div v-else class="d-flex ga-1">
-            <v-btn prepend-icon="mdi-image" @click="chooseCover">{{
-              $t("actions.choose_cover")
-            }}</v-btn>
-            <v-btn prepend-icon="mdi-account" @click="chooseAvatar">{{
-              $t("actions.edit_avatar")
-            }}</v-btn>
+            <v-btn
+              prepend-icon="mdi-image"
+              :disabled="!isAuthenticated"
+              @click="chooseCover"
+              >{{ $t("actions.choose_cover") }}</v-btn
+            >
+            <v-btn
+              prepend-icon="mdi-account"
+              :disabled="!isAuthenticated"
+              @click="chooseAvatar"
+              >{{ $t("actions.edit_avatar") }}</v-btn
+            >
             <v-menu>
               <template #activator="{ props }">
-                <v-btn v-bind="props" prepend-icon="mdi-pencil">{{
-                  $t("actions.edit")
-                }}</v-btn>
+                <v-btn
+                  v-bind="props"
+                  :disabled="!isAuthenticated"
+                  prepend-icon="mdi-pencil"
+                  >{{ $t("actions.edit") }}</v-btn
+                >
               </template>
               <v-list>
                 <v-list-item
@@ -122,6 +131,7 @@
             </v-menu>
             <v-btn
               prepend-icon="mdi-delete"
+              :disabled="!isAuthenticated"
               base-color="error"
               @click="showDeleteWarning = true"
               >{{ $t("actions.remove") }}</v-btn
@@ -295,7 +305,7 @@ const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>([]);
 const coverFile = ref<File>();
 const avatarFile = ref<File | null>(null);
-const { currentUser, isAuthenticated } = storeToRefs(useAuthStore());
+const { isAuthenticated } = storeToRefs(useAuthStore());
 const { person, genders, specialties, personForm, loading } =
   storeToRefs(usePersonStore());
 const {
@@ -308,6 +318,7 @@ const {
   uploadCover,
   removePerson,
   deleteGalleryItems,
+  clearPersonForm,
   GALLERY_SIZE,
 } = usePersonStore();
 
@@ -408,7 +419,7 @@ const handleChangeAvatar = async (index: number): Promise<void> => {
 
 const handleAvatarUpload = async (files: File[]): Promise<void> => {
   avatarFile.value = files[0];
-  const personId: number = Number(useRoute().params.id);
+  const personId: number = person.value?.id || 0;
   await uploadPhotos([avatarFile.value], personId);
   personForm.value.avatar = person.value?.photos[0] || "";
   await editPerson();
@@ -438,13 +449,13 @@ const handlePhotosUpload = async (files: File[]): Promise<void> => {
 
 const handleCoverChange = async (files: File[]): Promise<void> => {
   const file: File = files[0];
-  const id = Number(useRoute().params.id);
+  const personId: number = person.value?.id || 0;
   if (person.value?.cover !== "") {
     showCoverReplacementWarning.value = true;
     coverFile.value = file;
     return;
   }
-  await uploadCover(file, id || 0);
+  await uploadCover(file, personId || 0);
   await fetchData();
   photoEditMode.value = false;
   showSnackbar.value = !showSnackbar.value;
@@ -453,7 +464,7 @@ const handleCoverChange = async (files: File[]): Promise<void> => {
 const replaceCover = async (): Promise<void> => {
   showCoverReplacementWarning.value = false;
   const file: File = coverFile.value as File;
-  const id: number = Number(useRoute().params.id);
+  const id = person.value?.id;
   await uploadCover(file, id || 0);
   await fetchData();
   photoEditMode.value = false;
@@ -463,7 +474,8 @@ const replaceCover = async (): Promise<void> => {
 const handlePhotosDelete = async () => {};
 
 const handlePersonDelete = async (): Promise<void> => {
-  await removePerson(Number(useRoute().params.id));
+  const personId: number = person.value?.id || 0;
+  await removePerson(personId);
   navigateTo(localeRoute("/persons"));
 };
 
@@ -491,6 +503,10 @@ const fetchData = async (): Promise<void> => {
     fetchSpecialties(locale.value),
   ]);
 };
+
+onBeforeUnmount((): void => {
+  clearPersonForm();
+});
 
 onMounted(async (): Promise<void> => {
   await fetchData();

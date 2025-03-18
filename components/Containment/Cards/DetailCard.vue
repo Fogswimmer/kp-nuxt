@@ -49,7 +49,7 @@
               </v-sheet>
             </template>
             <template #error>
-              <ErrorPlaceHolder show-label />
+              <v-sheet height="300" width="100%" class="default-cover" />
             </template>
             <template v-if="poster">
               <slot name="poster" />
@@ -66,7 +66,6 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
-import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
 
 defineEmits(["drawer:toggle"]);
 const props = defineProps<{

@@ -48,7 +48,6 @@ export const usePersonStore = defineStore("persons", () => {
     locale: string
   ) => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<IPersonListResponse>(
         `${baseUrl}/persons/filter?limit=${limit}&offset=${offset}&search=${search}&sortBy=${sortBy}&order=${order}&specialty=${specialty}&locale=${locale}`
@@ -65,7 +64,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const fetchPersonDetails = async (slug: string, locale: string) => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<IPerson>(
         `${baseUrl}/persons/get/${slug}?locale=${locale}`
@@ -80,7 +78,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const fetchPersonForm = async (slug: string) => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<Partial<IPerson>>(
         `${baseUrl}/persons/${slug}/form`
@@ -95,7 +92,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const fetchGenders = async (locale: string) => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<Array<IGender>>(
         `${baseUrl}/genders/translations?locale=${locale}`
@@ -124,7 +120,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const addPerson = async (): Promise<boolean> => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<Partial<IPerson>>(`${baseUrl}/persons`, {
         headers: authHeaders.value,
@@ -142,7 +137,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const editPerson = async (): Promise<boolean> => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<IPerson>(
         `${baseUrl}/persons/${personForm.value.id}`,
@@ -162,7 +156,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const uploadPhotos = async (photos: File[], id: number): Promise<boolean> => {
     try {
-      networkError.value = null;
       loading.value = true;
       const formData = new FormData();
       photos.forEach((photo) => {
@@ -187,7 +180,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const uploadCover = async (cover: File, id: number): Promise<boolean> => {
     try {
-      networkError.value = null;
       loading.value = true;
       const formData = new FormData();
       formData.append("file", cover);
@@ -207,7 +199,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const removePerson = async (id: number): Promise<boolean> => {
     try {
-      networkError.value = null;
       loading.value = true;
       await $fetch<IPerson>(`${baseUrl}/persons/${id}`, {
         method: "DELETE",
@@ -222,7 +213,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const checkPersonsPresence = async (): Promise<void> => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<ICheckEmptyResponse>(
         `${baseUrl}/persons-check`
@@ -237,7 +227,6 @@ export const usePersonStore = defineStore("persons", () => {
 
   const listPopularActors = async () => {
     try {
-      networkError.value = null;
       loading.value = true;
       const response = await $fetch<IPersonListResponse>(
         `${baseUrl}/persons/actors/popular`

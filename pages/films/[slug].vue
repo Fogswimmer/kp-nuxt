@@ -74,6 +74,7 @@
                     <v-responsive>
                       <iframe
                         v-if="film?.trailer && !iframeError"
+                        id="iframe"
                         width="100%"
                         :height="$vuetify.display.mdAndUp ? '500' : '300px'"
                         :src="film?.trailer"
@@ -82,7 +83,6 @@
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         referrerpolicy="strict-origin-when-cross-origin"
                         allowfullscreen
-                        @error="iframeError = true"
                       />
                       <v-sheet
                         v-else
@@ -296,6 +296,7 @@
               <v-text-field
                 v-model="filmForm.trailer"
                 prepend-icon="mdi-youtube"
+                :rules="trailerRules"
                 :label="$t('forms.film.trailer')"
                 :hint="$t('general.youtube_link')"
                 clearable
@@ -344,6 +345,7 @@ const GALLERY_CARD_HEIGHT: number = 300;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
+
 const iframeError = ref<boolean>(false);
 const showDeleteWarning = ref<boolean>(false);
 const editDescriptionMode = ref<boolean>(false);
@@ -478,6 +480,7 @@ const team = computed((): Detail[] => {
 const computedGalleryEditTitle = computed((): string => {
   return t("pages.films.edit_gallery");
 });
+
 const fetchData = async (): Promise<void> => {
   const slug = useRoute().params.slug.toString();
   await Promise.allSettled([
@@ -504,7 +507,7 @@ const uploadCount = computed((): number => {
 
 const handleFilmDelete = async (): Promise<void> => {
   showDeleteWarning.value = false;
-  const filmId = Number(useRoute().params.id);
+  const filmId:number = film.value?.id || 0;
   await deleteFilm(filmId);
   navigateTo(localeRoute("/films"));
 };
@@ -525,8 +528,9 @@ const cancelAssessment = (): void => {
 };
 
 const submitAssessment = async (): Promise<void> => {
+  const filmId:number = film.value?.id || 0;
   await assessFilmById(
-    Number(useRoute().params.id),
+    filmId,
     rating.value,
     comment.value,
     locale.value
@@ -592,13 +596,13 @@ const choosePoster = (): void => {
 };
 
 const handleGalleryUpload = async (files: File[]): Promise<void> => {
-  const id = Number(filmForm.value.id);
-  await uploadGallery(files, id);
+  const filmId:number = film.value?.id || 0;
+  await uploadGallery(files, filmId);
   editGalleryMode.value = false;
   await fetchData();
-  await nextTick(() => {
+  if (!film.value?.poster) {
     showPosterSetDialog.value = true;
-  });
+  }
 };
 
 const handleChangePoster = async (index: number): Promise<void> => {
@@ -630,7 +634,8 @@ const submitDescriptionEdit = async (text: string): Promise<void> => {
 };
 
 const deleteAssessment = async (assessmentId: number): Promise<void> => {
-  await deleteAssessmentById(Number(useRoute().params.id), assessmentId );
+  const filmId:number = film.value?.id || 0;
+  await deleteAssessmentById(filmId, assessmentId );
   await fetchData();
 }
 
@@ -643,9 +648,24 @@ watch(
   { immediate: true }
 );
 
-onMounted(async (): Promise<void> => {
+onBeforeUnmount((): void => {
   clearFilmForm();
+})
+
+const trailerRules = [
+  (value: string) => !!value || t("forms.rules.required"),
+  (value: string) => validateUrl(value) || t("forms.rules.valid_url"),
+]
+
+onMounted(async (): Promise<void> => {
   await fetchData();
+  const iframe = document.getElementById('iframe') as HTMLIFrameElement;
+  if (iframe) {
+    iframe.onerror = () => {
+      iframeError.value = true;
+      console.log(iframeError.value)
+    }
+  }
 });
 
 definePageMeta({

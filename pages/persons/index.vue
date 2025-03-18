@@ -16,10 +16,16 @@
         <PopularActorsMasonry
           v-if="popularActors.length"
           :popular-actors="popularActors"
-          :loading="loading"
           sidebar
         />
-        <span v-else class="text-disabled">{{ $t("general.no_data") }}</span>
+        <span v-else-if="!loading" class="text-disabled">{{
+          $t("general.no_data")
+        }}</span>
+        <v-sheet v-else height="100vh">
+          <div class="fill-height d-flex align-center justify-center">
+            <v-progress-circular indeterminate />
+          </div>
+        </v-sheet>
       </v-card>
     </v-navigation-drawer>
 
@@ -52,8 +58,8 @@
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
-import { usePersonStore } from "~/stores/personStore";
 import definePageTitle from "~/utils/definePageTitle";
+import { usePersonStore } from "~/stores/personStore";
 
 const { locale, t } = useI18n();
 
@@ -72,6 +78,7 @@ const {
   fetchSpecialties,
   checkPersonsPresence,
 } = usePersonStore();
+
 const limit = ref<number | string>(5);
 const offset = ref<number>(0);
 const search = ref<string>("");
@@ -111,10 +118,16 @@ const personItems = computed((): Detail[] => {
     persons.value &&
     persons.value?.map((person): Detail => {
       return {
-        title: person?.firstname + " " + person?.lastname,
+        title:
+          person?.firstname +
+          " " +
+          person?.lastname +
+          (person?.internationalName
+            ? " (" + person?.internationalName + ")"
+            : ""),
         value: person?.specialtyNames.join(", "),
         avatar: person?.avatar || "",
-        to: "/persons/" + person?.id,
+        to: "/persons/" + person?.slug || "",
         createdAt: person?.createdAt || "",
         updatedAt: person?.updatedAt || "",
         publishedBy: person?.publisherData.name || "",
@@ -138,7 +151,7 @@ watch(
     newOrder,
     newSpecialtySort,
     newLocale,
-  ]) => {
+  ]): Promise<void> => {
     await fetchFilteredPersons(
       newLimit,
       newOffset,

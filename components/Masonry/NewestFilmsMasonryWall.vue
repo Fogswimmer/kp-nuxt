@@ -1,6 +1,6 @@
 <template>
   <div>
-    <masonry-wall :items="latestFilms" :gap="32">
+    <masonry-wall :items="latestFilms" :gap="16">
       <template #default="{ item, index }">
         <div
           v-intersect="onIntersect(index)"
@@ -8,12 +8,11 @@
           :class="{ 'fade-in': visibleItems.has(index) }"
         >
           <MasonryCard
-            :loading="loading"
+            :loading="Boolean(loading)"
             :index="index"
             :item="item"
             :img="item?.poster || ''"
             :sidebar="sidebar"
-            :style="`border: 1px solid ${darkAccentColors ? darkAccentColors[index] : 'white'};`"
             :link="`/films/${item.slug?.toString()}`"
           >
             <template #append>
@@ -46,10 +45,9 @@ const onIntersect = (index: number) => (isVisible: boolean) => {
 
 defineProps<{
   latestFilms: IFilm[];
-  loading: boolean;
+  loading?: boolean;
   sidebar?: boolean;
   link?: string;
-  darkAccentColors?: string[];
 }>();
 </script>
 

@@ -55,12 +55,11 @@ import GalleryUploader from "./GalleryUploader.vue";
 import MultipleImgSelector from "./Partials/MultipleImgSelector.vue";
 import SingleImgSelector from "./Partials/SingleImgSelector.vue";
 
-defineEmits([
-  "update:selected",
-  "delete:selected",
-  "upload:gallery",
-  "poster:change",
-]);
+defineEmits<{
+  (e: "update:selected" | "delete:selected", value: Array<number>): void;
+  (e: "upload:gallery", value: Array<File>): void;
+  (e: "poster:change", value: number): void;
+}>();
 
 const props = defineProps<{
   activeTab?: number;
@@ -72,10 +71,10 @@ const props = defineProps<{
   sliderArr?: string[];
   cardHeight?: number;
 }>();
-const active = ref(props.activeTab || 0);
+const active = ref<number>(props.activeTab || 0);
 const galleryFiles = ref<File[]>([]);
 
-const selectedPosterIndex = ref(
+const selectedPosterIndex = ref<number>(
   props.film?.gallery?.findIndex(
     (item: string) => item === props.film?.poster
   ) === -1
@@ -93,13 +92,13 @@ const uploadError = computed((): boolean => {
   return computedUploadCount.value <= 0;
 });
 
-const clearGalleryFiles = () => {
+const clearGalleryFiles = (): void => {
   galleryFiles.value = [];
 };
 
-onMounted(()=>{
+onMounted((): void => {
   galleryFiles.value = [];
-})
+});
 </script>
 
 <style lang="scss">

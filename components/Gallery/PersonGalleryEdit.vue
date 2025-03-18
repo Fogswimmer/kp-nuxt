@@ -71,14 +71,12 @@
 import GalleryUploader from "./GalleryUploader.vue";
 import MultipleImgSelector from "./Partials/MultipleImgSelector.vue";
 import SingleImgSelector from "./Partials/SingleImgSelector.vue";
-defineEmits([
-  "update:selected",
-  "delete:selected",
-  "upload",
-  "avatar:change",
-  "avatar:upload",
-  "cover:change",
-]);
+
+defineEmits<{
+  (e: "update:selected" | "delete:selected", value: Array<number>): void;
+  (e: "upload" | "avatar:upload" | "cover:change", value: Array<File>): void;
+  (e: "avatar:change", value: number): void;
+}>();
 const props = defineProps<{
   activeTab?: number;
   person?: IPerson | null;
@@ -89,9 +87,9 @@ const props = defineProps<{
   sliderArr?: string[];
   cardHeight?: number;
 }>();
-const active = ref(props.activeTab || 0);
+const active = ref<number>(props.activeTab || 0);
 const galleryFiles = ref<File[]>([]);
-const selectedAvatarIndex = ref(
+const selectedAvatarIndex = ref<number>(
   props.person?.photos?.findIndex(
     (item: string) => item === props.person?.avatar
   ) === -1
@@ -109,7 +107,7 @@ const uploadError = computed((): boolean => {
   return computedUploadCount.value <= 0;
 });
 
-const clearGalleryFiles = () => {
+const clearGalleryFiles = (): void => {
   galleryFiles.value = [];
 };
 </script>

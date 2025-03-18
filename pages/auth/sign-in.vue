@@ -86,8 +86,9 @@ import { useAuthStore } from "~/stores/authStore";
 
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
 const { t } = useI18n();
+const visible = ref<boolean>(false);
 
-const loginFormRef = ref();
+const loginFormRef = ref<HTMLFormElement | null>();
 const { login, fetchCurrentUser } = useAuthStore();
 const requiredRules = [
   (value: string) => {
@@ -96,12 +97,14 @@ const requiredRules = [
   },
 ];
 const validate = async () => {
-  const { valid } = await loginFormRef.value.validate();
-  if (valid) {
-    await login();
-    if (!showErrorMessage.value) {
-      await fetchCurrentUser();
-      navigateTo("/");
+  if (loginFormRef.value) {
+    const { valid } = await loginFormRef.value.validate();
+    if (valid) {
+      await login();
+      if (!showErrorMessage.value) {
+        await fetchCurrentUser();
+        navigateTo("/");
+      }
     }
   }
 };
@@ -111,6 +114,4 @@ definePageMeta({
   path: "/auth/sign-in",
   middleware: "auth",
 });
-
-const visible = ref(false);
 </script>

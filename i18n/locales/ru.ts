@@ -290,11 +290,12 @@ export default {
     network_error: "Ошибка сети",
     general_info: "Общая информация",
     detailed_info: "Подробная информация",
-    
+
     gallery: "Галерея",
     home: {
       title: "Главная",
       newest: "Новинки кинопроката",
+      top: "Топ {count} фильмов",
       popular_persons: "Популярные персоны",
       popular_actors: "Популярные актеры",
       buy_tickets: "Купить билеты",
@@ -398,10 +399,10 @@ export default {
         internationalization: "Интернационализация",
       },
       dev_prod: {
-        title: "Разработка и продакшн",
+        title: "DevOps стек",
         table_headers: {
           os: "Операционные системы",
-          editor: "Редактор",
+          version_control: "Контроль версий",
           pipeline: "Пайплайн",
           containerisation: "Контейнеризация",
           notice: "Примечание",
@@ -425,6 +426,8 @@ export default {
       required: "Обязательное поле",
       min_birthday: "Минимальный год рождения",
       max_birthday: "Максимальный год рождения",
+      only_latin_chars: "Только латинские символы",
+      valid_url: "Введите корректную ссылку",
     },
     film: {
       slogan: "Слоган",
@@ -432,6 +435,7 @@ export default {
       add: "Добавить фильм",
       edit: "Изменить фильм",
       name: "Название",
+      name_international: "Название (Международное)",
       release_year: "Год выпуска",
       director: "Режиссер",
       actors: "Актеры",
@@ -447,15 +451,6 @@ export default {
       update_poster: "Обновить постер",
       update_gallery: "Обновить галерею",
       gallery_actual: "Актуальная Галерея",
-
-      stepper: {
-        first: "Основные данные",
-        second: "Связать с персонами",
-        third: "Загрузить галерею",
-        required: "Обязательно",
-        optional: "Необязательно",
-        error: "Ошибка",
-      },
       gallery_item_delete_confirm:
         "Вы уверены, что хотите удалить эти изображения?",
     },
@@ -465,6 +460,7 @@ export default {
       add_specialty: "Добавить специальность",
       firstname: "Имя",
       lastname: "Фамилия",
+      name_international: "Полное имя (Международное)",
       gender: "Пол",
       birthday: "День рождения",
       age: "Возраст",
@@ -485,23 +481,13 @@ export default {
         "Вы не загрузили фото, но вы сможете сделать это позже. Завершить?",
       gender_hint: "Выберите пол",
       specialty_hint: "Выберите специальности",
-      stepper: {
-        first: "Основные данные",
-        second: "Загрузить фото",
-        third: "Добавить специальнось",
-        fourth: "Привязать к фильмам",
-        required: "Обязательное поле",
-        optional: "Необязательно",
-        error: "Ошибка",
-        skip: "Пропустить",
-      },
     },
   },
   stepper: {
     general: "Основные данные",
     gallery: "Загрузить галерею",
     cover: "Загрузить обложку",
-    poster: "Загрузить постер",
+    poster: "Установить как постер",
     avatar: "Установить аватар",
     avatar_upload: "Загрузить аватар",
   },

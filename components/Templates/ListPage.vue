@@ -162,9 +162,6 @@
         icon="mdi-alert-rhombus"
       />
     </div>
-    <!-- <v-app-bar location="bottom" order="1">
-      
-    </v-app-bar> -->
     <slot name="empty-state" />
   </div>
 </template>
@@ -174,13 +171,12 @@ import BackBtn from "../Containment/Btns/BackBtn.vue";
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
 
 const localeRoute = useLocaleRoute();
-const emit = defineEmits([
-  "update:page",
-  "form:open",
-  "update:search",
-  "delete:item",
-  "update:search",
-]);
+
+const emit = defineEmits<{
+  (e: "update:page" | "delete:item" | "form:open", value: number): void;
+  (e: "update:search", value: string): void;
+  (e: "update:search", value: string): void;
+}>();
 defineProps<{
   items: Detail[];
   totalPages: number;

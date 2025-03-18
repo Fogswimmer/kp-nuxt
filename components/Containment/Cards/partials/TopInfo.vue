@@ -1,51 +1,62 @@
 <template>
   <div class="position-relative">
-    <v-sheet min-height="260">
+    <v-sheet min-height="300">
       <div class="d-flex justify-center">
         <div class="position-absolute text-center" style="top: -50%">
           <div class="position-relative">
-            <v-avatar
-              size="250"
-              border
-              class="cursor-pointer"
-              @click="showAvatarEditBtns = !showAvatarEditBtns"
-            >
-              <v-img :src="avatar || ''" cover>
-                <template #placeholder>
-                  <ErrorPlaceHolder />
-                </template>
-                <template #error>
-                  <div
-                    class="d-flex align-center justify-center h-100 bg-surface"
+            <div style="width: 300px" class="position-relative mx-auto">
+              <v-avatar
+                size="300"
+                border
+                class="cursor-pointer"
+                @click="showAvatarEditBtns = !showAvatarEditBtns"
+              >
+                <v-img :src="avatar || ''" cover>
+                  <template #placeholder>
+                    <v-sheet height="100%">
+                      <div
+                        class="fill-height d-flex align-center justify-center"
+                      >
+                        <v-progress-circular indeterminate />
+                      </div>
+                    </v-sheet>
+                  </template>
+                  <template #error>
+                    <ErrorPlaceHolder />
+                  </template>
+                </v-img>
+              </v-avatar>
+              <v-fab
+                :active="showAvatarEditBtns"
+                :disabled="!isAuthenticated"
+                absolute
+                color="secondary"
+                location="bottom end"
+                icon="mdi-pencil"
+                @click="handleEditAvatar"
+              />
+              <v-tooltip>
+                <template #activator="{ props }">
+                  <v-icon
+                    v-if="Boolean(isAdmin)"
+                    v-bind="props"
+                    color="primary"
+                    size="64"
+                    class="position-absolute"
+                    style="right: 0"
                   >
-                    <v-icon color="error" icon="mdi-image-broken" />
-                  </div>
+                    mdi-shield
+                  </v-icon>
                 </template>
-              </v-img>
-            </v-avatar>
-            <v-chip
-              v-if="Boolean(isAdmin)"
-              color="primary"
-              prepend-icon="mdi-shield"
-              size="large"
-              class="position-absolute"
-              style="right: 0px"
-            >
-            {{ $t("auth.admin") }}
-            </v-chip>
-            <v-fab
-              :active="showAvatarEditBtns"
-              :disabled="!isAuthenticated"
-              absolute
-              color="secondary"
-              location="bottom end"
-              icon="mdi-pencil"
-              @click="handleEditAvatar"
-            />
+                {{ $t("auth.admin") }}
+              </v-tooltip>
+            </div>
           </div>
           <template v-if="!loading">
-            <div class="d-flex flex-column ga-1">
-              <span class="text-h6 text-lg-h4 font-weight-bold text-primary">
+            <div class="d-flex flex-column ga-1 justify-center align-center">
+              <span
+                class="text-h6 text-lg-h4 font-weight-bold text-primary text-center"
+              >
                 {{ title }}</span
               >
               <div class="text-caption text-lg-subtitle-1">
@@ -94,4 +105,9 @@ const handleEditAvatar = (): void => {
 };
 </script>
 
-<style></style>
+<style>
+.info-title {
+  max-width: 60%;
+  word-break: break-all !important;
+}
+</style>

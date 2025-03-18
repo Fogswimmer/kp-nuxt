@@ -70,7 +70,7 @@
               @files:upload="handleCoverSubmit"
             />
           </v-stepper-window-item>
-          <v-btn :disabled="step === 0" @click="handleFinish">{{
+          <v-btn :disabled="step === 0" block class="ma-4" @click="handleFinish">{{
             $t("actions.finish")
           }}</v-btn>
         </v-stepper-window>
@@ -107,11 +107,12 @@ const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
 const showErrorSnackbar = ref<boolean>(false);
+const error = useError();
 
-const { loading, personForm, genders, specialties, networkError } =
+const { loading, personForm, genders, specialties } =
   storeToRefs(usePersonStore());
 const nextStep = () => {
-  if (!networkError.value) {
+  if (!error.value) {
     step.value++;
     switch (step.value) {
       case 1:
@@ -140,7 +141,7 @@ const {
 const handleGeneralInfoSubmit = async (): Promise<void> => {
   if (await addPerson()) {
     nextStep();
-  } else if (networkError.value) {
+  } else if (error.value) {
     showErrorSnackbar.value = true;
   }
 };
@@ -150,7 +151,7 @@ const handlePhotoSubmit = async (files: File[]): Promise<void> => {
   if (id) {
     await uploadPhotos(files, id || 0);
     nextStep();
-  } else if (networkError.value) {
+  } else if (error.value) {
     showErrorSnackbar.value = true;
   }
 };
@@ -166,7 +167,7 @@ const handleCoverSubmit = async (files: File[]): Promise<void> => {
   const coverFile = files[0];
   const id = personForm.value.id;
   await uploadCover(coverFile, id || 0);
-  if (networkError.value) {
+  if (error.value) {
     showErrorSnackbar.value = true;
   } else {
     navigateTo(localeRoute(`/persons/${personForm.value.id}`));
@@ -178,7 +179,7 @@ const handleAvatarSubmit = async (index: number): Promise<void> => {
     ? personForm.value?.photos[index - 1]
     : "";
   await editPerson();
-  if (networkError.value) {
+  if (error.value) {
     showErrorSnackbar.value = true;
   }
   nextStep();
@@ -191,8 +192,11 @@ const fetchData = async (): Promise<void> => {
   ]);
 };
 
-onMounted(async (): Promise<void> => {
+onBeforeUnmount((): void => {
   clearPersonForm();
+})
+
+onMounted(async (): Promise<void> => {
   await fetchData();
   showFirstStepSnackbar.value = false;
   showSecondStepSnackbar.value = false;

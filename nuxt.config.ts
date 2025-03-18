@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "vuetify-nuxt-module",
     "@nuxt/test-utils/module",
     "nuxt-auth-utils",
+    '@nuxtjs/sitemap'
   ],
   css: ["@/assets/css/globals.scss"],
   app: {
@@ -21,6 +22,10 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   },
+  site: {  
+    url: 'https://example.com',  
+    name: 'My Awesome Website'  
+  }, 
   build: {
     transpile: ['vuetify', 'vue-demi'],
   },
@@ -66,6 +71,9 @@ export default defineNuxtConfig({
         provider: "~/providers/my-provider.ts",
         options: {
           baseUrl: process.env.BASE_URL,
+          modifiers: {
+            fit: "cover",
+          }
         },
       },
     },
