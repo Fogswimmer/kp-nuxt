@@ -450,7 +450,7 @@ const starring = computed((): Detail[] => {
         return {
           title: "",
           value: person?.name || "",
-          to:  person?.slug || "",
+          to: '/persons/' +  person?.slug || "",
           avatar: person.avatar || "",
         };
       })
@@ -470,7 +470,7 @@ const team = computed((): Detail[] => {
         return {
           title: teamMembersTitles[index],
           value: person?.name || "",
-          to: person?.slug || "",
+          to: '/persons/' + person?.slug || "",
           avatar: person.avatar || "",
         };
       })

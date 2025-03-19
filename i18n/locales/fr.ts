@@ -405,6 +405,8 @@ export default {
       },
       author: {
         title: "Auteur",
+        first_section:"Ce projet démontre mes compétences actuelles en développement web. Outre la pile utilisée, j'ai de l'expérience avec",
+        second_section:"Directions de croissance",
         subtitle: "Contacts",
         name: "André Diakov, fullstack developer",
         stack: "Mon stack",

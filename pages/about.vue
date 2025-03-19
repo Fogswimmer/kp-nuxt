@@ -14,81 +14,6 @@
       </v-toolbar>
 
       <v-container fluid>
-        <v-card variant="tonal" class="my-2">
-          <v-card-title>
-            {{ $t("pages.about.author.title") }}
-          </v-card-title>
-          <v-card-text>
-            <div :class="$vuetify.display.smAndDown ? 'text-center' : ''">
-              <v-avatar
-                size="300"
-                :class="['mr-2', { 'float-left': $vuetify.display.mdAndUp }]"
-              >
-                <nuxt-img
-                  src="/img/nebelschwimmer_avatar.jpg"
-                  alt="author"
-                  fit="cover"
-                  class="fill-height"
-                  loading="lazy"
-                />
-              </v-avatar>
-              <section class="d-flex flex-column ga-2">
-                <h5 class="text-primary text-h4">Андрей Дьяков</h5>
-                <div>
-                  Данный проект - демонстрация моих текущих умений в
-                  веб-разработке. Помимо использованного в проекте стека, имею
-                  опыт работы с:
-                </div>
-                <v-divider />
-                <div class="d-flex flex-column ga-2">
-                  <div class="d-flex align-center ga-2">
-                    <v-icon color="blue" size="large">mdi-react</v-icon>React JS
-                  </div>
-
-                  <div class="d-flex align-center ga-2">
-                    <v-icon size="large" color="green">mdi-nodejs</v-icon>
-                    Node JS
-                  </div>
-                  <div class="d-flex align-center ga-2">
-                    <v-icon size="large" color="pink">mdi-jquery</v-icon>
-                    jQuery
-                  </div>
-                </div>
-                <v-divider />
-                <div class="d-flex flex-wrap ga-2">
-                  <span class="d-flex align-center ga-1">
-                    Самостоятельно изучаю Golang
-                    <v-icon color="blue" size="x-large">mdi-language-go</v-icon
-                    >,
-                  </span>
-                  <span class="d-flex align-center ga-1">
-                    интересуюсь GNU/Linux
-                    <v-icon size="x-large">mdi-linux</v-icon></span
-                  >
-                  <span class="d-flex align-center ga-1">
-                    и сетевой инженерией
-                    <v-icon color="yellow" size="x-large">mdi-network</v-icon>,
-                  </span>
-                  <span class="d-flex align-center ga-1">
-                    осваиваю технологии DevOps
-                    <v-icon color="purple" size="x-large"
-                      >mdi-all-inclusive</v-icon
-                    >
-                  </span>
-                </div>
-                <v-divider />
-                <a
-                  href="https://github.com/nebelschwimmer"
-                  target="_blank"
-                  class="text-blue d-flex align-center ma-2 ga-2 justify-end text-h6 flex-wrap"
-                  ><v-icon size="x-large">mdi-github</v-icon>Мой GitHub</a
-                >
-              </section>
-              <v-divider />
-            </div>
-          </v-card-text>
-        </v-card>
-
         <v-card
           :title="$t('pages.about.stack')"
           prepend-icon="mdi-hammer-wrench"
@@ -280,6 +205,71 @@
             </v-table>
           </v-card-text>
         </v-card>
+        <v-card variant="tonal" class="my-2">
+          <v-card-title>
+            {{ $t("pages.about.author.title") }}
+          </v-card-title>
+          <v-card-text>
+            <div :class="$vuetify.display.smAndDown ? 'text-center' : ''">
+              <v-avatar
+                size="300"
+                :class="['mr-2', { 'float-left': $vuetify.display.mdAndUp }]"
+              >
+                <nuxt-img
+                  provider="myProvider"
+                  src="/img/nebelschwimmer_avatar.jpg"
+                  alt="author"
+                  fit="cover"
+                  class="fill-height"
+                  loading="lazy"
+                />
+              </v-avatar>
+              <section class="d-flex flex-column ga-2">
+                <h5 class="text-primary text-h6">{{ $t('pages.about.author.name') }}</h5>
+                <div>
+                 {{ $t("pages.about.author.first_section") }}
+                </div>
+                <v-divider />
+                <div class="d-flex flex-column ga-2">
+                  <div class="d-flex align-center ga-2">
+                    <v-icon color="blue" size="large">mdi-react</v-icon>React JS
+                  </div>
+
+                  <div class="d-flex align-center ga-2">
+                    <v-icon size="large" color="green">mdi-nodejs</v-icon>
+                    Node JS
+                  </div>
+                  <div class="d-flex align-center ga-2">
+                    <v-icon size="large" color="pink">mdi-jquery</v-icon>
+                    jQuery
+                  </div>
+                </div>
+                <v-divider />
+                <div class="d-flex flex-column ga-2">
+                  <span> {{ $t("pages.about.author.second_section") }}</span>
+                  <div class="d-flex align-center ga-1">
+                    <v-icon color="blue" size="x-large">mdi-language-go</v-icon>
+                    Golang
+                  </div>
+                  <div class="d-flex align-center ga-1">
+                    <v-icon color="purple" size="x-large">mdi-all-inclusive</v-icon>
+                    DevOps
+                  </div>
+                </div>
+                <v-divider />
+                <a
+                  href="https://github.com/nebelschwimmer"
+                  target="_blank"
+                  class="text-blue d-flex align-center justify-end ma-2 ga-2  flex-wrap"
+                  ><v-icon size="x-large">mdi-github</v-icon>Мой GitHub</a
+                >
+              </section>
+        
+            </div>
+          </v-card-text>
+        </v-card>
+
+        
       </v-container>
     </v-card>
   </div>
