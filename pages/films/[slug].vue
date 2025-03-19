@@ -450,7 +450,7 @@ const starring = computed((): Detail[] => {
         return {
           title: "",
           value: person?.name || "",
-          to: person?.id ? "/persons/" + person?.id : "",
+          to:  person?.slug || "",
           avatar: person.avatar || "",
         };
       })
@@ -470,7 +470,7 @@ const team = computed((): Detail[] => {
         return {
           title: teamMembersTitles[index],
           value: person?.name || "",
-          to: person?.id ? "/persons/" + person?.id : "",
+          to: person?.slug || "",
           avatar: person.avatar || "",
         };
       })
@@ -483,6 +483,7 @@ const computedGalleryEditTitle = computed((): string => {
 
 const fetchData = async (): Promise<void> => {
   const slug = useRoute().params.slug.toString();
+
   await Promise.allSettled([
     fetchGenres(locale.value),
     fetchFilmDetails(slug, locale.value),
@@ -507,7 +508,7 @@ const uploadCount = computed((): number => {
 
 const handleFilmDelete = async (): Promise<void> => {
   showDeleteWarning.value = false;
-  const filmId:number = film.value?.id || 0;
+  const filmId: number = film.value?.id || 0;
   await deleteFilm(filmId);
   navigateTo(localeRoute("/films"));
 };
@@ -528,13 +529,8 @@ const cancelAssessment = (): void => {
 };
 
 const submitAssessment = async (): Promise<void> => {
-  const filmId:number = film.value?.id || 0;
-  await assessFilmById(
-    filmId,
-    rating.value,
-    comment.value,
-    locale.value
-  );
+  const filmId: number = film.value?.id || 0;
+  await assessFilmById(filmId, rating.value, comment.value, locale.value);
   await fetchData();
   await nextTick(() => {
     showSnackbar.value = true;
@@ -596,7 +592,7 @@ const choosePoster = (): void => {
 };
 
 const handleGalleryUpload = async (files: File[]): Promise<void> => {
-  const filmId:number = film.value?.id || 0;
+  const filmId: number = film.value?.id || 0;
   await uploadGallery(files, filmId);
   editGalleryMode.value = false;
   await fetchData();
@@ -634,10 +630,10 @@ const submitDescriptionEdit = async (text: string): Promise<void> => {
 };
 
 const deleteAssessment = async (assessmentId: number): Promise<void> => {
-  const filmId:number = film.value?.id || 0;
-  await deleteAssessmentById(filmId, assessmentId );
+  const filmId: number = film.value?.id || 0;
+  await deleteAssessmentById(filmId, assessmentId);
   await fetchData();
-}
+};
 
 watch(
   locale,
@@ -650,21 +646,21 @@ watch(
 
 onBeforeUnmount((): void => {
   clearFilmForm();
-})
+});
 
 const trailerRules = [
   (value: string) => !!value || t("forms.rules.required"),
   (value: string) => validateUrl(value) || t("forms.rules.valid_url"),
-]
+];
 
 onMounted(async (): Promise<void> => {
   await fetchData();
-  const iframe = document.getElementById('iframe') as HTMLIFrameElement;
+  const iframe = document.getElementById("iframe") as HTMLIFrameElement;
   if (iframe) {
     iframe.onerror = () => {
       iframeError.value = true;
-      console.log(iframeError.value)
-    }
+      console.log(iframeError.value);
+    };
   }
 });
 

@@ -22,7 +22,6 @@ export const useFilmStore = defineStore("films", () => {
   const writers = ref<Partial<IPerson>[]>([]);
   const composers = ref<Partial<IPerson>[]>([]);
   const filmsPresent = ref<boolean>(false);
-  const similarGenreFilms = ref<IFilm[]>([]);
   const authHeaders = computed(() => {
     return {
       Authorization: `Bearer ${authStore.token}`,
@@ -85,6 +84,8 @@ export const useFilmStore = defineStore("films", () => {
       loading.value = false;
     }
   };
+
+
 
   const fetchTopFilms = async (): Promise<void> => {
     try {
@@ -310,7 +311,6 @@ export const useFilmStore = defineStore("films", () => {
     latestFilms,
     GALLERY_SIZE,
     filmsPresent,
-    similarGenreFilms,
     topFilms,
     fetchFilteredFilms,
     fetchGenres,
@@ -327,6 +327,6 @@ export const useFilmStore = defineStore("films", () => {
     deleteFilm,
     fetchSpecialists,
     deleteAssessmentById,
-    fetchTopFilms
+    fetchTopFilms,
   };
 });

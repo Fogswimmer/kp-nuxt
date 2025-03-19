@@ -23,4 +23,8 @@ export const getImage: ProviderGetImage = (
 
   return {
     url,
+    width: modifiers.width,
+    height: modifiers.height,
+    format: modifiers.format,
   };
+}

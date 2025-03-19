@@ -1,9 +1,9 @@
 {
-  "_hash": "RBwHfTozJ-VqNY6Y-DxfMXQJ4QPzoW5L3QflB4Dqlss",
+  "_hash": "ufpJ2onDfU8CA8wO8nJm8G9FUqGOphAtkPIJe9rgviM",
   "project": {
     "rootDir": "C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt"
   },
   "versions": {
-    "nuxt": "3.15.4"
+    "nuxt": "3.16.0"
   }
 }

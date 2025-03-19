@@ -57,7 +57,7 @@ declare global {
   }
 
   interface FilmPerson {
-    id: number | null;
+    slug: string;
     name?: string;
     avatar?: string;
   }

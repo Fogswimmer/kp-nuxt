@@ -42,6 +42,7 @@
       @update:search="search = $event"
     >
       <template #filters>
+        {{ order }}
         <Filters
           :sort-options="sortOptions"
           @update:limit="limit = $event.value"
@@ -142,6 +143,7 @@ const updateQueryParams = (page: number): void => {
   }
 };
 
+
 watch(
   [limit, offset, sortBy, order, specialtySort, locale],
   async ([
@@ -152,6 +154,9 @@ watch(
     newSpecialtySort,
     newLocale,
   ]): Promise<void> => {
+
+    console.log(limit)
+    console.log(limit)
     await fetchFilteredPersons(
       newLimit,
       newOffset,
