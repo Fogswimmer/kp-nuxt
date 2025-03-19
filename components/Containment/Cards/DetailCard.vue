@@ -100,11 +100,11 @@ const computedParallaxHeight = computed((): string => {
     ),
     repeating-linear-gradient(
       135deg,
-      rgb(44, 33, 33) 0px,
-      rgb(44, 33, 33) 1px,
+      rgba(65, 55, 25, 0.596) 0px,
+      rgba(77, 63, 35, 0.63) 1px,
       transparent 1px,
       transparent 13px
     ),
-    linear-gradient(90deg, rgb(12, 21, 28), rgb(12, 21, 28)) !important;
+    linear-gradient(90deg, rgb(12, 21, 28), rgb(9, 18, 26)) !important;
 }
 </style>

@@ -103,7 +103,6 @@ export const useFilmStore = defineStore("films", () => {
 
   const fetchFilmDetails = async (slug: string, locale: string): Promise<void> => {
     try {
-      console.log(slug)
       loading.value = true;
       const response = await $fetch<IFilm>(
         `${baseUrl}/films/get/${slug}?locale=${locale}`

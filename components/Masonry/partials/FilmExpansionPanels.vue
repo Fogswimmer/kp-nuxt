@@ -41,7 +41,7 @@
             </template>
           </v-list-item>
           <div
-            v-if="film.assessments.length > 2"
+            v-if="film.assessments.length > 5"
             class="d-flex flex-column justify-center align-center"
           >
             <span class="text-h6 mb-2">...</span>

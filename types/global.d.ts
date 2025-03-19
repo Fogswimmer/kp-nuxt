@@ -54,6 +54,7 @@ declare global {
     authorAvatar: string | null;
     rating: number;
     comment?: string;
+    createdAt: string | null;
   }
 
   interface FilmPerson {

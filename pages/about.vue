@@ -42,74 +42,57 @@
                 <tr>
                   <td>{{ $t("pages.about.table_headers.frontend") }}</td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }">
-                        <v-icon v-bind="props" size="x-large" color="blue"
-                          >mdi-language-typescript</v-icon
-                        >
-                      </template>
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon size="x-large" color="blue"
+                        >mdi-language-typescript
+                      </v-icon>
                       Typescript
-                    </v-tooltip>
+                    </div>
                   </td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }"
-                        ><v-icon
-                          v-bind="props"
-                          size="x-large"
-                          color="green-accent-3"
-                          >mdi-nuxt</v-icon
-                        ></template
-                      >
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon size="x-large" color="green-accent-3"
+                        >mdi-nuxt
+                      </v-icon>
                       Nuxt 3
-                    </v-tooltip>
+                    </div>
                   </td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }"
-                        ><v-icon
-                          v-bind="props"
-                          size="x-large"
-                          color="light-blue-accent-4"
-                          >mdi-vuetify</v-icon
-                        ></template
-                      >
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon size="x-large" color="light-blue-accent-4"
+                        >mdi-vuetify
+                      </v-icon>
                       Vuetify 3
-                    </v-tooltip>
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td>{{ $t("pages.about.table_headers.backend") }}</td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }">
-                        <v-icon
-                          v-bind="props"
-                          size="x-large"
-                          color="deep-purple-lighten-3"
-                          >mdi-language-php
-                        </v-icon>
-                      </template>
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon size="x-large" color="deep-purple-lighten-3"
+                        >mdi-language-php
+                      </v-icon>
                       Php 8.3
-                    </v-tooltip>
+                    </div>
                   </td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }"
-                        ><v-icon v-bind="props" size="x-large" color="purple"
-                          >mdi-symfony</v-icon
-                        ></template
-                      >
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon color="purple" size="x-large">mdi-symfony</v-icon>
                       Symfony 7
-                    </v-tooltip>
+                    </div>
                   </td>
                   <td>
-                    <v-tooltip location="bottom">
-                      <template #activator="{ props }">
-                        <v-img v-bind="props" height="32" src="/img/psql.svg" />
-                      </template>
+                    <div class="d-flex align-center justify-center ga-2">
+                      <nuxt-img
+                        provider="myProvider"
+                        width="32"
+                        height="32"
+                        src="/img/psql.svg"
+                      />
+
                       Postresql 16
-                    </v-tooltip>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -149,56 +132,38 @@
                 <tr>
                   <td>
                     <div class="d-flex ga-1 justify-center align-center">
-                      <v-tooltip location="bottom">
-                        <template #activator="{ props }">
-                          <v-icon v-bind="props" size="x-large"
-                            >mdi-linux</v-icon
-                          ></template
-                        >
-                        Linux
-                      </v-tooltip>
-                      <v-tooltip location="bottom">
-                        <template #activator="{ props }">
-                          <v-icon
-                            v-bind="props"
-                            size="x-large"
-                            color="light-blue"
-                            >mdi-microsoft</v-icon
-                          ></template
-                        >
-                        Windows
-                      </v-tooltip>
+                      <v-icon size="x-large">mdi-linux</v-icon>
+                      Linux
+
+                      <v-icon size="x-large" color="light-blue"
+                        >mdi-microsoft</v-icon
+                      >
+                      Windows
                     </div>
                   </td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }">
-                        <v-icon v-bind="props" size="x-large"
-                          >mdi-github</v-icon
-                        ></template
-                      >
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon color="blue" size="x-large">mdi-github</v-icon>
                       GitHub
-                    </v-tooltip>
+                    </div>
                   </td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }">
-                        <v-icon v-bind="props" size="x-large"
-                          >mdi-github</v-icon
-                        ></template
-                      >
+                    <div class="d-flex align-center justify-center ga-2">
+                      <v-icon color="purple" size="x-large">mdi-github</v-icon>
                       GitHub Actions: CI & CD
-                    </v-tooltip>
+                    </div>
                   </td>
                   <td>
-                    <v-tooltip>
-                      <template #activator="{ props }">
-                        <v-icon v-bind="props" size="x-large" color="blue"
-                          >mdi-docker</v-icon
-                        ></template
-                      >
-                      Docker + Docker Compose
-                    </v-tooltip>
+                    <div class="d-flex ga-1 justify-center align-center">
+                      <span>
+                        <v-icon size="x-large" color="blue">mdi-docker</v-icon>
+                        Docker
+                      </span>
+                      <span>
+                        <v-icon size="x-large" color="pink">mdi-docker</v-icon>
+                        Docker Compose
+                      </span>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -225,9 +190,11 @@
                 />
               </v-avatar>
               <section class="d-flex flex-column ga-2">
-                <h5 class="text-primary text-h6">{{ $t('pages.about.author.name') }}</h5>
+                <h5 class="text-primary text-h6">
+                  {{ $t("pages.about.author.name") }}
+                </h5>
                 <div>
-                 {{ $t("pages.about.author.first_section") }}
+                  {{ $t("pages.about.author.first_section") }}
                 </div>
                 <v-divider />
                 <div class="d-flex flex-column ga-2">
@@ -252,7 +219,9 @@
                     Golang
                   </div>
                   <div class="d-flex align-center ga-1">
-                    <v-icon color="purple" size="x-large">mdi-all-inclusive</v-icon>
+                    <v-icon color="purple" size="x-large"
+                      >mdi-all-inclusive</v-icon
+                    >
                     DevOps
                   </div>
                 </div>
@@ -260,16 +229,13 @@
                 <a
                   href="https://github.com/nebelschwimmer"
                   target="_blank"
-                  class="text-blue d-flex align-center justify-end ma-2 ga-2  flex-wrap"
+                  class="text-blue d-flex align-center justify-end ma-2 ga-2 flex-wrap"
                   ><v-icon size="x-large">mdi-github</v-icon>Мой GitHub</a
                 >
               </section>
-        
             </div>
           </v-card-text>
         </v-card>
-
-        
       </v-container>
     </v-card>
   </div>

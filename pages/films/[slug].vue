@@ -134,8 +134,7 @@
             <v-expansion-panels
               v-model="mainAccordion"
               variant="accordion"
-              class="glassed"
-              :multiple="$vuetify.display.mdAndUp"
+              bg-color="transparent"
               border
             >
               <v-expansion-panel
@@ -364,7 +363,7 @@ const rating = ref<number>(0);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 
-const mainAccordion = ref<string[]>([]);
+const mainAccordion = ref<string[]>(["description"]);
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
