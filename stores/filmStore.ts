@@ -6,31 +6,17 @@ export const useFilmStore = defineStore("films", () => {
     totalPages: number;
     currentPage: number;
   }
+  const baseUrl = useRuntimeConfig().public.apiBase;
   const authStore = useAuthStore();
-  const film = ref<IFilm | null>(null);
-  const films = ref<IFilm[]>([]);
-  const currentPage = ref<number>(1);
-  const totalPages = ref<number>(0);
-  const genres = ref<IGenre[]>([]);
-  const loading = ref<boolean>(false);
-  const total = ref<number>(0);
-  const latestFilms = ref<IFilm[]>([]);
-  const topFilms = ref<IFilm[]>([]);
-  const directors = ref<Partial<IPerson>[]>([]);
-  const actors = ref<Partial<IPerson>[]>([]);
-  const producers = ref<Partial<IPerson>[]>([]);
-  const writers = ref<Partial<IPerson>[]>([]);
-  const composers = ref<Partial<IPerson>[]>([]);
-  const filmsPresent = ref<boolean>(false);
   const authHeaders = computed(() => {
     return {
       Authorization: `Bearer ${authStore.token}`,
     };
   });
-  const baseUrl = useRuntimeConfig().public.apiBase;
   const defaultFilmValues: Partial<IFilm> = {
     id: null,
     name: "",
+    internationalName: "",
     slogan: "",
     genreIds: [],
     releaseYear: new Date().getFullYear(),
@@ -46,8 +32,23 @@ export const useFilmStore = defineStore("films", () => {
     poster: "",
     trailer: "",
   };
-  const filmForm = ref<Partial<IFilm>>({ ...defaultFilmValues });
   const GALLERY_SIZE: number = 8;
+  const film = ref<IFilm|null>(null);
+  const films = ref<IFilm[]>([]);
+  const currentPage = ref<number>(1);
+  const totalPages = ref<number>(0);
+  const genres = ref<IGenre[]>([]);
+  const loading = ref<boolean>(false);
+  const total = ref<number>(0);
+  const latestFilms = ref<IFilm[]>([]);
+  const topFilms = ref<IFilm[]>([]);
+  const directors = ref<Partial<IPerson>[]>([]);
+  const actors = ref<Partial<IPerson>[]>([]);
+  const producers = ref<Partial<IPerson>[]>([]);
+  const writers = ref<Partial<IPerson>[]>([]);
+  const composers = ref<Partial<IPerson>[]>([]);
+  const filmsPresent = ref<boolean>(false);
+  const filmForm = ref<Partial<IFilm>>({ ...defaultFilmValues });
   const fetchFilteredFilms = async (
     limit: number,
     offset: number,
@@ -114,6 +115,7 @@ export const useFilmStore = defineStore("films", () => {
       loading.value = false;
     }
   };
+
   const fetchFilmForm = async (slug: string, locale: string): Promise<void> => {
     try {
       loading.value = true;
@@ -255,9 +257,9 @@ export const useFilmStore = defineStore("films", () => {
     }
   };
 
-  const deleteAssessmentById = async (filmId: number, assessmentID: number): Promise<void> => {
+  const deleteAssessmentById = async (filmId: number, assessmentId: number): Promise<void> => {
     try {
-      await $fetch(`${baseUrl}/films/${filmId}/assess/${assessmentID}`, {
+      await $fetch(`${baseUrl}/films/${filmId}/assess/${assessmentId}`, {
         headers: authHeaders.value,
         method: "DELETE",
       });

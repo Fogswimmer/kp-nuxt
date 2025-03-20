@@ -13,20 +13,15 @@
       </v-toolbar>
 
       <div class="mt-4">
-        <UserForm :is-new="true" />
+        <RegistrationForm
+          is-new
+          :user-form="userForm"
+          :loading="loading"
+          @update:model-value="userForm = $event"
+          @form:submit="submit"
+        />
       </div>
       <div class="d-flex flex-column ga-4 mt-5">
-        <v-btn
-          color="primary"
-          variant="tonal"
-          size="large"
-          :loading="loading"
-          block
-          @click="submit"
-        >
-          {{ $t("auth.sign_up") }}
-        </v-btn>
-
         <v-btn
           prepend-icon="mdi-account-off"
           color="secondary"
@@ -50,7 +45,7 @@
 
 <script lang="ts" setup>
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
-import UserForm from "~/components/Forms/UserForm.vue";
+import RegistrationForm from "~/components/Forms/Auth/UserForm.vue";
 import { useAuthStore } from "~/stores/authStore";
 
 const { register } = useAuthStore();
@@ -58,14 +53,17 @@ interface AuthError {
   message: string;
 }
 
-const { loading, authError, showErrorMessage } = storeToRefs(
-  useAuthStore()
-) as {
+const {
+  loading,
+  authError,
+  showErrorMessage,
+  userForm,
+} = storeToRefs(useAuthStore()) as {
   loading: Ref<boolean>;
   authError: Ref<AuthError | null>;
   showErrorMessage: Ref<boolean>;
+  userForm: Ref<Partial<CurrentUser>>;
 };
-
 
 const submit = async () => {
   await register();

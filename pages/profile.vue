@@ -78,7 +78,7 @@
           />
         </template>
         <template #text>
-         <IndentedEditableText
+          <IndentedEditableText
             :text="currentUser?.about || ''"
             :edit-mode="editMode"
             :messages="$t('pages.profile.edit_bio')"
@@ -153,7 +153,13 @@
       <template #text>
         <v-card>
           <v-card-text>
-            <UserForm :is-new="false" @cancel="editMode = false" />
+            <UserForm
+              :user-form="userForm"
+              :is-new="false"
+              :loading="loading"
+              @update:model-value="userForm = $event"
+              @form:submit="submitEdit"
+            />
           </v-card-text>
           <v-card-actions>
             <v-btn
@@ -177,13 +183,14 @@ import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
-import UserForm from "~/components/Forms/UserForm.vue";
+import UserForm from "~/components/Forms/Auth/UserForm.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 
 const { t, locale } = useI18n();
 const { currentUser, loading, userForm } = storeToRefs(useAuthStore());
+
 const showConfirmLogoutDialog = ref<boolean>(false);
 const showCoverChooseDialog = ref<boolean>(false);
 const showAvatarWarning = ref<boolean>(false);
@@ -192,6 +199,7 @@ const showAvatarUploadDialog = ref<boolean>(false);
 const editMode = ref<boolean>(false);
 const avatarFile = ref<File>();
 const coverFile = ref<File>();
+
 const computedLastLogin = computed((): string => {
   const lastLogin = new Date(
     currentUser.value?.lastLogin || 0

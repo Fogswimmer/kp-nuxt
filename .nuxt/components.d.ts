@@ -30,10 +30,11 @@ interface _GlobalComponents {
     'FilmPartialsFilmAssessments': typeof import("../components/FilmPartials/FilmAssessments.vue")['default']
     'FilmPartialsFilmDetailMenu': typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']
     'FilmPartialsFilmDrawerContent': typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']
-    'FormsAssessmentForm': typeof import("../components/Forms/AssessmentForm.vue")['default']
-    'FormsFilmForm': typeof import("../components/Forms/FilmForm.vue")['default']
-    'FormsPersonForm': typeof import("../components/Forms/PersonForm.vue")['default']
-    'FormsUserForm': typeof import("../components/Forms/UserForm.vue")['default']
+    'FormsAuthUserForm': typeof import("../components/Forms/Auth/UserForm.vue")['default']
+    'FormsFilmAssessmentForm': typeof import("../components/Forms/Film/AssessmentForm.vue")['default']
+    'FormsFilmForm': typeof import("../components/Forms/Film/FilmForm.vue")['default']
+    'FormsFilmTrailerForm': typeof import("../components/Forms/Film/TrailerForm.vue")['default']
+    'FormsPersonForm': typeof import("../components/Forms/Person/PersonForm.vue")['default']
     'GalleryFilmGalleryEdit': typeof import("../components/Gallery/FilmGalleryEdit.vue")['default']
     'GalleryFullscreenViewer': typeof import("../components/Gallery/GalleryFullscreenViewer.vue")['default']
     'GalleryUploader': typeof import("../components/Gallery/GalleryUploader.vue")['default']
@@ -104,10 +105,11 @@ interface _GlobalComponents {
     'LazyFilmPartialsFilmAssessments': LazyComponent<typeof import("../components/FilmPartials/FilmAssessments.vue")['default']>
     'LazyFilmPartialsFilmDetailMenu': LazyComponent<typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']>
     'LazyFilmPartialsFilmDrawerContent': LazyComponent<typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']>
-    'LazyFormsAssessmentForm': LazyComponent<typeof import("../components/Forms/AssessmentForm.vue")['default']>
-    'LazyFormsFilmForm': LazyComponent<typeof import("../components/Forms/FilmForm.vue")['default']>
-    'LazyFormsPersonForm': LazyComponent<typeof import("../components/Forms/PersonForm.vue")['default']>
-    'LazyFormsUserForm': LazyComponent<typeof import("../components/Forms/UserForm.vue")['default']>
+    'LazyFormsAuthUserForm': LazyComponent<typeof import("../components/Forms/Auth/UserForm.vue")['default']>
+    'LazyFormsFilmAssessmentForm': LazyComponent<typeof import("../components/Forms/Film/AssessmentForm.vue")['default']>
+    'LazyFormsFilmForm': LazyComponent<typeof import("../components/Forms/Film/FilmForm.vue")['default']>
+    'LazyFormsFilmTrailerForm': LazyComponent<typeof import("../components/Forms/Film/TrailerForm.vue")['default']>
+    'LazyFormsPersonForm': LazyComponent<typeof import("../components/Forms/Person/PersonForm.vue")['default']>
     'LazyGalleryFilmGalleryEdit': LazyComponent<typeof import("../components/Gallery/FilmGalleryEdit.vue")['default']>
     'LazyGalleryFullscreenViewer': LazyComponent<typeof import("../components/Gallery/GalleryFullscreenViewer.vue")['default']>
     'LazyGalleryUploader': LazyComponent<typeof import("../components/Gallery/GalleryUploader.vue")['default']>
@@ -184,10 +186,11 @@ export const DialogsConfirmDialog: typeof import("../components/Dialogs/ConfirmD
 export const FilmPartialsFilmAssessments: typeof import("../components/FilmPartials/FilmAssessments.vue")['default']
 export const FilmPartialsFilmDetailMenu: typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']
 export const FilmPartialsFilmDrawerContent: typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']
-export const FormsAssessmentForm: typeof import("../components/Forms/AssessmentForm.vue")['default']
-export const FormsFilmForm: typeof import("../components/Forms/FilmForm.vue")['default']
-export const FormsPersonForm: typeof import("../components/Forms/PersonForm.vue")['default']
-export const FormsUserForm: typeof import("../components/Forms/UserForm.vue")['default']
+export const FormsAuthUserForm: typeof import("../components/Forms/Auth/UserForm.vue")['default']
+export const FormsFilmAssessmentForm: typeof import("../components/Forms/Film/AssessmentForm.vue")['default']
+export const FormsFilmForm: typeof import("../components/Forms/Film/FilmForm.vue")['default']
+export const FormsFilmTrailerForm: typeof import("../components/Forms/Film/TrailerForm.vue")['default']
+export const FormsPersonForm: typeof import("../components/Forms/Person/PersonForm.vue")['default']
 export const GalleryFilmGalleryEdit: typeof import("../components/Gallery/FilmGalleryEdit.vue")['default']
 export const GalleryFullscreenViewer: typeof import("../components/Gallery/GalleryFullscreenViewer.vue")['default']
 export const GalleryUploader: typeof import("../components/Gallery/GalleryUploader.vue")['default']
@@ -258,10 +261,11 @@ export const LazyDialogsConfirmDialog: LazyComponent<typeof import("../component
 export const LazyFilmPartialsFilmAssessments: LazyComponent<typeof import("../components/FilmPartials/FilmAssessments.vue")['default']>
 export const LazyFilmPartialsFilmDetailMenu: LazyComponent<typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']>
 export const LazyFilmPartialsFilmDrawerContent: LazyComponent<typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']>
-export const LazyFormsAssessmentForm: LazyComponent<typeof import("../components/Forms/AssessmentForm.vue")['default']>
-export const LazyFormsFilmForm: LazyComponent<typeof import("../components/Forms/FilmForm.vue")['default']>
-export const LazyFormsPersonForm: LazyComponent<typeof import("../components/Forms/PersonForm.vue")['default']>
-export const LazyFormsUserForm: LazyComponent<typeof import("../components/Forms/UserForm.vue")['default']>
+export const LazyFormsAuthUserForm: LazyComponent<typeof import("../components/Forms/Auth/UserForm.vue")['default']>
+export const LazyFormsFilmAssessmentForm: LazyComponent<typeof import("../components/Forms/Film/AssessmentForm.vue")['default']>
+export const LazyFormsFilmForm: LazyComponent<typeof import("../components/Forms/Film/FilmForm.vue")['default']>
+export const LazyFormsFilmTrailerForm: LazyComponent<typeof import("../components/Forms/Film/TrailerForm.vue")['default']>
+export const LazyFormsPersonForm: LazyComponent<typeof import("../components/Forms/Person/PersonForm.vue")['default']>
 export const LazyGalleryFilmGalleryEdit: LazyComponent<typeof import("../components/Gallery/FilmGalleryEdit.vue")['default']>
 export const LazyGalleryFullscreenViewer: LazyComponent<typeof import("../components/Gallery/GalleryFullscreenViewer.vue")['default']>
 export const LazyGalleryUploader: LazyComponent<typeof import("../components/Gallery/GalleryUploader.vue")['default']>

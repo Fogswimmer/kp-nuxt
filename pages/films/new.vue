@@ -87,7 +87,7 @@
 </template>
 
 <script lang="ts" setup>
-import FilmForm from "~/components/Forms/FilmForm.vue";
+import FilmForm from "~/components/Forms/Film/FilmForm.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";

@@ -194,7 +194,7 @@
                   {{ $t("pages.about.author.name") }}
                 </h5>
                 <div>
-                  {{ $t("pages.about.author.first_section") }}
+                  {{ $t("pages.about.author.first_section") }}:
                 </div>
                 <v-divider />
                 <div class="d-flex flex-column ga-2">
@@ -213,7 +213,7 @@
                 </div>
                 <v-divider />
                 <div class="d-flex flex-column ga-2">
-                  <span> {{ $t("pages.about.author.second_section") }}</span>
+                  <span> {{ $t("pages.about.author.second_section") }}:</span>
                   <div class="d-flex align-center ga-1">
                     <v-icon color="blue" size="x-large">mdi-language-go</v-icon>
                     Golang

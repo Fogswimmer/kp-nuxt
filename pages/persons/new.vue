@@ -93,7 +93,7 @@
 
 <script lang="ts" setup>
 import { usePersonStore } from "~/stores/personStore";
-import PersonForm from "~/components/Forms/PersonForm.vue";
+import PersonForm from "~/components/Forms/Person/PersonForm.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";

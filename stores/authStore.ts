@@ -42,7 +42,7 @@ export const useAuthStore = defineStore("authStore", () => {
     cover: "",
     displayName: "",
     avatar: "",
-    age: 0,
+    age: 18,
   };
   const userForm = ref<Partial<CurrentUser>>({ ...defaultUserValues });
   const showErrorMessage = ref(false);
@@ -174,6 +174,7 @@ export const useAuthStore = defineStore("authStore", () => {
     showErrorMessage,
     token,
     isAuthenticated,
+    isAdmin,
     register,
     login,
     signOut,
@@ -181,6 +182,5 @@ export const useAuthStore = defineStore("authStore", () => {
     uploadCover,
     fetchCurrentUser,
     editUser,
-    isAdmin
   };
 });

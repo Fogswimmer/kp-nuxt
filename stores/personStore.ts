@@ -6,8 +6,25 @@ export const usePersonStore = defineStore("persons", () => {
     currentPage: number;
     totalPages: number;
   }
-  const GALLERY_SIZE: number = 6;
+  const baseUrl = useRuntimeConfig().public.apiBase;
   const authStore = useAuthStore();
+  const authHeaders = computed(() => {
+    return {
+      Authorization: `Bearer ${authStore.token}`,
+    };
+  });
+  const defaultPersonValues: Partial<IPerson> = {
+    id: null,
+    firstname: "",
+    lastname: "",
+    internationalName: "",
+    genderId: 1,
+    specialtyIds: [1],
+    birthday: getDefaultBirthday(),
+    bio: "",
+    photos: [],
+  };
+  const GALLERY_SIZE: number = 6;
   const persons = ref<IPerson[]>([]);
   const person = ref<IPerson | null>(null);
   const loading = ref<boolean>(false);
@@ -18,22 +35,6 @@ export const usePersonStore = defineStore("persons", () => {
   const specialties = ref<ISpecialty[]>([]);
   const personsPresent = ref<boolean>(false);
   const popularActors = ref<IPerson[]>([]);
-  const baseUrl = useRuntimeConfig().public.apiBase;
-  const authHeaders = computed(() => {
-    return {
-      Authorization: `Bearer ${authStore.token}`,
-    };
-  });
-  const defaultPersonValues: Partial<IPerson> = {
-    id: null,
-    firstname: "",
-    lastname: "",
-    genderId: 1,
-    specialtyIds: [1],
-    birthday: getDefaultBirthday(),
-    bio: "",
-    photos: [],
-  };
   const personForm = ref<Partial<IPerson>>({
     ...defaultPersonValues,
   });

@@ -196,7 +196,7 @@ declare global {
   const useTheme: typeof import('vuetify')['useTheme']
   const useTransitionState: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['useTransitionState']
   const useUserSession: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/app/composables/session')['useUserSession']
-  const validateUrl: typeof import('../../utils/validateUrl')['default']
+  const useValidation: typeof import('../../composables/useValidation')['useValidation']
   const watch: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['watch']
   const watchEffect: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['watchEffect']
   const watchPostEffect: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['watchPostEffect']
@@ -416,7 +416,7 @@ declare module 'vue' {
     readonly useTheme: UnwrapRef<typeof import('vuetify')['useTheme']>
     readonly useTransitionState: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['useTransitionState']>
     readonly useUserSession: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/app/composables/session')['useUserSession']>
-    readonly validateUrl: UnwrapRef<typeof import('../../utils/validateUrl')['default']>
+    readonly useValidation: UnwrapRef<typeof import('../../composables/useValidation')['useValidation']>
     readonly watch: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['watch']>
     readonly watchEffect: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['watchEffect']>
     readonly watchPostEffect: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.2/node_modules/vue')['watchPostEffect']>

@@ -274,7 +274,7 @@
 <script lang="ts" setup>
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
-import PersonForm from "~/components/Forms/PersonForm.vue";
+import PersonForm from "~/components/Forms/Person/PersonForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import PersonGalleryEdit from "~/components/Gallery/PersonGalleryEdit.vue";

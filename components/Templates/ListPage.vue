@@ -45,7 +45,7 @@
             {{ $t("filters.title") }}</v-tooltip
           >
         </v-btn>
-        <v-btn icon :to="localeRoute(newPageLink)">
+        <v-btn icon :disabled="!isAuthenticated" :to="localeRoute(newPageLink)">
           <v-icon>mdi-plus</v-icon>
           <v-tooltip activator="parent" location="bottom">
             {{ $t("actions.add") }}
@@ -169,7 +169,8 @@
 <script lang="ts" setup>
 import BackBtn from "../Containment/Btns/BackBtn.vue";
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
-
+import { useAuthStore } from "#imports";
+const { isAuthenticated } = useAuthStore();
 const localeRoute = useLocaleRoute();
 
 const emit = defineEmits<{

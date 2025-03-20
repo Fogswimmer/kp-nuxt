@@ -19,7 +19,7 @@
         :label="$t('pages.films.comment')"
         counter
         rows="5"
-        :rules="[(v: string) => v.length <= 255 || t('forms.rules.max_chars') + ' - 255']"
+        :rules="[requiredRule, minLengthRule, maxLengthRule]"
         @update:model-value="$emit('update:comment', $event)"
       />
     </v-card-text>
@@ -43,17 +43,23 @@ defineProps<{
   rating: number;
   comment: string;
 }>();
-const emit = defineEmits([
-  "submit",
-  "cancel",
-  "update:comment",
-  "update:rating",
-]);
+const emits = defineEmits<{
+  (event: "submit" | "cancel"): void;
+  (event: "update:comment", value: string): void;
+  (event: "update:rating", value: number): void;
+}>();
+
+const { maxLength, minLength, required: requiredRule } = useValidation();
+
+const MAX_COMMENT_LENGTH = 255;
+const MIN_COMMENT_LENGTH = 5;
+const maxLengthRule = maxLength(MAX_COMMENT_LENGTH);
+const minLengthRule = minLength(MIN_COMMENT_LENGTH);
+
 function submitAssessment() {
-  emit("submit");
+  emits("submit");
 }
 function cancelAssessment() {
-  emit("cancel");
+  emits("cancel");
 }
-const { t } = useI18n();
 </script>

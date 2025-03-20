@@ -14,7 +14,7 @@
         </v-toolbar-title>
       </v-toolbar>
 
-      <v-card-text class="pa-4">
+      <v-card-text class="pa-4 text-center">
         <v-form ref="loginFormRef" class="mt-4">
           <div class="d-flex flex-column ga-2">
             <v-text-field
@@ -37,8 +37,13 @@
               @click:append-inner="visible = !visible"
             />
           </div>
+          <v-label>
+            <nuxt-link to="/auth/password-reset">
+              {{ $t("auth.forgot_password") }}</nuxt-link
+            >
+          </v-label>
         </v-form>
-        <div class="d-flex flex-column ga-4 mt-5">
+        <div class="d-flex flex-column ga-4 mt-10">
           <v-btn
             color="primary"
             size="large"

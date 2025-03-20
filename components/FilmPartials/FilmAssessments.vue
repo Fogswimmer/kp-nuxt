@@ -90,10 +90,9 @@
               class="rounded-lg ma-2"
               lines="two"
               :title="item.raw.authorName ? item.raw.authorName : 'Anonymous'"
-              :subtitle="item.raw.comment"
             >
               <template #prepend>
-                <v-avatar border>
+                <v-avatar border size="64">
                   <v-img :src="item?.raw.authorAvatar || ''">
                     <template #placeholder>
                       <div
@@ -108,16 +107,15 @@
                   </v-img>
                 </v-avatar>
               </template>
+
               <template #append>
-                <div>
-                  <FilmRatingChip :rating="item.raw.rating || '0'" />
                   <v-btn
                     v-if="
                       (isAuthenticated &&
                         item.raw.authorId === currentUser?.id) ||
                       isAdmin
                     "
-                    size="small"
+                   
                     icon
                     variant="plain"
                     color="error"
@@ -125,18 +123,24 @@
                   >
                     <v-icon>mdi-delete</v-icon></v-btn
                   >
-                </div>
               </template>
               <template #title>
-                <div class="d-flex ga-1 align-end">
+                <div class="d-flex align-end ga-1">
                   <span>{{
                     item.raw.authorName ? item.raw.authorName : "Anonymous"
                   }}</span>
+                  <FilmRatingChip :rating="item.raw.rating || '0'" />
+                </div>
+              </template>
+              <template #subtitle>
+                <div class="d-flex flex-column ga-1">
                   <span
                     v-if="$vuetify.display.mdAndUp"
                     class="text-caption text-disabled"
                     >{{ dateFormatter(item.raw.createdAt) }}</span
                   >
+
+                  <span> {{ item.raw.comment }}</span>
                 </div>
               </template>
             </v-list-item>
@@ -164,7 +168,7 @@
 </template>
 
 <script lang="ts" setup>
-import AssessmentForm from "../Forms/AssessmentForm.vue";
+import AssessmentForm from "../Forms/Film/AssessmentForm.vue";
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 import FilmRatingChip from "../Misc/FilmRatingChip.vue";
 import ConfirmDialog from "../Dialogs/ConfirmDialog.vue";

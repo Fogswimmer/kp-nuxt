@@ -194,21 +194,6 @@ declare global {
     to?: string;
     avatar?: string;
   }
-  interface ImgPlaceholderOptions {
-    displayIcon: boolean;
-  }
-  interface ImgOptions {
-    shaded?: boolean;
-    height?: number | string;
-    cover?: boolean;
-    class?: string;
-    aspectRatio?: number | string;
-    clickable?: boolean;
-    removable?: boolean;
-    uploaded?: boolean;
-    placeholderOptions?: ImgPlaceholderOptions;
-    uploader?: boolean;
-  }
 
   interface CurrentUser {
     id: number | null;
@@ -224,6 +209,7 @@ declare global {
     about: string;
     lastLogin: Date;
     roles: ERole[]|[];
+    about: string;
     assessments: IAssessment[];
   }
   interface IListItems {

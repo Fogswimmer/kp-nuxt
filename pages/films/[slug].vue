@@ -96,6 +96,7 @@
                         <v-icon size="64" color="grey">mdi-video-off</v-icon>
                         <v-btn
                           prepend-icon="mdi-youtube"
+                          :disabled="!isAuthenticated"
                           variant="outlined"
                           color="primary"
                           @click="showLinkTrailerDialog = true"
@@ -289,27 +290,12 @@
       @close="showLinkTrailerDialog = false"
     >
       <template #text>
-        <v-card>
-          <v-card-text>
-            <v-form ref="linkFormRef" @submit.prevent>
-              <v-text-field
-                v-model="filmForm.trailer"
-                prepend-icon="mdi-youtube"
-                :rules="trailerRules"
-                :label="$t('forms.film.trailer')"
-                :hint="$t('general.youtube_link')"
-                clearable
-                @update:model-value="
-                  filmForm.trailer = youtubeUrlToEmbed($event)
-                "
-              />
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <SubmitBtn :loading="loading" @click="handleEditTrailerLink" />
-          </v-card-actions>
-        </v-card>
+        <TrailerForm
+          :trailer="filmForm.trailer || ''"
+          :loading="loading"
+          @form:submit="handleEditTrailerLink"
+          @update:model-value="filmForm.trailer = $event"
+        />
       </template>
     </BaseDialog>
     <ConfirmDialog
@@ -329,7 +315,7 @@ import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import FilmGalleryEdit from "~/components/Gallery/FilmGalleryEdit.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
-import FilmForm from "~/components/Forms/FilmForm.vue";
+import FilmForm from "~/components/Forms/Film/FilmForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
@@ -337,7 +323,7 @@ import FilmAssessments from "~/components/FilmPartials/FilmAssessments.vue";
 import FilmDrawerContent from "~/components/FilmPartials/FilmDrawerContent.vue";
 import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
-import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
+import TrailerForm from "~/components/Forms/Film/TrailerForm.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
@@ -359,7 +345,7 @@ const showLinkTrailerDialog = ref<boolean>(false);
 const showPosterSetDialog = ref<boolean>(false);
 
 const comment = ref<string>("");
-const rating = ref<number>(0);
+const rating = ref<number>(5);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 
@@ -449,7 +435,7 @@ const starring = computed((): Detail[] => {
         return {
           title: "",
           value: person?.name || "",
-          to: '/persons/' +  person?.slug || "",
+          to: "/persons/" + person?.slug || "",
           avatar: person.avatar || "",
         };
       })
@@ -469,7 +455,7 @@ const team = computed((): Detail[] => {
         return {
           title: teamMembersTitles[index],
           value: person?.name || "",
-          to: '/persons/' + person?.slug || "",
+          to: "/persons/" + person?.slug || "",
           avatar: person.avatar || "",
         };
       })
@@ -560,7 +546,7 @@ const sumbitEdit = async (): Promise<void> => {
   await fetchData();
   await nextTick(() => {
     showSnackbar.value = true;
-    editDescriptionMode.value = !editDescriptionMode.value;
+    editDescriptionMode.value = false;
     generalInfoEdit.value = false;
   });
 };
@@ -646,11 +632,6 @@ watch(
 onBeforeUnmount((): void => {
   clearFilmForm();
 });
-
-const trailerRules = [
-  (value: string) => !!value || t("forms.rules.required"),
-  (value: string) => validateUrl(value) || t("forms.rules.valid_url"),
-];
 
 onMounted(async (): Promise<void> => {
   await fetchData();
