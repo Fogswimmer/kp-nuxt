@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head>
-      <Title>{{ definePageTitle($t("auth.reset_password")) }}</Title>
+      <Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
     </Head>
     <v-card variant="tonal" class="mx-auto" max-width="600">
       <v-toolbar>
@@ -12,62 +12,55 @@
           {{ $t("auth.password_reset") }}
         </v-toolbar-title>
       </v-toolbar>
-
       <v-card-text class="pa-4">
-        <v-form ref="loginFormRef" class="mt-4">
+        <v-form ref="emailFormRef" class="mt-4">
           <div class="d-flex flex-column ga-2">
             <v-text-field
-              v-model="email"
+              v-model="emailResetForm"
               :label="$t('auth.password_reset_email')"
-              :placeholder="$t('auth.login_placeholder')"
-              prepend-inner-icon="mdi-account-key"
+              :placeholder="$t('auth.password_reset_email')"
+              prepend-inner-icon="mdi-email-outline"
               variant="outlined"
-             :rules="[required, emailRule]"
+              :rules="[required, emailRule]"
             />
           </div>
         </v-form>
-        <div class="d-flex flex-column ga-4 mt-5">
-          <!-- <v-btn
-            color="primary"
-            size="large"
-            variant="tonal"
-            block
-            :loading="loading"
-            @click="validate"
-          >
-            {{ $t("auth.sign_in") }}
-          </v-btn>
-          <v-btn
-            to="/auth/sign-up"
-            variant="outlined"
-            block
-            size="large"
-            color="secondary"
-            prepend-icon="mdi-account-plus"
-          >
-            {{ $t("auth.register") }}
-          </v-btn>
-
-          <v-btn
-            prepend-icon="mdi-account-off"
-            variant="plain"
-            block
-            size="large"
-            to="/"
-          >
-            {{ $t("auth.continue_as_guest") }}
-          </v-btn> -->
-        </div>
       </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <SubmitBtn :loading="loading" @click="handleValidationAndSubmit" />
+      </v-card-actions>
     </v-card>
-    
   </div>
 </template>
 
 <script lang="ts" setup>
-import BackBtn from '~/components/Containment/Btns/BackBtn.vue';
+import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
+import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
+import { useAuthStore } from "~/stores/authStore";
+
+const { loading, emailResetForm } = storeToRefs(useAuthStore());
+const { resetPassword } = useAuthStore();
 const { required, email: emailRule } = useValidation();
 
-const email = ref<string>("");
+const { locale } = useI18n();
+const emailFormRef = ref<HTMLFormElement | null>(null);
+const isFormValid = ref<boolean>(false);
+const validate = async (): Promise<boolean> => {
+  if (!emailFormRef.value) return false;
+  const result = await emailFormRef.value.validate();
+  isFormValid.value = result.valid;
 
+  return result.valid;
+};
+const handleValidationAndSubmit = async (): Promise<void> => {
+  const isValid = await validate();
+  if (isValid) {
+    await resetPassword(locale.value);
+  }
+};
+definePageMeta({
+  name: "passwordReset",
+  path: "/auth/password-reset",
+});
 </script>

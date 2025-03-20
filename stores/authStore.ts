@@ -3,17 +3,24 @@ export const useAuthStore = defineStore("authStore", () => {
     USER = "ROLE_USER",
     ADMIN = "ROLE_ADMIN",
   }
-
+  interface ResetTokenResponse {
+    token: string;
+    expiresAt: string;
+  }
+  const baseUrl = useRuntimeConfig().public.apiBase;
   const currentUser = ref<CurrentUser | null>();
   const loading = ref(false);
   const authError = ref<Error | unknown>();
+  const resetPasswordError = ref<Error | unknown>();
   const tokenCookie = useCookie("auth_token", {
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 7,
     secure: true,
   });
+  const EXTERNAL_RESET_URL: string = baseUrl + "/reset-password";
 
   const token = ref<string | null | undefined>(tokenCookie.value || null || "");
+  const resetToken = ref<string | null | undefined>(null);
   if (import.meta.server) {
     const headers = useRequestHeaders(["cookie"]);
     const cookieHeader = headers?.cookie || "";
@@ -32,8 +39,8 @@ export const useAuthStore = defineStore("authStore", () => {
   });
   const isAdmin = computed(() => {
     return !!currentUser.value?.roles?.find((role) => role === ERole.ADMIN);
-  })
-  const baseUrl = useRuntimeConfig().public.apiBase;
+  });
+
   const defaultUserValues: Partial<CurrentUser> = {
     id: null,
     username: "",
@@ -45,7 +52,8 @@ export const useAuthStore = defineStore("authStore", () => {
     age: 18,
   };
   const userForm = ref<Partial<CurrentUser>>({ ...defaultUserValues });
-  const showErrorMessage = ref(false);
+  const showErrorMessage = ref<boolean>(false);
+  const emailResetForm = ref<string>("");
 
   const fetchCurrentUser = async () => {
     try {
@@ -166,6 +174,25 @@ export const useAuthStore = defineStore("authStore", () => {
     }
   };
 
+  const resetPassword = async (locale: string): Promise<boolean> => {
+    try {
+      loading.value = true;
+      await $fetch<ResetTokenResponse>(`${baseUrl}/reset-password/email`, {
+        method: "POST",
+        body: { 
+          email: emailResetForm.value,
+          locale: locale
+         },
+      });
+      loading.value = false;
+      return true;
+    } catch (error: unknown) {
+      console.log(error);
+      resetPasswordError.value = error;
+      return false;
+    }
+  };
+
   return {
     currentUser,
     userForm,
@@ -175,6 +202,9 @@ export const useAuthStore = defineStore("authStore", () => {
     token,
     isAuthenticated,
     isAdmin,
+    emailResetForm,
+    resetToken,
+    EXTERNAL_RESET_URL,
     register,
     login,
     signOut,
@@ -182,5 +212,6 @@ export const useAuthStore = defineStore("authStore", () => {
     uploadCover,
     fetchCurrentUser,
     editUser,
+    resetPassword,
   };
 });

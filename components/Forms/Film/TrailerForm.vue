@@ -22,6 +22,7 @@
 
 <script lang="ts" setup>
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
+
 const props = defineProps<{
   trailer: string;
   loading?: boolean;
@@ -29,26 +30,25 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (event: "form:submit"): void;
-  (event: "update:modelValue", value:string): void;
+  (event: "update:modelValue", value: string): void;
 }>();
 
 const { required: requiredRule, validUrl: validUrlRule } = useValidation();
 
 const formRef = ref<HTMLFormElement | null>(null);
 const isFormValid = ref<boolean>(false);
-const form = ref<string|null|undefined>(props.trailer || null);
+const form = ref<string | null | undefined>(props.trailer || null);
 
 const validate = async (): Promise<boolean> => {
   if (!formRef.value) return false;
-
   const result = await formRef.value.validate();
   isFormValid.value = result.valid;
 
   return result.valid;
 };
 const handleUpdateModelValue = (value: string): void => {
-  if (!value) return; 
-  form.value = youtubeUrlToEmbed(value) || '';
+  if (!value) return;
+  form.value = youtubeUrlToEmbed(value) || "";
   emit("update:modelValue", form.value);
 };
 
@@ -64,9 +64,6 @@ watch(
   (): string => props.trailer,
   (): void => {
     form.value = props.trailer;
-  },
-  {
-    deep: true,
   }
 );
 </script>
