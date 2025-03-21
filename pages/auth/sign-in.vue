@@ -38,7 +38,9 @@
             />
           </div>
           <v-label>
-            <a :href="EXTERNAL_RESET_URL + `/${locale}`" target="_blank"> {{ $t("auth.forgot_password") }}</a>
+            <NuxtLink :to="localeRoute('/auth/password-reset')">
+              {{ $t("auth.forgot_password") }}</NuxtLink
+            >
           </v-label>
         </v-form>
         <div class="d-flex flex-column ga-4 mt-10">
@@ -88,11 +90,11 @@ import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import { useAuthStore } from "~/stores/authStore";
 
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
-const { t, locale } = useI18n();
+const { t } = useI18n();
 const visible = ref<boolean>(false);
-
+const localeRoute = useLocaleRoute();
 const loginFormRef = ref<HTMLFormElement | null>();
-const { login, fetchCurrentUser, EXTERNAL_RESET_URL } = useAuthStore();
+const { login, fetchCurrentUser } = useAuthStore();
 const requiredRules = [
   (value: string) => {
     if (value) return true;
@@ -114,7 +116,6 @@ const validate = async () => {
 
 definePageMeta({
   name: "signIn",
-  path: "/auth/sign-in",
-  middleware: "auth",
+  title: "Sign in",
 });
 </script>

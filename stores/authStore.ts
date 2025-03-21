@@ -17,8 +17,6 @@ export const useAuthStore = defineStore("authStore", () => {
     maxAge: 60 * 60 * 24 * 7,
     secure: true,
   });
-  const EXTERNAL_RESET_URL: string = baseUrl + "/reset-password";
-
   const token = ref<string | null | undefined>(tokenCookie.value || null || "");
   const resetToken = ref<string | null | undefined>(null);
   if (import.meta.server) {
@@ -53,7 +51,14 @@ export const useAuthStore = defineStore("authStore", () => {
   };
   const userForm = ref<Partial<CurrentUser>>({ ...defaultUserValues });
   const showErrorMessage = ref<boolean>(false);
-  const emailResetForm = ref<string>("");
+  interface PasswordResetForm {
+    email: string;
+    newPassword: string;
+  }
+  const passwordResetForm = ref<PasswordResetForm>({
+    email: "",
+    newPassword: "",
+  });
 
   const fetchCurrentUser = async () => {
     try {
@@ -174,21 +179,44 @@ export const useAuthStore = defineStore("authStore", () => {
     }
   };
 
-  const resetPassword = async (locale: string): Promise<boolean> => {
+  const resetPasswordRequest = async (locale: string): Promise<boolean> => {
     try {
       loading.value = true;
-      await $fetch<ResetTokenResponse>(`${baseUrl}/reset-password/email`, {
+      await $fetch<ResetTokenResponse>(`${baseUrl}/reset-password/request`, {
         method: "POST",
-        body: { 
-          email: emailResetForm.value,
-          locale: locale
-         },
+        body: {
+          email: passwordResetForm.value.email,
+          locale: locale,
+        },
       });
       loading.value = false;
       return true;
     } catch (error: unknown) {
       console.log(error);
       resetPasswordError.value = error;
+      showErrorMessage.value = true;
+      return false;
+    }
+  };
+
+  const sendNewPassword = async (): Promise<boolean> => {
+    try {
+      loading.value = true;
+      await $fetch<ResetTokenResponse>(
+        `${baseUrl}/reset-password/reset`,
+        {
+          method: "POST",
+          body: {
+            password: passwordResetForm.value.newPassword,
+          },
+        }
+      );
+      loading.value = false;
+      return true;
+    } catch (error: unknown) {
+      console.log(error);
+      resetPasswordError.value = error;
+      showErrorMessage.value = true;
       return false;
     }
   };
@@ -202,9 +230,8 @@ export const useAuthStore = defineStore("authStore", () => {
     token,
     isAuthenticated,
     isAdmin,
-    emailResetForm,
+    passwordResetForm,
     resetToken,
-    EXTERNAL_RESET_URL,
     register,
     login,
     signOut,
@@ -212,6 +239,7 @@ export const useAuthStore = defineStore("authStore", () => {
     uploadCover,
     fetchCurrentUser,
     editUser,
-    resetPassword,
+    resetPasswordRequest,
+    sendNewPassword
   };
 });

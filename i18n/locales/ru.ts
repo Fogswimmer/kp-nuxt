@@ -89,9 +89,18 @@ export default {
     password_reset_email: "Электронная почта",
     password_reset_email_placeholder: "Введите адрес электронной почты",
     password_reset_submit: "Сбросить пароль",
-    password_reset_success: "Пароль был успешно сброшен.",
-    password_reset_error:
-      "Произошла ошибка при отправке ссылки для сброса пароля.",
+    new_password: "Новый пароль",
+    stepper: {
+      first: "Отправить код подтверждения на почту",
+      second: "Введите код из письма",
+      third: "Введите новый пароль",
+    },
+    password_reset_messages: {
+      success:
+        "Код сброса пароля был отправлен по электронной почте.",
+      error:
+        "Произошла ошибка при отправке кода сброса пароля",
+    },
   },
   nav: {
     title: "Навигация",
@@ -443,6 +452,8 @@ export default {
       invalid_url: "Введите корректную ссылку",
       invalid_email: "Введите корректную почту",
       only_letters: "Допустимы только буквы",
+      invalid_password: "Неверный пароль",
+      password_requirement:"Пароль должен быть не короче 8 символов и содержать хотя бы одну цифру и 1 лат. букву"
     },
     film: {
       slogan: "Слоган",

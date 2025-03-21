@@ -32,6 +32,7 @@ export const useValidation = () => {
   const maxBirthday = (date: number) => (value: string) => 
     new Date(value).getFullYear() <= date ? true : t("forms.rules.min_birthday", { date });
   const validUrl = (value: string) => regExps.url.test(value) ? true : t("forms.rules.invalid_url");
+  const password = (value: string) => regExps.password.test(value) ? true : t("forms.rules.invalid_password");
 
   return {
     required,
@@ -46,6 +47,7 @@ export const useValidation = () => {
     onlyLatinChars,
     minBirthday,
     maxBirthday,
-    validUrl
+    validUrl,
+    password
   };
 }

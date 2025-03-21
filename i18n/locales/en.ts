@@ -121,8 +121,16 @@ export default {
     password_reset_email: "Email",
     password_reset_email_placeholder: "Enter your email address",
     password_reset_submit: "Reset password",
-    password_reset_success: "Password reset link has been sent to your email address.",
-    password_reset_error: "An error occurred while sending the password reset link.",
+    new_password: "New password",
+    stepper: {
+      first: "Send verification code to email",
+      second: "Enter code from email",
+      third: "Enter new password",
+    },
+    password_reset_messages: {
+      success: "The password reset code has been sent to your email address.",
+      error: "An error occurred while sending the password reset link.",
+    }
   },
   nav: {
     title: "Navigation",
@@ -439,6 +447,8 @@ export default {
       invalid_url: "Enter a valid url",
       invalid_email: "Enter a valid email",
       only_letters: "Only letters allowed",
+      invalid_password: "Invalid password",
+      password_requirement:"The password must be at least 8 characters long and contain at least one letter and one number",
     },
     film: {
       slogan: "Slogan",

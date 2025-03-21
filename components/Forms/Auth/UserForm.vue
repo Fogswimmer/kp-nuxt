@@ -10,6 +10,9 @@
           :rules="[requiredRule, maxLoginLengthRule, minLoginLengthRule]"
           @update:model-value="handleUpdateModelValue"
         />
+        <span class="text-caption text-secondary">{{
+          $t("forms.rules.password_requirement")
+        }}</span>
         <v-text-field
           v-model="form.password"
           :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
@@ -17,7 +20,7 @@
           :label="$t('auth.password')"
           :placeholder="$t('auth.password_placeholder')"
           prepend-inner-icon="mdi-lock-outline"
-          :rules="[requiredRule]"
+          :rules="[requiredRule, passwordRule]"
           @click:append-inner="visible = !visible"
           @update:model-value="handleUpdateModelValue"
         />
@@ -81,7 +84,6 @@ const emit = defineEmits<{
 const MAX_LOGIN_LENGTH: number = 50;
 const MIN_LOGIN_LENGTH: number = 5;
 
-
 const isFormValid = ref<boolean>(false);
 const visible = ref<boolean>(false);
 const registerFormRef = ref<HTMLFormElement>();
@@ -90,6 +92,7 @@ const {
   required: requiredRule,
   email: emailRule,
   onlyNums: onlyNumsRule,
+  password: passwordRule,
   maxLength,
 } = useValidation();
 

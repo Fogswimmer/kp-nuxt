@@ -38,7 +38,7 @@
     <v-snackbar
       v-model="showErrorMessage"
       color="error"
-      :text="authError?.message || ''"
+      :text="errorMessage.message || ''"
     />
   </div>
 </template>
@@ -49,33 +49,29 @@ import RegistrationForm from "~/components/Forms/Auth/UserForm.vue";
 import { useAuthStore } from "~/stores/authStore";
 
 const { register } = useAuthStore();
-interface AuthError {
-  message: string;
-}
 
-const {
-  loading,
-  authError,
-  showErrorMessage,
-  userForm,
-} = storeToRefs(useAuthStore()) as {
-  loading: Ref<boolean>;
-  authError: Ref<AuthError | null>;
-  showErrorMessage: Ref<boolean>;
-  userForm: Ref<Partial<CurrentUser>>;
-};
-
+const { loading, authError, showErrorMessage, userForm } =
+  storeToRefs(useAuthStore());
 const submit = async () => {
   await register();
   if (!showErrorMessage.value) {
     navigateTo("/auth/sign-in");
   }
 };
+
+interface AuthError {
+  message: string;
+}
+
+const errorMessage = ref<AuthError>({ message: "" });
+watchEffect(() => {
+  if (authError.value) {
+    errorMessage.value = authError.value as AuthError;
+  }
+});
+
 definePageMeta({
   name: "signUp",
-  path: "/auth/sign-up",
-  middleware: "guest",
+  title: "Sign up",
 });
 </script>
-
-<style></style>

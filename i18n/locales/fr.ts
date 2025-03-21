@@ -112,14 +112,22 @@ export default {
     logout_confirm: "Voulez-vous vraiment vous déconnecter?",
     profile_photo: "Photo de profil",
     display_name: "Nom d'affichage",
-    password_reset: "Reset mot de passe",
-    password_reset_title: "Mot de passe oublie? Reset",
-    password_reset_text: "Veuillez entrer votre adresse email pour recevoir un lien de reset de mot de passe.",
+    password_reset: "Réinitialiser le mot de passe",
+    password_reset_title: "Mot de passe oublié? Réinitialiser",
+    password_reset_text: "Veuillez entrer votre adresse email pour recevoir un lien de réinitialisation de mot de passe.",
     password_reset_email: "Email",
     password_reset_email_placeholder: "Entrer votre email",
-    password_reset_submit: "Envoyer le lien de reset",
-    password_reset_success: "Un lien de reset de mot de passe a été envoyé par email.",
-    password_reset_error: "Une erreur s'est produite lors de l'envoi du lien de reset de mot de passe.",
+    password_reset_submit: "Envoyer le lien de réinitialisation",
+    new_password: "Nouveau mot de passe",
+    stepper: {
+      first: "Envoyer un lien de réinitialisation de mot de passe",
+      second: "Entrer le code envoyé par email",
+      third: "Entrer un nouveau mot de passe",
+    },
+    password_reset_messages: {
+      success: "Le code de réinitialisation de mot de passe a été envoyé par email.",
+      error: "Une erreur s'est produite lors de l'envoi du code de réinitialisation de mot de passe.",
+    }
   },
   nav: {
     title: "Navigation",
@@ -435,6 +443,8 @@ export default {
       invalid_url: "Entrez une url valide",
       invalid_email: "Entrez une adresse email valide",
       only_letters: "Seuls les lettres sont autorisées",
+      invalid_password: "Mot de passe invalide",
+      password_requirement:"Le mot de passe doit comporter au moins 8 caractères et contenir au moins une lettre et un chiffre",
     },
     film: {
       slogan: "Slogan",
