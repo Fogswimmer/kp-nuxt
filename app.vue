@@ -73,8 +73,8 @@ p {
     #0c151c,
     #101d27,
     #122534,
-    #142d40,
-    #16354d
+    #0e161b,
+    #0b1a25
   ) !important;
   background-attachment: fixed !important;
 }

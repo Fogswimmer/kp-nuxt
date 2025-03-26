@@ -65,7 +65,10 @@ import GalleryFullscreenViewer from "./GalleryFullscreenViewer.vue";
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 const emit = defineEmits<{
   (event: "editor:open"): void;
-  (event: "avatar:set" | "cover:set" | "delete:img" | "poster:set", index: number): void;
+  (
+    event: "avatar:set" | "cover:set" | "delete:img" | "poster:set",
+    index: number
+  ): void;
 }>();
 const props = defineProps<{
   sliderArr: string[];
@@ -105,7 +108,7 @@ const handleDeleteImg = (index: number): void => {
 };
 
 const handleSetPoster = (index: number): void => {
-  console.log(1)
+  console.log(1);
   emit("poster:set", index);
   fullscreenMode.value = false;
 };

@@ -5,43 +5,44 @@
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
     <ClientOnly>
-      <v-navigation-drawer location="start" floating color="transparent" />
-      <v-navigation-drawer location="end" floating color="transparent" />
+      <v-navigation-drawer location="start" rail floating color="transparent" />
+      <v-navigation-drawer location="end" rail floating color="transparent" />
     </ClientOnly>
     <template v-if="filmsPresent && personsPresent">
       <main class="d-flex flex-column ga-6 overflow-y-hidden">
- 
-          <MasonrySection
-            v-if="latestFilms.length > 0"
-            :present="filmsPresent"
-            :loading="filmLoading"
-            :dark-accent-color="darkAccentColors[0]"
-            :title="$t('pages.home.newest')"
-          >
-            <template #default>
-              <NewestFilmsMasonryWall
-                :latest-films="latestFilms"
-                :loading="filmLoading"
-                :sidebar="false"
-              />
-            </template>
-          </MasonrySection>
-          <MasonrySection
-            v-if="topFilms.length > 0"
-            :present="filmsPresent"
-            :loading="filmLoading"
-            :dark-accent-color="darkAccentColors[1]"
-            :title="$t('pages.home.top', topFilms.length)"
-          >
-            <template #default>
-              <NewestFilmsMasonryWall
-                :latest-films="topFilms"
-                :loading="filmLoading"
-                :sidebar="false"
-              />
-            </template>
-          </MasonrySection>
-   
+        <MasonrySection
+          v-if="latestFilms.length > 0"
+          :present="filmsPresent"
+          :loading="filmLoading"
+          :dark-accent-color="darkAccentColors[0]"
+          :title="$t('pages.home.newest')"
+        >
+          <template #default>
+            <FilmsMasonryWall
+              :latest-films="latestFilms"
+              :loading="filmLoading"
+              :dark-accent-color="darkAccentColors[0]"
+              :sidebar="false"
+            />
+          </template>
+        </MasonrySection>
+        <MasonrySection
+          v-if="topFilms.length > 0"
+          :present="filmsPresent"
+          :loading="filmLoading"
+          :dark-accent-color="darkAccentColors[1]"
+          :title="$t('pages.home.top', topFilms.length)"
+        >
+          <template #default>
+            <FilmsMasonryWall
+              :latest-films="topFilms"
+              :loading="filmLoading"
+              :dark-accent-color="darkAccentColors[1]"
+              :sidebar="false"
+            />
+          </template>
+        </MasonrySection>
+
         <MasonrySection
           v-if="popularActors.length > 0"
           :present="personsPresent"
@@ -53,6 +54,7 @@
             <PopularActorsMasonry
               :popular-actors="popularActors"
               :loading="personLoading"
+              :dark-accent-color="darkAccentColors[2]"
               :sidebar="false"
             />
           </template>
@@ -73,7 +75,10 @@
       </EmptyPage>
     </template>
     <template v-else>
-      <div style="height: 100vh" class="d-flex align-center justify-center">
+      <div
+        style="height: calc(100vh - 100px)"
+        class="d-flex align-center justify-center"
+      >
         <v-progress-circular indeterminate color="primary" />
       </div>
     </template>
@@ -85,10 +90,9 @@ import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 import EmptyPage from "~/components/Templates/EmptyPage.vue";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
-import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
+import FilmsMasonryWall from "~/components/Masonry/FilmsMasonryWall.vue";
 import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import definePageTitle from "~/utils/definePageTitle";
-import randomColorGenerator from "~/utils/randomColorGenerator";
 
 const {
   loading: filmLoading,
@@ -121,7 +125,7 @@ const fetchData = async (): Promise<void> => {
 onMounted(async (): Promise<void> => {
   await fetchData();
   darkAccentColors.value = Array.from({ length: 2 }, () =>
-    randomColorGenerator()
+    useBgAccentColor().value
   );
 });
 

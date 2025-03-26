@@ -86,7 +86,7 @@
       <v-btn
         prepend-icon="mdi-information"
         :to="localeRoute('/about')"
-        :active="$route.name === 'about'"
+        :active="computedActiveNavBtn.about"
       >
         {{ $t("general.about") }}
       </v-btn>
@@ -109,6 +109,7 @@ const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
     films: routeName.startsWith("film") || routeName.startsWith("newFilm"),
     persons:
       routeName.startsWith("person") || routeName.startsWith("newPerson"),
+    about: routeName.startsWith("about"),
   };
 });
 </script>

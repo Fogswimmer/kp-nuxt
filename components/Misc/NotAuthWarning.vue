@@ -1,11 +1,13 @@
 <template>
-  <v-chip color="warning" density="compact" class="text-caption py-2" variant="tonal">
-    <nuxt-link to="/auth/sign-in">
+  <v-alert closable type="warning" variant="tonal" density="compact">
+    <nuxt-link :to="localeRoute('/auth/sign-in')">
       {{ $t("auth.not_auth") }}
     </nuxt-link>
-  </v-chip>
+  </v-alert>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const localeRoute = useLocaleRoute();
+</script>
 
 <style></style>

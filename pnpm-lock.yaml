@@ -32,6 +32,9 @@ importers:
       '@tsndr/cloudflare-worker-jwt':
         specifier: ^3.1.4
         version: 3.1.4
+      '@types/youtube':
+        specifier: ^0.1.0
+        version: 0.1.0
       '@vuestic/nuxt':
         specifier: ^1.0.21
         version: 1.0.21(@parcel/watcher@2.5.1)(@types/node@22.13.10)(db0@0.3.1)(eslint@9.22.0(jiti@2.4.2))(ioredis@5.6.0)(magicast@0.3.5)(optionator@0.9.4)(rollup@4.36.0)(sass-embedded@1.86.0)(terser@5.39.0)(tsx@4.19.3)(typescript@5.8.2)(vite@6.1.1(@types/node@22.13.10)(jiti@2.4.2)(sass-embedded@1.86.0)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.0))(vue@3.5.13(typescript@5.8.2))(yaml@2.7.0)
@@ -1013,8 +1016,8 @@ packages:
     resolution: {integrity: sha512-T/xbNDzi+Yv0Qn2Dfz2CWCAJiwNgU5d95EhhAEf4YmOgjCKktpfpiUSmLcBvK1CtLpPQ85AMMQk/2NCcXnNj1g==}
     engines: {node: '>= 16'}
 
-  '@intlify/message-compiler@12.0.0-alpha.1':
-    resolution: {integrity: sha512-rS1Lc99D2uaGqWxlrpGPWdgkq2Jox8xxOS9gdIRhuF2CsuJISWQmwd/TjMnWNhwv9olE0aPEBh1323a61Tfp+g==}
+  '@intlify/message-compiler@12.0.0-alpha.2':
+    resolution: {integrity: sha512-PD9C+oQbb7BF52hec0+vLnScaFkvnfX+R7zSbODYuRo/E2niAtGmHd0wPvEMsDhf9Z9b8f/qyDsVeZnD/ya9Ug==}
     engines: {node: '>= 16'}
 
   '@intlify/shared@10.0.5':
@@ -1025,8 +1028,8 @@ packages:
     resolution: {integrity: sha512-dF2iMMy8P9uKVHV/20LA1ulFLL+MKSbfMiixSmn6fpwqzvix38OIc7ebgnFbBqElvghZCW9ACtzKTGKsTGTWGA==}
     engines: {node: '>= 16'}
 
-  '@intlify/shared@12.0.0-alpha.1':
-    resolution: {integrity: sha512-ZZ5rtlUcEnhhFS+MTrl0V1UoN3yRninGawP3f1YituJN9217xJvpqCSLa9t8NLaVwVIxsRcq4lQe48D0SigmBg==}
+  '@intlify/shared@12.0.0-alpha.2':
+    resolution: {integrity: sha512-P2DULVX9nz3y8zKNqLw9Es1aAgQ1JGC+kgpx5q7yLmrnAKkPR5MybQWoEhxanefNJgUY5ehsgo+GKif59SrncA==}
     engines: {node: '>= 16'}
 
   '@intlify/unplugin-vue-i18n@6.0.3':
@@ -2083,6 +2086,9 @@ packages:
 
   '@types/yargs@17.0.33':
     resolution: {integrity: sha512-WpxBCKWPLr4xSsHgz511rFJAM+wS28w2zEO1QDNY5zM/S8ok70NNfztH0xwhqKyaK0OHCbN98LDAZuy1ctxDkA==}
+
+  '@types/youtube@0.1.0':
+    resolution: {integrity: sha512-Pg33m3X2mFgdmhtvzOlAfUfgOa3341N3/2JCrVY/mXVxb4hagcqqEG6w4vGCfB64StQNWHSj/T8Eotb1Rko/FQ==}
 
   '@typescript-eslint/eslint-plugin@6.21.0':
     resolution: {integrity: sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==}
@@ -8160,8 +8166,8 @@ snapshots:
 
   '@intlify/bundle-utils@10.0.0(vue-i18n@10.0.5(vue@3.5.13(typescript@5.8.2)))':
     dependencies:
-      '@intlify/message-compiler': 12.0.0-alpha.1
-      '@intlify/shared': 12.0.0-alpha.1
+      '@intlify/message-compiler': 12.0.0-alpha.2
+      '@intlify/shared': 12.0.0-alpha.2
       acorn: 8.14.0
       escodegen: 2.1.0
       estree-walker: 2.0.2
@@ -8202,16 +8208,16 @@ snapshots:
       '@intlify/shared': 11.1.2
       source-map-js: 1.2.1
 
-  '@intlify/message-compiler@12.0.0-alpha.1':
+  '@intlify/message-compiler@12.0.0-alpha.2':
     dependencies:
-      '@intlify/shared': 12.0.0-alpha.1
+      '@intlify/shared': 12.0.0-alpha.2
       source-map-js: 1.2.1
 
   '@intlify/shared@10.0.5': {}
 
   '@intlify/shared@11.1.2': {}
 
-  '@intlify/shared@12.0.0-alpha.1': {}
+  '@intlify/shared@12.0.0-alpha.2': {}
 
   '@intlify/unplugin-vue-i18n@6.0.3(@vue/compiler-dom@3.5.13)(eslint@9.22.0(jiti@2.4.2))(rollup@4.36.0)(typescript@5.8.2)(vue-i18n@10.0.5(vue@3.5.13(typescript@5.8.2)))(vue@3.5.13(typescript@5.8.2))':
     dependencies:
@@ -9693,6 +9699,8 @@ snapshots:
   '@types/yargs@17.0.33':
     dependencies:
       '@types/yargs-parser': 21.0.3
+
+  '@types/youtube@0.1.0': {}
 
   '@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2))(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)':
     dependencies:

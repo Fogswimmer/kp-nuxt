@@ -1,4 +1,4 @@
-export default () => {
+export const useBgAccentColor = () => {
   const letters = "0123456789ABCDEF";
   let color = "#";
   const opacity = "40";
@@ -7,5 +7,5 @@ export default () => {
   }
 
   color += opacity;
-  return color;
-};
+  return ref(color)
+}

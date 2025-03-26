@@ -8,12 +8,6 @@
       </template>
       <v-list density="compact">
         <v-list-item
-          :title="$t('actions.choose_poster')"
-          prepend-icon="mdi-post"
-          value="poster"
-          @click="$emit('choose:poster')"
-        />
-        <v-list-item
           :title="$t('actions.edit')"
           prepend-icon="mdi-pencil"
           value="edit"
@@ -60,12 +54,6 @@
       </v-list>
     </v-menu>
     <client-only v-else>
-      <v-btn
-        prepend-icon="mdi-post"
-        :disabled="!isAuthenticated"
-        @click="$emit('choose:cover')"
-        >{{ $t("actions.choose_poster") }}</v-btn
-      >
       <v-menu>
         <template #activator="{ props }">
           <v-btn
@@ -117,15 +105,16 @@
 defineProps<{
   isAuthenticated: boolean;
 }>();
-defineEmits([
-  "choose:cover",
-  "choose:poster",
-  "edit:trailer",
-  "edit:general",
-  "edit:description",
-  "edit:gallery",
-  "delete:film",
-]);
+defineEmits<{
+  (
+    event:
+      | "edit:trailer"
+      | "edit:general"
+      | "edit:description"
+      | "edit:gallery"
+      | "delete:film"
+  ): void;
+}>();
 </script>
 
 <style></style>

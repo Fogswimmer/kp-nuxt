@@ -2,10 +2,10 @@
   <v-card
     v-if="present"
     tag:section
-    class="my-3"
+    class="my-3 masonry-section"
     rounded="lg"
     variant="text"
-    :style="`background-image: radial-gradient(circle, ${darkAccentColor} 0%, transparent 60%)`"
+    :style="`background-image: radial-gradient(ellipse, ${darkAccentColor} 0%, transparent 50%);`"
   >
     <v-card-title>
       <div class="pa-2 d-flex flex-column ga-2 mb-2">
@@ -35,3 +35,10 @@ defineProps<{
   darkAccentColor?: string;
 }>();
 </script>
+
+<style>
+.masonry-section {
+  /* background-attachment: fixed; */
+  min-height: 100vh;
+}
+</style>

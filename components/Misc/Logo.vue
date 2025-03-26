@@ -1,5 +1,5 @@
 <template>
-  <v-list-item variant="flat">
+  <v-list-item variant="flat" base-color="transparent">
     <v-list-item-title>
       <nuxt-link
         class="d-flex align-center font-weight-bold text-lg-h5 text-h6 ga-2 text-primary"

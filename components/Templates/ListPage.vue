@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-toolbar>
+  <GradientWrapper>
+    <v-toolbar class="glassed">
       <template #prepend>
         <BackBtn />
       </template>
@@ -87,9 +87,12 @@
           </v-label>
         </div>
       </v-navigation-drawer>
-      <v-navigation-drawer v-model="showFilters" order="1" location="end">
+      <v-navigation-drawer v-model="showFilters" width="300" location="end">
         <div class="pa-2 flex flex-column ga-4">
-          <CloseBtn @close="showFilters = false" />
+          <CloseBtn
+            v-if="$vuetify.display.smAndDown"
+            @close="showFilters = false"
+          />
           <slot name="filters" />
         </div>
       </v-navigation-drawer>
@@ -109,6 +112,7 @@
           v-for="(item, i) in items"
           :key="i"
           :to="localeRoute(item.to || '/')"
+          border
           rounded="lg"
           elevation="5"
           lines="two"
@@ -136,7 +140,7 @@
             >
           </template>
         </v-list-item>
-        <v-footer class="d-flex justify-center ma-2">
+        <v-footer class="d-flex justify-center glassed mx-2">
           <v-pagination
             v-model="currentPage"
             :length="totalPages"
@@ -163,12 +167,13 @@
       />
     </div>
     <slot name="empty-state" />
-  </div>
+  </GradientWrapper>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Containment/Btns/BackBtn.vue";
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
+import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import { useAuthStore } from "#imports";
 const { isAuthenticated } = useAuthStore();
 const localeRoute = useLocaleRoute();

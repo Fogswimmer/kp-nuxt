@@ -4,118 +4,28 @@
       <Title>{{ definePageTitle(film?.name || "") }}</Title>
       <Meta name="description" :content="film?.description" />
     </Head>
-    <main>
+    <v-sheet max-width="1200" class="mx-auto pa-2" rounded="lg">
       <DetailCard
-        film-variant
         :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
         :loading="loading"
-        :cover="film?.poster || ''"
         :notification="!isAuthenticated"
-        :poster="true"
+        trailer
       >
-        <template #sidebar>
-          <client-only>
-            <v-navigation-drawer width="400">
-              <FilmDrawerContent
-                :poster="film?.poster || ''"
-                :general-info="generalInfo"
-                :starring="starring || []"
-                :team="team"
-              />
-            </v-navigation-drawer>
-          </client-only>
-        </template>
         <template #notification>
           <NotAuthWarning v-if="!isAuthenticated" />
         </template>
-        <template #poster>
-          <client-only>
-            <v-sheet height="100%">
-              <v-container>
-                <v-row>
-                  <v-col cols="12" lg="3" md="4" sm="12">
-                    <v-sheet height="100%" width="100%" min-height="400">
-                      <v-img
-                        v-if="film?.poster"
-                        :src="film?.poster || ''"
-                        cover
-                        height="100%"
-                      >
-                        <template #placeholder>
-                          <v-sheet height="100%">
-                            <div
-                              v-if="loading"
-                              class="fill-height d-flex align-center justify-center"
-                            >
-                              <v-progress-circular indeterminate />
-                            </div>
-                          </v-sheet>
-                        </template>
-                        <template #error>
-                          <ErrorPlaceHolder show-label />
-                        </template>
-                      </v-img>
-                      <div
-                        v-else
-                        class="fill-height d-flex align-center justify-center"
-                      >
-                        <div class="d-flex flex-column ga-2 align-center">
-                          <v-icon>mdi-image-off</v-icon>
-                          <v-btn
-                            :disabled="!isAuthenticated"
-                            @click="choosePoster"
-                            >{{ $t("actions.choose_poster") }}</v-btn
-                          >
-                        </div>
-                      </div>
-                    </v-sheet>
-                  </v-col>
-                  <v-col cols="12" lg="9" md="8" sm="12">
-                    <v-responsive>
-                      <iframe
-                        v-if="film?.trailer && !iframeError"
-                        id="iframe"
-                        width="100%"
-                        :height="$vuetify.display.mdAndUp ? '500' : '300px'"
-                        :src="film?.trailer"
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerpolicy="strict-origin-when-cross-origin"
-                        allowfullscreen
-                      />
-                      <v-sheet
-                        v-else
-                        height="100%"
-                        :min-height="
-                          $vuetify.display.mdAndUp ? '500px' : '200px'
-                        "
-                        width="100%"
-                        class="d-flex align-center justify-center flex-column pa-4"
-                      >
-                        <v-icon size="64" color="grey">mdi-video-off</v-icon>
-                        <v-btn
-                          prepend-icon="mdi-youtube"
-                          :disabled="!isAuthenticated"
-                          variant="outlined"
-                          color="primary"
-                          @click="showLinkTrailerDialog = true"
-                        >
-                          {{ $t("actions.link_trailer") }}
-                        </v-btn>
-                      </v-sheet>
-                    </v-responsive>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-sheet>
-          </client-only>
+        <template #trailer>
+          <div class="d-flex justify-center">
+            <Trailer
+              :trailer="film?.trailer || ''"
+              :is-authenticated="isAuthenticated"
+              @choose:trailer="showLinkTrailerDialog = true"
+            />
+          </div>
         </template>
         <template #menu>
-          <FilmDetailMenu
+          <DetailMenu
             :is-authenticated="isAuthenticated"
-            @choose:cover="chooseCover"
-            @choose:poster="choosePoster"
             @edit:general="handleGeneralInfoEdit"
             @edit:description="handleEditDescription"
             @edit:gallery="openGalleryEditor"
@@ -125,82 +35,45 @@
         </template>
         <template #text>
           <main>
-            <FilmDrawerContent
-              v-if="$vuetify.display.smAndDown"
-              :poster="film?.poster || ''"
-              :general-info="generalInfo"
-              :starring="starring"
-              :team="team"
-            />
-            <v-expansion-panels
-              v-model="mainAccordion"
-              variant="accordion"
-              bg-color="transparent"
-              border
-            >
-              <v-expansion-panel
-                id="description"
-                :title="$t('pages.films.description')"
-                tag="section"
-                class="content-item"
-                value="description"
-              >
-                <v-expansion-panel-text>
-                  <IndentedEditableText
-                    :edit-mode="editDescriptionMode"
-                    :messages="$t('pages.films.edit_description')"
-                    :text="film?.description || ''"
-                    @sumbit:edit="submitDescriptionEdit"
-                  />
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-              <v-expansion-panel
-                id="rating"
-                tag="section"
-                value="rating"
-                class="content-item"
-                :title="$t('pages.films.rating')"
-              >
-                <v-expansion-panel-text>
-                  <div class="d-flex flex-column justify-center ga-1">
-                    <FilmAssessments
-                      :current-rating="film?.rating || ''"
-                      :assessments="film?.assessments || []"
-                      :is-assessing="isAssessing"
-                      :is-authenticated="isAuthenticated"
-                      :rating="rating"
-                      :comment="comment"
-                      @assession:submit="submitAssessment"
-                      @assession:enable="isAssessing = true"
-                      @assession:cancel="cancelAssessment"
-                      @assession:delete="deleteAssessment"
-                      @comment:update="comment = $event"
-                      @rating:update="rating = $event"
-                    />
-                  </div>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-              <v-expansion-panel
-                id="gallery"
-                value="gallery"
-                tag="section"
-                :title="$t('pages.films.gallery')"
-              >
-                <v-expansion-panel-text>
-                  <GalleryViewer
-                    :slider-arr="sliderGalleryArr || []"
-                    :disabled="!isAuthenticated"
-                    :gallery="film?.gallery || []"
-                    :entity-name="film?.name || ''"
-                    :loading="loading"
-                    :with-avatar="false"
-                    @poster:set="handleChangePoster"
-                    @editor:open="openGalleryEditor"
-                    @delete:img="handleDeleteImg"
-                  />
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
+            <FilmExpansionPanels :film="film || null">
+              <template #gallery-viewer>
+                <GalleryViewer
+                  :slider-arr="sliderGalleryArr || []"
+                  :disabled="!isAuthenticated"
+                  :gallery="film?.gallery || []"
+                  :entity-name="film?.name || ''"
+                  :loading="loading"
+                  :with-avatar="false"
+                  @poster:set="handleChangePoster"
+                  @editor:open="openGalleryEditor"
+                  @delete:img="handleDeleteImg"
+                />
+              </template>
+              <template #description>
+                <IndentedEditableText
+                  :edit-mode="editDescriptionMode"
+                  :messages="$t('pages.films.edit_description')"
+                  :text="film?.description || ''"
+                  @sumbit:edit="submitDescriptionEdit"
+                />
+              </template>
+              <template #assessments>
+                <Assessments
+                  :current-rating="film?.rating || ''"
+                  :assessments="film?.assessments || []"
+                  :is-assessing="isAssessing"
+                  :is-authenticated="isAuthenticated"
+                  :rating="rating"
+                  :comment="comment"
+                  @assession:submit="submitAssessment"
+                  @assession:enable="isAssessing = true"
+                  @assession:cancel="cancelAssessment"
+                  @assession:delete="deleteAssessment"
+                  @comment:update="comment = $event"
+                  @rating:update="rating = $event"
+                />
+              </template>
+            </FilmExpansionPanels>
           </main>
           <v-footer>
             <v-spacer />
@@ -214,7 +87,7 @@
           </v-footer>
         </template>
       </DetailCard>
-    </main>
+    </v-sheet>
     <ConfirmDialog
       v-model="showConfirmDialog"
       type="error"
@@ -310,7 +183,6 @@
 <script lang="ts" setup>
 import { useFilmStore } from "~/stores/filmStore";
 import { useAuthStore } from "~/stores/authStore";
-
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import FilmGalleryEdit from "~/components/Gallery/FilmGalleryEdit.vue";
@@ -319,19 +191,17 @@ import FilmForm from "~/components/Forms/Film/FilmForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
-import FilmAssessments from "~/components/FilmPartials/FilmAssessments.vue";
-import FilmDrawerContent from "~/components/FilmPartials/FilmDrawerContent.vue";
-import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
+import Assessments from "~/components/FilmPartials/Assessments.vue";
+import DetailMenu from "~/components/FilmPartials/DetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import TrailerForm from "~/components/Forms/Film/TrailerForm.vue";
-import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
+import Trailer from "~/components/FilmPartials/Trailer.vue";
+import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
-
-const iframeError = ref<boolean>(false);
 const showDeleteWarning = ref<boolean>(false);
 const editDescriptionMode = ref<boolean>(false);
 const showConfirmDialog = ref<boolean>(false);
@@ -348,8 +218,6 @@ const comment = ref<string>("");
 const rating = ref<number>(5);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-
-const mainAccordion = ref<string[]>(["description"]);
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
@@ -389,78 +257,6 @@ const imagesToDelete = computed(() => {
       return fileName.split(".")[0];
     });
 }) as ComputedRef<string[]>;
-
-const generalInfo = computed((): Detail[] => {
-  const info = [
-    {
-      title: "forms.film.name",
-      value: film.value?.name || "",
-      icon: "mdi-movie",
-      tooltip: film.value && film.value.name?.length > 60 ? true : false,
-    },
-    {
-      title: "forms.film.slogan",
-      value: film.value?.slogan || "",
-      icon: "mdi-format-title",
-      tooltip:
-        film.value?.slogan && film.value.slogan?.length > 60 ? true : false,
-    },
-    {
-      title: "forms.film.duration",
-      value: film.value?.duration || "",
-      icon: "mdi-timer",
-    },
-    {
-      title: "forms.film.genres",
-      value: film.value?.genreNames ? film.value?.genreNames.join(", ") : "",
-      icon: "mdi-filmstrip",
-      tooltip:
-        film.value?.genreNames && film.value?.genreNames.join(", ").length > 120
-          ? true
-          : false,
-    },
-    {
-      title: "forms.film.age",
-      value: film.value?.age + "+" || "",
-      icon: "mdi-account-supervisor",
-    },
-  ];
-
-  return info as Detail[];
-});
-
-const starring = computed((): Detail[] => {
-  return film?.value
-    ? film.value.actorsData?.map((person: FilmPerson): Detail => {
-        return {
-          title: "",
-          value: person?.name || "",
-          to: "/persons/" + person?.slug || "",
-          avatar: person.avatar || "",
-        };
-      })
-    : [];
-});
-
-const team = computed((): Detail[] => {
-  const teamMembersTitles = [
-    "forms.film.director",
-    "forms.film.writer",
-    "forms.film.producer",
-    "forms.film.composer",
-    "forms.film.actors",
-  ];
-  return film.value
-    ? film.value.teamData?.map((person: FilmPerson, index: number): Detail => {
-        return {
-          title: teamMembersTitles[index],
-          value: person?.name || "",
-          to: "/persons/" + person?.slug || "",
-          avatar: person.avatar || "",
-        };
-      })
-    : [];
-});
 
 const computedGalleryEditTitle = computed((): string => {
   return t("pages.films.edit_gallery");
@@ -525,9 +321,6 @@ const submitAssessment = async (): Promise<void> => {
 
 const handleEditDescription = async (): Promise<void> => {
   editDescriptionMode.value = true;
-  if (mainAccordion.value.indexOf("description") === -1) {
-    mainAccordion.value.push("description");
-  }
   const descriptionPanelElement = document.getElementById("description");
   await nextTick(() => {
     if (descriptionPanelElement) {
@@ -564,16 +357,6 @@ const handleGalleryItemsDelete = async (): Promise<void> => {
 const handleDeleteImg = async (index: number): Promise<void> => {
   selectedImagesIndices.value.push(index);
   await handleGalleryItemsDelete();
-};
-
-const chooseCover = (): void => {
-  editGalleryMode.value = true;
-  activeTab.value = 0;
-};
-
-const choosePoster = (): void => {
-  editGalleryMode.value = true;
-  activeTab.value = 1;
 };
 
 const handleGalleryUpload = async (files: File[]): Promise<void> => {
@@ -635,13 +418,6 @@ onBeforeUnmount((): void => {
 
 onMounted(async (): Promise<void> => {
   await fetchData();
-  const iframe = document.getElementById("iframe") as HTMLIFrameElement;
-  if (iframe) {
-    iframe.onerror = () => {
-      iframeError.value = true;
-      console.log(iframeError.value);
-    };
-  }
 });
 
 definePageMeta({

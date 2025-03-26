@@ -4,56 +4,63 @@
       <Title>{{ definePageTitle($t("pages.films.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.films_list')" />
     </Head>
-    <v-navigation-drawer location="start" width="400">
-      <v-card
-        class="pa-4 text-center"
-        :title="$t('pages.home.newest')"
-        variant="text"
-      >
-        <NewestFilmsMasonryWall
-          v-if="latestFilms.length"
-          :latest-films="latestFilms"
-          sidebar
-        />
-        <span v-else-if="!loading" class="text-disabled">{{
-          $t("general.no_data")
-        }}</span>
-        <v-sheet v-else height="100vh">
-          <div class="fill-height d-flex align-center justify-center">
-            <v-progress-circular indeterminate />
-          </div>
-        </v-sheet>
-      </v-card>
-    </v-navigation-drawer>
-      <ListPage
-        v-if="filmsPresent"
-        :items="filmItems || []"
-        :loading="loading"
-        :total-pages="totalPages"
-        :page="currentPage"
-        :limit="computedLimitProp"
-        :list-title="$t('nav.films_list')"
-        new-page-link="/films/new"
-        @update:page="updateQueryParams"
-        @update:search="search = $event"
-      >
-        <template #filters>
-          <Filters
-            :sort-options="sortOptions"
-            @update:limit="limit = $event.value"
-            @update:order="order = $event.value"
-            @update:search="search = $event.value"
-            @update:sort="sortBy = $event.value"
-          />
-        </template>
-      </ListPage>
+    <div>
+      <v-row no-gutters>
+        <v-col cols="12" lg="9">
+          <ListPage
+            v-if="filmsPresent"
+            :items="filmItems || []"
+            :loading="loading"
+            :total-pages="totalPages"
+            :page="currentPage"
+            :limit="computedLimitProp"
+            :list-title="$t('nav.films_list')"
+            new-page-link="/films/new"
+            @update:page="updateQueryParams"
+            @update:search="search = $event"
+          >
+            <template #filters>
+              <Filters
+                :sort-options="sortOptions"
+                @update:limit="limit = $event.value"
+                @update:order="order = $event.value"
+                @update:search="search = $event.value"
+                @update:sort="sortBy = $event.value"
+              />
+            </template>
+          </ListPage>
+        </v-col>
+        <v-col v-if="$vuetify.display.mdAndUp" cols="3">
+          <v-card
+            class="pa-4  text-center glassed overflow-y-auto"
+            :title="$t('pages.home.newest')"
+            variant="text"
+            height="90vh"
+          >
+            <FilmsMasonryWall
+              v-if="latestFilms.length"
+              :latest-films="latestFilms"
+              sidebar
+            />
+            <span v-else-if="!loading" class="text-disabled">{{
+              $t("general.no_data")
+            }}</span>
+            <v-sheet v-else height="100%">
+              <div class="fill-height d-flex align-center justify-center">
+                <v-progress-circular indeterminate />
+              </div>
+            </v-sheet>
+          </v-card>
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
-import NewestFilmsMasonryWall from "~/components/Masonry/NewestFilmsMasonryWall.vue";
+import FilmsMasonryWall from "~/components/Masonry/FilmsMasonryWall.vue";
 import { useFilmStore } from "~/stores/filmStore";
 import definePageTitle from "~/utils/definePageTitle";
 
@@ -120,7 +127,14 @@ const updateQueryParams = (page: number): void => {
 
 watch(
   [limit, offset, search, order, sortBy, locale],
-  async ([newLimit, newOffset, newSearch, newOrder, newSortBy, newLocale]): Promise<void> => {
+  async ([
+    newLimit,
+    newOffset,
+    newSearch,
+    newOrder,
+    newSortBy,
+    newLocale,
+  ]): Promise<void> => {
     await fetchFilteredFilms(
       newLimit,
       newOffset,

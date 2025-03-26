@@ -12,6 +12,7 @@
           :index="index"
           :sidebar="sidebar"
           :img="item?.avatar || ''"
+          :dark-accent-color="darkAccentColor || ''"
           :link="`/persons/${item?.slug || ''}`"
         />
       </div>
@@ -26,6 +27,7 @@ defineProps<{
   popularActors: IPerson[];
   loading?: boolean;
   sidebar: boolean;
+  darkAccentColor?: string;
 }>();
 
 const visibleItems = ref(new Set<number>());

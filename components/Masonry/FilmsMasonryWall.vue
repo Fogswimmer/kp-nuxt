@@ -4,8 +4,7 @@
       <template #default="{ item, index }">
         <div
           v-intersect="onIntersect(index)"
-          class="masonry-item"
-          :class="{ 'fade-in': visibleItems.has(index) }"
+          :class="['masonry-item', { 'fade-in': visibleItems.has(index) }]"
         >
           <MasonryCard
             :loading="Boolean(loading)"
@@ -13,13 +12,11 @@
             :item="item"
             :img="item?.poster || ''"
             :sidebar="sidebar"
+            :dark-accent-color="darkAccentColor || ''"
             :link="`/films/${item.slug?.toString()}`"
           >
             <template #append>
               <FilmRatingChip :rating="item.rating || '0'" />
-            </template>
-            <template #default>
-              <FilmExpansionPanels :film="item" />
             </template>
           </MasonryCard>
         </div>
@@ -30,7 +27,6 @@
 
 <script lang="ts" setup>
 import MasonryCard from "./partials/MasonryCard.vue";
-import FilmExpansionPanels from "./partials/FilmExpansionPanels.vue";
 import FilmRatingChip from "../Misc/FilmRatingChip.vue";
 
 const visibleItems = ref(new Set<number>());
@@ -48,6 +44,7 @@ defineProps<{
   loading?: boolean;
   sidebar?: boolean;
   link?: string;
+  darkAccentColor?: string;
 }>();
 </script>
 

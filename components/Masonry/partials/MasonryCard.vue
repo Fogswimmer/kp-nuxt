@@ -3,11 +3,10 @@
     :key="index"
     :loading="loading"
     :title="item?.name"
-    :subtitle="item?.internationalName || ''"
     rounded="lg"
     elevation="5"
-    :variant="sidebar ? 'plain' : 'text'"
-    class="masonry-card glassed"
+    :variant="sidebar ? 'plain' : 'elevated'"
+    :style="`border: 1px solid ${darkAccentColor || 'grey'};`"
   >
     <template #append>
       <slot name="append" />
@@ -17,7 +16,6 @@
         :src="img"
         provider="myProvider"
         placeholder
-        :modifiers="{ roundCorner: '0:100' }"
         fit="cover"
         loading="lazy"
         class="cursor-pointer masonry-image"
@@ -37,6 +35,7 @@ defineProps<{
   item: IFilm | IPerson;
   link: string;
   sidebar?: boolean;
+  darkAccentColor: string;
 }>();
 
 const localeRoute = useLocaleRoute();
@@ -51,9 +50,6 @@ const localeRoute = useLocaleRoute();
 }
 
 .masonry-image:hover {
-  transform: scale(1.05);
-}
-.masonry-card{
- border: 1px solid rgba(128, 128, 128, 0.459);
+  transform: scale(0.99);
 }
 </style>

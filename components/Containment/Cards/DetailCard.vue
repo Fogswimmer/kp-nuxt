@@ -1,6 +1,6 @@
 <template>
-  <v-app id="detail_card">
-    <v-app-bar order="0" scroll-behavior="fade-image" class="glassed">
+  <div>
+    <v-toolbar class="glassed">
       <template #image>
         <v-img gradient="to top right, rgba(0,0,0,.5), rgba(0,0,0,.5)" />
       </template>
@@ -10,65 +10,69 @@
       <v-toolbar-title>
         <span class="font-weight-bold"> {{ pageName }} </span>
       </v-toolbar-title>
+      <template v-if="notification">
+        <div v-if="$vuetify.display.mdAndUp" class="d-flex justify-center pa-2">
+          <slot name="notification" />
+        </div>
+      </template>
       <slot name="menu" />
-    </v-app-bar>
-    <slot name="sidebar" />
-    <v-main>
+    </v-toolbar>
+    <div v-if="$vuetify.display.smAndDown" class="d-flex justify-center pa-2 text-caption">
+      <slot name="notification" />
+    </div>
+    <v-card variant="text">
+      <template v-if="loading" #loader>
+        <v-progress-linear indeterminate color="primary" />
+      </template>
       <v-card>
-        <template v-if="notification">
-          <div class="d-flex justify-center w-100 glassed pa-2">
-            <slot name="notification" />
-          </div>
-        </template>
-        <template v-if="loading" #loader>
-          <v-progress-linear indeterminate color="primary" />
-        </template>
-        <v-card>
-          <template #image>
-            <v-img
-              v-if="cover"
-              :src="cover"
-              class="img-blur"
-              cover
-              :height="$vuetify.display.mdAndUp ? '800px' : '600px'"
-            />
-            <v-sheet v-else height="300" width="100%" class="default-cover" />
-          </template>
-          <v-parallax
-            v-if="cover || filmVariant"
+        <template #image>
+          <v-img
+            v-if="cover"
             :src="cover"
-            scale="1.3"
-            :height="computedParallaxHeight"
-            class="position-relative"
-          >
-            <template #placeholder>
-              <v-sheet v-if="loading" height="100%">
-                <div class="fill-height d-flex align-center justify-center">
-                  <v-progress-circular indeterminate />
-                </div>
-              </v-sheet>
-            </template>
-            <template #error>
-              <v-sheet height="300" width="100%" class="default-cover" />
-            </template>
-            <template v-if="poster">
-              <slot name="poster" />
-            </template>
-          </v-parallax>
+            class="img-blur"
+            cover
+            :height="$vuetify.display.mdAndUp ? '800px' : '600px'"
+          />
           <v-sheet v-else height="300" width="100%" class="default-cover" />
-          <slot name="general_info" />
-          <slot name="text" />
-        </v-card>
+        </template>
+        <v-parallax
+          v-if="cover"
+          :src="cover"
+          scale="1.3"
+          :height="computedParallaxHeight"
+          class="position-relative"
+        >
+          <template #placeholder>
+            <v-sheet v-if="loading" height="100%">
+              <div class="fill-height d-flex align-center justify-center">
+                <v-progress-circular indeterminate />
+              </div>
+            </v-sheet>
+          </template>
+          <template #error>
+            <v-sheet height="300" width="100%" class="default-cover" />
+          </template>
+        </v-parallax>
+        <v-sheet
+          v-else-if="!trailer"
+          height="300"
+          width="100%"
+          class="default-cover"
+        />
+        <v-sheet v-else class="w-100 glassed pa-4" height="400">
+          <slot name="trailer" />
+        </v-sheet>
+        <slot name="general_info" />
+        <slot name="text" />
       </v-card>
-    </v-main>
-  </v-app>
+    </v-card>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
 
-defineEmits(["drawer:toggle"]);
-const props = defineProps<{
+defineProps<{
   pageName?: string;
   title?: string;
   loading: boolean;
@@ -76,14 +80,13 @@ const props = defineProps<{
   drawer?: boolean;
   notification?: boolean;
   poster?: boolean;
-  filmVariant?: boolean;
+  trailer?: boolean;
 }>();
 const display = useDisplay();
 
 const computedParallaxHeight = computed((): string => {
-  if (!props.filmVariant) return "300";
   if (display.smAndDown.value) return "1100";
-  return "550";
+  return "330";
 });
 </script>
 

@@ -1,4 +1,9 @@
+import 'youtube';
 declare global {
+  interface Window {
+    YT: typeof YT | undefined;
+    onYouTubeIframeAPIReady: (() => void) | undefined;
+  }
   enum Language {
     RU = "ru",
     EN = "en",
