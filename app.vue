@@ -62,10 +62,11 @@ p {
 }
 
 .glassed {
-  background: rgba(0, 0, 0, 0.3) !important;
+  background: rgba(0, 0, 0, 0.2) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   backdrop-filter: blur(10px) !important;
 }
+
 
 .bg-gradient {
   background-image: linear-gradient(

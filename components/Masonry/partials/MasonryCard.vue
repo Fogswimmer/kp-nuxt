@@ -6,7 +6,7 @@
     rounded="lg"
     elevation="5"
     :variant="sidebar ? 'plain' : 'elevated'"
-    :style="`border: 1px solid ${darkAccentColor || 'grey'};`"
+    border
   >
     <template #append>
       <slot name="append" />

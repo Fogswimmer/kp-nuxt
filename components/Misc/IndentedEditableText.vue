@@ -1,6 +1,6 @@
 <template>
   <v-card rounded="lg" class="pa-2" variant="text" border>
-    <div v-if="!editMode" class="text-body-1 pa-2">
+    <div v-if="!editMode" :class="['text-body-1 pa-2', { 'text-body-2': compact }]">
       <div v-if="text" :class="['text-container', { expanded: !collapsed }]">
         <p v-for="(paragraph, index) in text ? text?.split('\n') : []" :key="index">
           {{ paragraph || "" }}
@@ -25,7 +25,7 @@
           <template #text>
             <v-textarea
               v-model="proxyModel.value"
-              :messages="messages"
+              :messages="messages || ''"
               auto-grow
               rows="5"
             />
@@ -46,7 +46,8 @@ import ExpandBtn from "../Containment/Btns/ExpandBtn.vue";
 const props = defineProps<{
   editMode: boolean;
   text: string;
-  messages: string;
+  messages?: string;
+  compact?: boolean;
 }>();
 
 defineEmits<{
@@ -57,10 +58,10 @@ const editModeText = ref<string>(props.text);
 const collapsed = ref<boolean>(true);
 
 const shouldShowExpandButton = computed((): boolean => {
-  const lineHeight = 1.4; 
-  const maxLines = 3; 
-  const maxHeight = lineHeight * maxLines; 
-  const textHeight = props.text ? (props.text?.split("\n").length * lineHeight + 1) : 0; 
+  const lineHeight: number = 1.4; 
+  const maxLines: number = 3; 
+  const maxHeight: number = lineHeight * maxLines; 
+  const textHeight  = props.text ? (props.text?.split("\n").length * lineHeight + 1) : 0; 
 
   return textHeight > maxHeight;
 });

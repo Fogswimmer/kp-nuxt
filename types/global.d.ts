@@ -50,6 +50,12 @@ declare global {
     actorsData: FilmPerson[];
     trailer: string | null;
     slug: string | null;
+    assessmentsGraph: AssessmentsGraph[];
+  }
+
+  interface AssessmentsGraph {
+    rating: number;
+    count: number;
   }
 
   interface IAssessment {
@@ -67,7 +73,6 @@ declare global {
     name?: string;
     avatar?: string;
   }
-
   interface Detail {
     title: string;
     value: string;
@@ -131,8 +136,6 @@ declare global {
     producedFilms: [IFilm]
     composedFilms: [IFilm]
   }
-
-
   interface IPersonForm {
     id: number | null;
     firstname: string;

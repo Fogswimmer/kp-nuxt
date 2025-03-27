@@ -26,7 +26,7 @@
             <v-sheet
               v-else
               rounded="lg"
-              class="pa-2 cursor-pointer glassed"
+              class="pa-2 cursor-pointer"
               width="100%"
               height="100%"
             >

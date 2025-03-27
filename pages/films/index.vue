@@ -5,37 +5,33 @@
       <Meta name="description" :content="$t('page_descriptions.films_list')" />
     </Head>
     <div>
-      <v-row no-gutters>
-        <v-col cols="12" lg="9">
-          <ListPage
-            v-if="filmsPresent"
-            :items="filmItems || []"
-            :loading="loading"
-            :total-pages="totalPages"
-            :page="currentPage"
-            :limit="computedLimitProp"
-            :list-title="$t('nav.films_list')"
-            new-page-link="/films/new"
-            @update:page="updateQueryParams"
-            @update:search="search = $event"
-          >
-            <template #filters>
-              <Filters
-                :sort-options="sortOptions"
-                @update:limit="limit = $event.value"
-                @update:order="order = $event.value"
-                @update:search="search = $event.value"
-                @update:sort="sortBy = $event.value"
-              />
-            </template>
-          </ListPage>
-        </v-col>
-        <v-col v-if="$vuetify.display.mdAndUp" cols="3">
+      <ListPage
+        v-if="filmsPresent"
+        :items="filmItems || []"
+        :loading="loading"
+        :total-pages="totalPages"
+        :page="currentPage"
+        :limit="computedLimitProp"
+        :list-title="$t('nav.films_list')"
+        new-page-link="/films/new"
+        @update:page="updateQueryParams"
+        @update:search="search = $event"
+      >
+        <template #filters>
+          <Filters
+            :sort-options="sortOptions"
+            @update:limit="limit = $event.value"
+            @update:order="order = $event.value"
+            @update:search="search = $event.value"
+            @update:sort="sortBy = $event.value"
+          />
+        </template>
+        <template v-if="$vuetify.display.mdAndUp" #sidebar>
           <v-card
-            class="pa-4  text-center glassed overflow-y-auto"
+            class="pa-4 text-center glassed"
             :title="$t('pages.home.newest')"
             variant="text"
-            height="90vh"
+          
           >
             <FilmsMasonryWall
               v-if="latestFilms.length"
@@ -51,8 +47,8 @@
               </div>
             </v-sheet>
           </v-card>
-        </v-col>
-      </v-row>
+        </template>
+      </ListPage>
     </div>
   </div>
 </template>

@@ -211,7 +211,7 @@ const props = defineProps<{
 
 const form = ref<Partial<IFilm>>({ ...props.filmForm });
 const isFormValid = ref<boolean>(true);
-const ageItems = [0, 3, 12, 16, 18];
+const ageItems: number[] = [0, 3, 12, 16, 18];
 
 const yearsOfReleaseItems = Array.from(
   { length: CURRENT_YEAR - START_YEAR + 1 },

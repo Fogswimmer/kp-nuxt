@@ -347,7 +347,7 @@ export default {
       edit: "Modifier Film",
       remove: "Supprimer Film",
       rating: "Evaluation",
-      assessments: "avis",
+      assessments: "{count} avis",
       no_assessments: "Aucun avis",
       your_assessment: "Votre avis",
       comment: "Commentaire",

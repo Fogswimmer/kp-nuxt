@@ -65,14 +65,6 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps<{
-  sortOptions: { value: string; title: string }[];
-}>();
-defineEmits<{
-  (e: "update:limit", value: number): void;
-  (e: "update:order" | "update:sort", value: string): void;
-}>();
-
 interface IStringValueOption {
   value: string;
   title: string;
@@ -82,6 +74,13 @@ interface INumberValueOption {
   value: number;
   title: string;
 }
+const props = defineProps<{
+  sortOptions: { value: string; title: string }[];
+}>();
+defineEmits<{
+  (e: "update:limit", value: number): void;
+  (e: "update:order" | "update:sort", value: string): void;
+}>();
 
 const { t } = useI18n();
 const orderOptions: IStringValueOption[] = [

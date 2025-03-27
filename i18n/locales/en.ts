@@ -349,7 +349,7 @@ export default {
       edit: "Edit Film",
       remove: "Remove Film",
       rating: "Rating",
-      assessments: "assessments",
+      assessments: "{count} assessments",
       no_assessments: "No assessments",
       your_assessment: "Your assessment",
       confirm_assessment: "Confirm assessment",

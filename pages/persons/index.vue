@@ -1,5 +1,5 @@
 <template>
-  <div id="persons">
+  <div>
     <Head>
       <Title>{{ definePageTitle($t("pages.persons.title")) }}</Title>
       <Meta
@@ -7,27 +7,6 @@
         :content="$t('page_descriptions.persons_list')"
       />
     </Head>
-    <v-navigation-drawer location="start" width="400">
-      <v-card
-        :title="$t('pages.home.popular_actors')"
-        class="text-center pa-4"
-        variant="text"
-      >
-        <PopularActorsMasonry
-          v-if="popularActors.length"
-          :popular-actors="popularActors"
-          sidebar
-        />
-        <span v-else-if="!loading" class="text-disabled">{{
-          $t("general.no_data")
-        }}</span>
-        <v-sheet v-else height="100vh">
-          <div class="fill-height d-flex align-center justify-center">
-            <v-progress-circular indeterminate />
-          </div>
-        </v-sheet>
-      </v-card>
-    </v-navigation-drawer>
 
     <ListPage
       v-if="personsPresent"
@@ -41,8 +20,28 @@
       @update:page="updateQueryParams"
       @update:search="search = $event"
     >
+      <template v-if="$vuetify.display.mdAndUp" #sidebar>
+        <v-card
+          :title="$t('pages.home.popular_actors')"
+          class="text-center pa-4"
+          variant="text"
+        >
+          <PopularActorsMasonry
+            v-if="popularActors.length"
+            :popular-actors="popularActors"
+            sidebar
+          />
+          <span v-else-if="!loading" class="text-disabled">{{
+            $t("general.no_data")
+          }}</span>
+          <v-sheet v-else height="100vh">
+            <div class="fill-height d-flex align-center justify-center">
+              <v-progress-circular indeterminate />
+            </div>
+          </v-sheet>
+        </v-card>
+      </template>
       <template #filters>
-        {{ order }}
         <Filters
           :sort-options="sortOptions"
           @update:limit="limit = $event.value"
@@ -143,7 +142,6 @@ const updateQueryParams = (page: number): void => {
   }
 };
 
-
 watch(
   [limit, offset, sortBy, order, specialtySort, locale],
   async ([
@@ -154,9 +152,8 @@ watch(
     newSpecialtySort,
     newLocale,
   ]): Promise<void> => {
-
-    console.log(limit)
-    console.log(limit)
+    console.log(limit);
+    console.log(limit);
     await fetchFilteredPersons(
       newLimit,
       newOffset,

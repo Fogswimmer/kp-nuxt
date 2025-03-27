@@ -21,15 +21,19 @@ interface _GlobalComponents {
     'ContainmentBtnsSubmitBtn': typeof import("../components/Containment/Btns/SubmitBtn.vue")['default']
     'ContainmentBtnsToggleThemeBtn': typeof import("../components/Containment/Btns/ToggleThemeBtn.vue")['default']
     'ContainmentCardsDetailCard': typeof import("../components/Containment/Cards/DetailCard.vue")['default']
+    'ContainmentCardsGradientWrapper': typeof import("../components/Containment/Cards/GradientWrapper.vue")['default']
     'ContainmentCardsPartialsTopInfo': typeof import("../components/Containment/Cards/partials/TopInfo.vue")['default']
-    'ContainmentImgBaseImg': typeof import("../components/Containment/Img/BaseImg.vue")['default']
     'ContainmentImgErrorPlaceHolder': typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']
-    'ContainmentImgPlaceholder': typeof import("../components/Containment/Img/ImgPlaceholder.vue")['default']
     'DialogsBaseDialog': typeof import("../components/Dialogs/BaseDialog.vue")['default']
     'DialogsConfirmDialog': typeof import("../components/Dialogs/ConfirmDialog.vue")['default']
-    'FilmPartialsFilmAssessments': typeof import("../components/FilmPartials/FilmAssessments.vue")['default']
-    'FilmPartialsFilmDetailMenu': typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']
-    'FilmPartialsFilmDrawerContent': typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']
+    'FilmPartialsAssessmentAssessmentsBoard': typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']
+    'FilmPartialsAssessmentComments': typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']
+    'FilmPartialsAssessmentRating': typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']
+    'FilmPartialsAssessmentComponentsAssessmentGraph': typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']
+    'FilmPartialsAssessmentComponentsComment': typeof import("../components/FilmPartials/Assessment/components/Comment.vue")['default']
+    'FilmPartialsDetailMenu': typeof import("../components/FilmPartials/DetailMenu.vue")['default']
+    'FilmPartialsFilmExpansionPanels': typeof import("../components/FilmPartials/FilmExpansionPanels.vue")['default']
+    'FilmPartialsTrailer': typeof import("../components/FilmPartials/Trailer.vue")['default']
     'FormsAuthUserForm': typeof import("../components/Forms/Auth/UserForm.vue")['default']
     'FormsFilmAssessmentForm': typeof import("../components/Forms/Film/AssessmentForm.vue")['default']
     'FormsFilmForm': typeof import("../components/Forms/Film/FilmForm.vue")['default']
@@ -42,9 +46,8 @@ interface _GlobalComponents {
     'GalleryPartialsMultipleImgSelector': typeof import("../components/Gallery/Partials/MultipleImgSelector.vue")['default']
     'GalleryPartialsSingleImgSelector': typeof import("../components/Gallery/Partials/SingleImgSelector.vue")['default']
     'GalleryPersonGalleryEdit': typeof import("../components/Gallery/PersonGalleryEdit.vue")['default']
-    'MasonryNewestFilmsMasonryWall': typeof import("../components/Masonry/NewestFilmsMasonryWall.vue")['default']
+    'MasonryFilmsMasonryWall': typeof import("../components/Masonry/FilmsMasonryWall.vue")['default']
     'MasonryPopularActorsMasonry': typeof import("../components/Masonry/PopularActorsMasonry.vue")['default']
-    'MasonryPartialsFilmExpansionPanels': typeof import("../components/Masonry/partials/FilmExpansionPanels.vue")['default']
     'MasonryPartialsMasonryCard': typeof import("../components/Masonry/partials/MasonryCard.vue")['default']
     'MasonryPartialsMasonrySection': typeof import("../components/Masonry/partials/MasonrySection.vue")['default']
     'MiscFilmRatingChip': typeof import("../components/Misc/FilmRatingChip.vue")['default']
@@ -55,7 +58,9 @@ interface _GlobalComponents {
     'MiscNotAuthWarning': typeof import("../components/Misc/NotAuthWarning.vue")['default']
     'MiscSectionDivider': typeof import("../components/Misc/SectionDivider.vue")['default']
     'MiscSuccessSnackbar': typeof import("../components/Misc/SuccessSnackbar.vue")['default']
+    'NavigationAppHeader': typeof import("../components/Navigation/AppHeader.vue")['default']
     'NavigationAppNavDrawerContent': typeof import("../components/Navigation/AppNavDrawerContent.vue")['default']
+    'NavigationBottomNav': typeof import("../components/Navigation/BottomNav.vue")['default']
     'NavigationNavBtns': typeof import("../components/Navigation/NavBtns.vue")['default']
     'NavigationProfileNav': typeof import("../components/Navigation/ProfileNav.vue")['default']
     'PersonPartialsFilmography': typeof import("../components/PersonPartials/Filmography.vue")['default']
@@ -96,15 +101,19 @@ interface _GlobalComponents {
     'LazyContainmentBtnsSubmitBtn': LazyComponent<typeof import("../components/Containment/Btns/SubmitBtn.vue")['default']>
     'LazyContainmentBtnsToggleThemeBtn': LazyComponent<typeof import("../components/Containment/Btns/ToggleThemeBtn.vue")['default']>
     'LazyContainmentCardsDetailCard': LazyComponent<typeof import("../components/Containment/Cards/DetailCard.vue")['default']>
+    'LazyContainmentCardsGradientWrapper': LazyComponent<typeof import("../components/Containment/Cards/GradientWrapper.vue")['default']>
     'LazyContainmentCardsPartialsTopInfo': LazyComponent<typeof import("../components/Containment/Cards/partials/TopInfo.vue")['default']>
-    'LazyContainmentImgBaseImg': LazyComponent<typeof import("../components/Containment/Img/BaseImg.vue")['default']>
     'LazyContainmentImgErrorPlaceHolder': LazyComponent<typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']>
-    'LazyContainmentImgPlaceholder': LazyComponent<typeof import("../components/Containment/Img/ImgPlaceholder.vue")['default']>
     'LazyDialogsBaseDialog': LazyComponent<typeof import("../components/Dialogs/BaseDialog.vue")['default']>
     'LazyDialogsConfirmDialog': LazyComponent<typeof import("../components/Dialogs/ConfirmDialog.vue")['default']>
-    'LazyFilmPartialsFilmAssessments': LazyComponent<typeof import("../components/FilmPartials/FilmAssessments.vue")['default']>
-    'LazyFilmPartialsFilmDetailMenu': LazyComponent<typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']>
-    'LazyFilmPartialsFilmDrawerContent': LazyComponent<typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']>
+    'LazyFilmPartialsAssessmentAssessmentsBoard': LazyComponent<typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']>
+    'LazyFilmPartialsAssessmentComments': LazyComponent<typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']>
+    'LazyFilmPartialsAssessmentRating': LazyComponent<typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']>
+    'LazyFilmPartialsAssessmentComponentsAssessmentGraph': LazyComponent<typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']>
+    'LazyFilmPartialsAssessmentComponentsComment': LazyComponent<typeof import("../components/FilmPartials/Assessment/components/Comment.vue")['default']>
+    'LazyFilmPartialsDetailMenu': LazyComponent<typeof import("../components/FilmPartials/DetailMenu.vue")['default']>
+    'LazyFilmPartialsFilmExpansionPanels': LazyComponent<typeof import("../components/FilmPartials/FilmExpansionPanels.vue")['default']>
+    'LazyFilmPartialsTrailer': LazyComponent<typeof import("../components/FilmPartials/Trailer.vue")['default']>
     'LazyFormsAuthUserForm': LazyComponent<typeof import("../components/Forms/Auth/UserForm.vue")['default']>
     'LazyFormsFilmAssessmentForm': LazyComponent<typeof import("../components/Forms/Film/AssessmentForm.vue")['default']>
     'LazyFormsFilmForm': LazyComponent<typeof import("../components/Forms/Film/FilmForm.vue")['default']>
@@ -117,9 +126,8 @@ interface _GlobalComponents {
     'LazyGalleryPartialsMultipleImgSelector': LazyComponent<typeof import("../components/Gallery/Partials/MultipleImgSelector.vue")['default']>
     'LazyGalleryPartialsSingleImgSelector': LazyComponent<typeof import("../components/Gallery/Partials/SingleImgSelector.vue")['default']>
     'LazyGalleryPersonGalleryEdit': LazyComponent<typeof import("../components/Gallery/PersonGalleryEdit.vue")['default']>
-    'LazyMasonryNewestFilmsMasonryWall': LazyComponent<typeof import("../components/Masonry/NewestFilmsMasonryWall.vue")['default']>
+    'LazyMasonryFilmsMasonryWall': LazyComponent<typeof import("../components/Masonry/FilmsMasonryWall.vue")['default']>
     'LazyMasonryPopularActorsMasonry': LazyComponent<typeof import("../components/Masonry/PopularActorsMasonry.vue")['default']>
-    'LazyMasonryPartialsFilmExpansionPanels': LazyComponent<typeof import("../components/Masonry/partials/FilmExpansionPanels.vue")['default']>
     'LazyMasonryPartialsMasonryCard': LazyComponent<typeof import("../components/Masonry/partials/MasonryCard.vue")['default']>
     'LazyMasonryPartialsMasonrySection': LazyComponent<typeof import("../components/Masonry/partials/MasonrySection.vue")['default']>
     'LazyMiscFilmRatingChip': LazyComponent<typeof import("../components/Misc/FilmRatingChip.vue")['default']>
@@ -130,7 +138,9 @@ interface _GlobalComponents {
     'LazyMiscNotAuthWarning': LazyComponent<typeof import("../components/Misc/NotAuthWarning.vue")['default']>
     'LazyMiscSectionDivider': LazyComponent<typeof import("../components/Misc/SectionDivider.vue")['default']>
     'LazyMiscSuccessSnackbar': LazyComponent<typeof import("../components/Misc/SuccessSnackbar.vue")['default']>
+    'LazyNavigationAppHeader': LazyComponent<typeof import("../components/Navigation/AppHeader.vue")['default']>
     'LazyNavigationAppNavDrawerContent': LazyComponent<typeof import("../components/Navigation/AppNavDrawerContent.vue")['default']>
+    'LazyNavigationBottomNav': LazyComponent<typeof import("../components/Navigation/BottomNav.vue")['default']>
     'LazyNavigationNavBtns': LazyComponent<typeof import("../components/Navigation/NavBtns.vue")['default']>
     'LazyNavigationProfileNav': LazyComponent<typeof import("../components/Navigation/ProfileNav.vue")['default']>
     'LazyPersonPartialsFilmography': LazyComponent<typeof import("../components/PersonPartials/Filmography.vue")['default']>
@@ -177,15 +187,19 @@ export const ContainmentBtnsScrollTopFab: typeof import("../components/Containme
 export const ContainmentBtnsSubmitBtn: typeof import("../components/Containment/Btns/SubmitBtn.vue")['default']
 export const ContainmentBtnsToggleThemeBtn: typeof import("../components/Containment/Btns/ToggleThemeBtn.vue")['default']
 export const ContainmentCardsDetailCard: typeof import("../components/Containment/Cards/DetailCard.vue")['default']
+export const ContainmentCardsGradientWrapper: typeof import("../components/Containment/Cards/GradientWrapper.vue")['default']
 export const ContainmentCardsPartialsTopInfo: typeof import("../components/Containment/Cards/partials/TopInfo.vue")['default']
-export const ContainmentImgBaseImg: typeof import("../components/Containment/Img/BaseImg.vue")['default']
 export const ContainmentImgErrorPlaceHolder: typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']
-export const ContainmentImgPlaceholder: typeof import("../components/Containment/Img/ImgPlaceholder.vue")['default']
 export const DialogsBaseDialog: typeof import("../components/Dialogs/BaseDialog.vue")['default']
 export const DialogsConfirmDialog: typeof import("../components/Dialogs/ConfirmDialog.vue")['default']
-export const FilmPartialsFilmAssessments: typeof import("../components/FilmPartials/FilmAssessments.vue")['default']
-export const FilmPartialsFilmDetailMenu: typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']
-export const FilmPartialsFilmDrawerContent: typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']
+export const FilmPartialsAssessmentAssessmentsBoard: typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']
+export const FilmPartialsAssessmentComments: typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']
+export const FilmPartialsAssessmentRating: typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']
+export const FilmPartialsAssessmentComponentsAssessmentGraph: typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']
+export const FilmPartialsAssessmentComponentsComment: typeof import("../components/FilmPartials/Assessment/components/Comment.vue")['default']
+export const FilmPartialsDetailMenu: typeof import("../components/FilmPartials/DetailMenu.vue")['default']
+export const FilmPartialsFilmExpansionPanels: typeof import("../components/FilmPartials/FilmExpansionPanels.vue")['default']
+export const FilmPartialsTrailer: typeof import("../components/FilmPartials/Trailer.vue")['default']
 export const FormsAuthUserForm: typeof import("../components/Forms/Auth/UserForm.vue")['default']
 export const FormsFilmAssessmentForm: typeof import("../components/Forms/Film/AssessmentForm.vue")['default']
 export const FormsFilmForm: typeof import("../components/Forms/Film/FilmForm.vue")['default']
@@ -198,9 +212,8 @@ export const GalleryViewer: typeof import("../components/Gallery/GalleryViewer.v
 export const GalleryPartialsMultipleImgSelector: typeof import("../components/Gallery/Partials/MultipleImgSelector.vue")['default']
 export const GalleryPartialsSingleImgSelector: typeof import("../components/Gallery/Partials/SingleImgSelector.vue")['default']
 export const GalleryPersonGalleryEdit: typeof import("../components/Gallery/PersonGalleryEdit.vue")['default']
-export const MasonryNewestFilmsMasonryWall: typeof import("../components/Masonry/NewestFilmsMasonryWall.vue")['default']
+export const MasonryFilmsMasonryWall: typeof import("../components/Masonry/FilmsMasonryWall.vue")['default']
 export const MasonryPopularActorsMasonry: typeof import("../components/Masonry/PopularActorsMasonry.vue")['default']
-export const MasonryPartialsFilmExpansionPanels: typeof import("../components/Masonry/partials/FilmExpansionPanels.vue")['default']
 export const MasonryPartialsMasonryCard: typeof import("../components/Masonry/partials/MasonryCard.vue")['default']
 export const MasonryPartialsMasonrySection: typeof import("../components/Masonry/partials/MasonrySection.vue")['default']
 export const MiscFilmRatingChip: typeof import("../components/Misc/FilmRatingChip.vue")['default']
@@ -211,7 +224,9 @@ export const MiscLogo: typeof import("../components/Misc/Logo.vue")['default']
 export const MiscNotAuthWarning: typeof import("../components/Misc/NotAuthWarning.vue")['default']
 export const MiscSectionDivider: typeof import("../components/Misc/SectionDivider.vue")['default']
 export const MiscSuccessSnackbar: typeof import("../components/Misc/SuccessSnackbar.vue")['default']
+export const NavigationAppHeader: typeof import("../components/Navigation/AppHeader.vue")['default']
 export const NavigationAppNavDrawerContent: typeof import("../components/Navigation/AppNavDrawerContent.vue")['default']
+export const NavigationBottomNav: typeof import("../components/Navigation/BottomNav.vue")['default']
 export const NavigationNavBtns: typeof import("../components/Navigation/NavBtns.vue")['default']
 export const NavigationProfileNav: typeof import("../components/Navigation/ProfileNav.vue")['default']
 export const PersonPartialsFilmography: typeof import("../components/PersonPartials/Filmography.vue")['default']
@@ -252,15 +267,19 @@ export const LazyContainmentBtnsScrollTopFab: LazyComponent<typeof import("../co
 export const LazyContainmentBtnsSubmitBtn: LazyComponent<typeof import("../components/Containment/Btns/SubmitBtn.vue")['default']>
 export const LazyContainmentBtnsToggleThemeBtn: LazyComponent<typeof import("../components/Containment/Btns/ToggleThemeBtn.vue")['default']>
 export const LazyContainmentCardsDetailCard: LazyComponent<typeof import("../components/Containment/Cards/DetailCard.vue")['default']>
+export const LazyContainmentCardsGradientWrapper: LazyComponent<typeof import("../components/Containment/Cards/GradientWrapper.vue")['default']>
 export const LazyContainmentCardsPartialsTopInfo: LazyComponent<typeof import("../components/Containment/Cards/partials/TopInfo.vue")['default']>
-export const LazyContainmentImgBaseImg: LazyComponent<typeof import("../components/Containment/Img/BaseImg.vue")['default']>
 export const LazyContainmentImgErrorPlaceHolder: LazyComponent<typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']>
-export const LazyContainmentImgPlaceholder: LazyComponent<typeof import("../components/Containment/Img/ImgPlaceholder.vue")['default']>
 export const LazyDialogsBaseDialog: LazyComponent<typeof import("../components/Dialogs/BaseDialog.vue")['default']>
 export const LazyDialogsConfirmDialog: LazyComponent<typeof import("../components/Dialogs/ConfirmDialog.vue")['default']>
-export const LazyFilmPartialsFilmAssessments: LazyComponent<typeof import("../components/FilmPartials/FilmAssessments.vue")['default']>
-export const LazyFilmPartialsFilmDetailMenu: LazyComponent<typeof import("../components/FilmPartials/FilmDetailMenu.vue")['default']>
-export const LazyFilmPartialsFilmDrawerContent: LazyComponent<typeof import("../components/FilmPartials/FilmDrawerContent.vue")['default']>
+export const LazyFilmPartialsAssessmentAssessmentsBoard: LazyComponent<typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']>
+export const LazyFilmPartialsAssessmentComments: LazyComponent<typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']>
+export const LazyFilmPartialsAssessmentRating: LazyComponent<typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']>
+export const LazyFilmPartialsAssessmentComponentsAssessmentGraph: LazyComponent<typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']>
+export const LazyFilmPartialsAssessmentComponentsComment: LazyComponent<typeof import("../components/FilmPartials/Assessment/components/Comment.vue")['default']>
+export const LazyFilmPartialsDetailMenu: LazyComponent<typeof import("../components/FilmPartials/DetailMenu.vue")['default']>
+export const LazyFilmPartialsFilmExpansionPanels: LazyComponent<typeof import("../components/FilmPartials/FilmExpansionPanels.vue")['default']>
+export const LazyFilmPartialsTrailer: LazyComponent<typeof import("../components/FilmPartials/Trailer.vue")['default']>
 export const LazyFormsAuthUserForm: LazyComponent<typeof import("../components/Forms/Auth/UserForm.vue")['default']>
 export const LazyFormsFilmAssessmentForm: LazyComponent<typeof import("../components/Forms/Film/AssessmentForm.vue")['default']>
 export const LazyFormsFilmForm: LazyComponent<typeof import("../components/Forms/Film/FilmForm.vue")['default']>
@@ -273,9 +292,8 @@ export const LazyGalleryViewer: LazyComponent<typeof import("../components/Galle
 export const LazyGalleryPartialsMultipleImgSelector: LazyComponent<typeof import("../components/Gallery/Partials/MultipleImgSelector.vue")['default']>
 export const LazyGalleryPartialsSingleImgSelector: LazyComponent<typeof import("../components/Gallery/Partials/SingleImgSelector.vue")['default']>
 export const LazyGalleryPersonGalleryEdit: LazyComponent<typeof import("../components/Gallery/PersonGalleryEdit.vue")['default']>
-export const LazyMasonryNewestFilmsMasonryWall: LazyComponent<typeof import("../components/Masonry/NewestFilmsMasonryWall.vue")['default']>
+export const LazyMasonryFilmsMasonryWall: LazyComponent<typeof import("../components/Masonry/FilmsMasonryWall.vue")['default']>
 export const LazyMasonryPopularActorsMasonry: LazyComponent<typeof import("../components/Masonry/PopularActorsMasonry.vue")['default']>
-export const LazyMasonryPartialsFilmExpansionPanels: LazyComponent<typeof import("../components/Masonry/partials/FilmExpansionPanels.vue")['default']>
 export const LazyMasonryPartialsMasonryCard: LazyComponent<typeof import("../components/Masonry/partials/MasonryCard.vue")['default']>
 export const LazyMasonryPartialsMasonrySection: LazyComponent<typeof import("../components/Masonry/partials/MasonrySection.vue")['default']>
 export const LazyMiscFilmRatingChip: LazyComponent<typeof import("../components/Misc/FilmRatingChip.vue")['default']>
@@ -286,7 +304,9 @@ export const LazyMiscLogo: LazyComponent<typeof import("../components/Misc/Logo.
 export const LazyMiscNotAuthWarning: LazyComponent<typeof import("../components/Misc/NotAuthWarning.vue")['default']>
 export const LazyMiscSectionDivider: LazyComponent<typeof import("../components/Misc/SectionDivider.vue")['default']>
 export const LazyMiscSuccessSnackbar: LazyComponent<typeof import("../components/Misc/SuccessSnackbar.vue")['default']>
+export const LazyNavigationAppHeader: LazyComponent<typeof import("../components/Navigation/AppHeader.vue")['default']>
 export const LazyNavigationAppNavDrawerContent: LazyComponent<typeof import("../components/Navigation/AppNavDrawerContent.vue")['default']>
+export const LazyNavigationBottomNav: LazyComponent<typeof import("../components/Navigation/BottomNav.vue")['default']>
 export const LazyNavigationNavBtns: LazyComponent<typeof import("../components/Navigation/NavBtns.vue")['default']>
 export const LazyNavigationProfileNav: LazyComponent<typeof import("../components/Navigation/ProfileNav.vue")['default']>
 export const LazyPersonPartialsFilmography: LazyComponent<typeof import("../components/PersonPartials/Filmography.vue")['default']>

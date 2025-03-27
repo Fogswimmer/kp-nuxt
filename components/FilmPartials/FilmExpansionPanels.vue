@@ -6,6 +6,19 @@
       bg-color="transparent"
       border
     >
+    <v-expansion-panel
+        id="rating"
+        tag="section"
+        value="rating"
+        class="content-item"
+        :title="$t('pages.films.rating')"
+      >
+        <v-expansion-panel-text>
+          <div class="d-flex flex-column justify-center ga-1">
+            <slot name="rating" />
+          </div>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
       <v-expansion-panel :title="$t('pages.general_info')" value="info">
         <v-expansion-panel-text>
           <v-list rounded="lg" nav border>
@@ -112,16 +125,17 @@
           <slot name="description" />
         </v-expansion-panel-text>
       </v-expansion-panel>
+      
       <v-expansion-panel
-        id="rating"
+        id="comments"
         tag="section"
-        value="rating"
+        value="comments"
         class="content-item"
-        :title="$t('pages.films.rating')"
+        :title="$t('pages.films.comments')"
       >
         <v-expansion-panel-text>
           <div class="d-flex flex-column justify-center ga-1">
-            <slot name="assessments" />
+            <slot name="comments" />
           </div>
         </v-expansion-panel-text>
       </v-expansion-panel>
@@ -134,7 +148,7 @@ import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 import GradientWrapper from "~/components/Containment/Cards/GradientWrapper.vue";
 
 const localeRoute = useLocaleRoute();
-const accordion = ref<string[]>(["info"]);
+const accordion = ref<string[]>(["rating"]);
 const props = defineProps<{
   film: IFilm | null;
 }>();

@@ -57,10 +57,11 @@
                   @sumbit:edit="submitDescriptionEdit"
                 />
               </template>
-              <template #assessments>
-                <Assessments
+              <template #rating>
+                <Rating
                   :current-rating="film?.rating || ''"
                   :assessments="film?.assessments || []"
+                  :assessments-graph="film?.assessmentsGraph || []"
                   :is-assessing="isAssessing"
                   :is-authenticated="isAuthenticated"
                   :rating="rating"
@@ -71,6 +72,16 @@
                   @assession:delete="deleteAssessment"
                   @comment:update="comment = $event"
                   @rating:update="rating = $event"
+                />
+              </template>
+              <template #comments>
+                <Comments
+                  :assessments="film?.assessments || []"
+                  :comment="comment"
+                  @assession:submit="submitAssessment"
+                  @assession:enable="isAssessing = true"
+                  @assession:cancel="cancelAssessment"
+                  @comment:delete="deleteAssessment"
                 />
               </template>
             </FilmExpansionPanels>
@@ -191,12 +202,13 @@ import FilmForm from "~/components/Forms/Film/FilmForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
-import Assessments from "~/components/FilmPartials/Assessments.vue";
+import Comments from "~/components/FilmPartials/Assessment/Comments.vue";
 import DetailMenu from "~/components/FilmPartials/DetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import TrailerForm from "~/components/Forms/Film/TrailerForm.vue";
 import Trailer from "~/components/FilmPartials/Trailer.vue";
 import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
+import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
 

@@ -4,79 +4,85 @@
       <Title>{{ definePageTitle($t("auth.sign_in")) }}</Title>
     </Head>
 
-    <v-card variant="tonal" class="mx-auto" max-width="600">
-      <v-toolbar>
-        <template #prepend>
-          <BackBtn />
-        </template>
-        <v-toolbar-title>
-          {{ $t("auth.sign_in") }}
-        </v-toolbar-title>
-      </v-toolbar>
-
-      <v-card-text class="pa-4 text-center">
-        <v-form ref="loginFormRef" class="mt-4">
-          <div class="d-flex flex-column ga-2">
-            <v-text-field
-              v-model="userForm.username"
-              :label="$t('auth.login')"
-              :placeholder="$t('auth.login_placeholder')"
-              prepend-inner-icon="mdi-account-key"
-              variant="outlined"
-              :rules="requiredRules"
-            />
-            <v-text-field
-              v-model="userForm.password"
-              :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-              :type="visible ? 'text' : 'password'"
-              :label="$t('auth.password')"
-              :placeholder="$t('auth.password_placeholder')"
-              prepend-inner-icon="mdi-lock-outline"
-              variant="outlined"
-              :rules="requiredRules"
-              @click:append-inner="visible = !visible"
-            />
-          </div>
-          <v-label>
-            <NuxtLink :to="localeRoute('/auth/password-reset')">
-              {{ $t("auth.forgot_password") }}</NuxtLink
-            >
-          </v-label>
-        </v-form>
-        <div class="d-flex flex-column ga-4 mt-10">
-          <v-btn
-            color="primary"
-            size="large"
-            variant="tonal"
-            block
-            :loading="loading"
-            @click="validate"
-          >
+    <main class="position-relative">
+      <v-card
+        class="mx-auto glassed position-absolute right-0 left-0 top-0 ma-2"
+        max-width="600"
+        :style="$vuetify.display.mdAndUp ? 'transform: translateY(25%);' : ''"
+      >
+        <v-toolbar class="glassed">
+          <template #prepend>
+            <BackBtn />
+          </template>
+          <v-toolbar-title>
             {{ $t("auth.sign_in") }}
-          </v-btn>
-          <v-btn
-            to="/auth/sign-up"
-            variant="outlined"
-            block
-            size="large"
-            color="secondary"
-            prepend-icon="mdi-account-plus"
-          >
-            {{ $t("auth.register") }}
-          </v-btn>
+          </v-toolbar-title>
+        </v-toolbar>
 
-          <v-btn
-            prepend-icon="mdi-account-off"
-            variant="plain"
-            block
-            size="large"
-            to="/"
-          >
-            {{ $t("auth.continue_as_guest") }}
-          </v-btn>
-        </div>
-      </v-card-text>
-    </v-card>
+        <v-card-text class="pa-4 text-center">
+          <v-form ref="loginFormRef" class="mt-4">
+            <div class="d-flex flex-column ga-2">
+              <v-text-field
+                v-model="userForm.username"
+                :label="$t('auth.login')"
+                :placeholder="$t('auth.login_placeholder')"
+                prepend-inner-icon="mdi-account-key"
+                variant="outlined"
+                :rules="requiredRules"
+              />
+              <v-text-field
+                v-model="userForm.password"
+                :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+                :type="visible ? 'text' : 'password'"
+                :label="$t('auth.password')"
+                :placeholder="$t('auth.password_placeholder')"
+                prepend-inner-icon="mdi-lock-outline"
+                variant="outlined"
+                :rules="requiredRules"
+                @click:append-inner="visible = !visible"
+              />
+            </div>
+            <v-label>
+              <NuxtLink :to="localeRoute('/auth/password-reset')">
+                {{ $t("auth.forgot_password") }}</NuxtLink
+              >
+            </v-label>
+          </v-form>
+          <div class="d-flex flex-column ga-4 mt-10">
+            <v-btn
+              color="primary"
+              size="large"
+              variant="tonal"
+              block
+              :loading="loading"
+              @click="validate"
+            >
+              {{ $t("auth.sign_in") }}
+            </v-btn>
+            <v-btn
+              to="/auth/sign-up"
+              variant="outlined"
+              block
+              size="large"
+              color="secondary"
+              prepend-icon="mdi-account-plus"
+            >
+              {{ $t("auth.register") }}
+            </v-btn>
+
+            <v-btn
+              prepend-icon="mdi-account-off"
+              variant="plain"
+              block
+              size="large"
+              to="/"
+            >
+              {{ $t("auth.continue_as_guest") }}
+            </v-btn>
+          </div>
+        </v-card-text>
+      </v-card>
+    </main>
     <v-snackbar
       v-model="showErrorMessage"
       color="error"

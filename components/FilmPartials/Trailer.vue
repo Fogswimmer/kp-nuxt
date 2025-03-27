@@ -12,15 +12,17 @@
     class="d-flex align-center justify-center flex-column pa-4 mx-auto"
   >
     <v-icon size="64" color="grey">mdi-video-off</v-icon>
-    <v-btn
-      prepend-icon="mdi-youtube"
-      :disabled="!isAuthenticated"
-      variant="outlined"
-      color="primary"
-      @click="$emit('choose:trailer')"
-    >
-      {{ $t("actions.link_trailer") }}
-    </v-btn>
+    <ClientOnly>
+      <v-btn
+        prepend-icon="mdi-youtube"
+        :disabled="!isAuthenticated"
+        variant="outlined"
+        color="primary"
+        @click="$emit('choose:trailer')"
+      >
+        {{ $t("actions.link_trailer") }}
+      </v-btn>
+    </ClientOnly>
   </v-sheet>
 </template>
 
