@@ -356,7 +356,7 @@ export default {
       comment: "Comment",
       comments: "Comments",
       last_comments: "Last comments",
-      no_comments: "No comments",
+      no_comments: "No comments here yet",
       producer: "Producer",
       writer: "Writer",
       age: "Age restriction",

@@ -353,7 +353,7 @@ export default {
       comment: "Commentaire",
       comments: "Commentaires",
       last_comments: "Derniers commentaires",
-      no_comments: "Aucun commentaire",
+      no_comments: "Aucun commentaire pour le moment",
       confirm_assessment: "Confirmer l'avis",
       producer: "Producteur",
       writer: "Auteur",

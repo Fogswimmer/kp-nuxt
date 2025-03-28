@@ -359,7 +359,7 @@ export default {
       comment: "Комментарий",
       comments: "Комментарии",
       last_comments: "Последние комментарии",
-      no_comments: "Нет комментариев",
+      no_comments: "Пока что нет комментариев",
       confirm_assessment: "Подтвердить оценку",
       team: "Над фильмом работали",
       gallery_banner:

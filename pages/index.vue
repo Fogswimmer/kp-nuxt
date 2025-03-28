@@ -5,8 +5,8 @@
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
     <ClientOnly>
-      <v-navigation-drawer location="start" rail floating color="transparent" />
-      <v-navigation-drawer location="end" rail floating color="transparent" />
+      <v-navigation-drawer location="start" floating color="transparent" />
+      <v-navigation-drawer location="end" floating color="transparent" />
     </ClientOnly>
     <template v-if="filmsPresent && personsPresent">
       <main class="d-flex flex-column ga-6 overflow-y-hidden">
