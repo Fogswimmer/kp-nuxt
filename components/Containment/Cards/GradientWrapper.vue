@@ -1,7 +1,8 @@
 <template>
   <Client-Only>
     <div
-      :style="`background-image: radial-gradient(ellipse , ${bgAccentColor} 0%, transparent 70%);`"
+      :style="`background-image: linear-gradient(225deg , ${bgAccentColor} 0%, transparent 80%);`"
+      class="gradient-wrapper"
     >
       <slot />
     </div>
@@ -10,6 +11,12 @@
 
 <script lang="ts" setup>
 const bgAccentColor = useBgAccentColor();
+
 </script>
 
-<style></style>
+<style>
+.gradient-wrapper {
+  background-attachment: fixed;
+
+}
+</style>

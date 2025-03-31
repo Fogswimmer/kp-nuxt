@@ -1,10 +1,18 @@
 <template>
   <v-card rounded="lg" class="pa-2" variant="text" border>
-    <div v-if="!editMode" :class="['text-body-1 pa-2', { 'text-body-2': compact }]">
-      <div v-if="text" :class="['text-container', { expanded: !collapsed }]">
-        <p v-for="(paragraph, index) in text ? text?.split('\n') : []" :key="index">
-          {{ paragraph || "" }}
-        </p>
+    <div
+      v-if="!editMode"
+      :class="['text-body-1 pa-2', { 'text-body-2': compact }]"
+    >
+      <div
+        v-if="text"
+        ref="textContainer"
+        class="text-container"
+        :class="{ expanded: !collapsed }"
+      >
+        <div v-for="(paragraph, index) in formattedText" :key="index">
+          <p>{{ paragraph }}</p>
+        </div>
       </div>
       <v-skeleton-loader v-else type="text" />
       <div class="mt-2 text-center">
@@ -57,26 +65,46 @@ defineEmits<{
 const editModeText = ref<string>(props.text);
 const collapsed = ref<boolean>(true);
 
-const shouldShowExpandButton = computed((): boolean => {
-  const lineHeight: number = 1.4; 
-  const maxLines: number = 3; 
-  const maxHeight: number = lineHeight * maxLines; 
-  const textHeight  = props.text ? (props.text?.split("\n").length * lineHeight + 1) : 0; 
+const textContainer = ref<HTMLElement | null>(null);
+const shouldShowExpandButton = ref(false);
 
-  return textHeight > maxHeight;
+const formattedText = computed(() =>
+  props.text
+    ? props.text
+        .trim()
+        .split("\n")
+        .map((p) => p.replace(/[\u200B\r\t\xa0]/g, "").trim())
+        .map((p) => p.replace(/^\.+|\.+$/g, ""))
+        .filter((p) => p.length > 0)
+    : []
+);
+
+
+onMounted(() => {
+  if (textContainer.value) {
+    const observer = new ResizeObserver(() => {
+      if (textContainer.value) {
+        if (collapsed.value) {
+          shouldShowExpandButton.value = textContainer.value.scrollHeight > textContainer.value.clientHeight;
+        }
+      }
+    });
+
+    observer.observe(textContainer.value);
+  }
 });
 </script>
 
 <style sroped>
 .text-container {
   display: -webkit-box;
-  line-clamp: 3;
-  -webkit-line-clamp: 3;
+  line-clamp: 6;
+  -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.4em;
-  max-height: calc(1.4em * 6);
+  line-height: 1.2em;
+  max-height: calc(1.2em * 6);
 }
 
 .expanded {

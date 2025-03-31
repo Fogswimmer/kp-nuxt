@@ -31,7 +31,6 @@
             :src="cover"
             class="img-blur"
             cover
-            :height="$vuetify.display.mdAndUp ? '800px' : '600px'"
           />
           <v-sheet v-else height="300" width="100%" class="default-cover" />
         </template>
@@ -39,7 +38,7 @@
           v-if="cover"
           :src="cover"
           scale="1.3"
-          :height="computedParallaxHeight"
+          height="300"
           class="position-relative"
         >
           <template #placeholder>
@@ -82,12 +81,8 @@ defineProps<{
   poster?: boolean;
   trailer?: boolean;
 }>();
-const display = useDisplay();
 
-const computedParallaxHeight = computed((): string => {
-  if (display.smAndDown.value) return "1100";
-  return "330";
-});
+
 </script>
 
 <style>

@@ -26,7 +26,6 @@ interface _GlobalComponents {
     'ContainmentImgErrorPlaceHolder': typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']
     'DialogsBaseDialog': typeof import("../components/Dialogs/BaseDialog.vue")['default']
     'DialogsConfirmDialog': typeof import("../components/Dialogs/ConfirmDialog.vue")['default']
-    'FilmPartialsAssessmentAssessmentsBoard': typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']
     'FilmPartialsAssessmentComments': typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']
     'FilmPartialsAssessmentRating': typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']
     'FilmPartialsAssessmentComponentsAssessmentGraph': typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']
@@ -106,7 +105,6 @@ interface _GlobalComponents {
     'LazyContainmentImgErrorPlaceHolder': LazyComponent<typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']>
     'LazyDialogsBaseDialog': LazyComponent<typeof import("../components/Dialogs/BaseDialog.vue")['default']>
     'LazyDialogsConfirmDialog': LazyComponent<typeof import("../components/Dialogs/ConfirmDialog.vue")['default']>
-    'LazyFilmPartialsAssessmentAssessmentsBoard': LazyComponent<typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']>
     'LazyFilmPartialsAssessmentComments': LazyComponent<typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']>
     'LazyFilmPartialsAssessmentRating': LazyComponent<typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']>
     'LazyFilmPartialsAssessmentComponentsAssessmentGraph': LazyComponent<typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']>
@@ -192,7 +190,6 @@ export const ContainmentCardsPartialsTopInfo: typeof import("../components/Conta
 export const ContainmentImgErrorPlaceHolder: typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']
 export const DialogsBaseDialog: typeof import("../components/Dialogs/BaseDialog.vue")['default']
 export const DialogsConfirmDialog: typeof import("../components/Dialogs/ConfirmDialog.vue")['default']
-export const FilmPartialsAssessmentAssessmentsBoard: typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']
 export const FilmPartialsAssessmentComments: typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']
 export const FilmPartialsAssessmentRating: typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']
 export const FilmPartialsAssessmentComponentsAssessmentGraph: typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']
@@ -272,7 +269,6 @@ export const LazyContainmentCardsPartialsTopInfo: LazyComponent<typeof import(".
 export const LazyContainmentImgErrorPlaceHolder: LazyComponent<typeof import("../components/Containment/Img/ErrorPlaceHolder.vue")['default']>
 export const LazyDialogsBaseDialog: LazyComponent<typeof import("../components/Dialogs/BaseDialog.vue")['default']>
 export const LazyDialogsConfirmDialog: LazyComponent<typeof import("../components/Dialogs/ConfirmDialog.vue")['default']>
-export const LazyFilmPartialsAssessmentAssessmentsBoard: LazyComponent<typeof import("../components/FilmPartials/Assessment/AssessmentsBoard.vue")['default']>
 export const LazyFilmPartialsAssessmentComments: LazyComponent<typeof import("../components/FilmPartials/Assessment/Comments.vue")['default']>
 export const LazyFilmPartialsAssessmentRating: LazyComponent<typeof import("../components/FilmPartials/Assessment/Rating.vue")['default']>
 export const LazyFilmPartialsAssessmentComponentsAssessmentGraph: LazyComponent<typeof import("../components/FilmPartials/Assessment/components/AssessmentGraph.vue")['default']>

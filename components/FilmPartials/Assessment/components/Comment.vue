@@ -1,20 +1,35 @@
 <template>
-  <v-card class="ma-2" variant="tonal" color="surface-variant" elevation="10">
+  <v-card
+    class="ma-2"
+    variant="tonal"
+    :color="color || 'surface-variant'"
+    density="compact"
+  >
     <v-toolbar class="pa-2" density="compact" color="surface">
       <template #prepend>
         <span class="text-subtitle-2 text-disabled">#{{ index + 1 }}</span>
-        <v-avatar border class="ms-2">
-          <v-img :src="comment?.authorAvatar || ''">
-            <template #placeholder>
-              <div class="d-flex fill-height align-center justify-center">
-                <v-icon size="x-small">mdi-account</v-icon>
-              </div>
-            </template>
-            <template #error>
-              <ErrorPlaceHolder />
-            </template>
-          </v-img>
-        </v-avatar>
+        <div class="position-relative">
+          <v-avatar border class="ms-2">
+            <v-img :src="comment?.authorAvatar || ''">
+              <template #placeholder>
+                <div class="d-flex fill-height align-center justify-center">
+                  <v-icon size="x-small">mdi-account</v-icon>
+                </div>
+              </template>
+              <template #error>
+                <ErrorPlaceHolder />
+              </template>
+            </v-img>
+          </v-avatar>
+          <v-icon
+            v-if="!isAdmin"
+            class="position-absolute top-0"
+            style="right: -5px"
+            size="x-small"
+            color="yellow"
+            >mdi-shield</v-icon
+          >
+        </div>
       </template>
 
       <v-toolbar-items>
@@ -34,13 +49,10 @@
       </template>
       <template #title>
         <div class="d-flex flex-column">
-          <div class="d-flex ga-2 align-center">
-            <span class="text-body-1 font-weight-bold">{{
+          <div class="d-flex ga-1 align-center">
+            <span class="text-body-1 font-weight-bold text-truncate">{{
               comment.authorName ? comment.authorName : "???"
             }}</span>
-            <v-icon v-if="isAdmin" size="x-small" color="yellow"
-              >mdi-shield</v-icon
-            >
           </div>
 
           <span class="text-caption text-disabled">{{
@@ -49,9 +61,11 @@
         </div>
       </template>
     </v-toolbar>
-    <v-divider/>
+    <v-divider />
     <v-card-text>
-      {{ comment.comment }}
+      <v-sheet class="pa-2" rounded="lg">
+        {{ comment.comment }}
+      </v-sheet>
     </v-card-text>
     <ConfirmDialog
       v-model="showDeleteConfirm"
@@ -82,6 +96,7 @@ defineProps<{
   isAdmin: boolean;
   isAuthenticated: boolean;
   userId?: number;
+  color?: string;
 }>();
 
 const emits = defineEmits<{
@@ -93,7 +108,7 @@ const handleConfirm = (id: number) => {
   showDeleteConfirm.value = false;
   emits("confirm:delete", id);
 };
-// const editCommentMode = ref<boolean>(false);
+
 </script>
 
 <style></style>

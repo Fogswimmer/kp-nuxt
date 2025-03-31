@@ -2,7 +2,7 @@
   <div>
     <v-card v-if="assessments.length > 0" rounded="lg" border>
       <v-data-iterator
-        :items="assessments"
+        :items="assementsWithColors"
         :page="page"
         :items-per-page="itemsPerPage"
       >
@@ -43,16 +43,17 @@
           <v-divider />
         </template>
         <template #default="{ items }">
-          <Comment
-            v-for="(item, i) in items"
-            :key="i"
-            :index="i"
-            :comment="item.raw"
-            :is-admin="isAdmin"
-            :is-authenticated="isAuthenticated"
-            :user-id="currentUser?.id || 0"
-            @confirm:delete="confirmDelete"
-          />
+          <div v-for="(item, i) in items" :key="i">
+            <Comment
+              :color="item.raw.color"
+              :index="i"
+              :comment="item.raw"
+              :is-admin="isAdmin"
+              :is-authenticated="isAuthenticated"
+              :user-id="currentUser?.id || 0"
+              @confirm:delete="confirmDelete"
+            />
+          </div>
         </template>
         <template #footer="{ pageCount }">
           <v-footer class="justify-space-between text-subtitle-2 mt-4">
@@ -78,7 +79,7 @@
 
 <script lang="ts" setup>
 import Comment from "./components/Comment.vue";
-const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
+
 const emits = defineEmits<{
   (event: "coment:delete", id: number): void;
 }>();
@@ -86,12 +87,45 @@ const props = defineProps<{
   assessments: IAssessment[];
   comment: string;
 }>();
+
+const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
 const page = ref<number>(1);
 const itemsPerPage = ref<number>(5);
 const showDeleteConfirm = ref<boolean>(false);
+const commentColors = [
+  "primary",
+  "secondary",
+  "green",
+  "blue",
+  "orange",
+  "yellow",
+];
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;
 };
+
+const assementsWithColors = computed(() => {
+  const commentsWithSameAuthor = props.assessments.reduce((acc, item) => {
+    const { authorId: author } = item;
+    acc[author] = acc[author] || [];
+    acc[author].push(item);
+    return acc;
+  }, {} as Record<string, IAssessment[]>);
+
+  const assementsWithColors = Object.entries(commentsWithSameAuthor).map(
+    ([_, comments]) => {
+      const color = commentColors[comments.length % commentColors.length];
+      return comments.map((comment) => {
+        return {
+          ...comment,
+          color,
+        };
+      });
+    }
+  );
+
+  return assementsWithColors.flat();
+});
 const confirmDelete = (id: number) => {
   console.log(id);
   emits("coment:delete", id);

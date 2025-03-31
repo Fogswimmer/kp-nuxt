@@ -1,6 +1,6 @@
 <template>
   <div>
-    <masonry-wall :items="latestFilms" :gap="16">
+    <masonry-wall :items="latestFilms" :gap="16" :min-columns="3">
       <template #default="{ item, index }">
         <div
           v-intersect="onIntersect(index)"
@@ -28,6 +28,7 @@
 <script lang="ts" setup>
 import MasonryCard from "./partials/MasonryCard.vue";
 import FilmRatingChip from "../Misc/FilmRatingChip.vue";
+
 
 const visibleItems = ref(new Set<number>());
 

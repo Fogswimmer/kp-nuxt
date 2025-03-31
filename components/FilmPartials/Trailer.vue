@@ -4,8 +4,9 @@
     ref="youtubePlayer"
     class="youtube-player"
   />
+
   <v-sheet
-    v-else
+    v-else-if="!playerError"
     height="350"
     width="100%"
     max-width="100%"
@@ -23,6 +24,12 @@
         {{ $t("actions.link_trailer") }}
       </v-btn>
     </ClientOnly>
+  </v-sheet>
+  <v-sheet v-else width="100%" max-width="100%"  height="350">
+    <div class="d-flex align-center justify-center flex-column fill-height pa-4 mx-auto">
+      <v-icon size="64" color="error">mdi-video-off</v-icon>
+      <div class="text-center">{{ $t("pages.films.trailer_error") }} ...</div>
+    </div>
   </v-sheet>
 </template>
 

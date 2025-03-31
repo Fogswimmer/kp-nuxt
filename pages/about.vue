@@ -20,6 +20,7 @@
             prepend-icon="mdi-hammer-wrench"
             class="my-2 glassed"
             variant="elevated"
+            border
           >
             <v-card-text>
               <v-table hover class="glassed">
@@ -182,7 +183,17 @@
           </v-card>
           <v-card variant="elevated" class="my-2 glassed" border>
             <v-card-title>
-              {{ $t("pages.about.author.title") }}
+             <div class="d-flex"> 
+              <span>{{ $t("pages.about.author.title") }}</span>
+              <v-spacer/>
+
+              <a
+                href="https://github.com/nebelschwimmer"
+                target="_blank"
+                class="text-blue d-flex align-center justify-end ma-2 ga-2 flex-wrap"
+                ><v-icon size="large">mdi-github</v-icon>GitHub</a
+              >
+            </div>
             </v-card-title>
             <v-card-text>
               <div :class="$vuetify.display.smAndDown ? 'text-center' : ''">
@@ -199,7 +210,7 @@
                     loading="lazy"
                   />
                 </v-avatar>
-               
+
                 <div class="d-flex flex-column ga-2">
                   <h5 class="text-primary text-h6">
                     {{ $t("pages.about.author.name") }}
@@ -222,7 +233,7 @@
                     </div>
                   </div>
                   <v-divider />
-                  <div class="d-flex flex-column ga-2">
+                  <div class="d-flex ga-2 align-center">
                     <span> {{ $t("pages.about.author.second_section") }}:</span>
                     <div class="d-flex align-center ga-1">
                       <v-icon color="blue" size="x-large"
@@ -237,13 +248,6 @@
                       DevOps
                     </div>
                   </div>
-                  <v-divider />
-                  <a
-                    href="https://github.com/nebelschwimmer"
-                    target="_blank"
-                    class="text-blue d-flex align-center justify-end ma-2 ga-2 flex-wrap"
-                    ><v-icon size="x-large">mdi-github</v-icon>GitHub</a
-                  >
                 </div>
               </div>
             </v-card-text>

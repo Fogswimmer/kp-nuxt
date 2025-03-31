@@ -232,6 +232,8 @@ export default {
     upload_gallery: "Загрузить галерею",
     link_trailer: "Ссылка на трейлер",
     delete_assessment_warning: "Вы уверены, что хотите удалить эту оценку?",
+    comments_show: "Показать комментарии",
+    comments_hide: "Скрыть комментарии",
   },
   search: {
     title: "Поиск",
@@ -364,6 +366,7 @@ export default {
       team: "Над фильмом работали",
       gallery_banner:
         "Выберите файлы для удаления или загрузите новые изображения, если доступно",
+        trailer_error: "Трейлер недоступен",
     },
     persons: {
       list: "Список персон",

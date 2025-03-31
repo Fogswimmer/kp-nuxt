@@ -24,6 +24,7 @@
               :dark-accent-color="darkAccentColors[0]"
               :sidebar="false"
             />
+
           </template>
         </MasonrySection>
         <MasonrySection
@@ -124,8 +125,9 @@ const fetchData = async (): Promise<void> => {
 
 onMounted(async (): Promise<void> => {
   await fetchData();
-  darkAccentColors.value = Array.from({ length: 2 }, () =>
-    useBgAccentColor().value
+  darkAccentColors.value = Array.from(
+    { length: 2 },
+    () => useBgAccentColor().value
   );
 });
 

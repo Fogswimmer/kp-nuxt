@@ -261,6 +261,8 @@ export default {
     upload_gallery: "Télécharger la galerie",
     link_trailer: "Lien vers le trailer",
     delete_assessment_warning: "Etes-vous certain de vouloir supprimer cette évaluation?",
+    comments_show: "Afficher les commentaires",
+    comments_hide: "Cacher les commentaires",
   },
   state: {
     all: "Toutes",
@@ -362,6 +364,7 @@ export default {
       assess: "Evaluer",
       team: "Equipe",
       gallery_banner: "Choississez les images à effacer ou ajouter de nouvelles si disponible",
+      trailer_error: "Le trailer n'a pas pu charger",
     },
     persons: {
       title: "Personnes",

@@ -262,6 +262,8 @@ export default {
     upload_gallery: "Upload gallery",
     link_trailer: "Link to trailer",
     delete_assessment_warning: "Are you sure you want to delete this assessment?",
+    comments_show: "Show comments",
+    comments_hide: "Hide comments",
   },
   state: {
     all: "All",
@@ -364,6 +366,7 @@ export default {
       assess: "Assess",
       team: "Team",
       gallery_banner: "Choose files to delete or add new ones if available",
+      trailer_error: "Trailer not available",
     },
     persons: {
       firstname: "Firstname",

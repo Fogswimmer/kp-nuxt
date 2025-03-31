@@ -5,99 +5,102 @@
       <Meta name="description" :content="film?.description" />
     </Head>
     <v-sheet max-width="1200" class="mx-auto pa-2" rounded="lg">
-      <DetailCard
-        :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
-        :loading="loading"
-        :notification="!isAuthenticated"
-        trailer
-      >
-        <template #notification>
-          <NotAuthWarning v-if="!isAuthenticated" />
-        </template>
-        <template #trailer>
-          <div class="d-flex justify-center">
-            <Trailer
-              :trailer="film?.trailer || ''"
-              :is-authenticated="isAuthenticated"
-              @choose:trailer="showLinkTrailerDialog = true"
-            />
-          </div>
-        </template>
-        <template #menu>
-          <DetailMenu
-            :is-authenticated="isAuthenticated"
-            @edit:general="handleGeneralInfoEdit"
-            @edit:description="handleEditDescription"
-            @edit:gallery="openGalleryEditor"
-            @edit:trailer="showLinkTrailerDialog = true"
-            @delete:film="showDeleteWarning = true"
-          />
-        </template>
-        <template #text>
-          <main>
-            <FilmExpansionPanels :film="film || null">
-              <template #gallery-viewer>
-                <GalleryViewer
-                  :slider-arr="sliderGalleryArr || []"
-                  :disabled="!isAuthenticated"
-                  :gallery="film?.gallery || []"
-                  :entity-name="film?.name || ''"
-                  :loading="loading"
-                  :with-avatar="false"
-                  @poster:set="handleChangePoster"
-                  @editor:open="openGalleryEditor"
-                  @delete:img="handleDeleteImg"
-                />
-              </template>
-              <template #description>
-                <IndentedEditableText
-                  :edit-mode="editDescriptionMode"
-                  :messages="$t('pages.films.edit_description')"
-                  :text="film?.description || ''"
-                  @sumbit:edit="submitDescriptionEdit"
-                />
-              </template>
-              <template #rating>
-                <Rating
-                  :current-rating="film?.rating || ''"
-                  :assessments="film?.assessments || []"
-                  :assessments-graph="film?.assessmentsGraph || []"
-                  :is-assessing="isAssessing"
-                  :is-authenticated="isAuthenticated"
-                  :rating="rating"
-                  :comment="comment"
-                  @assession:submit="submitAssessment"
-                  @assession:enable="isAssessing = true"
-                  @assession:cancel="cancelAssessment"
-                  @assession:delete="deleteAssessment"
-                  @comment:update="comment = $event"
-                  @rating:update="rating = $event"
-                />
-              </template>
-              <template #comments>
-                <Comments
-                  :assessments="film?.assessments || []"
-                  :comment="comment"
-                  @assession:submit="submitAssessment"
-                  @assession:enable="isAssessing = true"
-                  @assession:cancel="cancelAssessment"
-                  @comment:delete="deleteAssessment"
-                />
-              </template>
-            </FilmExpansionPanels>
-          </main>
-          <v-footer>
-            <v-spacer />
-            <div class="d-flex align-center text-caption ga-1">
-              <span>{{ $t("general.published_by") }}</span>
-              <nuxt-link class="text-secondary">{{
-                film?.publisherData ? film?.publisherData.name : ""
-              }}</nuxt-link>
-              {{ film?.createdAt || "" }}
+      <GradientWr>
+        <DetailCard
+          :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
+          :loading="loading"
+          :notification="!isAuthenticated"
+          trailer
+        >
+          <template #notification>
+            <NotAuthWarning v-if="!isAuthenticated" />
+          </template>
+          <template #trailer>
+            <div class="d-flex justify-center">
+              <Trailer
+                :trailer="film?.trailer || ''"
+                :is-authenticated="isAuthenticated"
+                @choose:trailer="showLinkTrailerDialog = true"
+              />
             </div>
-          </v-footer>
-        </template>
-      </DetailCard>
+          </template>
+          <template #menu>
+            <DetailMenu
+              :is-authenticated="isAuthenticated"
+              @edit:general="handleGeneralInfoEdit"
+              @edit:description="handleEditDescription"
+              @edit:gallery="openGalleryEditor"
+              @edit:trailer="showLinkTrailerDialog = true"
+              @delete:film="showDeleteWarning = true"
+            />
+          </template>
+          <template #text>
+            <main>
+              <FilmExpansionPanels :film="film || null">
+                <template #gallery-viewer>
+                  <GalleryViewer
+                    :slider-arr="sliderGalleryArr || []"
+                    :disabled="!isAuthenticated"
+                    :gallery="film?.gallery || []"
+                    :entity-name="film?.name || ''"
+                    :loading="loading"
+                    :with-avatar="false"
+                    @poster:set="handleChangePoster"
+                    @editor:open="openGalleryEditor"
+                    @delete:img="handleDeleteImg"
+                  />
+                </template>
+                <template #description>
+                  <IndentedEditableText
+                    :edit-mode="editDescriptionMode"
+                    :messages="$t('pages.films.edit_description')"
+                    :text="film?.description || ''"
+                    @sumbit:edit="submitDescriptionEdit"
+                  />
+                </template>
+                <template #rating>
+                  <Rating
+                    :current-rating="film?.rating || ''"
+                    :assessments="film?.assessments || []"
+                    :assessments-graph="film?.assessmentsGraph || []"
+                    :is-assessing="isAssessing"
+                    :is-authenticated="isAuthenticated"
+                    :rating="rating"
+                    :comment="comment"
+                    @assession:submit="submitAssessment"
+                    @assession:enable="isAssessing = true"
+                    @assession:cancel="cancelAssessment"
+                    @assession:delete="deleteAssessment"
+                    @comment:update="comment = $event"
+                    @rating:update="rating = $event"
+                  >
+                    <template #comments>
+                      <Comments
+                        :assessments="film?.assessments || []"
+                        :comment="comment"
+                        @assession:submit="submitAssessment"
+                        @assession:enable="isAssessing = true"
+                        @assession:cancel="cancelAssessment"
+                        @comment:delete="deleteAssessment"
+                      />
+                    </template>
+                  </Rating>
+                </template>
+              </FilmExpansionPanels>
+            </main>
+            <v-footer>
+              <v-spacer />
+              <div class="d-flex align-center text-caption ga-1">
+                <span>{{ $t("general.published_by") }}</span>
+                <nuxt-link class="text-secondary">{{
+                  film?.publisherData ? film?.publisherData.name : ""
+                }}</nuxt-link>
+                {{ film?.createdAt || "" }}
+              </div>
+            </v-footer>
+          </template>
+        </DetailCard>
+      </GradientWr>
     </v-sheet>
     <ConfirmDialog
       v-model="showConfirmDialog"

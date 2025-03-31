@@ -35,18 +35,6 @@
             </template>
             <v-list density="compact">
               <v-list-item
-                :title="$t('actions.choose_cover')"
-                prepend-icon="mdi-image"
-                value="cover"
-                @click="chooseCover"
-              />
-              <v-list-item
-                :title="$t('actions.edit_avatar')"
-                prepend-icon="mdi-account"
-                value="avatar"
-                @click="chooseAvatar"
-              />
-              <v-list-item
                 :title="$t('actions.edit')"
                 prepend-icon="mdi-pencil"
                 value="edit"
@@ -87,18 +75,6 @@
             </v-list>
           </v-menu>
           <div v-else class="d-flex ga-1">
-            <v-btn
-              prepend-icon="mdi-image"
-              :disabled="!isAuthenticated"
-              @click="chooseCover"
-              >{{ $t("actions.choose_cover") }}</v-btn
-            >
-            <v-btn
-              prepend-icon="mdi-account"
-              :disabled="!isAuthenticated"
-              @click="chooseAvatar"
-              >{{ $t("actions.edit_avatar") }}</v-btn
-            >
             <v-menu>
               <template #activator="{ props }">
                 <v-btn
@@ -140,62 +116,64 @@
         </template>
 
         <template #text>
-          <v-expansion-panels v-model="mainAccordion" variant="accordion">
-            <v-expansion-panel
-              id="bio"
-              value="bio"
-              class="content-item"
-              tag="section"
-              :title="$t('pages.persons.bio')"
-            >
-              <v-expansion-panel-text>
-                <IndentedEditableText
-                  v-if="person?.bio"
-                  :edit-mode="bioEditMode"
-                  :messages="$t('pages.persons.edit_bio')"
-                  :text="person?.bio || ''"
-                  @sumbit:edit="submitBioEdit"
-                />
-                <div v-else class="w-100 text-center">
-                  <span>{{ $t("general.no_data") }}</span>
-                </div>
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            <v-expansion-panel
-              v-if="person?.filmWorks"
-              id="filmography"
-              tag="section"
-              value="filmography"
-              class="content-item"
-              :title="$t('pages.persons.filmography')"
-            >
-              <v-expansion-panel-text>
-                <Filmography :person="person" />
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            <v-expansion-panel
-              id="gallery"
-              tag="section"
-              class="content-item"
-              value="gallery"
-              :title="$t('pages.persons.photos')"
-            >
-              <v-expansion-panel-text>
-                <GalleryViewer
-                  :slider-arr="sliderGalleryArr || []"
-                  :disabled="!isAuthenticated"
-                  :gallery="person?.photos || []"
-                  :entity-name="personFullName"
-                  :loading="loading"
-                  with-avatar
-                  @editor:open="photoEditMode = true"
-                  @cover:set="handleCoverChange"
-                  @avatar:set="handleChangeAvatar"
-                  @delete:img="handleDeleteImg"
-                />
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-          </v-expansion-panels>
+          <GradientWrapper>
+            <v-expansion-panels v-model="mainAccordion" variant="accordion" bg-color="transparent">
+              <v-expansion-panel
+                id="bio"
+                value="bio"
+                class="content-item"
+                tag="section"
+                :title="$t('pages.persons.bio')"
+              >
+                <v-expansion-panel-text>
+                  <IndentedEditableText
+                    v-if="person?.bio"
+                    :edit-mode="bioEditMode"
+                    :messages="$t('pages.persons.edit_bio')"
+                    :text="person?.bio || ''"
+                    @sumbit:edit="submitBioEdit"
+                  />
+                  <div v-else class="w-100 text-center">
+                    <span>{{ $t("general.no_data") }}</span>
+                  </div>
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel
+                v-if="person?.filmWorks"
+                id="filmography"
+                tag="section"
+                value="filmography"
+                class="content-item"
+                :title="$t('pages.persons.filmography')"
+              >
+                <v-expansion-panel-text>
+                  <Filmography :person="person" />
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+              <v-expansion-panel
+                id="gallery"
+                tag="section"
+                class="content-item"
+                value="gallery"
+                :title="$t('pages.persons.photos')"
+              >
+                <v-expansion-panel-text>
+                  <GalleryViewer
+                    :slider-arr="sliderGalleryArr || []"
+                    :disabled="!isAuthenticated"
+                    :gallery="person?.photos || []"
+                    :entity-name="personFullName"
+                    :loading="loading"
+                    with-avatar
+                    @editor:open="photoEditMode = true"
+                    @cover:set="handleCoverChange"
+                    @avatar:set="handleChangeAvatar"
+                    @delete:img="handleDeleteImg"
+                  />
+                </v-expansion-panel-text>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </GradientWrapper>
         </template>
       </DetailCard>
       <BaseDialog
@@ -286,6 +264,7 @@ import Filmography from "~/components/PersonPartials/Filmography.vue";
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
 import definePageTitle from "~/utils/definePageTitle";
+import GradientWrapper from "~/components/Containment/Cards/GradientWrapper.vue";
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
@@ -334,10 +313,6 @@ const imagesToDelete = computed(() => {
     });
 }) as ComputedRef<string[]>;
 
-const chooseCover = (): void => {
-  photoEditMode.value = true;
-  activeTab.value = 1;
-};
 
 const handleBioEdit = (): void => {
   bioEditMode.value = true;

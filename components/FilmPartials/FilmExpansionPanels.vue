@@ -6,7 +6,7 @@
       bg-color="transparent"
       border
     >
-    <v-expansion-panel
+      <v-expansion-panel
         id="rating"
         tag="section"
         value="rating"
@@ -125,30 +125,17 @@
           <slot name="description" />
         </v-expansion-panel-text>
       </v-expansion-panel>
-      
-      <v-expansion-panel
-        id="comments"
-        tag="section"
-        value="comments"
-        class="content-item"
-        :title="$t('pages.films.comments')"
-      >
-        <v-expansion-panel-text>
-          <div class="d-flex flex-column justify-center ga-1">
-            <slot name="comments" />
-          </div>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
     </v-expansion-panels>
   </GradientWrapper>
 </template>
 
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
-import GradientWrapper from "~/components/Containment/Cards/GradientWrapper.vue";
+import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 
 const localeRoute = useLocaleRoute();
-const accordion = ref<string[]>(["rating"]);
+const display = useDisplay();
+const accordion = ref<string[]>(display.smAndDown.value ? [] : ["rating", "info"]);
 const props = defineProps<{
   film: IFilm | null;
 }>();
@@ -224,6 +211,7 @@ const team = computed((): Detail[] => {
       })
     : [];
 });
+
 </script>
 
 <style></style>

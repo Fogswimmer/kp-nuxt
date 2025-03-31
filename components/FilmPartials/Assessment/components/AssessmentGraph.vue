@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column ga-2 ali">
+  <div class="d-flex flex-column ga-2 justify-center fill-height">
     <template v-if="graphData.length">
       <div v-for="(data, index) in graphData" :key="index">
         <div class="d-flex flex-column ga-1">

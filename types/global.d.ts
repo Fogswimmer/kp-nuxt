@@ -52,15 +52,13 @@ declare global {
     slug: string | null;
     assessmentsGraph: AssessmentsGraph[];
   }
-
   interface AssessmentsGraph {
     rating: number;
     count: number;
   }
-
   interface IAssessment {
-    id: number | null;
-    authorId: number | null;
+    id: number;
+    authorId: number;
     authorName: string | null;
     authorAvatar: string | null;
     rating: number;

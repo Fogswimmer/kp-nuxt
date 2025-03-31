@@ -7,50 +7,51 @@
         :content="$t('page_descriptions.persons_list')"
       />
     </Head>
-
-    <ListPage
-      v-if="personsPresent"
-      :items="personItems || []"
-      :loading="loading"
-      :total-pages="totalPages"
-      :page="currentPage"
-      :limit="limit !== 'all' ? (limit as number) : 15"
-      :list-title="$t('nav.persons')"
-      new-page-link="/persons/new"
-      @update:page="updateQueryParams"
-      @update:search="search = $event"
-    >
-      <template v-if="$vuetify.display.mdAndUp" #sidebar>
-        <v-card
-          :title="$t('pages.home.popular_actors')"
-          class="text-center pa-4"
-          variant="text"
-        >
-          <PopularActorsMasonry
-            v-if="popularActors.length"
-            :popular-actors="popularActors"
-            sidebar
+    <div>
+      <ListPage
+        v-if="personsPresent"
+        :items="personItems || []"
+        :loading="loading"
+        :total-pages="totalPages"
+        :page="currentPage"
+        :limit="computedLimitProp"
+        :list-title="$t('nav.persons')"
+        new-page-link="/persons/new"
+        @update:page="updateQueryParams"
+        @update:search="search = $event"
+      >
+        <template #filters>
+          <Filters
+            :sort-options="sortOptions"
+            @update:limit="limit = $event.value"
+            @update:order="order = $event.value"
+            @update:search="search = $event.value"
+            @update:sort="sortBy = $event.value"
           />
-          <span v-else-if="!loading" class="text-disabled">{{
-            $t("general.no_data")
-          }}</span>
-          <v-sheet v-else height="100vh">
-            <div class="fill-height d-flex align-center justify-center">
-              <v-progress-circular indeterminate />
-            </div>
-          </v-sheet>
-        </v-card>
-      </template>
-      <template #filters>
-        <Filters
-          :sort-options="sortOptions"
-          @update:limit="limit = $event.value"
-          @update:order="order = $event.value"
-          @update:search="search = $event.value"
-          @update:sort="sortBy = $event.value"
-        />
-      </template>
-    </ListPage>
+        </template>
+        <template v-if="$vuetify.display.mdAndUp" #sidebar>
+          <v-card
+            :title="$t('pages.home.popular_actors')"
+            class="text-center pa-4"
+            variant="text"
+          >
+            <PopularActorsMasonry
+              v-if="popularActors.length"
+              :popular-actors="popularActors"
+              sidebar
+            />
+            <span v-else-if="!loading" class="text-disabled">{{
+              $t("general.no_data")
+            }}</span>
+            <v-sheet v-else height="100%">
+              <div class="fill-height d-flex align-center justify-center">
+                <v-progress-circular indeterminate />
+              </div>
+            </v-sheet>
+          </v-card>
+        </template>
+      </ListPage>
+    </div>
   </div>
 </template>
 
@@ -136,6 +137,10 @@ const personItems = computed((): Detail[] => {
   );
 });
 
+const computedLimitProp = computed((): number => {
+  return typeof limit.value === "number" ? limit.value : 15;
+});
+
 const updateQueryParams = (page: number): void => {
   if (limit.value !== "all") {
     offset.value = (page - 1) * Number(limit.value);
@@ -152,8 +157,6 @@ watch(
     newSpecialtySort,
     newLocale,
   ]): Promise<void> => {
-    console.log(limit);
-    console.log(limit);
     await fetchFilteredPersons(
       newLimit,
       newOffset,

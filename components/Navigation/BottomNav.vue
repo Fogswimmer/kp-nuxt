@@ -21,6 +21,13 @@
 const localeRoute = useLocaleRoute();
 const activeBottomBtn = ref<string>("home");
 const error = useError();
+
+watch(
+  () => useRoute().path,
+  (): void => {
+    activeBottomBtn.value = useRoute().path;
+  }
+);
 </script>
 
 <style></style>

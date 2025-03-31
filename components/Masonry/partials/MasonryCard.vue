@@ -1,33 +1,36 @@
 <template>
-  <v-card
-    :key="index"
-    :loading="loading"
-    :title="item?.name"
-    rounded="lg"
-    elevation="5"
-    :variant="sidebar ? 'plain' : 'elevated'"
-    border
-  >
-    <template #append>
-      <slot name="append" />
-    </template>
-    <v-card-text>
-      <NuxtImg
-        :src="img"
-        provider="myProvider"
-        placeholder
-        fit="cover"
-        loading="lazy"
-        class="cursor-pointer masonry-image"
-        @click="navigateTo(localeRoute(link))"
-      />
-    </v-card-text>
+  <GradientWrapper>
+    <v-card
+      :key="index"
+      :loading="loading"
+      :title="item?.name"
+      rounded="lg"
+      elevation="5"
+      :variant="sidebar ? 'plain' : 'text'"
+      border
+    >
+      <template #append>
+        <slot name="append" />
+      </template>
+      <v-card-text>
+        <NuxtImg
+          :src="img"
+          provider="myProvider"
+          placeholder
+          fit="cover"
+          loading="lazy"
+          class="cursor-pointer masonry-image"
+          @click="navigateTo(localeRoute(link))"
+        />
+      </v-card-text>
 
-    <slot />
-  </v-card>
+      <slot />
+    </v-card>
+  </GradientWrapper>
 </template>
 
 <script lang="ts" setup>
+import GradientWrapper from "~/components/Containment/Cards/GradientWrapper.vue";
 defineProps<{
   loading: boolean;
   img: string;

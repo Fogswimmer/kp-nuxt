@@ -1,5 +1,5 @@
 <template>
-  <v-layout>
+  <div class="position-relative">
     <GradientWrapper>
       <v-app-bar class="glassed" elevation="5">
         <template #prepend>
@@ -107,13 +107,8 @@
         </v-navigation-drawer>
       </client-only>
 
-      <v-main>
-        <v-sheet
-          min-height="calc(100vh - 225px)"
-          max-width="100vw"
-          min-width="calc(100vw - 500px)"
-          class="pa-2"
-        >
+      <main>
+        <v-sheet height="100%" width="100%" class="pa-2">
           <v-label
             v-if="needle && !loading && $vuetify.display.mdAndUp"
             class="mt-2"
@@ -138,7 +133,7 @@
               :value="item"
             >
               <template #prepend>
-                <v-avatar size="100">
+                <v-avatar :size="$vuetify.display.mdAndUp ? 107 : 64">
                   <v-img :src="item.avatar">
                     <template #placeholder>
                       <v-sheet height="100%">
@@ -164,7 +159,7 @@
               v-for="n in limit"
               :key="n"
               rounded="lg"
-              height="120"
+              :height="$vuetify.display.mdAndUp ? 100 : 64"
               class="my-2 glassed"
               type="list-item-avatar-two-line"
             />
@@ -175,24 +170,22 @@
               icon="mdi-alert-rhombus"
             />
           </template>
+          <v-footer class="d-flex justify-center glassed position-absolute left-0 right-0">
+              <v-pagination
+                v-model="currentPage"
+                :length="totalPages"
+                rounded="lg"
+                color="primary"
+                :total-visible="3"
+                @update:model-value="handlePageChange"
+              />
+          </v-footer>
         </v-sheet>
         <v-spacer />
         <slot name="empty-state" />
-      </v-main>
-      <v-app-bar location="bottom">
-        <v-footer class="d-flex justify-center glassed">
-          <v-pagination
-            v-model="currentPage"
-            :length="totalPages"
-            rounded="lg"
-            color="primary"
-            :total-visible="3"
-            @update:model-value="handlePageChange"
-          />
-        </v-footer>
-      </v-app-bar>
+      </main>
     </GradientWrapper>
-  </v-layout>
+  </div>
 </template>
 
 <script lang="ts" setup>
