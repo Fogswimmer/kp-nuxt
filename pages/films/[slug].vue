@@ -16,13 +16,27 @@
             <NotAuthWarning v-if="!isAuthenticated" />
           </template>
           <template #trailer>
-            <div class="d-flex justify-center">
-              <Trailer
-                :trailer="film?.trailer || ''"
-                :is-authenticated="isAuthenticated"
-                @choose:trailer="showLinkTrailerDialog = true"
-              />
-            </div>
+            <v-container>
+              <v-row no-gutters>
+                <v-col cols="12" lg="3" md="6" sm="12">
+                  <v-img :src="film?.poster || ''" cover height="400">
+                    <template #placeholder>
+                      <ImgLoader />
+                    </template>
+                    <template #error>
+                      <ErrorPlaceHolder />
+                    </template>
+                  </v-img>
+                </v-col>
+                <v-col cols="12" lg="9" md="6" sm="12">
+                  <Trailer
+                    :trailer="film?.trailer || ''"
+                    :is-authenticated="isAuthenticated"
+                    @choose:trailer="showLinkTrailerDialog = true"
+                  />
+                </v-col>
+              </v-row>
+            </v-container>
           </template>
           <template #menu>
             <DetailMenu
@@ -212,6 +226,8 @@ import TrailerForm from "~/components/Forms/Film/TrailerForm.vue";
 import Trailer from "~/components/FilmPartials/Trailer.vue";
 import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
 import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
+import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
+import ImgLoader from "~/components/Containment/Img/ImgLoader.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
 

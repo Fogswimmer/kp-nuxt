@@ -1,7 +1,7 @@
 <template>
   <v-card
     class="ma-2"
-    variant="tonal"
+    variant="outlined"
     :color="color || 'surface-variant'"
     density="compact"
   >

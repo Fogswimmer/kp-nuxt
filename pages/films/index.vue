@@ -33,9 +33,9 @@
             variant="text"
           
           >
-            <FilmsMasonryWall
-              v-if="latestFilms.length"
-              :latest-films="latestFilms"
+            <HomeWall
+              v-if="filmItems"
+              :items="latestFilmItems"
               sidebar
             />
             <span v-else-if="!loading" class="text-disabled">{{
@@ -56,7 +56,7 @@
 <script lang="ts" setup>
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
-import FilmsMasonryWall from "~/components/Masonry/FilmsMasonryWall.vue";
+import HomeWall from "~/components/Masonry/HomeWall.vue";
 import { useFilmStore } from "~/stores/filmStore";
 import definePageTitle from "~/utils/definePageTitle";
 
@@ -98,6 +98,24 @@ const fetchData = async (): Promise<void> => {
 const filmItems = computed((): Detail[] => {
   return films.value[0] !== null
     ? films.value?.map((film) => {
+        return {
+          title:
+            film?.name +
+            " (" +
+            (film?.releaseYear ? film.releaseYear.toString() : "") +
+            ")",
+          value: film.description || "",
+          avatar: film.poster || film.gallery[0] || "",
+          to: "/films/" + film.slug,
+          createdAt: film.createdAt || "",
+        };
+      })
+    : [];
+});
+
+const latestFilmItems = computed((): Detail[] => {
+  return latestFilms.value[0] !== null
+    ? latestFilms.value?.map((film) => {
         return {
           title:
             film?.name +

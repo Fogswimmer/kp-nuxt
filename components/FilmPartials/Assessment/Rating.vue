@@ -8,7 +8,7 @@
               <v-row>
                 <v-col cols="12" lg="4" md="6" sm="12">
                   <div
-                    class="d-flex flex-column justify-center ga-1 align-center"
+                    class="d-flex flex-column justify-center fill-height ga-1 align-center"
                   >
                     <div class="d-flex ga-1 align-center">
                       <v-icon icon="mdi-star" size="x-large" color="warning" />

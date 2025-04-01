@@ -42,11 +42,7 @@
           class="position-relative"
         >
           <template #placeholder>
-            <v-sheet v-if="loading" height="100%">
-              <div class="fill-height d-flex align-center justify-center">
-                <v-progress-circular indeterminate />
-              </div>
-            </v-sheet>
+            <ImgLoader />
           </template>
           <template #error>
             <v-sheet height="300" width="100%" class="default-cover" />
@@ -58,7 +54,7 @@
           width="100%"
           class="default-cover"
         />
-        <v-sheet v-else class="w-100 glassed pa-4" height="400">
+        <v-sheet v-else class="w-100 glassed pa-2" min-height="400">
           <slot name="trailer" />
         </v-sheet>
         <slot name="general_info" />
@@ -70,6 +66,7 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
+import ImgLoader from "../Img/ImgLoader.vue";
 
 defineProps<{
   pageName?: string;

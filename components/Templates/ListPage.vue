@@ -107,7 +107,7 @@
         </v-navigation-drawer>
       </client-only>
 
-      <main>
+      <main class="position-relative">
         <v-sheet height="100%" width="100%" class="pa-2">
           <v-label
             v-if="needle && !loading && $vuetify.display.mdAndUp"
@@ -123,7 +123,7 @@
               v-for="(item, i) in items"
               :key="i"
               :to="localeRoute(item.to || '/')"
-              border
+              border 
               rounded="lg"
               elevation="5"
               lines="two"
@@ -133,7 +133,7 @@
               :value="item"
             >
               <template #prepend>
-                <v-avatar :size="$vuetify.display.mdAndUp ? 107 : 64">
+                <v-avatar :size="$vuetify.display.mdAndUp ? 107 : 80">
                   <v-img :src="item.avatar">
                     <template #placeholder>
                       <v-sheet height="100%">
@@ -159,9 +159,9 @@
               v-for="n in limit"
               :key="n"
               rounded="lg"
-              :height="$vuetify.display.mdAndUp ? 100 : 64"
+              :height="$vuetify.display.mdAndUp ? 130 : 110"
               class="my-2 glassed"
-              type="list-item-avatar-two-line"
+              type="list-item-avatar-three-line"
             />
           </template>
           <template v-else-if="!loading">
@@ -170,17 +170,17 @@
               icon="mdi-alert-rhombus"
             />
           </template>
-          <v-footer class="d-flex justify-center glassed position-absolute left-0 right-0">
-              <v-pagination
-                v-model="currentPage"
-                :length="totalPages"
-                rounded="lg"
-                color="primary"
-                :total-visible="3"
-                @update:model-value="handlePageChange"
-              />
-          </v-footer>
         </v-sheet>
+        <v-footer class="d-flex justify-center glassed position-absolute left-0 right-0" color="transparent">
+            <v-pagination
+              v-model="currentPage"
+              :length="totalPages"
+              rounded="lg"
+              color="primary"
+              :total-visible="3"
+              @update:model-value="handlePageChange"
+            />
+        </v-footer>
         <v-spacer />
         <slot name="empty-state" />
       </main>

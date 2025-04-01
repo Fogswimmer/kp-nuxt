@@ -35,9 +35,9 @@
             class="text-center pa-4"
             variant="text"
           >
-            <PopularActorsMasonry
+            <HomeWall
               v-if="popularActors.length"
-              :popular-actors="popularActors"
+              :items="popularActorItems"
               sidebar
             />
             <span v-else-if="!loading" class="text-disabled">{{
@@ -58,9 +58,9 @@
 <script lang="ts" setup>
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
-import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import { usePersonStore } from "~/stores/personStore";
+import HomeWall from "~/components/Masonry/HomeWall.vue";
 
 const { locale, t } = useI18n();
 
@@ -136,6 +136,27 @@ const personItems = computed((): Detail[] => {
     })
   );
 });
+
+const popularActorItems = computed((): Detail[] => {
+  return (
+    popularActors.value &&
+    popularActors.value?.map((person): Detail => {
+      return {
+        title:
+          person?.firstname +
+          " " +
+          person?.lastname +
+          (person?.internationalName
+            ? " (" + person?.internationalName + ")"
+            : ""),
+        value: person?.specialtyNames.join(", "),
+        avatar: person?.avatar || "",
+        to: "/persons/" + person?.slug || "",
+      };
+    })
+  );
+});
+
 
 const computedLimitProp = computed((): number => {
   return typeof limit.value === "number" ? limit.value : 15;

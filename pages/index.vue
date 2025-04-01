@@ -5,11 +5,11 @@
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
     <ClientOnly>
-      <v-navigation-drawer location="start" floating color="transparent" />
-      <v-navigation-drawer location="end" floating color="transparent" />
+      <v-navigation-drawer location="start" width="300" floating color="transparent" />
+      <v-navigation-drawer location="end" width="300" floating color="transparent" />
     </ClientOnly>
     <template v-if="filmsPresent && personsPresent">
-      <main class="d-flex flex-column ga-6 overflow-y-hidden">
+      <main class="d-flex flex-column ga-2 overflow-y-hidden">
         <MasonrySection
           v-if="latestFilms.length > 0"
           :present="filmsPresent"
@@ -18,10 +18,9 @@
           :title="$t('pages.home.newest')"
         >
           <template #default>
-            <FilmsMasonryWall
-              :latest-films="latestFilms"
+            <HomeWall
+              :items="latestFilmItems"
               :loading="filmLoading"
-              :dark-accent-color="darkAccentColors[0]"
               :sidebar="false"
             />
 
@@ -35,8 +34,8 @@
           :title="$t('pages.home.top', topFilms.length)"
         >
           <template #default>
-            <FilmsMasonryWall
-              :latest-films="topFilms"
+            <HomeWall
+              :items="topFilmItems"
               :loading="filmLoading"
               :dark-accent-color="darkAccentColors[1]"
               :sidebar="false"
@@ -52,10 +51,9 @@
           :title="$t('pages.home.popular_actors')"
         >
           <template #default>
-            <PopularActorsMasonry
-              :popular-actors="popularActors"
+            <HomeWall
+              :items="personItems"
               :loading="personLoading"
-              :dark-accent-color="darkAccentColors[2]"
               :sidebar="false"
             />
           </template>
@@ -91,8 +89,7 @@ import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 import EmptyPage from "~/components/Templates/EmptyPage.vue";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
-import FilmsMasonryWall from "~/components/Masonry/FilmsMasonryWall.vue";
-import PopularActorsMasonry from "~/components/Masonry/PopularActorsMasonry.vue";
+import HomeWall from "~/components/Masonry/HomeWall.vue";
 import definePageTitle from "~/utils/definePageTitle";
 
 const {
@@ -122,6 +119,57 @@ const fetchData = async (): Promise<void> => {
     await listPopularActors();
   }
 };
+
+const latestFilmItems = computed((): Detail[] => {
+  return latestFilms.value[0] !== null
+    ? latestFilms.value?.map((film) => {
+        return {
+          title:
+            film?.name +
+            " (" +
+            (film?.releaseYear ? film.releaseYear.toString() : "") +
+            ")",
+          value: film.description || "",
+          avatar: film.poster || film.gallery[0] || "",
+          to: "/films/" + film.slug,
+          createdAt: film.createdAt || "",
+        };
+      })
+    : [];
+});
+
+const topFilmItems = computed((): Detail[] => {
+  return topFilms.value[0] !== null
+    ? topFilms.value?.map((film) => {
+        return {
+          title:
+            film?.name +
+            " (" +
+            (film?.releaseYear ? film.releaseYear.toString() : "") +
+            ")",
+          value: film.description || "",
+          avatar: film.poster || film.gallery[0] || "",
+          to: "/films/" + film.slug,
+          createdAt: film.createdAt || "",
+        };
+      })
+    : [];
+});
+
+const personItems = computed((): Detail[] => {
+  return (
+    popularActors.value &&
+    popularActors.value?.map((person): Detail => {
+      return {
+        title: person?.name || "",
+        value: person?.specialtyNames ? person?.specialtyNames.join(", ") : "",
+        avatar: person?.avatar || "",
+        to: "/persons/" + person?.slug || "",
+      };
+    })
+  );
+});
+
 
 onMounted(async (): Promise<void> => {
   await fetchData();
