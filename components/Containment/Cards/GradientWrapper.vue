@@ -2,7 +2,7 @@
   <Client-Only>
     <div
       :style="`background-image: linear-gradient(225deg , ${bgAccentColor} 0%, transparent 80%);`"
-      class="gradient-wrapper"
+      class="gradient-wrapper fill-height"
     >
       <slot />
     </div>
@@ -17,6 +17,5 @@ const bgAccentColor = useBgAccentColor();
 <style>
 .gradient-wrapper {
   background-attachment: fixed;
-
 }
 </style>

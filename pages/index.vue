@@ -4,10 +4,6 @@
       <Title>{{ definePageTitle($t("pages.home.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
-    <ClientOnly>
-      <v-navigation-drawer location="start" width="300" floating color="transparent" />
-      <v-navigation-drawer location="end" width="300" floating color="transparent" />
-    </ClientOnly>
     <template v-if="filmsPresent && personsPresent">
       <main class="d-flex flex-column ga-2 overflow-y-hidden">
         <MasonrySection
@@ -23,14 +19,12 @@
               :loading="filmLoading"
               :sidebar="false"
             />
-
           </template>
         </MasonrySection>
         <MasonrySection
           v-if="topFilms.length > 0"
           :present="filmsPresent"
           :loading="filmLoading"
-          :dark-accent-color="darkAccentColors[1]"
           :title="$t('pages.home.top', topFilms.length)"
         >
           <template #default>
@@ -42,12 +36,10 @@
             />
           </template>
         </MasonrySection>
-
         <MasonrySection
           v-if="popularActors.length > 0"
           :present="personsPresent"
           :loading="personLoading"
-          :dark-accent-color="darkAccentColors[2]"
           :title="$t('pages.home.popular_actors')"
         >
           <template #default>
@@ -162,7 +154,7 @@ const personItems = computed((): Detail[] => {
     popularActors.value?.map((person): Detail => {
       return {
         title: person?.name || "",
-        value: person?.specialtyNames ? person?.specialtyNames.join(", ") : "",
+        value: person?.internationalName ?? "",
         avatar: person?.avatar || "",
         to: "/persons/" + person?.slug || "",
       };

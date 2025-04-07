@@ -14,9 +14,7 @@
         ]"
       >
         <v-list-item-title>
-      
             <span class="text-lg-h5">{{ item.title }}</span>
-   
         </v-list-item-title>
         <v-divider class="my-2" />
         <v-list-item-subtitle>

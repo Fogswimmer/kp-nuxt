@@ -4,7 +4,8 @@ manifest
 schema
 types
 .nuxt
-.output
+.nuxt/
+.output/
 tsconfig.json
 *.env
 *.env.example

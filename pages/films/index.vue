@@ -28,16 +28,32 @@
         </template>
         <template v-if="$vuetify.display.mdAndUp" #sidebar>
           <v-card
-            class="pa-4 text-center glassed"
+            class="pa-4 glassed"
             :title="$t('pages.home.newest')"
             variant="text"
           
           >
-            <HomeWall
-              v-if="filmItems"
-              :items="latestFilmItems"
-              sidebar
-            />
+            <v-list v-if="latestFilms.length">
+              <v-list-item 
+              v-for="(film, index) in latestFilms" 
+              :key="index"
+              :title="film.name"
+              :to="`/films/${film.slug}`"
+              >
+              <template #prepend>
+                <v-avatar size="64">
+                  <v-img :src="film.poster || film.gallery[0] || ''">
+                    <template #placeholder>
+                      <ImgLoader />
+                    </template>
+                    <template #error>
+                      <ErrorPlaceHolder />
+                    </template>
+                  </v-img>
+                </v-avatar>
+              </template> 
+            </v-list-item>
+            </v-list>
             <span v-else-if="!loading" class="text-disabled">{{
               $t("general.no_data")
             }}</span>
@@ -56,9 +72,11 @@
 <script lang="ts" setup>
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
-import HomeWall from "~/components/Masonry/HomeWall.vue";
+
 import { useFilmStore } from "~/stores/filmStore";
 import definePageTitle from "~/utils/definePageTitle";
+import ImgLoader from "~/components/Containment/Img/ImgLoader.vue";
+import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 
 const { films, loading, totalPages, currentPage, filmsPresent, latestFilms } =
   storeToRefs(useFilmStore());
@@ -98,24 +116,6 @@ const fetchData = async (): Promise<void> => {
 const filmItems = computed((): Detail[] => {
   return films.value[0] !== null
     ? films.value?.map((film) => {
-        return {
-          title:
-            film?.name +
-            " (" +
-            (film?.releaseYear ? film.releaseYear.toString() : "") +
-            ")",
-          value: film.description || "",
-          avatar: film.poster || film.gallery[0] || "",
-          to: "/films/" + film.slug,
-          createdAt: film.createdAt || "",
-        };
-      })
-    : [];
-});
-
-const latestFilmItems = computed((): Detail[] => {
-  return latestFilms.value[0] !== null
-    ? latestFilms.value?.map((film) => {
         return {
           title:
             film?.name +

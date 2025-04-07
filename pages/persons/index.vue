@@ -32,14 +32,30 @@
         <template v-if="$vuetify.display.mdAndUp" #sidebar>
           <v-card
             :title="$t('pages.home.popular_actors')"
-            class="text-center pa-4"
+            class="pa-4"
             variant="text"
           >
-            <HomeWall
-              v-if="popularActors.length"
-              :items="popularActorItems"
-              sidebar
-            />
+          <v-list v-if="popularActors.length">
+              <v-list-item 
+              v-for="(person, index) in popularActors" 
+              :key="index"
+              :title="person.name"
+              :to="`/persons/${person.slug}`"
+              >
+              <template #prepend>
+                <v-avatar size="64">
+                  <v-img :src="person.avatar || person.photos[0] || ''">
+                    <template #placeholder>
+                      <ImgLoader />
+                    </template>
+                    <template #error>
+                      <ErrorPlaceHolder />
+                    </template>
+                  </v-img>
+                </v-avatar>
+              </template> 
+            </v-list-item>
+            </v-list>
             <span v-else-if="!loading" class="text-disabled">{{
               $t("general.no_data")
             }}</span>
@@ -59,8 +75,9 @@
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import definePageTitle from "~/utils/definePageTitle";
+import ImgLoader from "~/components/Containment/Img/ImgLoader.vue";
+import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import { usePersonStore } from "~/stores/personStore";
-import HomeWall from "~/components/Masonry/HomeWall.vue";
 
 const { locale, t } = useI18n();
 
@@ -136,27 +153,6 @@ const personItems = computed((): Detail[] => {
     })
   );
 });
-
-const popularActorItems = computed((): Detail[] => {
-  return (
-    popularActors.value &&
-    popularActors.value?.map((person): Detail => {
-      return {
-        title:
-          person?.firstname +
-          " " +
-          person?.lastname +
-          (person?.internationalName
-            ? " (" + person?.internationalName + ")"
-            : ""),
-        value: person?.specialtyNames.join(", "),
-        avatar: person?.avatar || "",
-        to: "/persons/" + person?.slug || "",
-      };
-    })
-  );
-});
-
 
 const computedLimitProp = computed((): number => {
   return typeof limit.value === "number" ? limit.value : 15;
