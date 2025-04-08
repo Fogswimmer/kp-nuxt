@@ -5,7 +5,7 @@
       <Meta name="description" :content="film?.description" />
     </Head>
     <v-sheet max-width="1200" class="mx-auto pa-2" rounded="lg">
-      <GradientWr>
+      <div>
         <DetailCard
           :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
           :loading="loading"
@@ -114,7 +114,7 @@
             </v-footer>
           </template>
         </DetailCard>
-      </GradientWr>
+      </div>
     </v-sheet>
     <ConfirmDialog
       v-model="showConfirmDialog"
@@ -436,7 +436,7 @@ const deleteAssessment = async (assessmentId: number): Promise<void> => {
 
 watch(
   locale,
-  async (newVal): Promise<void> => {
+  async (newVal: string): Promise<void> => {
     const slug = useRoute().params.slug.toString();
     await fetchFilmDetails(slug, newVal);
   },

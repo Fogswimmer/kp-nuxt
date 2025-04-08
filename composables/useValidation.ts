@@ -6,6 +6,7 @@ export const useValidation = () => {
     email: /\S+@\S+\.\S+/,
     typeNum: /^[0-9]+$/,
     letters: /^[a-zA-Z\s]+$/,
+    latinAndCyrillicLetters: /^[a-zA-Zа-яА-Я\s]+$/,
     password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
     url: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/,
     latinChars: /^[a-zA-Z\s\d]+$/
@@ -15,7 +16,7 @@ export const useValidation = () => {
   const email = (value: string) =>
     regExps.email.test(value) ? true : t("forms.rules.invalid_email");
   const onlyNums = (value: string) => regExps.typeNum.test(value) ? true : t("forms.rules.type_num");
-  const onlyLetters = (value: string) => regExps.letters.test(value) ? true : t("forms.rules.only_letters");
+  const onlyLetters = (value: string) => regExps.latinAndCyrillicLetters.test(value) ? true : t("forms.rules.only_letters");
 
   const minLength = (min: number) => (value: string) =>
     value.length >= min ? true : t("forms.rules.min_chars", { min });

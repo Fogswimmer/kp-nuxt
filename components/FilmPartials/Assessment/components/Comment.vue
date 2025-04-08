@@ -1,11 +1,12 @@
 <template>
   <v-card
-    class="ma-2"
-    variant="outlined"
+    border
+    variant="text"
+    class="my-2 glassed"
     :color="color || 'surface-variant'"
     density="compact"
   >
-    <v-toolbar class="pa-2" density="compact" color="surface">
+    <v-toolbar class="pa-2" density="compact" color="transparent">
       <template #prepend>
         <span class="text-subtitle-2 text-disabled">#{{ index + 1 }}</span>
         <div class="position-relative">
@@ -62,11 +63,11 @@
       </template>
     </v-toolbar>
     <v-divider />
-    <v-card-text>
-      <v-sheet class="pa-2" rounded="lg">
-        {{ comment.comment }}
-      </v-sheet>
-    </v-card-text>
+
+    <div class="pa-2 text-white">
+      {{ comment.comment }}
+    </div>
+
     <ConfirmDialog
       v-model="showDeleteConfirm"
       :text="$t('actions.delete_assessment_warning')"
@@ -108,7 +109,6 @@ const handleConfirm = (id: number) => {
   showDeleteConfirm.value = false;
   emits("confirm:delete", id);
 };
-
 </script>
 
 <style></style>

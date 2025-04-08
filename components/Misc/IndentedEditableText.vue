@@ -98,13 +98,13 @@ onMounted(() => {
 <style sroped>
 .text-container {
   display: -webkit-box;
-  line-clamp: 6;
-  -webkit-line-clamp: 6;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.2em;
-  max-height: calc(1.2em * 6);
+  max-height: calc(1.2em * 4);
 }
 
 .expanded {

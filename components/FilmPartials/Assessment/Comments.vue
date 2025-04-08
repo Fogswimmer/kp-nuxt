@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card v-if="assessments.length > 0" rounded="lg" border>
+    <template v-if="assessments.length > 0">
       <v-data-iterator
         :items="assementsWithColors"
         :page="page"
@@ -56,9 +56,8 @@
           </div>
         </template>
         <template #footer="{ pageCount }">
-          <v-footer class="justify-space-between text-subtitle-2 mt-4">
+          <v-footer class="justify-space-between text-subtitle-2 mt-2 glassed">
             {{ $t("general.total") }}: {{ assessments.length }}
-
             <div>
               {{ $t("general.page") }} {{ page }} {{ $t("general.of") }}
               {{ pageCount }}
@@ -66,7 +65,7 @@
           </v-footer>
         </template>
       </v-data-iterator>
-    </v-card>
+    </template>
     <v-sheet v-else height="100">
       <div class="d-flex fill-height justify-center align-center">
         <v-label class="text-caption">
@@ -105,12 +104,15 @@ const seeAllOnClick = () => {
 };
 
 const assementsWithColors = computed(() => {
-  const commentsWithSameAuthor = props.assessments.reduce((acc, item) => {
-    const { authorId: author } = item;
-    acc[author] = acc[author] || [];
-    acc[author].push(item);
-    return acc;
-  }, {} as Record<string, IAssessment[]>);
+  const commentsWithSameAuthor = props.assessments.reduce(
+    (acc, item) => {
+      const { authorId: author } = item;
+      acc[author] = acc[author] || [];
+      acc[author].push(item);
+      return acc;
+    },
+    {} as Record<string, IAssessment[]>
+  );
 
   const assementsWithColors = Object.entries(commentsWithSameAuthor).map(
     ([_, comments]) => {

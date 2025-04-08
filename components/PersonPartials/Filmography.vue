@@ -5,7 +5,7 @@
         <div
           v-for="(value, key, index) in person?.filmWorks"
           :key="index"
-          class="ma-2"
+          class="my-2"
         >
           <v-card
             v-if="value && value.length > 0"
@@ -62,8 +62,6 @@ const defineCardTitle = (key: string) => {
       return t("pages.persons.directed_films");
     case "writtenFilms":
       return t("pages.persons.written_films");
-    case "actedFilms":
-      return t("pages.persons.acted_films");
     case "producedFilms":
       return t("pages.persons.produced_films");
     case "composedFilms":
@@ -74,9 +72,10 @@ const defineCardTitle = (key: string) => {
 };
 
 const computedFilmographyDispay = computed(() => {
-  return Array.isArray(props.person?.filmWorks)
-    ? props.person?.filmWorks.length > 0
-    : false;
+  return (
+    props.person?.filmWorks &&
+    Object.values(props.person?.filmWorks).some((value) => value.length > 0)
+  );
 });
 </script>
 

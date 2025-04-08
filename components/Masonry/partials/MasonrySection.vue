@@ -15,14 +15,17 @@
         <SectionDivider />
       </div>
     </v-card-title>
-    <v-card-text v-if="!loading">
+    <div v-if="!loading">
       <slot />
-    </v-card-text>
-    <v-row v-else>
-      <v-col v-for="i in 3" :key="i" cols="12" lg="4" md="6" sm="12">
-        <v-skeleton-loader type="card" height="100vh" />
-      </v-col>
-    </v-row>
+    </div>
+    <v-skeleton-loader
+      v-for="n in 3"
+      v-else
+      :key="n"
+      type="list-item-avatar-three-line"
+      :height="$vuetify.display.mdAndUp ? 200 : 100"
+      class="my-3"
+    />
   </v-card>
 </template>
 

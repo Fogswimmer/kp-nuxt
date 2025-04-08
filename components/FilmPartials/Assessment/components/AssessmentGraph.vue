@@ -14,7 +14,7 @@
               />
             </ClientOnly>
             <v-spacer />
-            <span class="text-caption">{{ defineLabel(data.count) }}</span>
+            <span class="text-caption">{{ data.count }}</span>
           </div>
           <div class="d-flex ga-1 align-center justify-between">
             <v-progress-linear
@@ -42,19 +42,6 @@ defineProps<{
   graphData: AssessmentsGraph[];
   total: number;
 }>();
-
-const { t, locale } = useI18n();
-
-const defineLabel = (count: number | null) => {
-  if (!count) {
-    return t("pages.films.no_assessments");
-  }
-  if (locale.value == "ru") {
-    return declineInRussian(count, ["оценка", "оценки", "оценок"]);
-  } else {
-    return t("pages.films.assessments", count);
-  }
-};
 
 const stripeColor = (value: number) => {
   if (value > 3) {

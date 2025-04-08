@@ -25,15 +25,6 @@
         <v-progress-linear indeterminate color="primary" />
       </template>
       <v-card>
-        <template #image>
-          <v-img
-            v-if="cover"
-            :src="cover"
-            class="img-blur"
-            cover
-          />
-          <v-sheet v-else height="300" width="100%" class="default-cover" />
-        </template>
         <v-parallax
           v-if="cover"
           :src="cover"

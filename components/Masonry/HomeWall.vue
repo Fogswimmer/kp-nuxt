@@ -14,14 +14,26 @@
         ]"
       >
         <v-list-item-title>
-            <span class="text-lg-h5">{{ item.title }}</span>
+          <div class="d-flex w-100 align-center">
+            <span class="text-lg-h5 text-body-2 text-truncate">{{
+              item.title
+            }}</span>
+            <v-spacer />
+            <FilmRatingChip
+              v-if="item.rating"
+              :rating="item?.rating.toString()"
+            />
+          </div>
         </v-list-item-title>
         <v-divider class="my-2" />
         <v-list-item-subtitle>
           {{ item.value || $t("general.no_data") }}
         </v-list-item-subtitle>
         <template #prepend>
-          <v-avatar rounded="sm" :size="$vuetify.display.mdAndUp ? 164 : 64">
+          <v-avatar
+            rounded="sm"
+            :size="$vuetify.display.mdAndUp ? 164 : 'large'"
+          >
             <v-img :src="item?.avatar || ''">
               <template #placeholder>
                 <ImgLoader />
@@ -37,6 +49,7 @@
 <script lang="ts" setup>
 import ImgLoader from "../Containment/Img/ImgLoader.vue";
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
+import FilmRatingChip from "../Misc/FilmRatingChip.vue";
 
 const visibleItems = ref(new Set<number>());
 
@@ -49,7 +62,7 @@ const onIntersect = (index: number) => (isVisible: boolean) => {
 };
 
 defineProps<{
-  items: Detail[] ;
+  items: Detail[];
   loading?: boolean;
   sidebar?: boolean;
 }>();

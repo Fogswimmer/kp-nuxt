@@ -18,7 +18,7 @@
             :loading="loading"
             :general-info="computedPersonDetails"
             :avatar="person?.avatar || ''"
-            :title="`${personFullName} ${person?.internationalName ? '(' + person?.internationalName + ')' : ''}`"
+            :title="personFullName"
             :subtitle="specialtyNames"
             @avatar:edit="chooseAvatar"
           />
@@ -33,7 +33,7 @@
                 <v-icon>mdi-dots-vertical</v-icon>
               </v-btn>
             </template>
-            <v-list density="compact">
+            <v-list density="compact" class="bg-surface">
               <v-list-item
                 :title="$t('actions.edit')"
                 prepend-icon="mdi-pencil"
@@ -81,6 +81,7 @@
                   v-bind="props"
                   :disabled="!isAuthenticated"
                   prepend-icon="mdi-pencil"
+                  @click.prevent.stop
                   >{{ $t("actions.edit") }}</v-btn
                 >
               </template>
@@ -117,11 +118,10 @@
 
         <template #text>
           <GradientWrapper>
-            <v-expansion-panels v-model="mainAccordion" variant="accordion" bg-color="transparent">
+            <v-expansion-panels v-model="mainAccordion" variant="accordion">
               <v-expansion-panel
                 id="bio"
                 value="bio"
-                class="content-item"
                 tag="section"
                 :title="$t('pages.persons.bio')"
               >
@@ -143,7 +143,6 @@
                 id="filmography"
                 tag="section"
                 value="filmography"
-                class="content-item"
                 :title="$t('pages.persons.filmography')"
               >
                 <v-expansion-panel-text>
@@ -153,7 +152,6 @@
               <v-expansion-panel
                 id="gallery"
                 tag="section"
-                class="content-item"
                 value="gallery"
                 :title="$t('pages.persons.photos')"
               >
@@ -312,7 +310,6 @@ const imagesToDelete = computed(() => {
       return fileName ? fileName.split(".")[0] : "";
     });
 }) as ComputedRef<string[]>;
-
 
 const handleBioEdit = (): void => {
   bioEditMode.value = true;

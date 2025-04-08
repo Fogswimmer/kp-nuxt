@@ -11,6 +11,7 @@
       <v-empty-state
         :headline="error?.statusCode.toString()"
         :title="$t(`toast.messages.server_errors.${error?.statusCode}`)"
+        :text="error?.message"
         icon="mdi-alert-rhombus"
         :action-text="$t('empty_states.actions.home')"
         @click:action="clearError({ redirect: '/' })"

@@ -10,7 +10,6 @@
           v-if="latestFilms.length > 0"
           :present="filmsPresent"
           :loading="filmLoading"
-          :dark-accent-color="darkAccentColors[0]"
           :title="$t('pages.home.newest')"
         >
           <template #default>
@@ -31,7 +30,6 @@
             <HomeWall
               :items="topFilmItems"
               :loading="filmLoading"
-              :dark-accent-color="darkAccentColors[1]"
               :sidebar="false"
             />
           </template>
@@ -98,7 +96,7 @@ const {
   popularActors,
 } = storeToRefs(usePersonStore());
 
-const darkAccentColors = ref<string[]>([]);
+const { locale } = useI18n();
 
 const fetchData = async (): Promise<void> => {
   await checkFilmsPresence();
@@ -108,13 +106,13 @@ const fetchData = async (): Promise<void> => {
     await fetchTopFilms();
   }
   if (personsPresent.value) {
-    await listPopularActors();
+    await listPopularActors(locale.value);
   }
 };
 
 const latestFilmItems = computed((): Detail[] => {
   return latestFilms.value[0] !== null
-    ? latestFilms.value?.map((film) => {
+    ? latestFilms.value?.map((film: IFilm) => {
         return {
           title:
             film?.name +
@@ -122,6 +120,7 @@ const latestFilmItems = computed((): Detail[] => {
             (film?.releaseYear ? film.releaseYear.toString() : "") +
             ")",
           value: film.description || "",
+          rating: film.rating || "0",
           avatar: film.poster || film.gallery[0] || "",
           to: "/films/" + film.slug,
           createdAt: film.createdAt || "",
@@ -132,7 +131,7 @@ const latestFilmItems = computed((): Detail[] => {
 
 const topFilmItems = computed((): Detail[] => {
   return topFilms.value[0] !== null
-    ? topFilms.value?.map((film) => {
+    ? topFilms.value?.map((film: IFilm) => {
         return {
           title:
             film?.name +
@@ -140,6 +139,7 @@ const topFilmItems = computed((): Detail[] => {
             (film?.releaseYear ? film.releaseYear.toString() : "") +
             ")",
           value: film.description || "",
+          rating: film.rating || "0",
           avatar: film.poster || film.gallery[0] || "",
           to: "/films/" + film.slug,
           createdAt: film.createdAt || "",
@@ -151,10 +151,10 @@ const topFilmItems = computed((): Detail[] => {
 const personItems = computed((): Detail[] => {
   return (
     popularActors.value &&
-    popularActors.value?.map((person): Detail => {
+    popularActors.value?.map((person: IPerson): Detail => {
       return {
         title: person?.name || "",
-        value: person?.internationalName ?? "",
+        value: person?.bio || "",
         avatar: person?.avatar || "",
         to: "/persons/" + person?.slug || "",
       };
@@ -162,13 +162,8 @@ const personItems = computed((): Detail[] => {
   );
 });
 
-
 onMounted(async (): Promise<void> => {
   await fetchData();
-  darkAccentColors.value = Array.from(
-    { length: 2 },
-    () => useBgAccentColor().value
-  );
 });
 
 definePageMeta({

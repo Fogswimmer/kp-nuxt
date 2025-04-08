@@ -226,11 +226,11 @@ export const usePersonStore = defineStore("persons", () => {
     }
   };
 
-  const listPopularActors = async () => {
+  const listPopularActors = async (locale: string ) => {
     try {
       loading.value = true;
       const response = await $fetch<IPersonListResponse>(
-        `${baseUrl}/persons/actors/popular`
+        `${baseUrl}/persons/actors/popular?locale=${locale}`
       );
       popularActors.value = response?.items || [];
     } catch (error: unknown) {

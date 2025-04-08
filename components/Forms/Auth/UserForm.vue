@@ -58,6 +58,7 @@
       />
     </div>
     <v-btn
+      v-if="isNew"
       color="primary"
       variant="tonal"
       size="large"

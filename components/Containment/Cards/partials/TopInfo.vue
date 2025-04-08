@@ -35,27 +35,12 @@
                 icon="mdi-pencil"
                 @click="handleEditAvatar"
               />
-              <v-tooltip>
-                <template #activator="{ props }">
-                  <v-icon
-                    v-if="Boolean(isAdmin)"
-                    v-bind="props"
-                    color="primary"
-                    size="64"
-                    class="position-absolute"
-                    style="right: 0"
-                  >
-                    mdi-shield
-                  </v-icon>
-                </template>
-                {{ $t("auth.admin") }}
-              </v-tooltip>
             </div>
           </div>
           <template v-if="!loading">
             <div class="d-flex flex-column ga-1 justify-center align-center">
               <span
-                class="text-h6 text-lg-h4 font-weight-bold text-primary text-center"
+                class="text-h4 font-weight-bold text-primary text-center"
               >
                 {{ title }}</span
               >
@@ -89,7 +74,6 @@ defineProps<{
   generalInfo: Detail[];
   avatar: string;
   loading: boolean;
-  isAdmin?: boolean;
 }>();
 
 const { isAuthenticated } = storeToRefs(useAuthStore());

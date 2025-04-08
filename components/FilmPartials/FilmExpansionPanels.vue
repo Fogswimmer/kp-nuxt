@@ -10,7 +10,6 @@
         id="rating"
         tag="section"
         value="rating"
-        class="content-item"
         :title="$t('pages.films.rating')"
       >
         <v-expansion-panel-text>
@@ -118,7 +117,6 @@
         id="description"
         :title="$t('pages.films.description')"
         tag="section"
-        class="content-item"
         value="description"
       >
         <v-expansion-panel-text>

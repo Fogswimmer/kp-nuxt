@@ -78,6 +78,7 @@ declare global {
     subtitle?: string;
     icon?: string;
     to?: string;
+    rating?: number | string | null;
     avatar?: string;
     createdAt?: string;
     updatedAt?: string;

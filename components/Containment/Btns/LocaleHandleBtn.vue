@@ -1,5 +1,5 @@
 <template>
-  <v-btn stacked>
+  <v-btn icon>
     <v-badge color="transparent" :content="computedBadgeFlag">
       <v-icon>mdi-translate</v-icon>
     </v-badge>
