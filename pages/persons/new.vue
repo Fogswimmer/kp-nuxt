@@ -160,7 +160,7 @@ const handleFinish = (): void => {
   if (step.value <= 2) {
     navigateTo(localeRoute(`/persons`));
   } else {
-    navigateTo(localeRoute(`/persons/${personForm.value.id}`));
+    navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
   }
 };
 const handleCoverSubmit = async (files: File[]): Promise<void> => {
@@ -170,7 +170,7 @@ const handleCoverSubmit = async (files: File[]): Promise<void> => {
   if (error.value) {
     showErrorSnackbar.value = true;
   } else {
-    navigateTo(localeRoute(`/persons/${personForm.value.id}`));
+    navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
   }
 };
 

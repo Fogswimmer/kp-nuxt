@@ -182,11 +182,10 @@ export const useAuthStore = defineStore("authStore", () => {
   const resetPasswordRequest = async (locale: string): Promise<boolean> => {
     try {
       loading.value = true;
-      await $fetch<ResetTokenResponse>(`${baseUrl}/reset-password/request`, {
+      await $fetch<ResetTokenResponse>(`${baseUrl}/reset-password/request?locale=${locale}`, {
         method: "POST",
         body: {
           email: passwordResetForm.value.email,
-          locale: locale,
         },
       });
       loading.value = false;
@@ -196,6 +195,9 @@ export const useAuthStore = defineStore("authStore", () => {
       resetPasswordError.value = error;
       showErrorMessage.value = true;
       return false;
+    }
+    finally{
+      loading.value = false
     }
   };
 
@@ -218,6 +220,9 @@ export const useAuthStore = defineStore("authStore", () => {
       resetPasswordError.value = error;
       showErrorMessage.value = true;
       return false;
+    }
+    finally{
+      loading.value = false
     }
   };
 

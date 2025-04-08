@@ -176,7 +176,7 @@ const handleSetPoster = async (id: number): Promise<void> => {
     (filmForm.value.gallery && filmForm.value?.gallery[id - 1]) || "";
 
   await editFilm(locale.value);
-  navigateTo(localeRoute(`/films/${filmForm.value.id}`));
+  navigateTo(localeRoute(`/films/${filmForm.value.slug}`));
 };
 
 const updateForm = (value: IFilm) => {

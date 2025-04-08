@@ -3,13 +3,8 @@
     <Head>
       <Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
     </Head>
-    <v-sheet class="mx-auto" max-width="600">
-      <v-toolbar>
-        <v-toolbar-title>
-          {{ $t("auth.password_reset") }}
-        </v-toolbar-title>
-      </v-toolbar>
-      <v-card variant="tonal">
+    <AuthCard :title="$t('auth.password_reset')">
+      <v-card>
         <v-card-text class="pa-4">
           <v-form ref="emailFormRef" class="mt-4">
             <div class="d-flex flex-column ga-2">
@@ -33,7 +28,7 @@
           <SubmitBtn :loading="loading" @click="handleNewPasswordSubmit" />
         </v-card-actions>
       </v-card>
-    </v-sheet>
+    </AuthCard>
     <v-snackbar
       v-model="showErrorMessage"
       color="error"
@@ -43,8 +38,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useAuthStore } from "~/stores/authStore";
+import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
+import { useAuthStore } from "~/stores/authStore";
 
 const { loading, passwordResetForm, showErrorMessage } =
   storeToRefs(useAuthStore());
@@ -60,7 +56,8 @@ const handleNewPasswordSubmit = async (): Promise<void> => {
 };
 definePageMeta({
   name: "passwordReset",
-  path: "/password-reset/:slug",
+  path: "/auth/password-reset/:token",
+  middleware: ["validate-reset-token"], 
 });
 </script>
 

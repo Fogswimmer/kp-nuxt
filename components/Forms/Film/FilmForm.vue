@@ -126,7 +126,6 @@
         />
         <v-text-field
           v-model="form.trailer"
-          prepend-icon="mdi-asterisk"
           prepend-inner-icon="mdi-youtube"
           :label="$t('forms.film.trailer')"
           clearable
@@ -233,7 +232,6 @@ const handleUpdateModelValue = (): void => {
 
 const handleValidationAndSubmit = async (): Promise<void> => {
   const isValid = await validate();
-  console.log(isValid)
   if (isValid) {
     emit("form:submit");
   }

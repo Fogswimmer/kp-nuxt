@@ -4,7 +4,8 @@
       <Title>{{ definePageTitle(personFullName) }}</Title>
       <Meta name="description" :content="person?.bio" />
     </Head>
-    <v-sheet max-width="1200" class="mx-auto" rounded="lg">
+
+    <v-card variant="text" max-width="1200" class="mx-auto" rounded="lg">
       <DetailCard
         :film-variant="false"
         :page-name="personFullName"
@@ -115,10 +116,13 @@
             >
           </div>
         </template>
-
         <template #text>
           <GradientWrapper>
-            <v-expansion-panels v-model="mainAccordion" variant="accordion">
+            <v-expansion-panels
+              v-model="mainAccordion"
+              variant="accordion"
+              bg-color="transparent"
+            >
               <v-expansion-panel
                 id="bio"
                 value="bio"
@@ -164,7 +168,7 @@
                     :loading="loading"
                     with-avatar
                     @editor:open="photoEditMode = true"
-                    @cover:set="handleCoverChange"
+                    @cover:set="handleSetCover"
                     @avatar:set="handleChangeAvatar"
                     @delete:img="handleDeleteImg"
                   />
@@ -174,76 +178,76 @@
           </GradientWrapper>
         </template>
       </DetailCard>
-      <BaseDialog
-        v-model:opened="generalInfoEdit"
-        :max-width="1000"
-        :title="$t('actions.edit_person') + ' ' + personFullName"
-        @close="generalInfoEdit = false"
-      >
-        <template #text>
-          <div class="pa-4">
-            <PersonForm
-              :loading="loading"
-              :person-form="personForm"
-              :genders="genders"
-              :specialties="specialties"
-              @validate="isFormValid = $event"
-              @form:submit="submitGeneralInfoEdit"
-              @update:model-value="personForm = $event"
-            />
-          </div>
-        </template>
-      </BaseDialog>
-      <SuccessSnackbar
-        v-model:show="showSnackbar"
-        @close="showSnackbar = false"
-      />
-      <BaseDialog
-        v-model:opened="photoEditMode"
-        :title="computedGalleryEditTitle"
-        :max-width="1200"
-        @close="photoEditMode = false"
-      >
-        <template #text>
-          <PersonGalleryEdit
-            v-model:selected="selectedImagesIndices"
-            :active-tab="activeTab"
-            :person="person"
-            :slider-arr="sliderGalleryArr || []"
-            :upload-count="uploadCount"
-            :edit-mode="photoEditMode"
-            :upload-disabled="uploadCount === 0"
-            :remove-disabled="!person?.photos.length"
-            :card-height="GALLERY_CARD_HEIGHT"
-            @avatar:change="handleChangeAvatar"
-            @avatar:upload="handleAvatarUpload"
-            @update:selected="selectedImagesIndices = $event"
-            @delete:selected="showConfirmDialog = true"
-            @cover:change="handleCoverChange"
-            @upload="handlePhotosUpload"
+    </v-card>
+    <BaseDialog
+      v-model:opened="generalInfoEdit"
+      :max-width="1000"
+      :title="$t('actions.edit_person') + ' ' + personFullName"
+      @close="generalInfoEdit = false"
+    >
+      <template #text>
+        <div class="pa-4">
+          <PersonForm
+            :loading="loading"
+            :person-form="personForm"
+            :genders="genders"
+            :specialties="specialties"
+            @validate="isFormValid = $event"
+            @form:submit="submitGeneralInfoEdit"
+            @update:model-value="personForm = $event"
           />
-        </template>
-      </BaseDialog>
-      <ConfirmDialog
-        v-model="showConfirmDialog"
-        type="error"
-        :text="$t('forms.film.gallery_item_delete_confirm')"
-        :loading="loading"
-        @confirm="handlePhotosDelete"
-      />
-      <ConfirmDialog
-        v-model="showCoverReplacementWarning"
-        :text="$t('general.file_replacement_warning')"
-        @cancel="showCoverReplacementWarning = false"
-        @confirm="replaceCover"
-      />
-      <ConfirmDialog
-        v-model="showDeleteWarning"
-        :text="$t('general.entity_delete_warning')"
-        @cancel="showDeleteWarning = false"
-        @confirm="handlePersonDelete"
-      />
-    </v-sheet>
+        </div>
+      </template>
+    </BaseDialog>
+    <SuccessSnackbar
+      v-model:show="showSnackbar"
+      @close="showSnackbar = false"
+    />
+    <BaseDialog
+      v-model:opened="photoEditMode"
+      :title="computedGalleryEditTitle"
+      :max-width="1200"
+      @close="photoEditMode = false"
+    >
+      <template #text>
+        <PersonGalleryEdit
+          v-model:selected="selectedImagesIndices"
+          :active-tab="activeTab"
+          :person="person"
+          :slider-arr="sliderGalleryArr || []"
+          :upload-count="uploadCount"
+          :edit-mode="photoEditMode"
+          :upload-disabled="uploadCount === 0"
+          :remove-disabled="!person?.photos.length"
+          :card-height="GALLERY_CARD_HEIGHT"
+          @avatar:change="handleChangeAvatar"
+          @avatar:upload="handleAvatarUpload"
+          @update:selected="selectedImagesIndices = $event"
+          @delete:selected="showConfirmDialog = true"
+          @cover:change="handleCoverChange"
+          @upload="handlePhotosUpload"
+        />
+      </template>
+    </BaseDialog>
+    <ConfirmDialog
+      v-model="showConfirmDialog"
+      type="error"
+      :text="$t('forms.film.gallery_item_delete_confirm')"
+      :loading="loading"
+      @confirm="handlePhotosDelete"
+    />
+    <ConfirmDialog
+      v-model="showCoverReplacementWarning"
+      :text="$t('general.file_replacement_warning')"
+      @cancel="showCoverReplacementWarning = false"
+      @confirm="replaceCover"
+    />
+    <ConfirmDialog
+      v-model="showDeleteWarning"
+      :text="$t('general.entity_delete_warning')"
+      @cancel="showDeleteWarning = false"
+      @confirm="handlePersonDelete"
+    />
   </div>
 </template>
 
@@ -382,7 +386,17 @@ const submitBioEdit = async (text: string): Promise<void> => {
 };
 
 const handleChangeAvatar = async (index: number): Promise<void> => {
+  console.log(index);
   personForm.value.avatar = person.value?.photos[index - 1] || "";
+  await editPerson();
+  photoEditMode.value = false;
+  await fetchData();
+  showSnackbar.value = !showSnackbar.value;
+};
+
+const handleSetCover = async (index: number): Promise<void> => {
+  console.log(index);
+  personForm.value.cover = person.value?.photos[index - 1] || "";
   await editPerson();
   photoEditMode.value = false;
   await fetchData();

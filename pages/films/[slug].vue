@@ -386,6 +386,7 @@ const handleGalleryItemsDelete = async (): Promise<void> => {
 };
 
 const handleDeleteImg = async (index: number): Promise<void> => {
+  console.log(index);
   selectedImagesIndices.value.push(index);
   await handleGalleryItemsDelete();
 };
@@ -401,7 +402,7 @@ const handleGalleryUpload = async (files: File[]): Promise<void> => {
 };
 
 const handleChangePoster = async (index: number): Promise<void> => {
-  filmForm.value.poster = film.value?.gallery[index] || "";
+  filmForm.value.poster = film.value?.gallery[index - 1] || "";
   await editFilm(locale.value);
   editGalleryMode.value = false;
   await fetchData();

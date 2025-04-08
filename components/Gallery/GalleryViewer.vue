@@ -93,12 +93,12 @@ const openFullScreenModeOnClick = (index: number): void => {
   }
 };
 const handleSetAvatar = (index: number): void => {
-  emit("avatar:set", index);
+  emit("avatar:set", index + 1);
   fullscreenMode.value = false;
 };
 
 const handleSetCover = (index: number): void => {
-  emit("cover:set", index);
+  emit("cover:set", index + 1);
   fullscreenMode.value = false;
 };
 
@@ -106,10 +106,8 @@ const handleDeleteImg = (index: number): void => {
   emit("delete:img", index);
   fullscreenMode.value = false;
 };
-
 const handleSetPoster = (index: number): void => {
-  console.log(1);
-  emit("poster:set", index);
+  emit("poster:set", index + 1);
   fullscreenMode.value = false;
 };
 </script>

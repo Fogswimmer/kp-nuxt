@@ -3,22 +3,15 @@
     <Head>
       <Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
     </Head>
-    <v-sheet class="mx-auto" max-width="600">
-      <v-toolbar>
-        <template #prepend>
-          <BackBtn />
-        </template>
-        <v-toolbar-title>
-          {{ $t("auth.password_reset") }}
-        </v-toolbar-title>
-      </v-toolbar>
 
-      <v-card variant="tonal">
+    <AuthCard :title="$t('auth.password_reset')">
+      <v-card variant="text">
         <v-card-text class="pa-4">
           <v-form ref="emailFormRef" class="mt-4">
             <div class="d-flex flex-column ga-2">
               <v-text-field
                 v-model="passwordResetForm.email"
+                name="email"
                 :label="$t('auth.password_reset_email')"
                 :placeholder="$t('auth.password_reset_email')"
                 prepend-inner-icon="mdi-email-outline"
@@ -33,7 +26,8 @@
           <SubmitBtn :loading="loading" @click="handleValidationAndSubmit" />
         </v-card-actions>
       </v-card>
-    </v-sheet>
+    </AuthCard>
+
     <v-snackbar
       v-model="showSuccessMessage"
       color="success"
@@ -48,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
+import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
 import { useAuthStore } from "~/stores/authStore";
 
@@ -80,5 +74,6 @@ const handleValidationAndSubmit = async (): Promise<void> => {
 };
 definePageMeta({
   name: "passwordResetEmail",
+  path: "/auth/password-reset",
 });
 </script>
