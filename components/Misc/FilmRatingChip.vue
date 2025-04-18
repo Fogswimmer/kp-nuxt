@@ -2,10 +2,10 @@
   <v-chip
     v-if="rating !== '0'"
     color="warning"
-    density="compact"
+    :size="$vuetify.display.mdAndUp ? 'small' : 'x-small'"
     prepend-icon="mdi-star"
   >
-    {{ Number(rating).toFixed(1) }}
+    <span>{{ Number(rating).toFixed(1) }}</span>
   </v-chip>
 </template>
 

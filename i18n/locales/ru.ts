@@ -349,7 +349,7 @@ export default {
       add: "Добавить Фильм",
       edit: "Изменить Фильм",
       remove: "Удалить Фильм",
-      rating: "Рейтинг",
+      rating: "Рейтинг и комментарии",
       assessments: "оценок",
       no_assessments: "Нет оценок",
       producer: "Продюсер",

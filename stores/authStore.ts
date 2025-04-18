@@ -201,11 +201,28 @@ export const useAuthStore = defineStore("authStore", () => {
     }
   };
 
-  const sendNewPassword = async (): Promise<boolean> => {
+  const validateToken = async (token: string) => {
+    try {
+      loading.value = true;
+      await $fetch<ResetTokenResponse>(`${baseUrl}/reset/${token}`);
+      loading.value = false;
+      return true;
+    } catch (error: unknown) {
+      console.log(error);
+      resetPasswordError.value = error;
+      showErrorMessage.value = true;
+      return false;
+    }
+    finally{
+      loading.value = false
+    }
+  }
+
+  const sendNewPassword = async (token: string): Promise<boolean> => {
     try {
       loading.value = true;
       await $fetch<ResetTokenResponse>(
-        `${baseUrl}/reset-password/reset`,
+        `${baseUrl}/reset-password/reset/${token}/new-password`,
         {
           method: "POST",
           body: {
@@ -237,6 +254,7 @@ export const useAuthStore = defineStore("authStore", () => {
     isAdmin,
     passwordResetForm,
     resetToken,
+    validateToken,
     register,
     login,
     signOut,

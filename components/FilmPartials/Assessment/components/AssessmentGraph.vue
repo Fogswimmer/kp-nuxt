@@ -1,18 +1,12 @@
 <template>
   <div class="d-flex flex-column ga-2 justify-center fill-height">
     <template v-if="graphData.length">
-      <div v-for="(data, index) in graphData" :key="index">
+      <div v-for="(data, index) in sortedGraphData" :key="index">
         <div class="d-flex flex-column ga-1">
           <div class="d-flex ga-1 align-center w-100">
-            <ClientOnly>
-              <v-rating
-                readonly
-                :model-value="data.rating"
-                density="comfortable"
-                :color="stripeColor(data.rating)"
-                size="x-small"
-              />
-            </ClientOnly>
+            <v-chip :color="stripeColor(data.rating)" 
+            size="small" prepend-icon="mdi-star">{{ data.rating }}</v-chip>
+
             <v-spacer />
             <span class="text-caption">{{ data.count }}</span>
           </div>
@@ -38,10 +32,14 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{
+const props = defineProps<{
   graphData: AssessmentsGraph[];
   total: number;
 }>();
+
+const sortedGraphData = computed(() => {
+  return props.graphData.sort((a, b) => b.rating - a.rating);
+})
 
 const stripeColor = (value: number) => {
   if (value > 3) {

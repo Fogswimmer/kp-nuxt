@@ -2,9 +2,10 @@
   <div>
     <v-btn
       v-if="!isAuthenticated && $vuetify.display.mdAndUp"
+      :active="$route.name === 'signIn'"
       prepend-icon="mdi-login"
       variant="tonal"
-      :to="localeRoute('/auth/sign-in')"
+      :to="$localeRoute('/auth/sign-in')"
     >
       {{ $t("auth.sign_in") }}
     </v-btn>
@@ -37,7 +38,7 @@
               </v-avatar>
             </template>
           </v-list-item>
-          <v-avatar v-else v-bind="props" class="cursor-pointer">
+          <v-avatar v-else class="cursor-pointer" border>
             <v-img v-if="currentUser?.avatar" :src="currentUser?.avatar || ''">
               <template #error>
                 <v-avatar border>
@@ -45,7 +46,14 @@
                 </v-avatar>
               </template>
             </v-img>
-            <v-icon v-else @click="navigateTo(localeRoute('/profile'))">
+
+            <v-icon
+              v-else
+              :color="
+                $route.name && $route.name.toString().startsWith('signIn') ? 'primary' : ''
+              "
+              @click="navigateTo($localeRoute('/profile'))"
+            >
               mdi-account</v-icon
             >
           </v-avatar>
@@ -141,7 +149,6 @@ const { signOut, fetchCurrentUser, uploadAvatar, editUser } = useAuthStore();
 
 const showConfirmDialog = ref<boolean>(false);
 const showMenu = ref<boolean>(false);
-const localeRoute = useLocaleRoute();
 const handleSignOut = async (): Promise<void> => {
   await signOut();
   showConfirmDialog.value = false;

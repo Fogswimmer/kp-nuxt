@@ -114,11 +114,7 @@ const latestFilmItems = computed((): Detail[] => {
   return latestFilms.value[0] !== null
     ? latestFilms.value?.map((film: IFilm) => {
         return {
-          title:
-            film?.name +
-            " (" +
-            (film?.releaseYear ? film.releaseYear.toString() : "") +
-            ")",
+          title: film?.name || "",
           value: film.description || "",
           rating: film.rating || "0",
           avatar: film.poster || film.gallery[0] || "",
@@ -133,11 +129,7 @@ const topFilmItems = computed((): Detail[] => {
   return topFilms.value[0] !== null
     ? topFilms.value?.map((film: IFilm) => {
         return {
-          title:
-            film?.name +
-            " (" +
-            (film?.releaseYear ? film.releaseYear.toString() : "") +
-            ")",
+          title: film?.name || "",
           value: film.description || "",
           rating: film.rating || "0",
           avatar: film.poster || film.gallery[0] || "",

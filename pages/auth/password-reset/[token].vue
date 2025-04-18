@@ -23,7 +23,7 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn>{{ $t('auth.login') }}</v-btn>
+          <v-btn>{{ $t("auth.login") }}</v-btn>
 
           <SubmitBtn :loading="loading" @click="handleNewPasswordSubmit" />
         </v-card-actions>
@@ -33,6 +33,11 @@
       v-model="showErrorMessage"
       color="error"
       :text="$t('auth.password_reset_messages.error')"
+    />
+    <v-snackbar
+      v-model="showSuccessMessage"
+      color="success"
+      :text="$t('auth.password_reset_messages.success')"
     />
   </div>
 </template>
@@ -46,18 +51,22 @@ const { loading, passwordResetForm, showErrorMessage } =
   storeToRefs(useAuthStore());
 const { required, password: passwordRule } = useValidation();
 const { sendNewPassword } = useAuthStore();
-
 const showSuccessMessage = ref<boolean>(false);
+
 const handleNewPasswordSubmit = async (): Promise<void> => {
-  const success = await sendNewPassword();
+  const token = useRoute().params.token as string;
+  const success = await sendNewPassword(token);
   if (success) {
     showSuccessMessage.value = true;
+    setTimeout(() => {
+      navigateTo("/auth/sign-in");
+    }, 2000);
   }
 };
 definePageMeta({
   name: "passwordReset",
   path: "/auth/password-reset/:token",
-  middleware: ["validate-reset-token"], 
+  // middleware: ["validate-reset-token"],
 });
 </script>
 

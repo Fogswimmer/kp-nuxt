@@ -1,61 +1,35 @@
 <template>
   <v-card
     border
-    variant="text"
-    class="my-2 glassed"
+    variant="outlined"
+    class="ma-2"
     :color="color || 'surface-variant'"
     density="compact"
   >
     <v-toolbar class="pa-2" density="compact" color="transparent">
       <template #prepend>
-        <span class="text-subtitle-2 text-disabled">#{{ index + 1 }}</span>
         <div class="position-relative">
-          <v-avatar border class="ms-2">
+          <v-avatar border>
             <v-img :src="comment?.authorAvatar || ''">
               <template #placeholder>
-                <div class="d-flex fill-height align-center justify-center">
-                  <v-icon size="x-small">mdi-account</v-icon>
-                </div>
+                <ImgPlaceholder :loading="loading" icon="mdi-account" />
               </template>
               <template #error>
                 <ErrorPlaceHolder />
               </template>
             </v-img>
           </v-avatar>
-          <v-icon
-            v-if="!isAdmin"
-            class="position-absolute top-0"
-            style="right: -5px"
-            size="x-small"
-            color="yellow"
-            >mdi-shield</v-icon
-          >
         </div>
       </template>
-
-      <v-toolbar-items>
-        <v-btn
-          v-if="(isAuthenticated && comment.authorId === userId) || isAdmin"
-          variant="plain"
-          color="error"
-          prepend-icon="mdi-delete"
-          class="text-none ms-2"
-          @click="showDeleteConfirm = true"
-        >
-          {{ $t("actions.remove") }}</v-btn
-        >
-      </v-toolbar-items>
       <template #append>
         <FilmRatingChip :rating="comment.rating.toString() || '0'" />
       </template>
       <template #title>
         <div class="d-flex flex-column">
-          <div class="d-flex ga-1 align-center">
-            <span class="text-body-1 font-weight-bold text-truncate">{{
-              comment.authorName ? comment.authorName : "???"
-            }}</span>
-          </div>
-
+          <span
+            class="text-body-2 text-lg-text-body-1 font-weight-bold text-truncate"
+            >{{ comment.authorName ? comment.authorName : "???" }}</span
+          >
           <span class="text-caption text-disabled">{{
             dateFormatter(comment.createdAt)
           }}</span>
@@ -63,9 +37,24 @@
       </template>
     </v-toolbar>
     <v-divider />
-
-    <div class="pa-2 text-white">
-      {{ comment.comment }}
+    <div class="d-flex pa-2 align-center text-white">
+      <span> {{ comment.comment }}</span>
+      <v-spacer></v-spacer>
+      <v-tooltip>
+        <template #activator="{ props }">
+          <v-btn
+            v-if="(isAuthenticated && comment.authorId === userId) || isAdmin"
+            v-bind="props"
+            variant="plain"
+            icon
+            color="error"
+            size="small"
+            density="compact"
+            @click="showDeleteConfirm = true"
+          >
+            <v-icon>mdi-delete</v-icon></v-btn>
+        </template>{{ $t("actions.remove") }}
+      </v-tooltip>
     </div>
 
     <ConfirmDialog
@@ -81,6 +70,7 @@
 import FilmRatingChip from "~/components/Misc/FilmRatingChip.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
+import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 interface Comment {
   id: number;
   authorId: number;
@@ -92,6 +82,7 @@ interface Comment {
   updatedAt: string;
 }
 defineProps<{
+  loading: boolean;
   index: number;
   comment: Comment;
   isAdmin: boolean;
@@ -104,6 +95,8 @@ const emits = defineEmits<{
   (event: "confirm:delete", id: number): void;
 }>();
 const showDeleteConfirm = ref<boolean>(false);
+
+const sortOrder = ref<"asc" | "desc">("asc");
 
 const handleConfirm = (id: number) => {
   showDeleteConfirm.value = false;

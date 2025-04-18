@@ -350,7 +350,7 @@ export default {
       add: "Add Film",
       edit: "Edit Film",
       remove: "Remove Film",
-      rating: "Rating",
+      rating: "Rating and comments",
       assessments: "{count} assessments",
       no_assessments: "No assessments",
       your_assessment: "Your assessment",

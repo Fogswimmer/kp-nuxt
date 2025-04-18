@@ -1,55 +1,20 @@
 <template>
   <v-container class="overflow-hidden pa-2">
     <GradientWrapper v-for="(item, index) in items" :key="index">
-      <v-list-item
+      <HomeWallItem
+        :index="index"
+        :item="item"
+        :visible-items="visibleItems"
+        :loading="loading"
         v-intersect="onIntersect(index)"
-        lines="three"
-        variant="text"
-        rounded="lg"
-        :to="$localeRoute(item.to || '/')"
-        border
-        :class="[
-          'masonry-item my-6 glassed',
-          { 'fade-in': visibleItems.has(index) },
-        ]"
-      >
-        <v-list-item-title>
-          <div class="d-flex w-100 align-center">
-            <span class="text-lg-h5 text-body-2 text-truncate">{{
-              item.title
-            }}</span>
-            <v-spacer />
-            <FilmRatingChip
-              v-if="item.rating"
-              :rating="item?.rating.toString()"
-            />
-          </div>
-        </v-list-item-title>
-        <v-divider class="my-2" />
-        <v-list-item-subtitle>
-          {{ item.value || $t("general.no_data") }}
-        </v-list-item-subtitle>
-        <template #prepend>
-          <v-avatar
-            rounded="sm"
-            :size="$vuetify.display.mdAndUp ? 164 : 'large'"
-          >
-            <v-img :src="item?.avatar || ''">
-              <template #placeholder>
-                <ImgLoader />
-              </template>
-            </v-img>
-          </v-avatar>
-        </template>
-      </v-list-item>
+      />
     </GradientWrapper>
   </v-container>
 </template>
 
 <script lang="ts" setup>
-import ImgLoader from "../Containment/Img/ImgLoader.vue";
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
-import FilmRatingChip from "../Misc/FilmRatingChip.vue";
+import HomeWallItem from "./partials/HomeWallItem.vue";
 
 const visibleItems = ref(new Set<number>());
 
@@ -63,7 +28,7 @@ const onIntersect = (index: number) => (isVisible: boolean) => {
 
 defineProps<{
   items: Detail[];
-  loading?: boolean;
+  loading: boolean;
   sidebar?: boolean;
 }>();
 </script>

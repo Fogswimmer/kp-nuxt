@@ -6,44 +6,44 @@
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </template>
-      <v-list density="compact">
-        <v-list-item
-          :title="$t('actions.edit')"
-          prepend-icon="mdi-pencil"
-          value="edit"
-        >
-          <template #append>
-            <v-icon icon="mdi-menu-right" size="x-small" />
+
+      <v-list>
+        <v-list-group value="edit">
+          <template v-slot:activator="{ props }">
+            <v-list-item
+              v-bind="props"
+              prepend-icon="mdi-account-circle"
+              :title="$t('actions.edit')"
+            ></v-list-item>
           </template>
-          <v-menu activator="parent" submenu open-on-hover>
-            <v-list density="compact">
-              <v-list-item
-                :title="$t('pages.general_info')"
-                prepend-icon="mdi-information"
-                value="info"
-                @click="$emit('edit:general')"
-              />
-              <v-list-item
-                :title="$t('pages.detailed_info')"
-                prepend-icon="mdi-details"
-                value="details"
-                @click="$emit('edit:description')"
-              />
-              <v-list-item
-                :title="$t('pages.gallery')"
-                prepend-icon="mdi-view-gallery"
-                value="gallery"
-                @click="$emit('edit:gallery')"
-              />
-              <v-list-item
-                :title="$t('pages.films.trailer')"
-                prepend-icon="mdi-video"
-                value="gallery"
-                @click="$emit('edit:trailer')"
-              />
-            </v-list>
-          </v-menu>
-        </v-list-item>
+       
+         
+            <v-list-item
+              :title="$t('pages.general_info')"
+              prepend-icon="mdi-information"
+              value="info"
+              @click="$emit('edit:general')"
+            />
+            <v-list-item
+              :title="$t('pages.detailed_info')"
+              prepend-icon="mdi-details"
+              value="details"
+              @click="$emit('edit:description')"
+            />
+            <v-list-item
+              :title="$t('pages.gallery')"
+              prepend-icon="mdi-view-gallery"
+              value="gallery"
+              @click="$emit('edit:gallery')"
+            />
+            <v-list-item
+              :title="$t('pages.films.trailer')"
+              prepend-icon="mdi-video"
+              value="trailer"
+              @click="$emit('edit:trailer')"
+            />
+        
+        </v-list-group>
         <v-list-item
           :title="$t('actions.remove')"
           prepend-icon="mdi-delete"

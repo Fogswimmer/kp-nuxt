@@ -11,6 +11,7 @@
             <div class="d-flex flex-column ga-2">
               <v-text-field
                 v-model="passwordResetForm.email"
+                :disabled="showSuccessMessage"
                 name="email"
                 :label="$t('auth.password_reset_email')"
                 :placeholder="$t('auth.password_reset_email')"

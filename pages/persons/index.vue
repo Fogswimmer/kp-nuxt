@@ -75,7 +75,7 @@
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import definePageTitle from "~/utils/definePageTitle";
-import ImgLoader from "~/components/Containment/Img/ImgLoader.vue";
+import ImgLoader from "~/components/Containment/Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import { usePersonStore } from "~/stores/personStore";
 

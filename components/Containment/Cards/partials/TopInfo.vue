@@ -36,7 +36,7 @@
         </div>
         <template v-if="!loading">
           <div class="d-flex flex-column ga-1 justify-center align-center">
-            <span class="text-h4 font-weight-bold text-primary text-center">
+            <span class="text-h5 font-weight-bold text-primary text-center">
               {{ title }}</span
             >
             <div class="text-caption text-lg-subtitle-1">

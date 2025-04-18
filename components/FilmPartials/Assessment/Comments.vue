@@ -1,67 +1,56 @@
 <template>
-  <div>
+  <v-card variant="text" class="glassed">
     <template v-if="assessments.length > 0">
       <v-data-iterator
         :items="assementsWithColors"
         :page="page"
         :items-per-page="itemsPerPage"
       >
-        <template #header="{ page: currPage, pageCount, prevPage, nextPage }">
-          <div class="d-flex justify-space-between align-center pa-2">
+        <template #header>
+          <v-toolbar class="px-1" color="transparent">
+            <v-toolbar-title>
+            <span class="text-subtitle-1 text-lg-body-1">  {{ $t("pages.films.comments") }}</span>
+            </v-toolbar-title>
             <v-btn
-              class="me-8"
-              variant="text"
+              variant="tonal"
+              size="small"
               :disabled="assessments.length < itemsPerPage"
               @click="seeAllOnClick"
             >
-              <span
-                class="text-decoration-underline text-none text-subtitle-2"
-                >{{ $t("general.see_all") }}</span
-              >
+              <span class="text-none text-subtitle-2">{{
+                $t("general.see_all")
+              }}</span>
             </v-btn>
-            <div class="d-inline-flex">
-              <v-btn
-                :disabled="currPage === 1"
-                class="me-2"
-                icon="mdi-arrow-left"
-                size="small"
-                variant="plain"
-                density="compact"
-                @click="prevPage"
-              />
-
-              <v-btn
-                :disabled="currPage === pageCount"
-                icon="mdi-arrow-right"
-                size="small"
-                variant="plain"
-                density="compact"
-                @click="nextPage"
-              />
-            </div>
-          </div>
-          <v-divider />
+          </v-toolbar>
         </template>
         <template #default="{ items }">
-          <div v-for="(item, i) in items" :key="i">
-            <Comment
-              :color="item.raw.color"
-              :index="i"
-              :comment="item.raw"
-              :is-admin="isAdmin"
-              :is-authenticated="isAuthenticated"
-              :user-id="currentUser?.id || 0"
-              @confirm:delete="confirmDelete"
-            />
-          </div>
+          <Comment
+            v-for="(item, i) in items"
+            :key="i"
+            :loading="loading"
+            :color="item.raw.color"
+            :index="i"
+            :comment="item.raw"
+            :is-admin="isAdmin"
+            :is-authenticated="isAuthenticated"
+            :user-id="currentUser?.id || 0"
+            @confirm:delete="confirmDelete"
+          />
         </template>
         <template #footer="{ pageCount }">
           <v-footer class="justify-space-between text-subtitle-2 mt-2 glassed">
-            {{ $t("general.total") }}: {{ assessments.length }}
-            <div>
-              {{ $t("general.page") }} {{ page }} {{ $t("general.of") }}
-              {{ pageCount }}
-            </div>
+            <span> {{ $t("general.total") }}: {{ assessments.length }}</span>
+            <ClientOnly>
+              <v-pagination
+                v-model="page"
+                :length="pageCount"
+                rounded="lg"
+                variant="plain"
+                color="secondary"
+                :total-visible="3"
+                density="compact"
+              ></v-pagination
+            ></ClientOnly>
           </v-footer>
         </template>
       </v-data-iterator>
@@ -73,7 +62,7 @@
         </v-label>
       </div>
     </v-sheet>
-  </div>
+  </v-card>
 </template>
 
 <script lang="ts" setup>
@@ -85,6 +74,7 @@ const emits = defineEmits<{
 const props = defineProps<{
   assessments: IAssessment[];
   comment: string;
+  loading: boolean;
 }>();
 
 const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
@@ -126,7 +116,7 @@ const assementsWithColors = computed(() => {
     }
   );
 
-  return assementsWithColors.flat();
+  return assementsWithColors.flat().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 });
 const confirmDelete = (id: number) => {
   console.log(id);

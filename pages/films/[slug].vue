@@ -4,7 +4,7 @@
       <Title>{{ definePageTitle(film?.name || "") }}</Title>
       <Meta name="description" :content="film?.description" />
     </Head>
-    <v-sheet max-width="1200" class="mx-auto pa-2" rounded="lg">
+    <v-sheet max-width="1200" class="mx-auto" rounded="lg">
       <div>
         <DetailCard
           :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
@@ -90,6 +90,7 @@
                   >
                     <template #comments>
                       <Comments
+                        :loading="loading"
                         :assessments="film?.assessments || []"
                         :comment="comment"
                         @assession:submit="submitAssessment"
@@ -227,7 +228,7 @@ import Trailer from "~/components/FilmPartials/Trailer.vue";
 import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
 import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
-import ImgLoader from "~/components/Containment/Img/ImgLoader.vue";
+import ImgLoader from "~/components/Containment/Img/ImgPlaceholder.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
 

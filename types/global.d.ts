@@ -63,7 +63,7 @@ declare global {
     authorAvatar: string | null;
     rating: number;
     comment?: string;
-    createdAt: string | null;
+    createdAt: string;
   }
 
   interface FilmPerson {

@@ -8,16 +8,15 @@
         <BackBtn />
       </template>
       <v-toolbar-title>
-        <span class="font-weight-bold"> {{ pageName }} </span>
+        <span v-if="!loading" class="font-weight-bold"> {{ pageName }} </span>
+        <v-skeleton-loader v-else type="text" height="20" />
       </v-toolbar-title>
-      <template v-if="notification">
-        <div v-if="$vuetify.display.mdAndUp" class="d-flex justify-center pa-2">
+        <div v-if="$vuetify.display.mdAndUp && notification" class="d-flex justify-center pa-2">
           <slot name="notification" />
         </div>
-      </template>
       <slot name="menu" />
     </v-toolbar>
-    <div v-if="$vuetify.display.smAndDown" class="d-flex justify-center pa-2 text-caption">
+    <div v-if="$vuetify.display.smAndDown && notification" class="d-flex justify-center pa-2 text-caption">
       <slot name="notification" />
     </div>
     <v-card variant="text">
@@ -33,7 +32,7 @@
           class="position-relative"
         >
           <template #placeholder>
-            <ImgLoader />
+            <ImgPlaceholder />
           </template>
           <template #error>
             <v-sheet height="300" width="100%" class="default-cover" />
@@ -57,7 +56,7 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
-import ImgLoader from "../Img/ImgLoader.vue";
+import ImgPlaceholder from "../Img/ImgPlaceholder.vue";
 
 defineProps<{
   pageName?: string;

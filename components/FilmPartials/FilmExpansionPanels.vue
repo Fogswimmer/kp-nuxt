@@ -13,9 +13,7 @@
         :title="$t('pages.films.rating')"
       >
         <v-expansion-panel-text>
-          <div class="d-flex flex-column justify-center ga-1">
             <slot name="rating" />
-          </div>
         </v-expansion-panel-text>
       </v-expansion-panel>
       <v-expansion-panel :title="$t('pages.general_info')" value="info">

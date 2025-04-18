@@ -2,7 +2,7 @@
   <v-layout class="bg-gradient">
     <AppHeader />
     <v-main style="min-height: 100vh">
-      <slot />
+      <div class="mt-2"><slot /></div>
     </v-main>
     <BottomNav />
   </v-layout>

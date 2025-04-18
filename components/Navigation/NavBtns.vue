@@ -4,7 +4,7 @@
       <v-btn
         key="home_nav"
         :active="computedActiveNavBtn.home"
-        :to="localeRoute('/')"
+        :to="$localeRoute('/')"
         prepend-icon="mdi-home"
       >
         {{ $t("nav.home") }}
@@ -25,7 +25,7 @@
             :active="computedActiveNavBtn.films"
             prepend-icon="mdi-list-box"
             :title="$t('nav.films_list')"
-            :to="localeRoute('/films')"
+            :to="$localeRoute('/films')"
           />
           <v-tooltip
             :disabled="currentUser ? true : false"
@@ -39,7 +39,7 @@
                 :active="$route.name === 'newFilm'"
                 prepend-icon="mdi-plus"
                 :title="$t('nav.films_add')"
-                :to="localeRoute('/films/new')"
+                :to="$localeRoute('/films/new')"
               />
             </template>
             <span>{{ $t("actions.login_required") }}</span>
@@ -59,10 +59,10 @@
         </template>
         <v-list nav density="compact">
           <v-list-item
-            :active="$route.name === 'persons'"
+           :active="computedActiveNavBtn.persons"
             prepend-icon="mdi-list-box"
             :title="$t('nav.persons_list')"
-            :to="localeRoute('/persons')"
+            :to="$localeRoute('/persons')"
           />
           <v-tooltip
             :disabled="currentUser ? true : false"
@@ -74,10 +74,10 @@
               <v-list-item
                 v-bind="props"
                 :disabled="!currentUser"
-                :active="$route.name === 'newPerson'"
+                :active="computedActiveNavBtn.persons"
                 prepend-icon="mdi-plus"
                 :title="$t('nav.persons_add')"
-                :to="localeRoute('/persons/new')"
+                :to="$localeRoute('/persons/new')"
               />
             </template>
           </v-tooltip>
@@ -85,7 +85,7 @@
       </v-menu>
       <v-btn
         prepend-icon="mdi-information"
-        :to="localeRoute('/about')"
+        :to="$localeRoute('/about')"
         :active="computedActiveNavBtn.about"
       >
         {{ $t("general.about") }}
@@ -99,7 +99,6 @@ import { ClientOnly } from "#components";
 import { useAuthStore } from "~/stores/authStore";
 
 const { currentUser } = storeToRefs(useAuthStore());
-const localeRoute = useLocaleRoute();
 
 const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
   const route = useRoute();

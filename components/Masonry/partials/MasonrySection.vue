@@ -19,7 +19,7 @@
       <slot />
     </div>
     <v-skeleton-loader
-      v-for="n in 3"
+      v-for="n in 6"
       v-else
       :key="n"
       type="list-item-avatar-three-line"

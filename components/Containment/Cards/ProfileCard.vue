@@ -68,7 +68,7 @@
 </template>
 
 <script lang="ts" setup>
-import ImgLoader from "../Img/ImgLoader.vue";
+import ImgLoader from "../Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
 import CloseBtn from "../Btns/CloseBtn.vue";
 
