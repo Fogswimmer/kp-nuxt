@@ -4,13 +4,13 @@
       <Head>
         <Title>{{
           definePageTitle(
-            $t(`toast.messages.server_errors.${error?.statusCode}`)
+            $t(`toast.messages.server_errors.${error?.statusCode || 500}`)
           )
         }}</Title>
       </Head>
       <v-empty-state
         :headline="error?.statusCode.toString()"
-        :title="$t(`toast.messages.server_errors.${error?.statusCode}`)"
+        :title="$t(`toast.messages.server_errors.${error?.statusCode || 500}`)"
         :text="error?.message"
         icon="mdi-alert-rhombus"
         :action-text="$t('empty_states.actions.home')"
@@ -23,7 +23,4 @@
 <script setup lang="ts">
 const error = useError();
 
-// onMounted(() => {
-//   navigateTo("/");
-// });
 </script>

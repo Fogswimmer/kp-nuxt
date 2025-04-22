@@ -72,8 +72,8 @@ p {
   background-image: linear-gradient(
     to right top,
     #0c151c,
-    #101d27,
-    #122534,
+    #0b1a25,
+    #0e1b25,
     #0e161b,
     #0b1a25
   ) !important;

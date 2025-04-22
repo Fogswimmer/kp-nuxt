@@ -12,7 +12,7 @@
     </div>
     <v-spacer v-if="$vuetify.display.mdAndUp" />
     <template #append>
-      <div class="d-flex ga-1 align-center">
+      <div class="d-flex ga-1 align-center mr-2">
         <ProfileNav />
         <LocaleHandleBtn />
       </div>

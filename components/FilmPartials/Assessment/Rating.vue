@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column ga-2">
-    <v-card variant="text" class="glassed">
+    <v-card elevation="5" border>
       <v-container>
         <v-row>
           <v-col cols="12" lg="4" md="6" sm="12">

@@ -38,7 +38,7 @@
               </v-avatar>
             </template>
           </v-list-item>
-          <v-avatar v-else class="cursor-pointer" border>
+          <v-avatar v-else v-bind="props" class="cursor-pointer" border>
             <v-img v-if="currentUser?.avatar" :src="currentUser?.avatar || ''">
               <template #error>
                 <v-avatar border>

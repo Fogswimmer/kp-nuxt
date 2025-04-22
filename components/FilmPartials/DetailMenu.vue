@@ -16,33 +16,31 @@
               :title="$t('actions.edit')"
             ></v-list-item>
           </template>
-       
-         
-            <v-list-item
-              :title="$t('pages.general_info')"
-              prepend-icon="mdi-information"
-              value="info"
-              @click="$emit('edit:general')"
-            />
-            <v-list-item
-              :title="$t('pages.detailed_info')"
-              prepend-icon="mdi-details"
-              value="details"
-              @click="$emit('edit:description')"
-            />
-            <v-list-item
-              :title="$t('pages.gallery')"
-              prepend-icon="mdi-view-gallery"
-              value="gallery"
-              @click="$emit('edit:gallery')"
-            />
-            <v-list-item
-              :title="$t('pages.films.trailer')"
-              prepend-icon="mdi-video"
-              value="trailer"
-              @click="$emit('edit:trailer')"
-            />
-        
+
+          <v-list-item
+            :title="$t('pages.general_info')"
+            prepend-icon="mdi-information"
+            value="info"
+            @click="$emit('edit:general')"
+          />
+          <v-list-item
+            :title="$t('pages.detailed_info')"
+            prepend-icon="mdi-details"
+            value="details"
+            @click="$emit('edit:description')"
+          />
+          <v-list-item
+            :title="$t('pages.gallery')"
+            prepend-icon="mdi-view-gallery"
+            value="gallery"
+            @click="$emit('edit:gallery')"
+          />
+          <v-list-item
+            :title="$t('pages.films.trailer')"
+            prepend-icon="mdi-video"
+            value="trailer"
+            @click="$emit('edit:trailer')"
+          />
         </v-list-group>
         <v-list-item
           :title="$t('actions.remove')"

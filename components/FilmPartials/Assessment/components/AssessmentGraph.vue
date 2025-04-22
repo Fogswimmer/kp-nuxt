@@ -8,13 +8,13 @@
             size="small" prepend-icon="mdi-star">{{ data.rating }}</v-chip>
 
             <v-spacer />
-            <span class="text-caption">{{ data.count }}</span>
+            <v-chip size="x-small">{{ data.count }}</v-chip>
           </div>
           <div class="d-flex ga-1 align-center justify-between">
             <v-progress-linear
               height="10"
               rounded
-              :model-value="(data.count / total) * 100"
+              :model-value="(data.count / total) * 50"
               :color="stripeColor(data.rating)"
             />
           </div>

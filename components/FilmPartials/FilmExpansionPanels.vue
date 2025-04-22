@@ -1,5 +1,4 @@
 <template>
-  <GradientWrapper>
     <v-expansion-panels
       v-model="accordion"
       variant="accordion"
@@ -61,7 +60,7 @@
               :key="index"
               :title="actor.value"
               :value="index"
-              :to="localeRoute(actor.to || '/')"
+              :to="$localeRoute(actor.to || '/')"
               base-color="secondary"
             >
               <template #prepend>
@@ -92,7 +91,7 @@
               :subtitle="$t(person.title)"
               :title="person.value"
               :value="index"
-              :to="localeRoute(person.to || '/')"
+              :to="$localeRoute(person.to || '/')"
               base-color="secondary"
             >
               <template #prepend>
@@ -122,14 +121,11 @@
         </v-expansion-panel-text>
       </v-expansion-panel>
     </v-expansion-panels>
-  </GradientWrapper>
 </template>
 
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
-import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 
-const localeRoute = useLocaleRoute();
 const display = useDisplay();
 const accordion = ref<string[]>(display.smAndDown.value ? [] : ["rating", "info"]);
 const props = defineProps<{

@@ -28,7 +28,7 @@
                 <tr v-for="(item, i) in value" :key="i">
                   <td>{{ item.releaseYear || $t("general.no_data") }}</td>
                   <td>
-                    <nuxt-link :to="`/films/${item?.slug}`" class="text-accent">
+                    <nuxt-link :to="$localeRoute(`/films/${item?.slug}`)" class="text-accent">
                       {{ item?.name }}</nuxt-link
                     >
                   </td>

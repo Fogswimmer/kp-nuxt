@@ -1,7 +1,7 @@
 <template>
   <v-card
     border
-    variant="outlined"
+    variant="tonal"
     class="ma-2"
     :color="color || 'surface-variant'"
     density="compact"
@@ -37,26 +37,13 @@
       </template>
     </v-toolbar>
     <v-divider />
-    <div class="d-flex pa-2 align-center text-white">
-      <span> {{ comment.comment }}</span>
-      <v-spacer></v-spacer>
-      <v-tooltip>
-        <template #activator="{ props }">
-          <v-btn
-            v-if="(isAuthenticated && comment.authorId === userId) || isAdmin"
-            v-bind="props"
-            variant="plain"
-            icon
-            color="error"
-            size="small"
-            density="compact"
-            @click="showDeleteConfirm = true"
-          >
-            <v-icon>mdi-delete</v-icon></v-btn>
-        </template>{{ $t("actions.remove") }}
-      </v-tooltip>
-    </div>
-
+   
+     <div class="pa-2">
+        <span class="text-white ml-2">
+          {{ comment.comment }}</span
+        >
+     </div>
+   
     <ConfirmDialog
       v-model="showDeleteConfirm"
       :text="$t('actions.delete_assessment_warning')"
@@ -95,8 +82,6 @@ const emits = defineEmits<{
   (event: "confirm:delete", id: number): void;
 }>();
 const showDeleteConfirm = ref<boolean>(false);
-
-const sortOrder = ref<"asc" | "desc">("asc");
 
 const handleConfirm = (id: number) => {
   showDeleteConfirm.value = false;

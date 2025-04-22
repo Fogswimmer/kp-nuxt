@@ -117,7 +117,6 @@
           </div>
         </template>
         <template #text>
-          <GradientWrapper>
             <v-expansion-panels
               v-model="mainAccordion"
               variant="accordion"
@@ -175,7 +174,6 @@
                 </v-expansion-panel-text>
               </v-expansion-panel>
             </v-expansion-panels>
-          </GradientWrapper>
         </template>
       </DetailCard>
     </v-card>
@@ -263,10 +261,9 @@ import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import Filmography from "~/components/PersonPartials/Filmography.vue";
+import definePageTitle from "~/utils/definePageTitle";
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
-import definePageTitle from "~/utils/definePageTitle";
-import GradientWrapper from "~/components/Containment/Cards/GradientWrapper.vue";
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();

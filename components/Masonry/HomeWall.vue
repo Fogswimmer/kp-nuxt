@@ -29,7 +29,6 @@ const onIntersect = (index: number) => (isVisible: boolean) => {
 defineProps<{
   items: Detail[];
   loading: boolean;
-  sidebar?: boolean;
 }>();
 </script>
 

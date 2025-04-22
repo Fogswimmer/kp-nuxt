@@ -3,7 +3,6 @@
     <Head>
       <Title>{{ definePageTitle($t("auth.sign_in")) }}</Title>
     </Head>
-
     <AuthCard :title="$t('auth.sign_in')">
       <v-form ref="loginFormRef" class="mt-4">
         <div class="d-flex flex-column ga-2">

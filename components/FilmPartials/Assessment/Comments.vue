@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="text" class="glassed">
+  <v-card elevation="5" border>
     <template v-if="assessments.length > 0">
       <v-data-iterator
         :items="assementsWithColors"
@@ -84,10 +84,9 @@ const showDeleteConfirm = ref<boolean>(false);
 const commentColors = [
   "primary",
   "secondary",
-  "green",
   "blue",
   "orange",
-  "yellow",
+  "green",
 ];
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;
@@ -104,9 +103,11 @@ const assementsWithColors = computed(() => {
     {} as Record<string, IAssessment[]>
   );
 
-  const assementsWithColors = Object.entries(commentsWithSameAuthor).map(
+  const mappedAssementsWithColors = Object.entries(commentsWithSameAuthor).map(
     ([_, comments]) => {
-      const color = commentColors[comments.length % commentColors.length];
+      const color = commentColors[
+        Math.floor(Math.random() * commentColors.length)
+      ];
       return comments.map((comment) => {
         return {
           ...comment,
@@ -116,7 +117,7 @@ const assementsWithColors = computed(() => {
     }
   );
 
-  return assementsWithColors.flat().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  return mappedAssementsWithColors.flat().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 });
 const confirmDelete = (id: number) => {
   console.log(id);
