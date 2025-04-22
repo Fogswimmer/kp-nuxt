@@ -1,6 +1,6 @@
 import type { NavigationGuard } from 'vue-router'
-export type MiddlewareKey = "auth" | "content-present" | "guest" | "temporary"
-declare module "../../node_modules/.pnpm/nuxt@3.16.0_@parcel+watcher@2.5.1_@types+node@22.13.10_db0@0.3.1_eslint@9.22.0_jiti@2.4.2__io_s2oth3agfjxzfv6yc5beyd5qme/node_modules/nuxt/dist/pages/runtime/composables" {
+export type MiddlewareKey = "auth" | "content-present" | "guest" | "validate-reset-token"
+declare module "../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/pages/runtime/composables" {
   interface PageMeta {
     middleware?: MiddlewareKey | NavigationGuard | Array<MiddlewareKey | NavigationGuard>
   }

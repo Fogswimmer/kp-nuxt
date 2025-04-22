@@ -30,13 +30,9 @@ declare module '@nuxt/schema' {
      */
     ["auth"]: typeof import("nuxt-auth-utils").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module`
+     * Configuration for `@nuxt/devtools`
      */
-    ["site"]: typeof import("C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
-    /**
-     * Configuration for `@nuxtjs/sitemap`
-     */
-    ["sitemap"]: typeof import("@nuxtjs/sitemap").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["devtools"]: typeof import("@nuxt/devtools").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
      * Configuration for `@nuxt/telemetry`
      */
@@ -72,18 +68,14 @@ declare module '@nuxt/schema' {
      */
     ["auth"]?: typeof import("nuxt-auth-utils").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module`
+     * Configuration for `@nuxt/devtools`
      */
-    ["site"]?: typeof import("C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-    /**
-     * Configuration for `@nuxtjs/sitemap`
-     */
-    ["sitemap"]?: typeof import("@nuxtjs/sitemap").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["devtools"]?: typeof import("@nuxt/devtools").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
      * Configuration for `@nuxt/telemetry`
      */
     ["telemetry"]?: typeof import("@nuxt/telemetry").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxtjs/i18n", Exclude<NuxtConfig["i18n"], boolean>] | ["@pinia/nuxt", Exclude<NuxtConfig["pinia"], boolean>] | ["@nuxt/eslint", Exclude<NuxtConfig["eslint"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["vuetify-nuxt-module", Exclude<NuxtConfig["vuetify"], boolean>] | ["@nuxt/test-utils/module", Exclude<NuxtConfig["testUtils"], boolean>] | ["nuxt-auth-utils", Exclude<NuxtConfig["auth"], boolean>] | ["C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module", Exclude<NuxtConfig["site"], boolean>] | ["@nuxtjs/sitemap", Exclude<NuxtConfig["sitemap"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
+    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxtjs/i18n", Exclude<NuxtConfig["i18n"], boolean>] | ["@pinia/nuxt", Exclude<NuxtConfig["pinia"], boolean>] | ["@nuxt/eslint", Exclude<NuxtConfig["eslint"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["vuetify-nuxt-module", Exclude<NuxtConfig["vuetify"], boolean>] | ["@nuxt/test-utils/module", Exclude<NuxtConfig["testUtils"], boolean>] | ["nuxt-auth-utils", Exclude<NuxtConfig["auth"], boolean>] | ["@nuxt/devtools", Exclude<NuxtConfig["devtools"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
   }
 }
 declare module 'nuxt/schema' {
@@ -124,15 +116,10 @@ declare module 'nuxt/schema' {
      */
     ["auth"]: typeof import("nuxt-auth-utils").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
-     * Configuration for `C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module`
-     * @see https://www.npmjs.com/package/C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module
+     * Configuration for `@nuxt/devtools`
+     * @see https://www.npmjs.com/package/@nuxt/devtools
      */
-    ["site"]: typeof import("C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? O : Record<string, any>
-    /**
-     * Configuration for `@nuxtjs/sitemap`
-     * @see https://www.npmjs.com/package/@nuxtjs/sitemap
-     */
-    ["sitemap"]: typeof import("@nuxtjs/sitemap").default extends NuxtModule<infer O> ? O : Record<string, any>
+    ["devtools"]: typeof import("@nuxt/devtools").default extends NuxtModule<infer O> ? O : Record<string, any>
     /**
      * Configuration for `@nuxt/telemetry`
      * @see https://www.npmjs.com/package/@nuxt/telemetry
@@ -176,21 +163,16 @@ declare module 'nuxt/schema' {
      */
     ["auth"]?: typeof import("nuxt-auth-utils").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
-     * Configuration for `C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module`
-     * @see https://www.npmjs.com/package/C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module
+     * Configuration for `@nuxt/devtools`
+     * @see https://www.npmjs.com/package/@nuxt/devtools
      */
-    ["site"]?: typeof import("C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-    /**
-     * Configuration for `@nuxtjs/sitemap`
-     * @see https://www.npmjs.com/package/@nuxtjs/sitemap
-     */
-    ["sitemap"]?: typeof import("@nuxtjs/sitemap").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
+    ["devtools"]?: typeof import("@nuxt/devtools").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
     /**
      * Configuration for `@nuxt/telemetry`
      * @see https://www.npmjs.com/package/@nuxt/telemetry
      */
     ["telemetry"]?: typeof import("@nuxt/telemetry").default extends NuxtModule<infer O> ? Partial<O> : Record<string, any>
-    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxtjs/i18n", Exclude<NuxtConfig["i18n"], boolean>] | ["@pinia/nuxt", Exclude<NuxtConfig["pinia"], boolean>] | ["@nuxt/eslint", Exclude<NuxtConfig["eslint"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["vuetify-nuxt-module", Exclude<NuxtConfig["vuetify"], boolean>] | ["@nuxt/test-utils/module", Exclude<NuxtConfig["testUtils"], boolean>] | ["nuxt-auth-utils", Exclude<NuxtConfig["auth"], boolean>] | ["C:/Users/das/Documents/Dyakov/Training_projects/kp-nuxt/node_modules/.pnpm/nuxt-site-config@3.1.6_magicast@0.3.5_vue@3.5.13_typescript@5.8.2_/node_modules/nuxt-site-config/dist/module", Exclude<NuxtConfig["site"], boolean>] | ["@nuxtjs/sitemap", Exclude<NuxtConfig["sitemap"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
+    modules?: (undefined | null | false | NuxtModule<any> | string | [NuxtModule | string, Record<string, any>] | ["@nuxtjs/i18n", Exclude<NuxtConfig["i18n"], boolean>] | ["@pinia/nuxt", Exclude<NuxtConfig["pinia"], boolean>] | ["@nuxt/eslint", Exclude<NuxtConfig["eslint"], boolean>] | ["@nuxt/image", Exclude<NuxtConfig["image"], boolean>] | ["vuetify-nuxt-module", Exclude<NuxtConfig["vuetify"], boolean>] | ["@nuxt/test-utils/module", Exclude<NuxtConfig["testUtils"], boolean>] | ["nuxt-auth-utils", Exclude<NuxtConfig["auth"], boolean>] | ["@nuxt/devtools", Exclude<NuxtConfig["devtools"], boolean>] | ["@nuxt/telemetry", Exclude<NuxtConfig["telemetry"], boolean>])[],
   }
   interface RuntimeConfig {
    app: {
@@ -571,122 +553,6 @@ declare module 'nuxt/schema' {
 
          clientId: string,
       },
-   },
-
-   sitemap: {
-      isI18nMapped: boolean,
-
-      sitemapName: string,
-
-      isMultiSitemap: boolean,
-
-      excludeAppSources: Array<any>,
-
-      cacheMaxAgeSeconds: number,
-
-      autoLastmod: boolean,
-
-      defaultSitemapsChunkSize: number,
-
-      minify: boolean,
-
-      sortEntries: boolean,
-
-      debug: boolean,
-
-      discoverImages: boolean,
-
-      discoverVideos: boolean,
-
-      sitemapsPathPrefix: string,
-
-      isNuxtContentDocumentDriven: boolean,
-
-      xsl: string,
-
-      xslTips: boolean,
-
-      xslColumns: Array<{
-
-      }>,
-
-      credits: boolean,
-
-      version: string,
-
-      sitemaps: {
-         index: {
-            sitemapName: string,
-
-            _route: string,
-
-            sitemaps: Array<any>,
-
-            include: Array<any>,
-
-            exclude: Array<any>,
-         },
-
-         "ru-RU": {
-            include: Array<any>,
-
-            exclude: Array<string>,
-
-            includeAppSources: boolean,
-
-            sitemapName: string,
-
-            _route: string,
-         },
-
-         "en-US": {
-            include: Array<any>,
-
-            exclude: Array<string>,
-
-            includeAppSources: boolean,
-
-            sitemapName: string,
-
-            _route: string,
-         },
-
-         "fr-FR": {
-            include: Array<any>,
-
-            exclude: Array<string>,
-
-            includeAppSources: boolean,
-
-            sitemapName: string,
-
-            _route: string,
-         },
-      },
-
-      autoI18n: {
-         differentDomains: boolean,
-
-         defaultLocale: string,
-
-         locales: Array<{
-
-         }>,
-
-         strategy: string,
-      },
-   },
-
-   "nuxt-site-config": {
-      stack: Array<{
-
-      }>,
-
-      version: string,
-
-      debug: boolean,
-
-      multiTenancy: Array<any>,
    },
   }
   interface PublicRuntimeConfig {

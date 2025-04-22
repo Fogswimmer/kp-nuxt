@@ -1,5 +1,5 @@
 <template>
-  <v-card class="text-center" variant="tonal" color="surface-variant">
+  <v-card class="text-center">
     <v-card-text>
       <v-form ref="formRef">
         <div class="d-flex align-center justify-center ga-1">

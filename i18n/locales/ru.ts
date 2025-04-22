@@ -411,6 +411,7 @@ export default {
       title: "О проекте",
       subtitle: "Техническая информация",
       stack: "Стек технологий",
+      scheme: "Схема контейнеров",
       table_headers: {
         frontend: "Frontend",
         backend: "Backend",
@@ -427,7 +428,7 @@ export default {
           version_control: "Контроль версий",
           pipeline: "Пайплайн",
           containerisation: "Контейнеризация",
-          notice: "Примечание",
+          scripts: "Скрипты",
         },
       },
       author: {

@@ -406,6 +406,7 @@ export default {
       title: "A propos",
       subtitle: "Informations techniques",
       stack: "Stack technique",
+      scheme: "Scheme des conteneurs",
       table_headers: {
         frontend: "Frontend",
         backend: "Backend",
@@ -422,7 +423,7 @@ export default {
           version_control: "Contrôle de version",
           pipeline: "Pipeline",
           containerisation: "Conteneurisation",
-          notice: "Remarque",
+          scripts: "Scripts",
         },
       },
       author: {

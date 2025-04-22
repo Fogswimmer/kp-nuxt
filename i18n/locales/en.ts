@@ -410,6 +410,7 @@ export default {
       title: "About project",
       subtitle: "Technical information",
       stack: "Stack",
+      scheme: "Containers Scheme",
       table_headers: {
         frontend: "Frontend",
         backend: "Backend",

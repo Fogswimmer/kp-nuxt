@@ -14,7 +14,6 @@ declare module "#build/test-component-wrapper.mjs";
 declare module "#build/image-options.mjs";
 declare module "#build/vuetify-nuxt-plugin.client.mjs";
 declare module "#build/vuetify-nuxt-plugin.server.mjs";
-declare module "#build/nuxt-site-config/i18n-plugin-deps.mjs";
 declare module "#build/routes.mjs";
 declare module "#build/pages.mjs";
 declare module "#build/router.options.mjs";
