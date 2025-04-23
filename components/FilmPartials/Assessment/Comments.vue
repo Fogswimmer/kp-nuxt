@@ -69,7 +69,7 @@
 import Comment from "./components/Comment.vue";
 
 const emits = defineEmits<{
-  (event: "coment:delete", id: number): void;
+  (event: "assession:delete", id: number): void;
 }>();
 const props = defineProps<{
   assessments: IAssessment[];
@@ -127,7 +127,7 @@ const assementsWithColors = computed(() => {
 });
 const confirmDelete = (id: number) => {
   console.log(id);
-  emits("coment:delete", id);
+  emits("assession:delete", id);
   showDeleteConfirm.value = false;
 };
 </script>

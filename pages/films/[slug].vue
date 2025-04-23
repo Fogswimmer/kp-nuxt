@@ -20,7 +20,7 @@
               <v-row>
                 <v-col cols="12" lg="3" md="4" sm="12">
                   <v-card elevation="5" border height="420">
-                    <v-img :src="film?.poster || ''" cover>
+                    <v-img :src="film?.poster || ''" cover height="100%">
                       <template #placeholder>
                         <ImgPlaceholder :loading="loading" />
                       </template>
@@ -77,7 +77,6 @@
                     @assession:submit="submitAssessment"
                     @assession:enable="isAssessing = true"
                     @assession:cancel="cancelAssessment"
-                    @assession:delete="deleteAssessment"
                     @comment:update="comment = $event"
                     @rating:update="rating = $event"
                   >
@@ -128,7 +127,7 @@
                     @assession:submit="submitAssessment"
                     @assession:enable="isAssessing = true"
                     @assession:cancel="cancelAssessment"
-                    @comment:delete="deleteAssessment"
+                    @assession:delete="deleteAssessment"
                   />
                 </template>
               </FilmExpansionPanels>

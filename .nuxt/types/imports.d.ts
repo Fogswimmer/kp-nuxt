@@ -90,6 +90,7 @@ declare global {
   const reloadNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/chunk')['reloadNuxtApp']
   const requestIdleCallback: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/compat/idle-callback')['requestIdleCallback']
   const resolveComponent: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.3/node_modules/vue')['resolveComponent']
+  const setInterval: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/compat/interval')['setInterval']
   const setPageLayout: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/router')['setPageLayout']
   const setResponseStatus: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']
   const shallowReactive: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.3/node_modules/vue')['shallowReactive']
@@ -140,7 +141,6 @@ declare global {
   const useModel: typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.3/node_modules/vue')['useModel']
   const useNuxtApp: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']
-  const useNuxtDevTools: typeof import('../../node_modules/.pnpm/@nuxt+devtools@2.3.2_vite@6.2.5_@types+node@22.14.0_jiti@2.4.2_sass-embedded@1.86.3_ter_90d6f1ba420a1a1f9240e9f8b8094bcf/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
   const usePersonStore: typeof import('../../stores/personStore')['usePersonStore']
   const usePinia: typeof import('../../node_modules/.pnpm/@pinia+nuxt@0.9.0_magicast@0.3.5_pinia@2.3.1_typescript@5.8.3_vue@3.5.13_typescript@5.8.3__/node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']
   const usePreviewMode: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']
@@ -308,6 +308,7 @@ declare module 'vue' {
     readonly reloadNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/chunk')['reloadNuxtApp']>
     readonly requestIdleCallback: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/compat/idle-callback')['requestIdleCallback']>
     readonly resolveComponent: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.3/node_modules/vue')['resolveComponent']>
+    readonly setInterval: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/compat/interval')['setInterval']>
     readonly setPageLayout: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/router')['setPageLayout']>
     readonly setResponseStatus: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/ssr')['setResponseStatus']>
     readonly shallowReactive: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.3/node_modules/vue')['shallowReactive']>
@@ -358,7 +359,6 @@ declare module 'vue' {
     readonly useModel: UnwrapRef<typeof import('../../node_modules/.pnpm/vue@3.5.13_typescript@5.8.3/node_modules/vue')['useModel']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/nuxt')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/asyncData')['useNuxtData']>
-    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/.pnpm/@nuxt+devtools@2.3.2_vite@6.2.5_@types+node@22.14.0_jiti@2.4.2_sass-embedded@1.86.3_ter_90d6f1ba420a1a1f9240e9f8b8094bcf/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePersonStore: UnwrapRef<typeof import('../../stores/personStore')['usePersonStore']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/.pnpm/@pinia+nuxt@0.9.0_magicast@0.3.5_pinia@2.3.1_typescript@5.8.3_vue@3.5.13_typescript@5.8.3__/node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly usePreviewMode: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/app/composables/preview')['usePreviewMode']>

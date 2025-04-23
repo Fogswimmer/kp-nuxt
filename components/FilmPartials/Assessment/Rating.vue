@@ -76,7 +76,6 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
 const formOpen = ref<boolean>(false);
 defineEmits<{
   (event: "assession:submit" | "assession:enable" | "assession:cancel"): void;
-  (event: "assession:delete", id: number): void;
   (event: "comment:update" | "rating:update", value: string | number): void;
 }>();
 

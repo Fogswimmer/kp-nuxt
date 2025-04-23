@@ -125,13 +125,6 @@
           @update:model-value="handleUpdateModelValue"
         />
         <v-text-field
-          v-model="form.trailer"
-          prepend-inner-icon="mdi-youtube"
-          :label="$t('forms.film.trailer')"
-          clearable
-          @update:model-value="handleUpdateModelValue"
-        />
-        <v-text-field
           v-model="form.slogan"
           name="slogan"
           :label="$t('forms.film.slogan')"
