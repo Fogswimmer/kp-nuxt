@@ -1,12 +1,13 @@
 <template>
   <v-card
     border
-    variant="tonal"
     class="ma-2"
+    :loading="loading"
+    variant="tonal"
     :color="color || 'surface-variant'"
     density="compact"
   >
-    <v-toolbar class="pa-2" density="compact" color="transparent">
+    <v-toolbar class="pa-2 glassed" density="compact">
       <template #prepend>
         <div class="position-relative">
           <v-avatar border>
@@ -37,13 +38,20 @@
       </template>
     </v-toolbar>
     <v-divider />
-   
-     <div class="pa-2">
-        <span class="text-white ml-2">
-          {{ comment.comment }}</span
-        >
-     </div>
-   
+
+    <div class="d-flex pa-2">
+      <span class="text-white ml-2"> {{ comment.comment }}</span>
+      <v-spacer />
+      <v-btn
+        v-if="isAdmin || userId === comment.authorId"
+        size="x-small"
+        variant="tonal"
+        icon="mdi-delete"
+        color="error"
+        @click="showDeleteConfirm = true"
+      ></v-btn>
+    </div>
+
     <ConfirmDialog
       v-model="showDeleteConfirm"
       :text="$t('actions.delete_assessment_warning')"

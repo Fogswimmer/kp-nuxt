@@ -5,53 +5,6 @@
       bg-color="transparent"
       border
     >
-      <v-expansion-panel
-        id="rating"
-        tag="section"
-        value="rating"
-        :title="$t('pages.films.rating')"
-      >
-        <v-expansion-panel-text>
-            <slot name="rating" />
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-      <v-expansion-panel :title="$t('pages.general_info')" value="info">
-        <v-expansion-panel-text>
-          <v-list rounded="lg" nav border>
-            <div v-for="(detail, index) in generalInfo" :key="index">
-              <v-list-item
-                :key="index"
-                :subtitle="$t(detail.title)"
-                :prepend-icon="detail.icon"
-                class="my-2"
-              >
-                <v-list-item-title :class="{ 'text-secondary': detail.to }">
-                  {{ detail.value || $t("general.no_data") }}
-                </v-list-item-title>
-              </v-list-item>
-              <v-tooltip
-                v-if="
-                  typeof detail.value === 'string' && detail.value.length > 50
-                "
-                activator="parent"
-              >
-                <span> {{ detail.value }}</span>
-              </v-tooltip>
-            </div>
-          </v-list>
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-      <v-expansion-panel
-        id="gallery"
-        value="gallery"
-        tag="section"
-        :title="$t('pages.films.gallery')"
-      >
-        <v-expansion-panel-text>
-          <slot name="gallery-viewer" />
-        </v-expansion-panel-text>
-      </v-expansion-panel>
-
       <v-expansion-panel :title="$t('pages.films.starring')" value="starring">
         <v-expansion-panel-text>
           <v-list rounded="lg" nav border>
@@ -120,6 +73,27 @@
           <slot name="description" />
         </v-expansion-panel-text>
       </v-expansion-panel>
+      <v-expansion-panel
+      id="gallery"
+      value="gallery"
+      tag="section"
+      :title="$t('pages.films.gallery')"
+    >
+      <v-expansion-panel-text>
+        <slot name="gallery-viewer" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+      <v-expansion-panel
+        id="rating"
+        tag="section"
+        value="rating"
+        :title="$t('pages.films.comments')"
+      >
+        <v-expansion-panel-text>
+            <slot name="rating" />
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+
     </v-expansion-panels>
 </template>
 
@@ -131,45 +105,6 @@ const accordion = ref<string[]>(display.smAndDown.value ? [] : ["rating", "info"
 const props = defineProps<{
   film: IFilm | null;
 }>();
-
-const generalInfo = computed((): Detail[] => {
-  const info = [
-    {
-      title: "forms.film.name",
-      value: props.film?.name || "",
-      icon: "mdi-movie",
-      tooltip: props.film && props.film.name?.length > 60 ? true : false,
-    },
-    {
-      title: "forms.film.slogan",
-      value: props.film?.slogan || "",
-      icon: "mdi-format-title",
-      tooltip:
-        props.film?.slogan && props.film.slogan?.length > 60 ? true : false,
-    },
-    {
-      title: "forms.film.duration",
-      value: props.film?.duration || "",
-      icon: "mdi-timer",
-    },
-    {
-      title: "forms.film.genres",
-      value: props.film?.genreNames ? props.film?.genreNames.join(", ") : "",
-      icon: "mdi-filmstrip",
-      tooltip:
-        props.film?.genreNames && props.film?.genreNames.join(", ").length > 120
-          ? true
-          : false,
-    },
-    {
-      title: "forms.film.age",
-      value: props.film?.age + "+" || "",
-      icon: "mdi-account-supervisor",
-    },
-  ];
-
-  return info as Detail[];
-});
 
 const starring = computed((): Detail[] => {
   return props.film

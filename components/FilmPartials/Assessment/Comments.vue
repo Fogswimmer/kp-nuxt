@@ -82,11 +82,17 @@ const page = ref<number>(1);
 const itemsPerPage = ref<number>(5);
 const showDeleteConfirm = ref<boolean>(false);
 const commentColors = [
-  "primary",
-  "secondary",
-  "blue",
-  "orange",
-  "green",
+  'blue',
+  'green',
+  'red',
+  'yellow',
+  'orange',
+  'pink',
+  'indigo',
+  'purple',
+  'teal',
+  'cyan',
+  'brown',
 ];
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;

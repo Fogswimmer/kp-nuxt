@@ -7,6 +7,8 @@ export default {
     persons_list: "Les meilleurs acteurs, directeurs, producteurs, compositeurs, auteurs de tous les temps",
   },
   general: {
+    max_file_size: "Taille maximale des fichiers - { size }",
+    max_file_size_error: "Taille maximale des fichiers atteinte - { size }",
     youtube_link: "Lien youtube",
     img_replacement_warning: "L'image actuelle sera remplacée. Continuer?",
     img_delete_warning: "L'image actuelle sera supprimée. Continuer?",
@@ -348,7 +350,7 @@ export default {
       add: "Ajouter Film",
       edit: "Modifier Film",
       remove: "Supprimer Film",
-      rating: "Evaluation et avis",
+      rating: "Evaluation",
       assessments: "{count} avis",
       no_assessments: "Aucun avis",
       your_assessment: "Votre avis",
@@ -407,6 +409,7 @@ export default {
       subtitle: "Informations techniques",
       stack: "Stack technique",
       scheme: "Scheme des conteneurs",
+      code: "Code",
       table_headers: {
         frontend: "Frontend",
         backend: "Backend",

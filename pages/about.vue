@@ -108,9 +108,7 @@
                     }}
                   </th>
                   <th>
-                    {{
-                      $t("pages.about.dev_prod.table_headers.scripts")
-                    }}
+                    {{ $t("pages.about.dev_prod.table_headers.scripts") }}
                   </th>
                 </tr>
               </thead>
@@ -123,7 +121,7 @@
                     </div>
                   </td>
                   <td>
-                    <div class="d-flex  align-center ga-2">
+                    <div class="d-flex align-center ga-2">
                       <v-icon color="purple" size="x-large">mdi-github</v-icon>
                       GitHub Actions: CI & CD
                     </div>
@@ -148,22 +146,106 @@
                       </span>
                     </div>
                     <span>
-                        <v-icon size="x-large" color="orange"> mdi-file</v-icon>
-                        Makefile
-                      </span>
+                      <v-icon size="x-large" color="orange"> mdi-file</v-icon>
+                      Makefile
+                    </span>
                   </td>
                 </tr>
               </tbody>
             </v-table>
-          </v-expansion-panel-text>
-        </v-expansion-panel>
-        <v-expansion-panel :title="$t('pages.about.scheme')" value="scheme">
-          <v-expansion-panel-text>
-            <v-img src="/img/scheme.webp" alt="scheme" height="400">
-              <template #placeholder>
-                <ImgPlaceholder />
-              </template>
-            </v-img>
+            <v-card border class="mt-2">
+              <v-toolbar class="glassed">
+                <v-tabs v-model="active">
+                  <v-tab value="scheme" prepend-icon="mdi-image">{{
+                    $t("pages.about.scheme")
+                  }}</v-tab>
+                  <v-tab value="code" prepend-icon="mdi-code-tags"
+                    >compose.yaml</v-tab
+                  >
+                </v-tabs>
+              </v-toolbar>
+              <v-card-text>
+                <v-tabs-window v-model="active">
+                  <v-tabs-window-item value="scheme">
+                    <v-img src="/img/scheme.webp" alt="scheme" height="400">
+                      <template #placeholder>
+                        <ImgPlaceholder />
+                      </template>
+                    </v-img>
+                  </v-tabs-window-item>
+                  <v-tabs-window-item value="code">
+                    <pre>
+                    <code>
+services:
+  symfony:
+    build: ./symfony
+    container_name: symfony
+    ports:
+      - "8080:80"
+    volumes:
+      - ./symfony:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+  caddy:
+    image: caddy:latest
+    restart: unless-stopped
+    container_name: caddy
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy/data:/data
+      - ./caddy_config:/config
+      - ./caddy/fallback:/var/www
+    depends_on:
+      - nuxt
+      - symfony
+    networks:
+      - app-network
+  nuxt:
+    build: ./nuxt 
+    working_dir: /app
+    container_name: nuxt
+    ports:
+      - "3000:3000"
+    command: ["node", "/app/.output/server/index.mjs"]
+    networks:
+      - app-network
+  db:
+    image: postgres:16
+    container_name: db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: trust
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+  caddy_data:
+
+networks:
+  app-network:
+    driver: bridge
+  </code>
+                      </pre>
+                  </v-tabs-window-item>
+                </v-tabs-window>
+              </v-card-text>
+            </v-card>
           </v-expansion-panel-text>
         </v-expansion-panel>
         <v-expansion-panel
@@ -241,8 +323,8 @@ import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 
-const accordion = ref<string[]>(["stack", "devOps"]);
-
+const accordion = ref<string[]>(["stack"]);
+const active = ref("scheme");
 definePageMeta({
   name: "about",
   path: "/about",

@@ -6,7 +6,9 @@
     >
       <v-virtual-scroll
         v-if="text"
+        height="300"
         :items="formattedText"
+        item-height="25"
       >
         <template #default="{ item }">
           <p class="text-body-2 text-lg-body-1 text-paragraph">{{ item }}</p>

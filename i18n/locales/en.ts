@@ -8,6 +8,8 @@ export default {
       "Best actors, directors, producers, composers, writers of all time",
   },
   general: {
+    max_file_size: "Max files size - { size }",
+    max_file_size_error: "Max files size reached - { size }",
     youtube_link: "Youtube link",
     img_replacement_warning: "The current image will be replaced. Continue?",
     img_delete_warning: "The current image will be deleted. Continue?",
@@ -350,7 +352,7 @@ export default {
       add: "Add Film",
       edit: "Edit Film",
       remove: "Remove Film",
-      rating: "Rating and comments",
+      rating: "Rating",
       assessments: "{count} assessments",
       no_assessments: "No assessments",
       your_assessment: "Your assessment",
@@ -411,6 +413,7 @@ export default {
       subtitle: "Technical information",
       stack: "Stack",
       scheme: "Containers Scheme",
+      code: "Code",
       table_headers: {
         frontend: "Frontend",
         backend: "Backend",
@@ -427,7 +430,7 @@ export default {
           version_control: "Version control",
           pipeline: "Pipeline",
           containerisation: "Containerization",
-          notice: "Notice",
+          scripts: "Scripts",
         },
       },
       author: {

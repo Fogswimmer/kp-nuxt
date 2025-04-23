@@ -17,23 +17,71 @@
           </template>
           <template #trailer>
             <v-container>
-              <v-row no-gutters>
-                <v-col cols="12" lg="3" md="6" sm="12">
-                  <v-img :src="film?.poster || ''" cover height="400">
-                    <template #placeholder>
-                      <ImgLoader />
-                    </template>
-                    <template #error>
-                      <ErrorPlaceHolder />
-                    </template>
-                  </v-img>
+              <v-row>
+                <v-col cols="12" lg="3" md="4" sm="12">
+                  <v-card elevation="5" border height="420">
+                    <v-img :src="film?.poster || ''" cover>
+                      <template #placeholder>
+                        <ImgPlaceholder :loading="loading" />
+                      </template>
+                      <template #error>
+                        <ErrorPlaceHolder />
+                      </template>
+                    </v-img>
+                  </v-card>
                 </v-col>
-                <v-col cols="12" lg="9" md="6" sm="12">
-                  <Trailer
-                    :trailer="film?.trailer || ''"
+                <v-col cols="12" lg="5" md="5" sm="12">
+                  <v-card
+                    elevation="5"
+                    border
+                    height="420"
+                    :title="$t('pages.general_info')"
+                    prepend-icon="mdi-filmstrip"
+                  >
+                    <v-card-text>
+                      <div v-for="(detail, index) in generalInfo" :key="index">
+                        <v-list-item
+                          :key="index"
+                          :subtitle="$t(detail.title)"
+                          :prepend-icon="detail.icon"
+                          class="my-4"
+                        >
+                          <v-list-item-title
+                            :class="{ 'text-secondary': detail.to }"
+                          >
+                            {{ detail.value || $t("general.no_data") }}
+                          </v-list-item-title>
+                        </v-list-item>
+                        <v-tooltip
+                          v-if="
+                            typeof detail.value === 'string' &&
+                            detail.value.length > 50
+                          "
+                          activator="parent"
+                        >
+                          <span> {{ detail.value }}</span>
+                        </v-tooltip>
+                      </div>
+                    </v-card-text>
+                  </v-card>
+                </v-col>
+                <v-col cols="12" lg="4" md="3" sm="12">
+                  <Rating
+                    :current-rating="film?.rating || ''"
+                    :assessments="film?.assessments || []"
+                    :assessments-graph="film?.assessmentsGraph || []"
+                    :is-assessing="isAssessing"
                     :is-authenticated="isAuthenticated"
-                    @choose:trailer="showLinkTrailerDialog = true"
-                  />
+                    :rating="rating"
+                    :comment="comment"
+                    @assession:submit="submitAssessment"
+                    @assession:enable="isAssessing = true"
+                    @assession:cancel="cancelAssessment"
+                    @assession:delete="deleteAssessment"
+                    @comment:update="comment = $event"
+                    @rating:update="rating = $event"
+                  >
+                  </Rating>
                 </v-col>
               </v-row>
             </v-container>
@@ -73,33 +121,15 @@
                   />
                 </template>
                 <template #rating>
-                  <Rating
-                    :current-rating="film?.rating || ''"
+                  <Comments
+                    :loading="loading"
                     :assessments="film?.assessments || []"
-                    :assessments-graph="film?.assessmentsGraph || []"
-                    :is-assessing="isAssessing"
-                    :is-authenticated="isAuthenticated"
-                    :rating="rating"
                     :comment="comment"
                     @assession:submit="submitAssessment"
                     @assession:enable="isAssessing = true"
                     @assession:cancel="cancelAssessment"
-                    @assession:delete="deleteAssessment"
-                    @comment:update="comment = $event"
-                    @rating:update="rating = $event"
-                  >
-                    <template #comments>
-                      <Comments
-                        :loading="loading"
-                        :assessments="film?.assessments || []"
-                        :comment="comment"
-                        @assession:submit="submitAssessment"
-                        @assession:enable="isAssessing = true"
-                        @assession:cancel="cancelAssessment"
-                        @comment:delete="deleteAssessment"
-                      />
-                    </template>
-                  </Rating>
+                    @comment:delete="deleteAssessment"
+                  />
                 </template>
               </FilmExpansionPanels>
             </main>
@@ -228,7 +258,7 @@ import Trailer from "~/components/FilmPartials/Trailer.vue";
 import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
 import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
-import ImgLoader from "~/components/Containment/Img/ImgPlaceholder.vue";
+import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
 
@@ -289,6 +319,45 @@ const imagesToDelete = computed(() => {
       return fileName.split(".")[0];
     });
 }) as ComputedRef<string[]>;
+
+const generalInfo = computed((): Detail[] => {
+  const info = [
+    {
+      title: "forms.film.name",
+      value: film.value?.name || "",
+      icon: "mdi-movie",
+      tooltip: film.value && film.value.name?.length > 60 ? true : false,
+    },
+    {
+      title: "forms.film.slogan",
+      value: film.value?.slogan || "",
+      icon: "mdi-format-title",
+      tooltip:
+        film.value?.slogan && film.value?.slogan?.length > 60 ? true : false,
+    },
+    {
+      title: "forms.film.duration",
+      value: film.value?.duration || "",
+      icon: "mdi-timer",
+    },
+    {
+      title: "forms.film.genres",
+      value: film.value?.genreNames ? film.value?.genreNames.join(", ") : "",
+      icon: "mdi-filmstrip",
+      tooltip:
+        film.value && film.value?.genreNames.join(", ").length > 120
+          ? true
+          : false,
+    },
+    {
+      title: "forms.film.age",
+      value: film.value?.age + "+" || "",
+      icon: "mdi-account-supervisor",
+    },
+  ];
+
+  return info as Detail[];
+});
 
 const computedGalleryEditTitle = computed((): string => {
   return t("pages.films.edit_gallery");

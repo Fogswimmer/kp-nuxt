@@ -34,6 +34,7 @@ export const useValidation = () => {
     new Date(value).getFullYear() <= date ? true : t("forms.rules.min_birthday", { date });
   const validUrl = (value: string) => regExps.url.test(value) ? true : t("forms.rules.invalid_url");
   const password = (value: string) => regExps.password.test(value) ? true : t("forms.rules.invalid_password");
+  const maxUploadSize = (size: number) => (value: File) => value.size <= size ? true : t("forms.rules.max_file_size", { size });
 
   return {
     required,
@@ -49,6 +50,7 @@ export const useValidation = () => {
     minBirthday,
     maxBirthday,
     validUrl,
-    password
+    password,
+    maxUploadSize
   };
 }

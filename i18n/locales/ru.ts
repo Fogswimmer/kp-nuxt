@@ -8,6 +8,8 @@ export default {
       "Лучшие актеры, режиссеры, продюсеры, композиторы, авторы всех времен",
   },
   general: {
+    max_file_size: "Максимальный размер файлов - { size }",
+    max_file_size_error: "Превышен максимальный размер файлов - { size }",
     youtube_link: "Ссылка на ютуб",
     img_replacement_warning: "Текущее изображение будет заменено. Продолжить?",
     img_delete_warning: "Текущее изображение будет удалено. Продолжить?",
@@ -349,7 +351,7 @@ export default {
       add: "Добавить Фильм",
       edit: "Изменить Фильм",
       remove: "Удалить Фильм",
-      rating: "Рейтинг и комментарии",
+      rating: "Рейтинг",
       assessments: "оценок",
       no_assessments: "Нет оценок",
       producer: "Продюсер",
@@ -412,6 +414,7 @@ export default {
       subtitle: "Техническая информация",
       stack: "Стек технологий",
       scheme: "Схема контейнеров",
+      code: "Код",
       table_headers: {
         frontend: "Frontend",
         backend: "Backend",

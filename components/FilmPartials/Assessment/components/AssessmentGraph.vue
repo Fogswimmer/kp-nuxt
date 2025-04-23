@@ -14,14 +14,15 @@
             <v-progress-linear
               height="10"
               rounded
-              :model-value="(data.count / total) * 50"
+              rounded-bar
+              :model-value="(data.count / total) * 20"
               :color="stripeColor(data.rating)"
             />
           </div>
         </div>
       </div>
     </template>
-    <v-sheet v-else height="100">
+    <v-sheet v-else height="160">
       <div class="d-flex fill-height justify-center align-center">
         <v-label class="text-caption">
           {{ $t("general.no_data") }}
