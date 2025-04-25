@@ -1,6 +1,6 @@
 declare global {
-  const __buildAssetsURL: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/core/runtime/nitro/utils/paths')['buildAssetsURL']
-  const __publicAssetsURL: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/core/runtime/nitro/utils/paths')['publicAssetsURL']
+  const __buildAssetsURL: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/core/runtime/nitro/utils/paths')['buildAssetsURL']
+  const __publicAssetsURL: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/core/runtime/nitro/utils/paths')['publicAssetsURL']
   const appendCorsHeaders: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['appendCorsHeaders']
   const appendCorsPreflightHeaders: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['appendCorsPreflightHeaders']
   const appendHeader: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['appendHeader']
@@ -8,8 +8,8 @@ declare global {
   const appendResponseHeader: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['appendResponseHeader']
   const appendResponseHeaders: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['appendResponseHeaders']
   const assertMethod: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['assertMethod']
-  const cachedEventHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/cache')['cachedEventHandler']
-  const cachedFunction: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/cache')['cachedFunction']
+  const cachedEventHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/cache')['cachedEventHandler']
+  const cachedFunction: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/cache')['cachedFunction']
   const callNodeListener: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['callNodeListener']
   const clearResponseHeaders: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['clearResponseHeaders']
   const clearSession: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['clearSession']
@@ -21,15 +21,15 @@ declare global {
   const createEventStream: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['createEventStream']
   const createRouter: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['createRouter']
   const defaultContentType: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defaultContentType']
-  const defineAppConfig: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/core/runtime/nitro/utils/config')['defineAppConfig']
-  const defineCachedEventHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/cache')['defineCachedEventHandler']
-  const defineCachedFunction: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/cache')['defineCachedFunction']
+  const defineAppConfig: typeof import('../../node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/core/runtime/nitro/utils/config')['defineAppConfig']
+  const defineCachedEventHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/cache')['defineCachedEventHandler']
+  const defineCachedFunction: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/cache')['defineCachedFunction']
   const defineEventHandler: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineEventHandler']
-  const defineI18nConfig: typeof import('../../node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.24.0_jiti@2.4.2__magicast@0.3.5_ro_65a5e8dd996f24ebceb6889bd1aa97bd/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared')['defineI18nConfig']
-  const defineI18nLocale: typeof import('../../node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.24.0_jiti@2.4.2__magicast@0.3.5_ro_65a5e8dd996f24ebceb6889bd1aa97bd/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared')['defineI18nLocale']
+  const defineI18nConfig: typeof import('../../node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.25.1_jiti@2.4.2__magicast@0.3.5_ro_299b1c82a3558d6e7f619db9c1726a92/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared')['defineI18nConfig']
+  const defineI18nLocale: typeof import('../../node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.25.1_jiti@2.4.2__magicast@0.3.5_ro_299b1c82a3558d6e7f619db9c1726a92/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared')['defineI18nLocale']
   const defineLazyEventHandler: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineLazyEventHandler']
-  const defineNitroErrorHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/error/utils')['defineNitroErrorHandler']
-  const defineNitroPlugin: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/plugin')['defineNitroPlugin']
+  const defineNitroErrorHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/error/utils')['defineNitroErrorHandler']
+  const defineNitroPlugin: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/plugin')['defineNitroPlugin']
   const defineNodeListener: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineNodeListener']
   const defineNodeMiddleware: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineNodeMiddleware']
   const defineOAuthAppleEventHandler: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple')['defineOAuthAppleEventHandler']
@@ -66,11 +66,11 @@ declare global {
   const defineOAuthXSUAAEventHandler: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/xsuaa')['defineOAuthXSUAAEventHandler']
   const defineOAuthYandexEventHandler: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/yandex')['defineOAuthYandexEventHandler']
   const defineOAuthZitadelEventHandler: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/zitadel')['defineOAuthZitadelEventHandler']
-  const defineRenderHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/renderer')['defineRenderHandler']
+  const defineRenderHandler: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/renderer')['defineRenderHandler']
   const defineRequestMiddleware: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineRequestMiddleware']
   const defineResponseMiddleware: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineResponseMiddleware']
-  const defineRouteMeta: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/meta')['defineRouteMeta']
-  const defineTask: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/task')['defineTask']
+  const defineRouteMeta: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/meta')['defineRouteMeta']
+  const defineTask: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/task')['defineTask']
   const defineWebSocket: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineWebSocket']
   const defineWebSocketHandler: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['defineWebSocketHandler']
   const deleteCookie: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['deleteCookie']
@@ -100,7 +100,7 @@ declare global {
   const getResponseHeaders: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['getResponseHeaders']
   const getResponseStatus: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['getResponseStatus']
   const getResponseStatusText: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['getResponseStatusText']
-  const getRouteRules: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/route-rules')['getRouteRules']
+  const getRouteRules: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/route-rules')['getRouteRules']
   const getRouterParam: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['getRouterParam']
   const getRouterParams: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['getRouterParams']
   const getSession: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['getSession']
@@ -119,7 +119,7 @@ declare global {
   const isStream: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['isStream']
   const isWebResponse: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['isWebResponse']
   const lazyEventHandler: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['lazyEventHandler']
-  const nitroPlugin: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/plugin')['nitroPlugin']
+  const nitroPlugin: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/plugin')['nitroPlugin']
   const parseCookies: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['parseCookies']
   const promisifyNodeListener: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['promisifyNodeListener']
   const proxyRequest: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['proxyRequest']
@@ -131,7 +131,7 @@ declare global {
   const removeResponseHeader: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['removeResponseHeader']
   const replaceUserSession: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/utils/session')['replaceUserSession']
   const requireUserSession: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/utils/session')['requireUserSession']
-  const runTask: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/task')['runTask']
+  const runTask: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/task')['runTask']
   const sanitizeStatusCode: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['sanitizeStatusCode']
   const sanitizeStatusMessage: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['sanitizeStatusMessage']
   const sealSession: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['sealSession']
@@ -160,13 +160,13 @@ declare global {
   const toWebRequest: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['toWebRequest']
   const unsealSession: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['unsealSession']
   const updateSession: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['updateSession']
-  const useAppConfig: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/config')['useAppConfig']
+  const useAppConfig: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/config')['useAppConfig']
   const useBase: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['useBase']
-  const useEvent: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/context')['useEvent']
-  const useNitroApp: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/app')['useNitroApp']
-  const useRuntimeConfig: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/config')['useRuntimeConfig']
+  const useEvent: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/context')['useEvent']
+  const useNitroApp: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/app')['useNitroApp']
+  const useRuntimeConfig: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/config')['useRuntimeConfig']
   const useSession: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['useSession']
-  const useStorage: typeof import('../../node_modules/.pnpm/nitropack@2.11.8/node_modules/nitropack/dist/runtime/internal/storage')['useStorage']
+  const useStorage: typeof import('../../node_modules/.pnpm/nitropack@2.11.9_@netlify+blobs@8.2.0_encoding@0.1.13/node_modules/nitropack/dist/runtime/internal/storage')['useStorage']
   const verifyPassword: typeof import('../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/utils/password')['verifyPassword']
   const writeEarlyHints: typeof import('../../node_modules/.pnpm/h3@1.15.1/node_modules/h3')['writeEarlyHints']
 }
@@ -290,9 +290,9 @@ export { useEvent } from 'nitropack/runtime/internal/context';
 export { defineTask, runTask } from 'nitropack/runtime/internal/task';
 export { defineNitroErrorHandler } from 'nitropack/runtime/internal/error/utils';
 export { appendCorsHeaders, appendCorsPreflightHeaders, appendHeader, appendHeaders, appendResponseHeader, appendResponseHeaders, assertMethod, callNodeListener, clearResponseHeaders, clearSession, createApp, createAppEventHandler, createError, createEvent, createEventStream, createRouter, defaultContentType, defineEventHandler, defineLazyEventHandler, defineNodeListener, defineNodeMiddleware, defineRequestMiddleware, defineResponseMiddleware, defineWebSocket, defineWebSocketHandler, deleteCookie, dynamicEventHandler, eventHandler, fetchWithEvent, fromNodeMiddleware, fromPlainHandler, fromWebHandler, getCookie, getHeader, getHeaders, getMethod, getProxyRequestHeaders, getQuery, getRequestFingerprint, getRequestHeader, getRequestHeaders, getRequestHost, getRequestIP, getRequestPath, getRequestProtocol, getRequestURL, getRequestWebStream, getResponseHeader, getResponseHeaders, getResponseStatus, getResponseStatusText, getRouterParam, getRouterParams, getSession, getValidatedQuery, getValidatedRouterParams, handleCacheHeaders, handleCors, isCorsOriginAllowed, isError, isEvent, isEventHandler, isMethod, isPreflightRequest, isStream, isWebResponse, lazyEventHandler, parseCookies, promisifyNodeListener, proxyRequest, readBody, readFormData, readMultipartFormData, readRawBody, readValidatedBody, removeResponseHeader, sanitizeStatusCode, sanitizeStatusMessage, sealSession, send, sendError, sendIterable, sendNoContent, sendProxy, sendRedirect, sendStream, sendWebResponse, serveStatic, setCookie, setHeader, setHeaders, setResponseHeader, setResponseHeaders, setResponseStatus, splitCookiesString, toEventHandler, toNodeListener, toPlainHandler, toWebHandler, toWebRequest, unsealSession, updateSession, useBase, useSession, writeEarlyHints } from 'h3';
-export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/core/runtime/nitro/utils/paths';
-export { defineAppConfig } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/core/runtime/nitro/utils/config';
-export { defineI18nLocale, defineI18nConfig } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.24.0_jiti@2.4.2__magicast@0.3.5_ro_65a5e8dd996f24ebceb6889bd1aa97bd/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared';
+export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/core/runtime/nitro/utils/paths';
+export { defineAppConfig } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/core/runtime/nitro/utils/config';
+export { defineI18nLocale, defineI18nConfig } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.25.1_jiti@2.4.2__magicast@0.3.5_ro_299b1c82a3558d6e7f619db9c1726a92/node_modules/@nuxtjs/i18n/dist/runtime/composables/shared';
 export { defineOAuthAppleEventHandler } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple';
 export { defineOAuthAtlassianEventHandler } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/atlassian';
 export { defineOAuthAuth0EventHandler } from '/home/nebel/projects/kp-nuxt/node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/auth0';

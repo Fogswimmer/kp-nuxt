@@ -7,9 +7,20 @@ export default defineNuxtConfig({
     "vuetify-nuxt-module",
     "@nuxt/test-utils/module",
     "nuxt-auth-utils",
+    "nuxt-electron",
   ],
+  electron: {
+    build: [
+      {
+        // Main-Process entry file of the Electron App.
+        entry: 'electron/main.ts',
+      },
+    ],
+  },
   css: ["@/assets/css/globals.scss"],
+  ssr: false, // если ты не хочешь сервер, только SPA
   app: {
+    baseURL: './', // для electron
     pageTransition: {
       name: "page",
       mode: "out-in", // default
@@ -21,9 +32,6 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   }, 
-  build: {
-    transpile: ['vuetify', 'vue-demi'],
-  },
   experimental: {
     viewTransition: true,
   },

@@ -1,6 +1,6 @@
 import type { ComputedRef, MaybeRef } from 'vue'
 export type LayoutKey = "default"
-declare module "../../node_modules/.pnpm/nuxt@3.16.2_@parcel+watcher@2.5.1_@types+node@22.14.0_db0@0.3.1_eslint@9.24.0_jiti@2.4._1a120f236ef0f4de29ca0265fec139be/node_modules/nuxt/dist/pages/runtime/composables" {
+declare module "../../node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/pages/runtime/composables" {
   interface PageMeta {
     layout?: MaybeRef<LayoutKey | false> | ComputedRef<LayoutKey | false>
   }
