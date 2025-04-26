@@ -116,8 +116,8 @@
                 <tr>
                   <td>
                     <div class="d-flex align-center ga-2">
-                      <v-icon color="blue" size="x-large">mdi-github</v-icon>
-                      GitHub
+                      <v-icon color="orange" size="x-large">mdi-git</v-icon>
+                      Git
                     </div>
                   </td>
                   <td>

@@ -6,9 +6,8 @@
     >
       <v-virtual-scroll
         v-if="text"
-        height="300"
+        :height="computedScrollAreaHeight"
         :items="formattedText"
-        item-height="25"
       >
         <template #default="{ item }">
           <p class="text-body-2 text-lg-body-1 text-paragraph">{{ item }}</p>
@@ -55,7 +54,6 @@ defineEmits<{
 }>();
 
 const editModeText = ref<string>(props.text);
-const collapsed = ref<boolean>(true);
 
 const formattedText = computed(() =>
   props.text
@@ -67,6 +65,12 @@ const formattedText = computed(() =>
         .filter((p) => p.length > 0)
     : []
 );
+
+const computedScrollAreaHeight = computed(() => {
+  return props.text
+    ? Math.min(props.text.split("\n").length * 100, 300)
+    : 300;
+})
 </script>
 
 <style sroped>
