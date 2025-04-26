@@ -16,31 +16,37 @@
             <NotAuthWarning v-if="!isAuthenticated" />
           </template>
           <template #trailer>
-            <v-container>
-              <v-row>
-                <v-col cols="12" lg="3" md="4" sm="12">
-                  <v-card elevation="5" border height="420">
-                    <v-img :src="film?.poster || ''" cover height="100%">
-                      <template #placeholder>
-                        <ImgPlaceholder :loading="loading" />
-                      </template>
-                      <template #error>
-                        <ErrorPlaceHolder />
-                      </template>
-                    </v-img>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" lg="5" md="5" sm="12">
-                  <v-card
-                    elevation="5"
-                    border
-                    height="420"
-                    :title="$t('pages.general_info')"
-                    prepend-icon="mdi-filmstrip"
-                  >
-                    <v-card-text>
-                      <div v-for="(detail, index) in generalInfo" :key="index">
+            <v-lazy transition="fade-transition" min-height="300">
+              <v-container>
+                <v-card v-if="!loading" class="pa-2">
+                  <template #image>
+                    <v-img
+                      :src="film?.poster || ''"
+                      cover
+                      class="img-blur"
+                    ></v-img>
+                  </template>
+                  <v-row>
+                    <v-col cols="12" lg="3" md="4" sm="12">
+                      <v-img
+                        :src="film?.poster || ''"
+                        cover
+                        rounded="lg"
+                        height="100%"
+                      >
+                        <template #placeholder>
+                          <ImgPlaceholder :loading="loading" />
+                        </template>
+                        <template #error>
+                          <ErrorPlaceHolder />
+                        </template>
+                      </v-img>
+                      
+                    </v-col>
+                    <v-col cols="12" lg="5" md="5" sm="12">
+                      <v-sheet height="420" class="pa-4" rounded="lg">
                         <v-list-item
+                          v-for="(detail, index) in generalInfo"
                           :key="index"
                           :subtitle="$t(detail.title)"
                           :prepend-icon="detail.icon"
@@ -52,38 +58,42 @@
                             {{ detail.value || $t("general.no_data") }}
                           </v-list-item-title>
                         </v-list-item>
-                        <v-tooltip
-                          v-if="
-                            typeof detail.value === 'string' &&
-                            detail.value.length > 50
-                          "
-                          activator="parent"
+                      </v-sheet>
+                    </v-col>
+                    <v-col cols="12" lg="4" md="3" sm="12">
+                      <v-sheet rounded="lg">
+                        <Rating
+                          :current-rating="film?.rating || ''"
+                          :assessments="film?.assessments || []"
+                          :assessments-graph="film?.assessmentsGraph || []"
+                          :is-assessing="isAssessing"
+                          :is-authenticated="isAuthenticated"
+                          :rating="rating"
+                          :comment="comment"
+                          @assession:submit="submitAssessment"
+                          @assession:enable="isAssessing = true"
+                          @assession:cancel="cancelAssessment"
+                          @comment:update="comment = $event"
+                          @rating:update="rating = $event"
                         >
-                          <span> {{ detail.value }}</span>
-                        </v-tooltip>
-                      </div>
-                    </v-card-text>
-                  </v-card>
-                </v-col>
-                <v-col cols="12" lg="4" md="3" sm="12">
-                  <Rating
-                    :current-rating="film?.rating || ''"
-                    :assessments="film?.assessments || []"
-                    :assessments-graph="film?.assessmentsGraph || []"
-                    :is-assessing="isAssessing"
-                    :is-authenticated="isAuthenticated"
-                    :rating="rating"
-                    :comment="comment"
-                    @assession:submit="submitAssessment"
-                    @assession:enable="isAssessing = true"
-                    @assession:cancel="cancelAssessment"
-                    @comment:update="comment = $event"
-                    @rating:update="rating = $event"
-                  >
-                  </Rating>
-                </v-col>
-              </v-row>
-            </v-container>
+                        </Rating>
+                      </v-sheet>
+                    </v-col>
+                  </v-row>
+                </v-card>
+                <div v-else-if="$vuetify.display.mdAndUp" class="d-flex ga-2 fill-height">
+                  <v-skeleton-loader
+                   
+                    v-for="n in 3"
+                    :key="n"
+                    type="card"
+                    height="420"
+                    width="calc(100% / 3)"
+                  ></v-skeleton-loader>
+                </div v-else>
+                <v-skeleton-loader v-else type="card" height="420"></v-skeleton-loader>
+              </v-container>
+            </v-lazy>
           </template>
           <template #menu>
             <DetailMenu
@@ -213,7 +223,7 @@
       @cancel="showDeleteWarning = false"
       @confirm="handleFilmDelete"
     />
-    <BaseDialog
+    <!-- <BaseDialog
       v-model:opened="showLinkTrailerDialog"
       :loading="loading"
       :title="$t('actions.link_trailer')"
@@ -228,7 +238,7 @@
           @update:model-value="filmForm.trailer = $event"
         />
       </template>
-    </BaseDialog>
+    </BaseDialog> -->
     <ConfirmDialog
       v-model="showPosterSetDialog"
       :text="$t('actions.set_poster') + '?'"
@@ -455,7 +465,7 @@ const handleGalleryItemsDelete = async (): Promise<void> => {
 };
 
 const handleDeleteImg = async (index: number): Promise<void> => {
-  console.log(index);
+
   selectedImagesIndices.value.push(index);
   await handleGalleryItemsDelete();
 };

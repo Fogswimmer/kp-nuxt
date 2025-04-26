@@ -1,14 +1,19 @@
 <template>
   <v-container class="overflow-hidden pa-2">
-    <GradientWrapper v-for="(item, index) in items" :key="index">
-      <HomeWallItem
-        :index="index"
-        :item="item"
-        :visible-items="visibleItems"
-        :loading="loading"
-        v-intersect="onIntersect(index)"
-      />
-    </GradientWrapper>
+    <div
+      v-for="(item, index) in items"
+      :key="index"
+      :class="['masonry-item my-4', { 'fade-in': visibleItems.has(index) }]"
+    >
+      <GradientWrapper>
+        <HomeWallItem
+          :item="item"
+          :visible-items="visibleItems"
+          :loading="loading"
+          v-intersect="onIntersect(index)"
+        />
+      </GradientWrapper>
+    </div>
   </v-container>
 </template>
 

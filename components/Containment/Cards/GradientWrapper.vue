@@ -1,9 +1,6 @@
 <template>
   <Client-Only>
-    <div
-      :style="`background-image: linear-gradient(225deg , ${bgAccentColor} 0%, transparent 80%);`"
-      class="gradient-wrapper fill-height"
-    >
+    <div :style="`box-shadow: 1px 1px 8px ${bgAccentColor};`" class="fill-height">
       <slot />
     </div>
   </Client-Only>
@@ -11,11 +8,6 @@
 
 <script lang="ts" setup>
 const bgAccentColor = useBgAccentColor();
-
 </script>
 
-<style>
-.gradient-wrapper {
-  background-attachment: fixed;
-}
-</style>
+<style></style>

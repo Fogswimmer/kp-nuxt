@@ -1,98 +1,116 @@
 <template>
-  <v-card elevation="5" border>
-    <template v-if="assessments.length > 0">
-      <v-data-iterator
-        :items="assementsWithColors"
-        :page="page"
-        :items-per-page="itemsPerPage"
-      >
-        <template #header>
-          <v-toolbar class="px-1" color="transparent">
-            <v-toolbar-title>
-            <span class="text-subtitle-1 text-lg-body-1">  {{ $t("pages.films.comments") }}</span>
-            </v-toolbar-title>
-            <v-btn
-              variant="tonal"
-              size="small"
-              :disabled="assessments.length < itemsPerPage"
-              @click="seeAllOnClick"
-            >
-              <span class="text-none text-subtitle-2">{{
-                $t("general.see_all")
-              }}</span>
-            </v-btn>
-          </v-toolbar>
-        </template>
-        <template #default="{ items }">
-          <Comment
-            v-for="(item, i) in items"
-            :key="i"
-            :loading="loading"
-            :color="item.raw.color"
-            :index="i"
-            :comment="item.raw"
-            :is-admin="isAdmin"
-            :is-authenticated="isAuthenticated"
-            :user-id="currentUser?.id || 0"
-            @confirm:delete="confirmDelete"
-          />
-        </template>
-        <template #footer="{ pageCount }">
-          <v-footer class="justify-space-between text-subtitle-2 mt-2 glassed">
-            <span> {{ $t("general.total") }}: {{ assessments.length }}</span>
-            <ClientOnly>
-              <v-pagination
-                v-model="page"
-                :length="pageCount"
-                rounded="lg"
-                variant="plain"
-                color="secondary"
-                :total-visible="3"
-                density="compact"
-              ></v-pagination
-            ></ClientOnly>
-          </v-footer>
-        </template>
-      </v-data-iterator>
-    </template>
-    <v-sheet v-else height="100">
-      <div class="d-flex fill-height justify-center align-center">
-        <v-label class="text-caption">
-          {{ $t("pages.films.no_comments") }} ...
-        </v-label>
-      </div>
-    </v-sheet>
-  </v-card>
+<v-lazy transition="fade-transition" min-height="100">
+    <v-card elevation="5" border>
+      <template v-if="assessments.length > 0">
+        <v-data-iterator
+          :items="assementsWithColors"
+          :page="page"
+          :items-per-page="itemsPerPage"
+        >
+          <template #header>
+            <div class="d-flex align-center pa-2">
+              <v-responsive max-width="200">
+                <v-select
+                  v-model="sort"
+                  :items="sortItems"
+                  hide-details
+                  density="compact"
+                />
+              </v-responsive>
+              <v-spacer></v-spacer>
+              <v-btn
+                variant="tonal"
+                :disabled="assessments.length < itemsPerPage"
+                @click="seeAllOnClick"
+              >
+                <span class="text-none text-subtitle-2">{{
+                  $t("general.see_all")
+                }}</span>
+              </v-btn>
+            </div>
+          </template>
+          <template #default="{ items }">
+            <Comment
+              v-for="(item, i) in items"
+              :key="i"
+              :loading="loading"
+              :color="item.raw.color"
+              :index="i"
+              :comment="item.raw"
+              :is-admin="isAdmin"
+              :is-authenticated="isAuthenticated"
+              :user-id="currentUser?.id || 0"
+              @confirm:delete="confirmDelete"
+            />
+          </template>
+          <template #footer="{ pageCount }">
+            <v-footer class="justify-space-between text-subtitle-2 mt-2 glassed">
+              <span> {{ $t("general.total") }}: {{ assessments.length }}</span>
+              <ClientOnly>
+                <v-pagination
+                  v-model="page"
+                  :length="pageCount"
+                  rounded="lg"
+                  variant="plain"
+                  color="secondary"
+                  :total-visible="3"
+                  density="compact"
+                ></v-pagination
+              ></ClientOnly>
+            </v-footer>
+          </template>
+        </v-data-iterator>
+      </template>
+      <v-sheet v-else height="100">
+        <div class="d-flex fill-height justify-center align-center">
+          <v-label class="text-caption">
+            {{ $t("pages.films.no_comments") }} ...
+          </v-label>
+        </div>
+      </v-sheet>
+    </v-card>
+</v-lazy>
 </template>
 
 <script lang="ts" setup>
 import Comment from "./components/Comment.vue";
 
+const { t } = useI18n();
 const emits = defineEmits<{
   (event: "assession:delete", id: number): void;
 }>();
 const props = defineProps<{
   assessments: IAssessment[];
-  comment: string;
   loading: boolean;
 }>();
+const sort = ref<string>("asc");
+interface SortItem {
+  value: string;
+  title: string;
+}
+const sortItems = ref<SortItem[]>([
+  {
+    value: "asc",
+    title: t("actions.asc"),
+  },
+  {
+    value: "desc",
+    title: t("actions.desc"),
+  },
+]);
 
 const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
 const page = ref<number>(1);
 const itemsPerPage = ref<number>(5);
 const showDeleteConfirm = ref<boolean>(false);
 const commentColors = [
-  'blue',
-  'green',
-  'red',
-  'yellow',
-  'orange',
-  'pink',
-  'indigo',
-  'purple',
-  'teal',
-  'cyan',
-  'brown',
+  "rgba(255, 255, 255, 0.05)",
+  "rgba(255, 0, 0, 0.05)",
+  "rgba(0, 255, 0, 0.05)",
+  "rgba(0, 0, 255, 0.05)",
+  "rgba(255, 0, 255, 0.05)",
+  "rgba(0, 255, 255, 0.05)",
+  "rgba(255, 255, 0, 0.05)",
 ];
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;
@@ -111,9 +129,8 @@ const assementsWithColors = computed(() => {
 
   const mappedAssementsWithColors = Object.entries(commentsWithSameAuthor).map(
     ([_, comments]) => {
-      const color = commentColors[
-        Math.floor(Math.random() * commentColors.length)
-      ];
+      const color =
+        commentColors[comments.length % commentColors.length] || "blue";
       return comments.map((comment) => {
         return {
           ...comment,
@@ -123,7 +140,15 @@ const assementsWithColors = computed(() => {
     }
   );
 
-  return mappedAssementsWithColors.flat().sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  return mappedAssementsWithColors
+    .flat()
+    .sort(
+      (a, b) =>
+        sort.value === "asc" ?
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        :
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
 });
 const confirmDelete = (id: number) => {
   console.log(id);

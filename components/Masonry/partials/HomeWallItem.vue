@@ -1,14 +1,8 @@
 <template>
   <v-list-item
     lines="three"
-    variant="text"
-    rounded="lg"
     :to="$localeRoute(item.to || '/')"
     border
-    :class="[
-      'masonry-item my-2 glassed',
-      { 'fade-in': visibleItems.has(index) },
-    ]"
   >
     <v-list-item-title>
       <div class="d-flex w-100 align-center">
@@ -44,8 +38,6 @@ import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue"
 defineProps<{
   item: Detail;
   loading: boolean;
-  index: number;
-  visibleItems: Set<number>;
 }>();
 </script>
 

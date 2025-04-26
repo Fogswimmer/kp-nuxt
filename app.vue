@@ -63,8 +63,8 @@ p {
 
 .glassed {
   background: rgba(0, 0, 0, 0.2) !important;
-  -webkit-backdrop-filter: blur(10px) !important;
-  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(4rem) !important;
+  backdrop-filter: blur(4rem) !important;
 }
 
 
@@ -72,9 +72,9 @@ p {
   background-image: linear-gradient(
     to right top,
     #0c151c,
-    #0b1a25,
-    #0e1b25,
-    #0e161b,
+    #0c151b,
+    #0c151b,
+    #03121b,
     #0b1a25
   ) !important;
   background-attachment: fixed !important;

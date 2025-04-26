@@ -1,13 +1,12 @@
 <template>
   <v-card
     border
-    class="ma-2"
+    class="ma-4"
     :loading="loading"
-    variant="tonal"
-    :color="color || 'surface-variant'"
+   :style="`background-image: linear-gradient(145deg , ${color} 0%, transparent 80%);`"
     density="compact"
   >
-    <v-toolbar class="pa-2 glassed" density="compact">
+    <v-toolbar class="pa-2" density="compact" color="transparent" >
       <template #prepend>
         <div class="position-relative">
           <v-avatar border>
@@ -40,7 +39,7 @@
     <v-divider />
 
     <div class="d-flex pa-2">
-      <span class="text-white ml-2"> {{ comment.comment }}</span>
+      <span class="text-white mx-2 pa-2"> {{ comment.comment }}</span>
       <v-spacer />
       <v-btn
         v-if="isAdmin || userId === comment.authorId"

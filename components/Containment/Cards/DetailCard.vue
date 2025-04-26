@@ -9,7 +9,7 @@
       </template>
       <v-toolbar-title>
         <span v-if="!loading" class="font-weight-bold"> {{ pageName }} </span>
-        <v-skeleton-loader v-else type="text" height="20" />
+        <v-skeleton-loader v-else type="text" height="30" />
       </v-toolbar-title>
         <div v-if="$vuetify.display.mdAndUp && notification" class="d-flex justify-center pa-2">
           <slot name="notification" />

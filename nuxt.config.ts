@@ -21,12 +21,6 @@ export default defineNuxtConfig({
       viewport: "width=device-width, initial-scale=1",
     },
   }, 
-  build: {
-    transpile: ['vuetify', 'vue-demi'],
-  },
-  experimental: {
-    viewTransition: true,
-  },
   vuetify: {
     vuetifyOptions: "./vuetify.config.ts",
   },
