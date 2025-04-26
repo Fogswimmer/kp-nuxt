@@ -5,6 +5,7 @@
 /.nitro
 /.cache
 /dist
+/electron
 
 # Node dependencies
 node_modules
