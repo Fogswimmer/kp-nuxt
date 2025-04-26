@@ -59,7 +59,7 @@
         </template>
         <v-list nav density="compact">
           <v-list-item
-           :active="computedActiveNavBtn.persons"
+         
             prepend-icon="mdi-list-box"
             :title="$t('nav.persons_list')"
             :to="$localeRoute('/persons')"
@@ -74,7 +74,7 @@
               <v-list-item
                 v-bind="props"
                 :disabled="!currentUser"
-                :active="computedActiveNavBtn.persons"
+                
                 prepend-icon="mdi-plus"
                 :title="$t('nav.persons_add')"
                 :to="$localeRoute('/persons/new')"
