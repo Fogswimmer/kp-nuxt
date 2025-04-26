@@ -26,7 +26,9 @@ type NuxtAppInjections =
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/pages/runtime/plugins/prefetch.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/nuxt-auth-utils@0.5.14_@simplewebauthn+browser@13.1.0_@simplewebauthn+server@13.1.1_magicast@0.3.5/node_modules/nuxt-auth-utils/dist/runtime/app/plugins/session.client.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/vuetify-nuxt-module@0.18.6_magicast@0.3.5_typescript@5.8.3_vite@6.3.3_@types+node@22.15_ea22611e636dd905bcf22ca1b60daa6b/node_modules/vuetify-nuxt-module/dist/runtime/plugins/vuetify-no-client-hints.js")> &
+  InjectionType<typeof import("../../plugins/fix-image-paths.client")> &
   InjectionType<typeof import("../../plugins/vue-masonry-wall")> &
+  InjectionType<typeof import("../../node_modules/.pnpm/nuxt@3.16.2_@netlify+blobs@8.2.0_@parcel+watcher@2.5.1_@types+node@22.15.2_db0@0.3.2_en_51307845e002020a716d7c25bb2a0d63/node_modules/nuxt/dist/pages/runtime/plugins/prerender.server.js")> &
   InjectionType<typeof import("../../node_modules/.pnpm/@nuxtjs+i18n@9.5.3_@vue+compiler-dom@3.5.13_eslint@9.25.1_jiti@2.4.2__magicast@0.3.5_ro_299b1c82a3558d6e7f619db9c1726a92/node_modules/@nuxtjs/i18n/dist/runtime/plugins/ssg-detect.js")>
 
 declare module '#app' {

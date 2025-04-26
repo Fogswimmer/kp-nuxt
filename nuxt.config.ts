@@ -12,18 +12,17 @@ export default defineNuxtConfig({
   electron: {
     build: [
       {
-        // Main-Process entry file of the Electron App.
         entry: 'electron/main.ts',
       },
     ],
   },
   css: ["@/assets/css/globals.scss"],
-  ssr: false, // если ты не хочешь сервер, только SPA
+  ssr: false,
   app: {
-    baseURL: './', // для electron
+    baseURL: './',
     pageTransition: {
       name: "page",
-      mode: "out-in", // default
+      mode: "out-in"
     },
     layoutTransition: { name: "layout", mode: "out-in" },
     head: {

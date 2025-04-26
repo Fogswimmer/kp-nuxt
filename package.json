@@ -4,7 +4,7 @@
   "description": "My cool Nuxt + Electron app",
   "author": "Andrey Dyakov",
   "private": false,
-  "type": "module",
+ 
   "main": "dist-electron/main.js",
   "scripts": {
     "build": "nuxt build",
@@ -16,7 +16,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:error": "eslint --quiet --ext .jsx,.js,.tsx,.ts src/**/*",
     "lint:fix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
-    "build:electron": "pnpm build && tsc electron/main.ts --outDir dist-electron",
+    "build:electron": "nuxt generate && tsc electron/main.ts --outDir dist-electron",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
