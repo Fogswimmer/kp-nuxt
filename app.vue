@@ -71,9 +71,9 @@ p {
 .bg-gradient {
   background-image: linear-gradient(
     to right top,
-    #0c151c,
+    #1c0c0c,
     #0c151b,
-    #0c151b,
+    #15354b,
     #03121b,
     #0b1a25
   ) !important;
