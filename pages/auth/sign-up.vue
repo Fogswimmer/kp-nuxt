@@ -39,13 +39,13 @@ import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 import { useAuthStore } from "~/stores/authStore";
 
 const { register } = useAuthStore();
-
+const localeRoute = useLocaleRoute();
 const { loading, authError, showErrorMessage, userForm } =
   storeToRefs(useAuthStore());
 const submit = async () => {
   await register();
   if (!showErrorMessage.value) {
-    navigateTo("/auth/sign-in");
+    navigateTo(localeRoute("/auth/sign-in"));
   }
 };
 

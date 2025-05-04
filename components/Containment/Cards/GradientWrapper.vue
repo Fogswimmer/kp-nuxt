@@ -1,6 +1,6 @@
 <template>
   <Client-Only>
-    <div :style="`box-shadow: 1px 1px 8px ${bgAccentColor};`" class="fill-height">
+    <div :style="`background-image: linear-gradient(to left bottom, transparent 10%, ${bgAccentColor});`" class="fill-height rounded-lg">
       <slot />
     </div>
   </Client-Only>

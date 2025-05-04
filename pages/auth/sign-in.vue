@@ -96,7 +96,7 @@ const validate = async () => {
       await login();
       if (!showErrorMessage.value) {
         await fetchCurrentUser();
-        navigateTo("/");
+        navigateTo(localeRoute("/"));
       }
     }
   }

@@ -5,7 +5,7 @@
     <v-card-text>
       <div class="d-flex flex-column fill-height ga-2 align-center">
         <div class="d-flex flex-column ga-1 align-center">
-          <span class="text-h4">{{ currentRating }}</span>
+          <span class="text-h4">{{ currentRating || "0" }}</span>
           <ClientOnly>
             <v-rating
               readonly
@@ -36,7 +36,7 @@
   <v-card height="230" variant="text">
     <v-card-text>
       <AssessmentGraph
-        :graph-data="assessmentsGraph"
+        :graph-data="sortedGraphData"
         :total="assessments.length"
       />
     </v-card-text>
@@ -67,7 +67,7 @@ import { useAuthStore } from "~/stores/authStore";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
-const formOpen = ref<boolean>(false);
+
 defineEmits<{
   (event: "assession:submit" | "assession:enable" | "assession:cancel"): void;
   (event: "comment:update" | "rating:update", value: string | number): void;
@@ -83,6 +83,26 @@ const props = defineProps<{
 }>();
 
 const { t, locale } = useI18n();
+
+const sortedGraphData = computed(() => {
+  const sorted = [...props.assessmentsGraph].sort((a, b) => b.rating - a.rating);
+  const arrLength = 5;
+
+  const defaultRatings = [
+    { rating: 5, count: 0 },
+    { rating: 4, count: 0 },
+    { rating: 3, count: 0 },
+    { rating: 2, count: 0 },
+    { rating: 1, count: 0 }
+  ];
+  
+  const merged = defaultRatings.map(item => {
+    const found = sorted.find(el => el.rating === item.rating);
+    return found || item;
+  });
+
+  return merged.slice(0, arrLength);
+});
 
 const computedAssessmentNumber = computed(() => {
   const label =

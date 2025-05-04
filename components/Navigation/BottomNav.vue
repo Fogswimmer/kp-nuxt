@@ -19,6 +19,12 @@
         :to="$localeRoute('/persons')"
         icon="mdi-account-group"
       />
+      <v-btn
+        :active="computedActiveNavBtn.about"
+        value="about"
+        :to="$localeRoute('/about')"
+        icon="mdi-information"
+      />
     </v-bottom-navigation>
   </client-only>
 </template>

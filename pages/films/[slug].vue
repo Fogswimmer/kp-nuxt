@@ -7,7 +7,7 @@
     <v-sheet max-width="1200" class="mx-auto" rounded="lg">
       <div>
         <DetailCard
-          :page-name="film?.name + ' (' + film?.releaseYear + ')' || ''"
+          :page-name="useInternationalName(film?.name as string, film?.internationalName as string)"
           :loading="loading"
           :notification="!isAuthenticated"
           trailer
@@ -18,7 +18,7 @@
           <template #trailer>
             <v-lazy transition="fade-transition" min-height="300">
               <v-container>
-                <v-card v-if="!loading" class="pa-2">
+                <v-card v-if="!loading" :class="['pa-2 masonry-item  dark-glassed', { 'fade-in': visibleCards.has(0) }]" v-intersect="useIntersection(0, visibleCards)">
                   <template #image>
                     <v-img
                       :src="film?.poster || ''"
@@ -32,7 +32,7 @@
                         :src="film?.poster || ''"
                         cover
                         rounded="lg"
-                        height="100%"
+                       height="420"
                       >
                         <template #placeholder>
                           <ImgPlaceholder :loading="loading" />
@@ -43,25 +43,27 @@
                       </v-img>
                       
                     </v-col>
-                    <v-col cols="12" lg="5" md="5" sm="12">
-                      <v-sheet height="420" class="pa-4" rounded="lg">
-                        <v-list-item
-                          v-for="(detail, index) in generalInfo"
-                          :key="index"
-                          :subtitle="$t(detail.title)"
-                          :prepend-icon="detail.icon"
-                          class="my-4"
-                        >
-                          <v-list-item-title
-                            :class="{ 'text-secondary': detail.to }"
+                    <v-col cols="12" lg="5" md="5" sm="12"  v-intersect="useIntersection(1, visibleCards)">
+                      <v-card border  height="420" :class="[' masonry-item  dark-glassed', { 'fade-in': visibleCards.has(1) }]" rounded="lg" >
+                       <div class="fill-height d-flex flex-column items-center">
+                          <v-list-item
+                            v-for="(detail, index) in generalInfo"
+                            :key="index"
+                            :subtitle="$t(detail.title)"
+                            :prepend-icon="detail.icon"
+                            class="my-4"
                           >
-                            {{ detail.value || $t("general.no_data") }}
-                          </v-list-item-title>
-                        </v-list-item>
-                      </v-sheet>
+                            <v-list-item-title
+                              :class="{ 'text-secondary': detail.to }"
+                            >
+                              {{ detail.value || $t("general.no_data") }}
+                            </v-list-item-title>
+                          </v-list-item>
+                       </div>
+                      </v-card>
                     </v-col>
-                    <v-col cols="12" lg="4" md="3" sm="12">
-                      <v-sheet rounded="lg">
+                    <v-col cols="12" lg="4" md="3" sm="12"  v-intersect="useIntersection(2, visibleCards)">
+                      <v-card border rounded="lg" :class="['masonry-item dark-glassed', { 'fade-in': visibleCards.has(2) }]">
                         <Rating
                           :current-rating="film?.rating || ''"
                           :assessments="film?.assessments || []"
@@ -77,7 +79,7 @@
                           @rating:update="rating = $event"
                         >
                         </Rating>
-                      </v-sheet>
+                      </v-card>
                     </v-col>
                   </v-row>
                 </v-card>
@@ -223,22 +225,6 @@
       @cancel="showDeleteWarning = false"
       @confirm="handleFilmDelete"
     />
-    <!-- <BaseDialog
-      v-model:opened="showLinkTrailerDialog"
-      :loading="loading"
-      :title="$t('actions.link_trailer')"
-      :max-width="600"
-      @close="showLinkTrailerDialog = false"
-    >
-      <template #text>
-        <TrailerForm
-          :trailer="filmForm.trailer || ''"
-          :loading="loading"
-          @form:submit="handleEditTrailerLink"
-          @update:model-value="filmForm.trailer = $event"
-        />
-      </template>
-    </BaseDialog> -->
     <ConfirmDialog
       v-model="showPosterSetDialog"
       :text="$t('actions.set_poster') + '?'"
@@ -262,8 +248,6 @@ import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
 import Comments from "~/components/FilmPartials/Assessment/Comments.vue";
 import DetailMenu from "~/components/FilmPartials/DetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
-import TrailerForm from "~/components/Forms/Film/TrailerForm.vue";
-import Trailer from "~/components/FilmPartials/Trailer.vue";
 import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
 import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
@@ -284,7 +268,7 @@ const isAssessing = ref<boolean>(false);
 const showAssessDialog = ref<boolean>(false);
 const showLinkTrailerDialog = ref<boolean>(false);
 const showPosterSetDialog = ref<boolean>(false);
-
+const visibleCards= ref(new Set<number>());
 const comment = ref<string>("");
 const rating = ref<number>(5);
 const activeTab = ref<number>(0);
@@ -333,7 +317,7 @@ const generalInfo = computed((): Detail[] => {
   const info = [
     {
       title: "forms.film.name",
-      value: film.value?.name || "",
+      value: useInternationalName(film?.value?.name as string, film.value?.internationalName as string),
       icon: "mdi-movie",
       tooltip: film.value && film.value.name?.length > 60 ? true : false,
     },

@@ -8,9 +8,8 @@
       <GradientWrapper>
         <HomeWallItem
           :item="item"
-          :visible-items="visibleItems"
           :loading="loading"
-          v-intersect="onIntersect(index)"
+          v-intersect="useIntersection(index, visibleItems)"
         />
       </GradientWrapper>
     </div>
@@ -18,18 +17,11 @@
 </template>
 
 <script lang="ts" setup>
+
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import HomeWallItem from "./partials/HomeWallItem.vue";
 
 const visibleItems = ref(new Set<number>());
-
-const onIntersect = (index: number) => (isVisible: boolean) => {
-  if (isVisible) {
-    visibleItems.value.add(index);
-  } else {
-    visibleItems.value.delete(index);
-  }
-};
 
 defineProps<{
   items: Detail[];
@@ -37,7 +29,7 @@ defineProps<{
 }>();
 </script>
 
-<style scoped>
+<style>
 .masonry-item {
   opacity: 0;
   transform: translateY(20px);

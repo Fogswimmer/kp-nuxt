@@ -117,63 +117,63 @@
           </div>
         </template>
         <template #text>
-            <v-expansion-panels
-              v-model="mainAccordion"
-              variant="accordion"
-              bg-color="transparent"
+          <v-expansion-panels
+            v-model="mainAccordion"
+            variant="accordion"
+            bg-color="transparent"
+          >
+            <v-expansion-panel
+              id="bio"
+              value="bio"
+              tag="section"
+              :title="$t('pages.persons.bio')"
             >
-              <v-expansion-panel
-                id="bio"
-                value="bio"
-                tag="section"
-                :title="$t('pages.persons.bio')"
-              >
-                <v-expansion-panel-text>
-                  <IndentedEditableText
-                    v-if="person?.bio"
-                    :edit-mode="bioEditMode"
-                    :messages="$t('pages.persons.edit_bio')"
-                    :text="person?.bio || ''"
-                    @sumbit:edit="submitBioEdit"
-                  />
-                  <div v-else class="w-100 text-center">
-                    <span>{{ $t("general.no_data") }}</span>
-                  </div>
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-              <v-expansion-panel
-                v-if="person?.filmWorks"
-                id="filmography"
-                tag="section"
-                value="filmography"
-                :title="$t('pages.persons.filmography')"
-              >
-                <v-expansion-panel-text>
-                  <Filmography :person="person" />
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-              <v-expansion-panel
-                id="gallery"
-                tag="section"
-                value="gallery"
-                :title="$t('pages.persons.photos')"
-              >
-                <v-expansion-panel-text>
-                  <GalleryViewer
-                    :slider-arr="sliderGalleryArr || []"
-                    :disabled="!isAuthenticated"
-                    :gallery="person?.photos || []"
-                    :entity-name="personFullName"
-                    :loading="loading"
-                    with-avatar
-                    @editor:open="photoEditMode = true"
-                    @cover:set="handleSetCover"
-                    @avatar:set="handleChangeAvatar"
-                    @delete:img="handleDeleteImg"
-                  />
-                </v-expansion-panel-text>
-              </v-expansion-panel>
-            </v-expansion-panels>
+              <v-expansion-panel-text>
+                <IndentedEditableText
+                  v-if="person?.bio"
+                  :edit-mode="bioEditMode"
+                  :messages="$t('pages.persons.edit_bio')"
+                  :text="person?.bio || ''"
+                  @sumbit:edit="submitBioEdit"
+                />
+                <div v-else class="w-100 text-center">
+                  <span>{{ $t("general.no_data") }}</span>
+                </div>
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel
+              v-if="person?.filmWorks"
+              id="filmography"
+              tag="section"
+              value="filmography"
+              :title="$t('pages.persons.filmography')"
+            >
+              <v-expansion-panel-text>
+                <Filmography :person="person" />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+            <v-expansion-panel
+              id="gallery"
+              tag="section"
+              value="gallery"
+              :title="$t('pages.persons.photos')"
+            >
+              <v-expansion-panel-text>
+                <GalleryViewer
+                  :slider-arr="sliderGalleryArr || []"
+                  :disabled="!isAuthenticated"
+                  :gallery="person?.photos || []"
+                  :entity-name="personFullName"
+                  :loading="loading"
+                  with-avatar
+                  @editor:open="photoEditMode = true"
+                  @cover:set="handleSetCover"
+                  @avatar:set="handleChangeAvatar"
+                  @delete:img="handleDeleteImg"
+                />
+              </v-expansion-panel-text>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </template>
       </DetailCard>
     </v-card>
@@ -324,7 +324,10 @@ const handleBioEdit = (): void => {
 };
 
 const personFullName = computed((): string => {
-  return `${person.value?.firstname} ${person.value?.lastname}`;
+  return useInternationalName(
+    `${person.value?.firstname} ${person.value?.lastname}`,
+    person.value?.internationalName as string
+  );
 });
 const computedGalleryEditTitle = computed((): string => {
   return t("pages.films.edit_gallery") + " " + personFullName.value;

@@ -6,7 +6,7 @@
     </Head>
 
     <ListPage
-      v-if="filmsPresent"
+      v-if="filmsPresent && films"
       :items="filmItems || []"
       :loading="loading"
       :total-pages="totalPages"
@@ -75,11 +75,7 @@ const filmItems = computed((): Detail[] => {
   return films.value[0] !== null
     ? films.value?.map((film: IFilm) => {
         return {
-          title:
-            film?.name +
-            " (" +
-            (film?.releaseYear ? film.releaseYear.toString() : "") +
-            ")",
+          title: useInternationalName(film.name, film.internationalName),
           value: film.description || "",
           avatar: film.poster || film.gallery[0] || "",
           to: "/films/" + film.slug,

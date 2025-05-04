@@ -2,6 +2,7 @@
   <v-list-item
     lines="three"
     :to="$localeRoute(item.to || '/')"
+    rounded="lg"
     border
   >
     <v-list-item-title>
@@ -17,7 +18,7 @@
       {{ item.value || $t("general.no_data") }}
     </v-list-item-subtitle>
     <template #prepend>
-      <v-avatar rounded="sm" :size="$vuetify.display.mdAndUp ? 124 : 64">
+      <v-avatar :size="$vuetify.display.mdAndUp ? 124 : 64">
         <v-img :src="item?.avatar || ''">
           <template #placeholder>
             <ImgPlaceholder :loading="loading" icon="mdi-image" />

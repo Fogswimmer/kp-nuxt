@@ -9,7 +9,7 @@
     </Head>
     <div>
       <ListPage
-        v-if="personsPresent"
+        v-if="personsPresent && persons"
         :items="personItems || []"
         :loading="loading"
         :total-pages="totalPages"
@@ -35,26 +35,26 @@
             class="pa-4"
             variant="text"
           >
-          <v-list v-if="popularActors.length">
-              <v-list-item 
-              v-for="(person, index) in popularActors" 
-              :key="index"
-              :title="person.name"
-              :to="`/persons/${person.slug}`"
+            <v-list v-if="popularActors.length">
+              <v-list-item
+                v-for="(person, index) in popularActors"
+                :key="index"
+                :title="person.name"
+                :to="`/persons/${person.slug}`"
               >
-              <template #prepend>
-                <v-avatar size="64">
-                  <v-img :src="person.avatar || person.photos[0] || ''">
-                    <template #placeholder>
-                      <ImgLoader />
-                    </template>
-                    <template #error>
-                      <ErrorPlaceHolder />
-                    </template>
-                  </v-img>
-                </v-avatar>
-              </template> 
-            </v-list-item>
+                <template #prepend>
+                  <v-avatar size="64">
+                    <v-img :src="person.avatar || person.photos[0] || ''">
+                      <template #placeholder>
+                        <ImgLoader />
+                      </template>
+                      <template #error>
+                        <ErrorPlaceHolder />
+                      </template>
+                    </v-img>
+                  </v-avatar>
+                </template>
+              </v-list-item>
             </v-list>
             <span v-else-if="!loading" class="text-disabled">{{
               $t("general.no_data")
@@ -124,7 +124,6 @@ const fetchData = async (): Promise<void> => {
       ),
       fetchGenders(locale.value),
       fetchSpecialties(locale.value),
-      listPopularActors(),
     ]);
   } else {
     navigateTo("/persons/empty");
@@ -137,12 +136,10 @@ const personItems = computed((): Detail[] => {
     persons.value?.map((person): Detail => {
       return {
         title:
-          person?.firstname +
-          " " +
-          person?.lastname +
-          (person?.internationalName
-            ? " (" + person?.internationalName + ")"
-            : ""),
+          useInternationalName(
+            person.firstname + " " + person.lastname,
+            person.internationalName
+          ),
         value: person?.specialtyNames.join(", "),
         avatar: person?.avatar || "",
         to: "/persons/" + person?.slug || "",

@@ -19,7 +19,7 @@ declare global {
   interface IFilm {
     id: number | null;
     name: string;
-    internationalName: string | null;
+    internationalName: string;
     genres: string[] | [];
     genreIds: number[] | [];
     genreNames: string[] | [];
@@ -110,7 +110,7 @@ declare global {
     id: number | null;
     firstname: string;
     lastname: string;
-    internationalName: string | null;
+    internationalName: string;
     name?: string;
     photos: string[] | [];
     gender: string;

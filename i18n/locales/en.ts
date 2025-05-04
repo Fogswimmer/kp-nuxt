@@ -250,8 +250,8 @@ export default {
     limit: "Limit",
     order: "Order",
     filters: "Filters",
-    asc: "New first",
-    desc: "Old first",
+    asc: "Old first",
+    desc: "New first",
     edit_cover: "Edit cover",
     edit_poster: "Edit poster",
     delete_cover: "Delete cover",
@@ -550,8 +550,8 @@ export default {
     display: "Display",
     order: {
       title: "Order",
-      asc: "New first",
-      desc: "Old first",
+      asc: "Old first",
+      desc: "New first",
     },
     sort: {
       title: "Sort",

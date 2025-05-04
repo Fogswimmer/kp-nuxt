@@ -45,11 +45,13 @@ $dark-bg: #1e1e1e;
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+  
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  
 }
 
 .img-blur {
@@ -62,22 +64,24 @@ p {
 }
 
 .glassed {
-  background: rgba(0, 0, 0, 0.2) !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  -webkit-backdrop-filter: blur(4rem) !important;
+  backdrop-filter: blur(4rem) !important;
+}
+
+.dark-glassed {
+  background: rgba(5, 6, 10, 0.7) !important;
   -webkit-backdrop-filter: blur(4rem) !important;
   backdrop-filter: blur(4rem) !important;
 }
 
 
 .bg-gradient {
-  background-image: linear-gradient(
-    to right top,
-    #1c0c0c,
-    #0c151b,
-    #15354b,
-    #03121b,
-    #0b1a25
-  ) !important;
-  background-attachment: fixed !important;
+  // background-image: linear-gradient(to right top, #0c151c, #0c151b, #0c151b, #03121b, #0b1a25);
+  background-image: url('./public/img/bg.png');
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 </style>

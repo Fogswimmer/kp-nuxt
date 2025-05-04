@@ -1,8 +1,5 @@
 <template>
   <v-app-bar order="0" class="glassed">
-    <template #image>
-      <v-img gradient="to top right, rgba(0,0,0,.5), #122534" />
-    </template>
     <v-app-bar-title>
       <Logo />
     </v-app-bar-title>
@@ -25,7 +22,6 @@ import NavBtns from "~/components/Navigation/NavBtns.vue";
 import Logo from "~/components/Misc/Logo.vue";
 import LocaleHandleBtn from "../Containment/Btns/LocaleHandleBtn.vue";
 import ProfileNav from "./ProfileNav.vue";
-
 </script>
 
 <style></style>

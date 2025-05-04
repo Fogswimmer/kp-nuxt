@@ -3,7 +3,6 @@
     v-model="accordion"
     variant="accordion"
     bg-color="transparent"
-    border
   >
     <v-expansion-panel :title="$t('pages.films.starring')" value="starring">
       <v-expansion-panel-text>

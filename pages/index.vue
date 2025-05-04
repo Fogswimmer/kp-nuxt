@@ -114,7 +114,7 @@ const latestFilmItems = computed((): Detail[] => {
   return latestFilms.value[0] !== null
     ? latestFilms.value?.map((film: IFilm) => {
         return {
-          title: film?.name || "",
+          title: useInternationalName(film.name, film.internationalName),
           value: film.description || "",
           rating: film.rating || "0",
           avatar: film.poster || film.gallery[0] || "",
@@ -129,7 +129,7 @@ const topFilmItems = computed((): Detail[] => {
   return topFilms.value[0] !== null
     ? topFilms.value?.map((film: IFilm) => {
         return {
-          title: film?.name || "",
+          title: useInternationalName(film.name, film.internationalName),
           value: film.description || "",
           rating: film.rating || "0",
           avatar: film.poster || film.gallery[0] || "",
@@ -144,8 +144,12 @@ const personItems = computed((): Detail[] => {
   return (
     popularActors.value &&
     popularActors.value?.map((person: IPerson): Detail => {
+      console.log(person);
       return {
-        title: person?.name || "",
+        title: useInternationalName(
+          person.name as IPerson['firstname'],
+          person.internationalName
+        ),
         value: person?.bio || "",
         avatar: person?.avatar || "",
         to: "/persons/" + person?.slug || "",

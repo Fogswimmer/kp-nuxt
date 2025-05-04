@@ -1,5 +1,5 @@
 <template>
-<v-lazy transition="fade-transition" min-height="100">
+  <v-lazy transition="fade-transition" min-height="100">
     <v-card elevation="5" border>
       <template v-if="assessments.length > 0">
         <v-data-iterator
@@ -9,11 +9,12 @@
         >
           <template #header>
             <div class="d-flex align-center pa-2">
-              <v-responsive max-width="200">
+              <v-responsive :max-width="$vuetify.display.mdAndUp ? 200 : 150">
                 <v-select
                   v-model="sort"
                   :items="sortItems"
                   hide-details
+                  class="ma-2"
                   density="compact"
                 />
               </v-responsive>
@@ -30,21 +31,31 @@
             </div>
           </template>
           <template #default="{ items }">
-            <Comment
+            <div
               v-for="(item, i) in items"
-              :key="i"
-              :loading="loading"
-              :color="item.raw.color"
-              :index="i"
-              :comment="item.raw"
-              :is-admin="isAdmin"
-              :is-authenticated="isAuthenticated"
-              :user-id="currentUser?.id || 0"
-              @confirm:delete="confirmDelete"
-            />
+              :class="[
+                'masonry-item my-4',
+                { 'fade-in': visibleComments.has(i) },
+              ]"
+              v-intersect="useIntersection(i, visibleComments)"
+            >
+              <Comment
+                :key="i"
+                :loading="loading"
+                :color="item.raw.color"
+                :index="i"
+                :comment="item.raw"
+                :is-admin="isAdmin"
+                :is-authenticated="isAuthenticated"
+                :user-id="currentUser?.id || 0"
+                @confirm:delete="confirmDelete"
+              />
+            </div>
           </template>
           <template #footer="{ pageCount }">
-            <v-footer class="justify-space-between text-subtitle-2 mt-2 glassed">
+            <v-footer
+              class="justify-space-between text-subtitle-2 mt-2 glassed"
+            >
               <span> {{ $t("general.total") }}: {{ assessments.length }}</span>
               <ClientOnly>
                 <v-pagination
@@ -69,7 +80,7 @@
         </div>
       </v-sheet>
     </v-card>
-</v-lazy>
+  </v-lazy>
 </template>
 
 <script lang="ts" setup>
@@ -83,7 +94,7 @@ const props = defineProps<{
   assessments: IAssessment[];
   loading: boolean;
 }>();
-const sort = ref<string>("asc");
+const sort = ref<string>("desc");
 interface SortItem {
   value: string;
   title: string;
@@ -101,16 +112,15 @@ const sortItems = ref<SortItem[]>([
 
 const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
 const page = ref<number>(1);
+const visibleComments = ref(new Set<number>());
 const itemsPerPage = ref<number>(5);
 const showDeleteConfirm = ref<boolean>(false);
 const commentColors = [
-  "rgba(255, 255, 255, 0.05)",
-  "rgba(255, 0, 0, 0.05)",
-  "rgba(0, 255, 0, 0.05)",
-  "rgba(0, 0, 255, 0.05)",
-  "rgba(255, 0, 255, 0.05)",
-  "rgba(0, 255, 255, 0.05)",
-  "rgba(255, 255, 0, 0.05)",
+  "rgba(0, 255, 0, 0.07)",
+  "rgba(255, 0, 0, 0.07)",
+  "rgba(0, 255, 255, 0.07)",
+  "rgba(255, 255, 0, 0.07)",
+  "rgba(155, 155, 0, 0.07)",
 ];
 const seeAllOnClick = () => {
   itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5;
@@ -142,12 +152,10 @@ const assementsWithColors = computed(() => {
 
   return mappedAssementsWithColors
     .flat()
-    .sort(
-      (a, b) =>
-        sort.value === "asc" ?
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        :
-        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    .sort((a, b) =>
+      sort.value === "asc"
+        ? new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        : new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     );
 });
 const confirmDelete = (id: number) => {

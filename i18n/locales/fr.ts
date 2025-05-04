@@ -249,8 +249,8 @@ export default {
     limit: "Limite",
     order: "Order",
     filters: "Filtres",
-    asc: "Sauf les nouveaux",
-    desc: "Sauf les vieux",
+    asc: "Sauf les vieux",
+    desc: "Sauf les nouveraux",
     edit_cover: "Modifier la couverture",
     edit_poster: "Modifier l'affiche",
     delete_cover: "Supprimer la couverture",
@@ -533,8 +533,8 @@ export default {
 		display: "Afficher",
 		order: {
 			title: "Ordre",
-			asc: "Sauf les nouveaux",
-			desc: "Sauf les vieux",
+			asc: "Sauf les vieux",
+			desc: "Sauf les nouveaux",
 		},
 		sort: {
 			title: "Trier",

@@ -4,16 +4,16 @@
       v-if="!editMode"
       :class="['text-body-1 pa-2', { 'text-body-2': compact }]"
     >
-      <v-lazy
+      <v-virtual-scroll
         v-if="text"
-        :min-height="200"
-        :options="{ threshold: 0.5 }"
+        :height="200"
+        :items="formattedText || []"
         transition="fade-transition"
       >
-        <p class="text-body-2 text-lg-body-1 text-paragraph">
-          {{ formattedText }}
-        </p>
-      </v-lazy>
+        <template #default="{ item }">
+          <p>{{ item }}</p>
+        </template>
+      </v-virtual-scroll>
 
       <v-skeleton-loader v-else type="text" />
     </div>
@@ -62,9 +62,7 @@ const formattedText = computed(() =>
         .trim()
         .split("\n")
         .map((p) => p.replace(/[\u200B\r\t\xa0]/g, "").trim())
-        .map((p) => p.replace(/^\.+|\.+$/g, ""))
         .filter((p) => p.length > 0)
-        .join("\n")
     : []
 );
 </script>

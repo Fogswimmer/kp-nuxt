@@ -107,9 +107,6 @@
                       $t("pages.about.dev_prod.table_headers.containerisation")
                     }}
                   </th>
-                  <th>
-                    {{ $t("pages.about.dev_prod.table_headers.scripts") }}
-                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -121,13 +118,19 @@
                     </div>
                   </td>
                   <td>
-                    <div class="d-flex align-center ga-2">
-                      <v-icon color="purple" size="x-large">mdi-github</v-icon>
-                      GitHub Actions: CI & CD
+                    <div class="d-flex ga-1">
+                      <span>
+                        <v-icon color="green" size="x-large">mdi-bash</v-icon>
+                        Bash
+                      </span>
+                      <span>
+                        <v-icon size="x-large" color="orange"> mdi-file</v-icon>
+                        Makefile
+                      </span>
                     </div>
                   </td>
                   <td>
-                    <div class="d-flex flex-column ga-1">
+                    <div class="d-flex ga-1">
                       <span>
                         <v-icon size="x-large" color="blue">mdi-docker</v-icon>
                         Docker
@@ -137,18 +140,6 @@
                         Docker Compose
                       </span>
                     </div>
-                  </td>
-                  <td>
-                    <div class="d-flex flex-column ga-1">
-                      <span>
-                        <v-icon color="green" size="x-large">mdi-bash</v-icon>
-                        Bash
-                      </span>
-                    </div>
-                    <span>
-                      <v-icon size="x-large" color="orange"> mdi-file</v-icon>
-                      Makefile
-                    </span>
                   </td>
                 </tr>
               </tbody>
@@ -167,7 +158,7 @@
               <v-card-text>
                 <v-tabs-window v-model="active">
                   <v-tabs-window-item value="scheme">
-                    <v-img src="/img/scheme.webp" alt="scheme" height="400">
+                    <v-img src="/img/scheme-no-bg.png" alt="scheme" height="400">
                       <template #placeholder>
                         <ImgPlaceholder />
                       </template>
@@ -240,7 +231,7 @@ volumes:
 networks:
   app-network:
     driver: bridge
-  </code>
+                        </code>
                       </pre>
                   </v-tabs-window-item>
                 </v-tabs-window>
@@ -262,7 +253,7 @@ networks:
             <div :class="$vuetify.display.smAndDown ? 'text-center' : ''">
               <v-avatar
                 size="200"
-                :class="['mr-10', { 'float-left': $vuetify.display.mdAndUp }]"
+                :class="[{ 'float-left mr-10': $vuetify.display.mdAndUp }]"
               >
                 <v-img
                   src="/img/nebelschwimmer_avatar.jpg"
@@ -323,7 +314,7 @@ import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 
-const accordion = ref<string[]>(["stack"]);
+const accordion = ref<string[]>(["author"]);
 const active = ref("scheme");
 definePageMeta({
   name: "about",
