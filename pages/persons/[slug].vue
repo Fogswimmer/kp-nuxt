@@ -324,8 +324,9 @@ const handleBioEdit = (): void => {
 };
 
 const personFullName = computed((): string => {
+  const fullname = person.value ? person.value.firstname + " " + person.value.lastname : "";
   return useInternationalName(
-    `${person.value?.firstname} ${person.value?.lastname}`,
+    fullname,
     person.value?.internationalName as string
   );
 });

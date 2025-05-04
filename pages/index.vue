@@ -144,7 +144,6 @@ const personItems = computed((): Detail[] => {
   return (
     popularActors.value &&
     popularActors.value?.map((person: IPerson): Detail => {
-      console.log(person);
       return {
         title: useInternationalName(
           person.name as IPerson['firstname'],
