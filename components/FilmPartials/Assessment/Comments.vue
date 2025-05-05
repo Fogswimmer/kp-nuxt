@@ -9,7 +9,7 @@
         >
           <template #header>
             <div class="d-flex align-center pa-2">
-              <v-responsive :max-width="$vuetify.display.mdAndUp ? 200 : 150">
+              <v-responsive :max-width="$vuetify.display.mdAndUp ? 250 : 150">
                 <v-select
                   v-model="sort"
                   :items="sortItems"
@@ -94,7 +94,7 @@ const props = defineProps<{
   assessments: IAssessment[];
   loading: boolean;
 }>();
-const sort = ref<string>("desc");
+const sort = ref<string>("asc");
 interface SortItem {
   value: string;
   title: string;
@@ -102,11 +102,11 @@ interface SortItem {
 const sortItems = ref<SortItem[]>([
   {
     value: "asc",
-    title: t("actions.asc"),
+    title: t("actions.desc"),
   },
   {
     value: "desc",
-    title: t("actions.desc"),
+    title: t("actions.asc"),
   },
 ]);
 
@@ -159,7 +159,6 @@ const assementsWithColors = computed(() => {
     );
 });
 const confirmDelete = (id: number) => {
-  console.log(id);
   emits("assession:delete", id);
   showDeleteConfirm.value = false;
 };

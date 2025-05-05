@@ -50,19 +50,19 @@
         </MasonrySection>
       </main>
     </template>
-    <template v-else-if="!filmLoading && !personLoading">
-      <EmptyPage>
-        <template #default>
-          <v-empty-state
-            :headline="$t('empty_states.no_content')"
-            :title="$t('empty_states.no_content_notice')"
-            :action-text="$t('empty_states.actions.add_persons')"
-            icon="mdi-alert-circle"
-            @click:action="navigateTo('/persons/new')"
-          />
-        </template>
-      </EmptyPage>
-    </template>
+<!-- 
+    <EmptyPage v-else-if="!filmLoading && !personLoading">
+      <template #default>
+        <v-empty-state
+          :headline="$t('empty_states.no_content')"
+          :title="$t('empty_states.no_content_notice')"
+          :action-text="$t('empty_states.actions.add_persons')"
+          icon="mdi-alert-circle"
+          @click:action="navigateTo('/persons/new')"
+        />
+      </template>
+    </EmptyPage> -->
+
     <template v-else>
       <div
         style="height: calc(100vh - 100px)"
@@ -146,7 +146,7 @@ const personItems = computed((): Detail[] => {
     popularActors.value?.map((person: IPerson): Detail => {
       return {
         title: useInternationalName(
-          person.name as IPerson['firstname'],
+          person.name as IPerson["firstname"],
           person.internationalName
         ),
         value: person?.bio || "",
