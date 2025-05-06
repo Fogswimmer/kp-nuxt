@@ -7,9 +7,9 @@
     >
       <GradientWrapper>
         <HomeWallItem
+          v-intersect="useIntersection(index, visibleItems)"
           :item="item"
           :loading="loading"
-          v-intersect="useIntersection(index, visibleItems)"
         />
       </GradientWrapper>
     </div>
@@ -29,7 +29,7 @@ defineProps<{
 }>();
 </script>
 
-<style>
+<style scoped>
 .masonry-item {
   opacity: 0;
   transform: translateY(20px);

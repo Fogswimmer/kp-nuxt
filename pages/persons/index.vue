@@ -91,7 +91,6 @@ const {
 } = storeToRefs(usePersonStore());
 const {
   fetchFilteredPersons,
-  listPopularActors,
   fetchGenders,
   fetchSpecialties,
   checkPersonsPresence,
@@ -135,11 +134,10 @@ const personItems = computed((): Detail[] => {
     persons.value &&
     persons.value?.map((person): Detail => {
       return {
-        title:
-          useInternationalName(
-            person.firstname + " " + person.lastname,
-            person.internationalName
-          ),
+        title: useInternationalName(
+          person.firstname + " " + person.lastname,
+          person.internationalName
+        ),
         value: person?.specialtyNames.join(", "),
         avatar: person?.avatar || "",
         to: "/persons/" + person?.slug || "",

@@ -8,6 +8,8 @@ export default {
       "Best actors, directors, producers, composers, writers of all time",
   },
   general: {
+    show_more: "Show more",
+    hide: "Hide",
     max_file_size: "Max files size - { size }",
     max_file_size_error: "Max files size reached - { size }",
     youtube_link: "Youtube link",
@@ -202,6 +204,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    stop_edit: "Stop editing",
     close_window: "Close window",
     read_all: "Read all",
     login_required: "Login required",

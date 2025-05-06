@@ -7,7 +7,12 @@
     <v-sheet max-width="1200" class="mx-auto" rounded="lg">
       <div>
         <DetailCard
-          :page-name="useInternationalName(film?.name as string, film?.internationalName as string)"
+          :page-name="
+            useInternationalName(
+              film?.name as string,
+              film?.internationalName as string
+            )
+          "
           :loading="loading"
           :notification="!isAuthenticated"
           trailer
@@ -16,86 +21,79 @@
             <NotAuthWarning v-if="!isAuthenticated" />
           </template>
           <template #trailer>
-            <v-lazy transition="fade-transition" min-height="300">
-              <v-container>
-                <v-card v-if="!loading" :class="['pa-2 masonry-item  dark-glassed', { 'fade-in': visibleCards.has(0) }]" v-intersect="useIntersection(0, visibleCards)">
-                  <template #image>
+            <v-container>
+              <v-card v-if="!loading" class="pa-2">
+                <template #image>
+                  <v-img :src="film?.poster || ''" cover class="img-blur" />
+                </template>
+                <v-row>
+                  <v-col cols="12" lg="3" md="4" sm="12">
                     <v-img
                       :src="film?.poster || ''"
                       cover
-                      class="img-blur"
-                    ></v-img>
-                  </template>
-                  <v-row>
-                    <v-col cols="12" lg="3" md="4" sm="12">
-                      <v-img
-                        :src="film?.poster || ''"
-                        cover
-                        rounded="lg"
-                       height="420"
-                      >
-                        <template #placeholder>
-                          <ImgPlaceholder :loading="loading" />
-                        </template>
-                        <template #error>
-                          <ErrorPlaceHolder />
-                        </template>
-                      </v-img>
-                      
-                    </v-col>
-                    <v-col cols="12" lg="5" md="5" sm="12"  v-intersect="useIntersection(1, visibleCards)">
-                      <v-card border  height="420" :class="[' masonry-item  dark-glassed', { 'fade-in': visibleCards.has(1) }]" rounded="lg" >
-                       <div class="fill-height d-flex flex-column items-center">
-                          <v-list-item
-                            v-for="(detail, index) in generalInfo"
-                            :key="index"
-                            :subtitle="$t(detail.title)"
-                            :prepend-icon="detail.icon"
-                            class="my-4"
-                          >
-                            <v-list-item-title
-                              :class="{ 'text-secondary': detail.to }"
-                            >
-                              {{ detail.value || $t("general.no_data") }}
-                            </v-list-item-title>
-                          </v-list-item>
-                       </div>
-                      </v-card>
-                    </v-col>
-                    <v-col cols="12" lg="4" md="3" sm="12"  v-intersect="useIntersection(2, visibleCards)">
-                      <v-card border rounded="lg" :class="['masonry-item dark-glassed', { 'fade-in': visibleCards.has(2) }]">
-                        <Rating
-                          :current-rating="film?.rating || ''"
-                          :assessments="film?.assessments || []"
-                          :assessments-graph="film?.assessmentsGraph || []"
-                          :is-assessing="isAssessing"
-                          :is-authenticated="isAuthenticated"
-                          :rating="rating"
-                          :comment="comment"
-                          @assession:submit="submitAssessment"
-                          @assession:enable="isAssessing = true"
-                          @assession:cancel="cancelAssessment"
-                          @comment:update="comment = $event"
-                          @rating:update="rating = $event"
-                        >
-                        </Rating>
-                      </v-card>
-                    </v-col>
-                  </v-row>
-                </v-card>
-                <div v-else-if="$vuetify.display.mdAndUp" class="d-flex ga-2 fill-height">
-                  <v-skeleton-loader
-                   
-                    v-for="n in 3"
-                    :key="n"
-                    type="card"
-                    height="420"
-                    width="calc(100% / 3)"
-                  ></v-skeleton-loader>
-                </div v-else>
-                <v-skeleton-loader v-else type="card" height="420"></v-skeleton-loader>
-              </v-container>
-            </v-lazy>
+                      rounded="lg"
+                      height="420"
+                    >
+                      <template #placeholder>
+                        <ImgPlaceholder :loading="loading" />
+                      </template>
+                      <template #error>
+                        <ErrorPlaceHolder />
+                      </template>
+                    </v-img>
+                  </v-col>
+                  <v-col
+                    v-if="$vuetify.display.mdAndUp"
+                    cols="12"
+                    lg="5"
+                    md="5"
+                    sm="12"
+                  >
+                    <v-card border height="420" class="glassed" rounded="lg">
+                      <div class="fill-height d-flex flex-column items-center">
+                        <FilmGeneralInfo :general-info="generalInfo" />
+                      </div>
+                    </v-card>
+                  </v-col>
+                  <v-col
+                    v-if="$vuetify.display.mdAndUp"
+                    cols="12"
+                    lg="4"
+                    md="3"
+                    sm="12"
+                  >
+                    <v-card border rounded="lg" class="glassed">
+                      <Rating
+                        :current-rating="film?.rating || ''"
+                        :assessments="film?.assessments || []"
+                        :assessments-graph="film?.assessmentsGraph || []"
+                        :is-assessing="isAssessing"
+                        :rating="rating"
+                        :comment="comment"
+                        @assession:submit="submitAssessment"
+                        @assession:enable="isAssessing = true"
+                        @assession:cancel="cancelAssessment"
+                        @comment:update="comment = $event"
+                        @rating:update="rating = $event"
+                      />
+                    </v-card>
+                  </v-col>
+                </v-row>
+              </v-card>
+              <div
+                v-else-if="$vuetify.display.mdAndUp"
+                class="d-flex ga-2 fill-height"
+              >
+                <v-skeleton-loader
+                  v-for="n in 3"
+                  :key="n"
+                  type="card"
+                  height="420"
+                  width="calc(100% / 3)"
+                />
+              </div>
+              <v-skeleton-loader v-else type="card" height="420" />
+            </v-container>
           </template>
           <template #menu>
             <DetailMenu
@@ -109,7 +107,28 @@
           </template>
           <template #text>
             <main>
-              <FilmExpansionPanels :film="film || null">
+              <FilmExpansionPanels
+                :film="film || null"
+               :is-description-panel-open="isDescriptionPanelOpen"
+              >
+                <template #general-info>
+                  <FilmGeneralInfo :general-info="generalInfo" />
+                </template>
+                <template #rating>
+                  <Rating
+                    :current-rating="film?.rating || ''"
+                    :assessments="film?.assessments || []"
+                    :assessments-graph="film?.assessmentsGraph || []"
+                    :is-assessing="isAssessing"
+                    :rating="rating"
+                    :comment="comment"
+                    @assession:submit="submitAssessment"
+                    @assession:enable="isAssessing = true"
+                    @assession:cancel="cancelAssessment"
+                    @comment:update="comment = $event"
+                    @rating:update="rating = $event"
+                  />
+                </template>
                 <template #gallery-viewer>
                   <GalleryViewer
                     :slider-arr="sliderGalleryArr || []"
@@ -129,9 +148,10 @@
                     :messages="$t('pages.films.edit_description')"
                     :text="film?.description || ''"
                     @sumbit:edit="submitDescriptionEdit"
+                    @cancel:edit="cancelDescriptionEdit"
                   />
                 </template>
-                <template #rating>
+                <template #comments>
                   <Comments
                     :loading="loading"
                     :assessments="film?.assessments || []"
@@ -144,16 +164,15 @@
                 </template>
               </FilmExpansionPanels>
             </main>
-            <v-footer>
-              <v-spacer />
-              <div class="d-flex align-center text-caption ga-1">
-                <span>{{ $t("general.published_by") }}</span>
-                <nuxt-link class="text-secondary">{{
-                  film?.publisherData ? film?.publisherData.name : ""
-                }}</nuxt-link>
-                {{ film?.createdAt || "" }}
-              </div>
-            </v-footer>
+          </template>
+          <template #footer>
+            <div class="text-center w-100 text-caption ga-1 pa-2">
+              <span>{{ $t("general.published_by") }}</span>
+              <nuxt-link class="text-secondary">{{
+                film?.publisherData ? film?.publisherData.name : ""
+              }}</nuxt-link>
+              {{ film?.createdAt || "" }}
+            </div>
           </template>
         </DetailCard>
       </div>
@@ -252,6 +271,7 @@ import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.v
 import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
+import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
 
 const GALLERY_CARD_HEIGHT: number = 300;
 
@@ -268,12 +288,11 @@ const isAssessing = ref<boolean>(false);
 const showAssessDialog = ref<boolean>(false);
 const showLinkTrailerDialog = ref<boolean>(false);
 const showPosterSetDialog = ref<boolean>(false);
-const visibleCards= ref(new Set<number>());
 const comment = ref<string>("");
 const rating = ref<number>(5);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-
+const isDescriptionPanelOpen = ref<boolean>(false)
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
   film,
@@ -317,7 +336,10 @@ const generalInfo = computed((): Detail[] => {
   const info = [
     {
       title: "forms.film.name",
-      value: useInternationalName(film?.value?.name as string, film.value?.internationalName as string),
+      value: useInternationalName(
+        film?.value?.name as string,
+        film.value?.internationalName as string
+      ),
       icon: "mdi-movie",
       tooltip: film.value && film.value.name?.length > 60 ? true : false,
     },
@@ -419,13 +441,9 @@ const handleEditDescription = async (): Promise<void> => {
   await nextTick(() => {
     if (descriptionPanelElement) {
       descriptionPanelElement.scrollIntoView({ behavior: "smooth" });
+      isDescriptionPanelOpen.value = !isDescriptionPanelOpen.value
     }
   });
-};
-
-const handleEditTrailerLink = async (): Promise<void> => {
-  await sumbitEdit();
-  showLinkTrailerDialog.value = false;
 };
 
 const sumbitEdit = async (): Promise<void> => {
@@ -449,7 +467,6 @@ const handleGalleryItemsDelete = async (): Promise<void> => {
 };
 
 const handleDeleteImg = async (index: number): Promise<void> => {
-
   selectedImagesIndices.value.push(index);
   await handleGalleryItemsDelete();
 };
@@ -492,6 +509,10 @@ const submitDescriptionEdit = async (text: string): Promise<void> => {
   editDescriptionMode.value = false;
 };
 
+const cancelDescriptionEdit = () => {
+  editDescriptionMode.value = false;
+};
+
 const deleteAssessment = async (assessmentId: number): Promise<void> => {
   const filmId: number = film.value?.id || 0;
   await deleteAssessmentById(filmId, assessmentId);
@@ -518,6 +539,5 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "filmDetails",
   path: "/films/:slug",
-  middleware: ["content-present"],
 });
 </script>

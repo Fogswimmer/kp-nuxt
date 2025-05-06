@@ -22,7 +22,7 @@
     >
       <slot name="notification" />
     </div>
-    <v-card variant="text">
+    <v-card>
       <template v-if="loading" #loader>
         <v-progress-linear indeterminate color="primary" />
       </template>
@@ -54,13 +54,13 @@
         <slot name="text" />
       </v-card>
     </v-card>
+    <slot name="footer" />
   </v-card>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
 import ImgPlaceholder from "../Img/ImgPlaceholder.vue";
-
 defineProps<{
   pageName?: string;
   title?: string;

@@ -4,16 +4,16 @@
       v-if="!editMode"
       :class="['text-body-1 pa-2', { 'text-body-2': compact }]"
     >
-      <v-virtual-scroll
-        v-if="text"
-        :height="200"
-        :items="formattedText || []"
-        transition="fade-transition"
-      >
-        <template #default="{ item }">
-          <p>{{ item }}</p>
-        </template>
-      </v-virtual-scroll>
+      <div v-if="text">
+        <p
+          v-for="(paragraph, i) in formattedText"
+          :key="i"
+          v-intersect="useIntersection(i, visibleParagraphs)"
+          :class="['paragraph my-4', { 'fade-in': visibleParagraphs.has(i) }]"
+        >
+          {{ paragraph }}
+        </p>
+      </div>
 
       <v-skeleton-loader v-else type="text" />
     </div>
@@ -39,6 +39,17 @@
         </v-card>
       </template>
     </v-confirm-edit>
+    <v-card-actions>
+      <v-btn
+      v-if="editMode"
+        block
+        prepend-icon="mdi-close"
+        color="warning"
+        size="small"
+        @click="$emit('cancel:edit')"
+        >{{ $t("actions.stop_edit") }}</v-btn
+      >
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -52,10 +63,11 @@ const props = defineProps<{
 
 defineEmits<{
   (e: "sumbit:edit", value: string): void;
+  (e: "cancel:edit"): void;
 }>();
 
 const editModeText = ref<string>(props.text);
-
+const visibleParagraphs = ref(new Set<number>());
 const formattedText = computed(() =>
   props.text
     ? props.text
@@ -67,4 +79,12 @@ const formattedText = computed(() =>
 );
 </script>
 
-<style sroped></style>
+<style sroped>
+.paragraph {
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+.paragraph.fade-in {
+  opacity: 1;
+}
+</style>

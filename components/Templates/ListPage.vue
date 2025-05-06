@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="position-relative fill-height">
     <client-only>
       <v-navigation-drawer
         v-if="$vuetify.display.smAndDown"
@@ -51,10 +51,21 @@
           <BackBtn />
         </template>
         <v-toolbar-title>
-          <span class="text-h6 text-lg-h5 font-weight-bold">
-            {{ listTitle }}</span
-          >
+          <span class="text-lg-h5 font-weight-bold"> {{ listTitle }}</span>
         </v-toolbar-title>
+        <template v-if="$vuetify.display.mdAndUp">
+          <v-pagination
+            v-model="currentPage"
+            :length="totalPages"
+            rounded="lg"
+            variant="tonal"
+            density="comfortable"
+            color="primary"
+            :total-visible="3"
+            @update:model-value="handlePageChange"
+          />
+          <v-spacer />
+        </template>
         <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
           <v-text-field
             v-model="needle"
@@ -104,86 +115,86 @@
         </template>
       </v-toolbar>
 
-      <v-card v-if="items.length" variant="text">
-        <div  class="mt-2 w-100 d-flex align-center justify-center">
-          <v-label
-            v-if="needle && !loading && $vuetify.display.mdAndUp"
-           
-          >
+      <v-card v-if="items.length">
+        <div class="mt-2 w-100 d-flex align-center justify-center">
+          <v-label v-if="needle && !loading && $vuetify.display.mdAndUp">
             <span v-if="items.length">{{
               $t("search.request_result", { count: items.length })
             }}</span>
           </v-label>
         </div>
 
-        <v-list v-if="!loading" class="pa-2">
-          <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            :to="$localeRoute(item.to || '/')"
-            border
-            rounded="lg"
-            elevation="5"
-            lines="two"
-            class="glassed my-2"
-            :title="item.title"
-            :subtitle="item.value"
-            :value="item"
-          >
-            <template #prepend>
-              <v-avatar
-                :size="
-                  $vuetify.display.mdAndUp ? AVATAR_DESKTOP : AVATAR_MOBILE
-                "
-              >
-                <v-img :src="item.avatar">
-                  <template #placeholder>
-                    <v-sheet height="100%">
-                      <div
-                        class="d-flex align-center justify-center fill-height"
-                      >
-                        <v-icon icon="mdi-image-off" />
-                      </div>
-                    </v-sheet>
-                  </template>
-                </v-img>
-              </v-avatar>
-            </template>
-            <template v-if="$vuetify.display.mdAndUp" #append>
-              <v-chip variant="tonal" density="compact">
-                {{ $t("general.created_at") + ": " + item.createdAt }}</v-chip
-              >
-            </template>
-          </v-list-item>
-        </v-list>
-
+        <div v-if="!loading" class="pa-2">
+          <GradientWrapper v-for="(item, i) in items" :key="i">
+            <v-list-item
+              :to="$localeRoute(item.to || '/')"
+              border
+              rounded="lg"
+              lines="two"
+              class="my-2"
+              :title="item.title"
+              :subtitle="item.value"
+              :value="item"
+            >
+              <template #prepend>
+                <v-avatar
+                  :size="
+                    $vuetify.display.mdAndUp ? AVATAR_DESKTOP : AVATAR_MOBILE
+                  "
+                >
+                  <v-img :src="item.avatar">
+                    <template #placeholder>
+                      <v-sheet height="100%">
+                        <div
+                          class="d-flex align-center justify-center fill-height"
+                        >
+                          <v-icon icon="mdi-image-off" />
+                        </div>
+                      </v-sheet>
+                    </template>
+                  </v-img>
+                </v-avatar>
+              </template>
+              <template v-if="$vuetify.display.mdAndUp" #append>
+                <v-chip variant="tonal" density="compact">
+                  {{ $t("general.created_at") + ": " + item.createdAt }}</v-chip
+                >
+              </template>
+            </v-list-item>
+          </GradientWrapper>
+        </div>
         <v-skeleton-loader
-          v-else-if="items.length"
           v-for="n in limit"
+          v-else-if="items.length"
           :key="n"
           rounded="lg"
-          :height="$vuetify.display.mdAndUp ? AVATAR_DESKTOP : AVATAR_MOBILE"
-          class="my-2 glassed"
+          :height="
+            ($vuetify.display.mdAndUp ? AVATAR_DESKTOP : AVATAR_MOBILE) + 30
+          "
+          class="ma-2 glassed"
           type="list-item-avatar-three-line"
         />
       </v-card>
-      <div v-else-if="!loading" class="d-flex flex-column align-center justify-center" style="height: 50vh">
+      <div
+        v-else-if="!loading"
+        class="d-flex flex-column align-center justify-center"
+        style="height: 50vh"
+      >
         <v-label class="mt-2">{{ $t("general.no_results") }}</v-label>
       </div>
-
-      <v-footer v-if="items.length" color="transparent" class="justify-center">
-        <v-pagination
-          v-model="currentPage"
-          :length="totalPages"
-          rounded="lg"
-          size="small"
-          color="primary"
-          :total-visible="3"
-          @update:model-value="handlePageChange"
-        />
-      </v-footer>
     </v-sheet>
-
+    <v-pagination
+      v-if="$vuetify.display.smAndDown"
+      v-model="currentPage"
+      :length="totalPages"
+      rounded="lg"
+      variant="tonal"
+      density="comfortable"
+      color="primary"
+      class="position-absolute bottom-0 left-0 right-0 left-0 mb-4"
+      :total-visible="3"
+      @update:model-value="handlePageChange"
+    />
     <slot name="empty-state" />
   </div>
 </template>
@@ -197,7 +208,7 @@ import { useAuthStore } from "#imports";
 const { isAuthenticated } = useAuthStore();
 
 const AVATAR_DESKTOP: number = 100;
-const AVATAR_MOBILE: number = 70;
+const AVATAR_MOBILE: number = 60;
 
 const emit = defineEmits<{
   (e: "update:page" | "delete:item" | "form:open", value: number): void;

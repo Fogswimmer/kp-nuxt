@@ -27,23 +27,12 @@
             :title="$t('nav.films_list')"
             :to="$localeRoute('/films')"
           />
-          <v-tooltip
-            :disabled="currentUser ? true : false"
-            activator="parent"
-            location="bottom"
-          >
-            <template #activator="{ props }">
-              <v-list-item
-                v-bind="props"
-                :disabled="!currentUser"
-                :active="$route.name === 'newFilm'"
-                prepend-icon="mdi-plus"
-                :title="$t('nav.films_add')"
-                :to="$localeRoute('/films/new')"
-              />
-            </template>
-            <span>{{ $t("actions.login_required") }}</span>
-          </v-tooltip>
+          <v-list-item
+            :active="$route.name === 'newFilm'"
+            prepend-icon="mdi-plus"
+            :title="$t('nav.films_add')"
+            :to="$localeRoute('/films/new')"
+          />
         </v-list>
       </v-menu>
       <v-menu>
@@ -59,28 +48,15 @@
         </template>
         <v-list nav density="compact">
           <v-list-item
-         
             prepend-icon="mdi-list-box"
             :title="$t('nav.persons_list')"
             :to="$localeRoute('/persons')"
           />
-          <v-tooltip
-            :disabled="currentUser ? true : false"
-            activator="parent"
-            location="bottom"
-          >
-            {{ $t("actions.login_required") }}
-            <template #activator="{ props }">
-              <v-list-item
-                v-bind="props"
-                :disabled="!currentUser"
-                
-                prepend-icon="mdi-plus"
-                :title="$t('nav.persons_add')"
-                :to="$localeRoute('/persons/new')"
-              />
-            </template>
-          </v-tooltip>
+          <v-list-item
+            prepend-icon="mdi-plus"
+            :title="$t('nav.persons_add')"
+            :to="$localeRoute('/persons/new')"
+          />
         </v-list>
       </v-menu>
       <v-btn
@@ -95,11 +71,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ClientOnly } from "#components";
-import { useAuthStore } from "~/stores/authStore";
-
-const { currentUser } = storeToRefs(useAuthStore());
-
 const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
   const route = useRoute();
   const routeName = (route.name as string) || "";

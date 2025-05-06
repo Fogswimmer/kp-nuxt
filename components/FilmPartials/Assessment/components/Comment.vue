@@ -3,10 +3,10 @@
     border
     class="ma-4"
     :loading="loading"
-   :style="`background-image: linear-gradient(145deg , ${color} 0%, transparent 80%);`"
+    :style="`background-image: linear-gradient(145deg , ${color} 0%, transparent 80%);`"
     density="compact"
   >
-    <v-toolbar class="pa-2" density="compact" color="transparent" >
+    <v-toolbar class="pa-2" density="compact" color="transparent">
       <template #prepend>
         <div class="position-relative">
           <v-avatar border>
@@ -48,7 +48,7 @@
         icon="mdi-delete"
         color="error"
         @click="showDeleteConfirm = true"
-      ></v-btn>
+      />
     </div>
 
     <ConfirmDialog

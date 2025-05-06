@@ -2,11 +2,32 @@
   <v-expansion-panels
     v-model="accordion"
     variant="accordion"
-    bg-color="transparent"
   >
+    <v-expansion-panel
+      v-if="$vuetify.display.smAndDown"
+      id="general-info"
+      :title="$t('pages.general_info')"
+      tag="section"
+      value="general-info"
+    >
+      <v-expansion-panel-text>
+        <slot name="general-info" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+    <v-expansion-panel
+      v-if="$vuetify.display.smAndDown"
+      id="rating"
+      :title="$t('pages.films.rating')"
+      tag="section"
+      value="general-rating"
+    >
+      <v-expansion-panel-text>
+        <slot name="rating" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
     <v-expansion-panel :title="$t('pages.films.starring')" value="starring">
       <v-expansion-panel-text>
-        <v-list rounded="lg" nav border>
+        <v-list rounded="lg" border>
           <v-list-item
             v-for="(actor, index) in starring"
             :key="index"
@@ -32,10 +53,9 @@
         </v-list>
       </v-expansion-panel-text>
     </v-expansion-panel>
-
     <v-expansion-panel value="team" :title="$t('pages.films.team')">
       <v-expansion-panel-text>
-        <v-list rounded="lg" nav border>
+        <v-list rounded="lg" border>
           <v-list-item
             v-for="(person, index) in team"
             :key="index"
@@ -89,7 +109,7 @@
       :title="$t('pages.films.comments')"
     >
       <v-expansion-panel-text>
-        <slot name="rating" />
+        <slot name="comments" />
       </v-expansion-panel-text>
     </v-expansion-panel>
   </v-expansion-panels>
@@ -97,12 +117,14 @@
 
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
-
-const accordion = ref<string[]>([]);
+defineEmits<{
+  (e: "description:change", value: boolean): void;
+}>();
 const props = defineProps<{
   film: IFilm | null;
+  isDescriptionPanelOpen: boolean;
 }>();
-
+const accordion = ref<string[]>([]);
 const starring = computed((): Detail[] => {
   return props.film
     ? props.film.actorsData?.map((person: FilmPerson): Detail => {
@@ -135,6 +157,15 @@ const team = computed((): Detail[] => {
       })
     : [];
 });
+
+watch(
+  () => props.isDescriptionPanelOpen,
+  () => {
+    if (!accordion.value.includes("description")) {
+      accordion.value.push("description");
+    }
+  }
+);
 </script>
 
 <style></style>

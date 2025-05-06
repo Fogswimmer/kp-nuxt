@@ -13,7 +13,7 @@
               :model-value="currentRating"
               density="comfortable"
               color="yellow-darken-2"
-            ></v-rating>
+            />
           </ClientOnly>
         </div>
 

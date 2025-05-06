@@ -1,76 +1,67 @@
 <template>
-    <v-card :loading="loading" class="glassed">
-      <v-toolbar density="compact">
-        <template #append>
-          <CloseBtn @close="$emit('close')" />
-        </template>
-        <v-toolbar-title>
-          {{ $t("pages.profile.title") }}
-        </v-toolbar-title>
-      </v-toolbar>
-      <section class="text-center pa-2">
-        <div class="position-relative">
-          <v-avatar
-            size="200"
-            border
-            class="cursor-pointer"
-            @click.stop="showAvatarEditBtn = !showAvatarEditBtn"
-          >
-            <v-img :src="currentUser?.avatar || ''" cover>
-              <template #placeholder>
-                <ImgLoader />
-              </template>
-              <template #error>
-                <ErrorPlaceHolder />
-              </template>
-            </v-img>
-          </v-avatar>
-          <v-fab
-            :active="showAvatarEditBtn"
-            absolute
-            color="secondary"
-            location="bottom end"
-            icon="mdi-pencil"
-            @click.stop="$emit('avatar:edit')"
-          />
-        </div>
-      </section>
-      <v-list>
-        <v-list-item class="text-subtitle-2">{{
-          computedLastLogin
-        }}</v-list-item>
-        <v-list-item
-          v-for="(info, i) in computedGeneralInfo"
-          :key="i"
-          :title="info.title"
-          :prepend-icon="info.icon"
-          :subtitle="info.value"
+  <v-card :loading="loading" max-width="280" border class="mt-1">
+    <section class="text-center pa-2">
+      <div class="position-relative">
+        <v-avatar
+          size="200"
+          border
+          class="cursor-pointer"
+          @click.stop="showAvatarEditBtn = !showAvatarEditBtn"
+        >
+          <v-img :src="currentUser?.avatar || ''" cover>
+            <template #placeholder>
+              <ImgLoader />
+            </template>
+            <template #error>
+              <ErrorPlaceHolder />
+            </template>
+          </v-img>
+        </v-avatar>
+        <v-fab
+          :active="showAvatarEditBtn"
+          absolute
+          color="secondary"
+          location="bottom end"
+          icon="mdi-pencil"
+          @click.stop="$emit('avatar:edit')"
         />
-      </v-list>
-      <v-divider/>
-      <v-list density="compact" variant="tonal">
-        <v-list-item
-          :title="$t('actions.edit')"
-          prepend-icon="mdi-pencil"
-          value="edit"
-          @click.stop="$emit('edit')"
-        />
-        <v-list-item
-          :title="$t('auth.sign_out')"
-          prepend-icon="mdi-logout"
-          value="logout"
-          base-color="warning"
-          @click.stop="$emit('logout')"
-        />
-      </v-list>
-    </v-card>
-
+      </div>
+    </section>
+    <v-list nav density="compact">
+      <v-list-item class="text-caption">{{ computedLastLogin }}</v-list-item>
+      <v-list-item
+        v-for="(info, i) in computedGeneralInfo"
+        :key="i"
+        :title="info.title"
+        :subtitle="info.value"
+        lines="two"
+      />
+    </v-list>
+    <v-divider />
+    <v-card-actions>
+      <v-btn
+        :title="$t('actions.edit')"
+        prepend-icon="mdi-pencil"
+        size="small"
+        @click.stop="$emit('edit')"
+      >
+        {{ $t("actions.edit") }}
+      </v-btn>
+      <v-btn
+        prepend-icon="mdi-logout"
+        color="warning"
+        size="small"
+        @click.stop="$emit('logout')"
+      >
+        {{ $t("auth.sign_out") }}
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts" setup>
 import ImgLoader from "../Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
-import CloseBtn from "../Btns/CloseBtn.vue";
 
 const props = defineProps<{
   currentUser: CurrentUser;
@@ -79,7 +70,7 @@ const props = defineProps<{
 }>();
 
 defineEmits<{
-  (e: "edit" | "logout"| "avatar:edit"| "close"): void;
+  (e: "edit" | "logout" | "avatar:edit" | "close"): void;
 }>();
 
 const { locale, t } = useI18n();
@@ -95,11 +86,6 @@ const computedLastLogin = computed((): string => {
 const computedGeneralInfo = computed((): Detail[] => {
   return [
     {
-      title: t("auth.email"),
-      value: props.currentUser?.email || "",
-      icon: "mdi-email",
-    },
-    {
       title: t("forms.person.age"),
       value:
         locale.value === "ru"
@@ -109,7 +95,11 @@ const computedGeneralInfo = computed((): Detail[] => {
               "лет",
             ])
           : props.currentUser?.age + " " + t("general.years_old") || "",
-      icon: "mdi-cake",
+    },
+    {
+      title: t("auth.about"),
+      value: props.currentUser?.about || "",
+      icon: "",
     },
   ];
 });

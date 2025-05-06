@@ -8,6 +8,8 @@ export default {
       "Лучшие актеры, режиссеры, продюсеры, композиторы, авторы всех времен",
   },
   general: {
+    show_more: "Показать еще",
+    hide: "Скрыть",
     max_file_size: "Максимальный размер файлов - { size }",
     max_file_size_error: "Превышен максимальный размер файлов - { size }",
     youtube_link: "Ссылка на ютуб",
@@ -171,6 +173,7 @@ export default {
   },
   actions: {
     title: "Действия",
+    stop_edit: "Завершить изменение",
     close_window: "Закрыть окно",
     read_all: "Читать полностью",
     login_required: "Требуется авторизация",

@@ -59,7 +59,7 @@
           </v-avatar>
         </v-card>
       </template>
-      <v-sheet max-width="300">
+   
         <ProfileCard
           v-if="isAuthenticated && currentUser"
           :current-user="currentUser"
@@ -70,7 +70,7 @@
           @avatar:edit="showAvatarUploadDialog = true"
           @close="showMenu = false"
         />
-      </v-sheet>
+ 
     </v-menu>
     <ConfirmDialog
       v-model="showAvatarWarning"

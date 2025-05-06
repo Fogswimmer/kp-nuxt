@@ -7,6 +7,8 @@ export default {
     persons_list: "Les meilleurs acteurs, directeurs, producteurs, compositeurs, auteurs de tous les temps",
   },
   general: {
+    show_more: "Voir plus",
+    hide: "Cacher",
     max_file_size: "Taille maximale des fichiers - { size }",
     max_file_size_error: "Taille maximale des fichiers atteinte - { size }",
     youtube_link: "Lien youtube",
@@ -199,6 +201,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    stop_edit: "Arrêter modification",
     close_window: "Fermer la fenêtre",
     read_all: "Lire tout",
     login_required: "Autorisation requise",

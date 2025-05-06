@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fill-height">
     <Head>
       <Title>{{ definePageTitle($t("pages.films.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.films_list')" />

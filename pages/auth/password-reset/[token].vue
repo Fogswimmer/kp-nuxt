@@ -6,7 +6,7 @@
 
     <v-card>
       <v-card-title>
-        {{ $t('auth.password_reset') }}
+        {{ $t("auth.password_reset") }}
       </v-card-title>
       <v-card-subtitle>
         <span class="text-caption text-secondary">{{
@@ -15,13 +15,13 @@
       </v-card-subtitle>
       <v-card-text class="pa-4">
         <v-form ref="emailFormRef" class="mt-4">
-            <v-text-field
-              v-model="passwordResetForm.newPassword"
-              :label="$t('auth.new_password')"
-              prepend-inner-icon="mdi-email-outline"
-              variant="outlined"
-              :rules="[required, passwordRule]"
-            />
+          <v-text-field
+            v-model="passwordResetForm.newPassword"
+            :label="$t('auth.new_password')"
+            prepend-inner-icon="mdi-email-outline"
+            variant="outlined"
+            :rules="[required, passwordRule]"
+          />
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -42,7 +42,6 @@
 </template>
 
 <script lang="ts" setup>
-import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
 import { useAuthStore } from "~/stores/authStore";
 

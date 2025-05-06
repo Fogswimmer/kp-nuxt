@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fill-height">
     <Head>
       <Title>{{ definePageTitle($t("pages.home.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.home')" />
@@ -50,19 +50,6 @@
         </MasonrySection>
       </main>
     </template>
-<!-- 
-    <EmptyPage v-else-if="!filmLoading && !personLoading">
-      <template #default>
-        <v-empty-state
-          :headline="$t('empty_states.no_content')"
-          :title="$t('empty_states.no_content_notice')"
-          :action-text="$t('empty_states.actions.add_persons')"
-          icon="mdi-alert-circle"
-          @click:action="navigateTo('/persons/new')"
-        />
-      </template>
-    </EmptyPage> -->
-
     <template v-else>
       <div
         style="height: calc(100vh - 100px)"
@@ -77,7 +64,6 @@
 <script lang="ts" setup>
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
-import EmptyPage from "~/components/Templates/EmptyPage.vue";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import HomeWall from "~/components/Masonry/HomeWall.vue";
 import definePageTitle from "~/utils/definePageTitle";
@@ -97,6 +83,7 @@ const {
 } = storeToRefs(usePersonStore());
 
 const { locale } = useI18n();
+const localeRoute = useLocaleRoute();
 
 const fetchData = async (): Promise<void> => {
   await checkFilmsPresence();
@@ -107,6 +94,9 @@ const fetchData = async (): Promise<void> => {
   }
   if (personsPresent.value) {
     await listPopularActors(locale.value);
+  }
+  if (!filmsPresent.value && !personsPresent.value) {
+    navigateTo(localeRoute("/empty-page"));
   }
 };
 

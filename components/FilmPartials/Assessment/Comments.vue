@@ -18,7 +18,7 @@
                   density="compact"
                 />
               </v-responsive>
-              <v-spacer></v-spacer>
+              <v-spacer />
               <v-btn
                 variant="tonal"
                 :disabled="assessments.length < itemsPerPage"
@@ -33,11 +33,9 @@
           <template #default="{ items }">
             <div
               v-for="(item, i) in items"
-              :class="[
-                'masonry-item my-4',
-                { 'fade-in': visibleComments.has(i) },
-              ]"
+              :key="i"
               v-intersect="useIntersection(i, visibleComments)"
+              :class="['comment my-4', { 'fade-in': visibleComments.has(i) }]"
             >
               <Comment
                 :key="i"
@@ -66,8 +64,7 @@
                   color="secondary"
                   :total-visible="3"
                   density="compact"
-                ></v-pagination
-              ></ClientOnly>
+              /></ClientOnly>
             </v-footer>
           </template>
         </v-data-iterator>
@@ -163,5 +160,16 @@ const confirmDelete = (id: number) => {
   showDeleteConfirm.value = false;
 };
 </script>
-
-<style></style>
+<style>
+.comment {
+  opacity: 0;
+  transform: translateY(5px);
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
+}
+.comment.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>

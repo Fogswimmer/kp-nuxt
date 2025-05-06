@@ -135,6 +135,7 @@
                   :messages="$t('pages.persons.edit_bio')"
                   :text="person?.bio || ''"
                   @sumbit:edit="submitBioEdit"
+                  @cancel:edit="cancelBioEdit"
                 />
                 <div v-else class="w-100 text-center">
                   <span>{{ $t("general.no_data") }}</span>
@@ -324,7 +325,9 @@ const handleBioEdit = (): void => {
 };
 
 const personFullName = computed((): string => {
-  const fullname = person.value ? person.value.firstname + " " + person.value.lastname : "";
+  const fullname = person.value
+    ? person.value.firstname + " " + person.value.lastname
+    : "";
   return useInternationalName(
     fullname,
     person.value?.internationalName as string
@@ -384,6 +387,10 @@ const submitBioEdit = async (text: string): Promise<void> => {
   await fetchData();
   bioEditMode.value = false;
   showSnackbar.value = !showSnackbar.value;
+};
+
+const cancelBioEdit = () => {
+  bioEditMode.value = false;
 };
 
 const handleChangeAvatar = async (index: number): Promise<void> => {
@@ -502,7 +509,6 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "personDetails",
   path: "/persons/:slug",
-  middleware: ["content-present"],
 });
 </script>
 

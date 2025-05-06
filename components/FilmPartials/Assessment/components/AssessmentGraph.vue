@@ -4,7 +4,8 @@
       <div v-for="(data, index) in sortedGraphData" :key="index">
         <div class="d-flex flex-column ga-1">
           <div class="d-flex ga-1 align-center w-100">
-            <v-chip :color="stripeColor(data.rating)" 
+            <v-chip 
+            :color="stripeColor(data.rating)" 
             size="x-small" prepend-icon="mdi-star">{{ data.rating }}</v-chip>
 
             <v-spacer />
@@ -39,7 +40,8 @@ const props = defineProps<{
 }>();
 
 const sortedGraphData = computed(() => {
-  return props.graphData.sort((a, b) => b.rating - a.rating);
+  const data = props.graphData;
+  return data.sort((a, b) => b.rating - a.rating);
 })
 
 const stripeColor = (value: number) => {

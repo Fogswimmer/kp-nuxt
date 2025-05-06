@@ -9,12 +9,12 @@
 
       <v-list>
         <v-list-group value="edit">
-          <template v-slot:activator="{ props }">
+          <template #activator="{ props }">
             <v-list-item
               v-bind="props"
               prepend-icon="mdi-account-circle"
               :title="$t('actions.edit')"
-            ></v-list-item>
+            />
           </template>
 
           <v-list-item
@@ -35,12 +35,6 @@
             value="gallery"
             @click="$emit('edit:gallery')"
           />
-          <v-list-item
-            :title="$t('pages.films.trailer')"
-            prepend-icon="mdi-video"
-            value="trailer"
-            @click="$emit('edit:trailer')"
-          />
         </v-list-group>
         <v-list-item
           :title="$t('actions.remove')"
@@ -51,7 +45,7 @@
         />
       </v-list>
     </v-menu>
-    <client-only v-else>
+    <template v-else>
       <v-menu>
         <template #activator="{ props }">
           <v-btn
@@ -80,12 +74,6 @@
             value="gallery"
             @click="$emit('edit:gallery')"
           />
-          <v-list-item
-            :title="$t('pages.films.trailer')"
-            prepend-icon="mdi-video"
-            value="gallery"
-            @click="$emit('edit:trailer')"
-          />
         </v-list>
       </v-menu>
       <v-btn
@@ -95,7 +83,7 @@
         @click="$emit('delete:film')"
         >{{ $t("actions.remove") }}</v-btn
       >
-    </client-only>
+    </template>
   </div>
 </template>
 
