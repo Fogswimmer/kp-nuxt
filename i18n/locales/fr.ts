@@ -129,6 +129,8 @@ export default {
     password_reset_messages: {
       success: "Le code de réinitialisation de mot de passe a été envoyé par email.",
       error: "Une erreur s'est produite lors de l'envoi du code de réinitialisation de mot de passe.",
+      invalid_token: "Le token est invalide",
+      reset_success: "Votre mot de passe a été réinitialisé. Vous pouvez fermer cette page"
     }
   },
   nav: {
@@ -197,6 +199,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    close_window: "Fermer la fenêtre",
     read_all: "Lire tout",
     login_required: "Autorisation requise",
     choose_cover: "Choisir une couverture",

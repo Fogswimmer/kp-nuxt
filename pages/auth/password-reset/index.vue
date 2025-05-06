@@ -11,8 +11,8 @@
             <div class="d-flex flex-column ga-2">
               <v-text-field
                 v-model="passwordResetForm.email"
-                :disabled="showSuccessMessage"
                 name="email"
+                :disabled="showSuccessMessage"
                 :label="$t('auth.password_reset_email')"
                 :placeholder="$t('auth.password_reset_email')"
                 prepend-inner-icon="mdi-email-outline"
@@ -77,4 +77,6 @@ definePageMeta({
   name: "passwordResetEmail",
   path: "/auth/password-reset",
 });
+
+
 </script>

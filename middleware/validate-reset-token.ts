@@ -1,5 +1,5 @@
 export default defineNuxtRouteMiddleware(async (to) => {
-  const token = to.params.token;
+  const token = to.params.token.toString();
   const { validateToken } = useAuthStore();
 
   if (!token || typeof token !== "string") {
@@ -7,5 +7,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   }
 
   const isTokenValid = await validateToken(token);
+  console.log(isTokenValid)
   return isTokenValid || navigateTo("/auth/password-reset/invalid");
 });

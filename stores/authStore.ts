@@ -182,12 +182,15 @@ export const useAuthStore = defineStore("authStore", () => {
   const resetPasswordRequest = async (locale: string): Promise<boolean> => {
     try {
       loading.value = true;
-      await $fetch<ResetTokenResponse>(`${baseUrl}/reset-password/request?locale=${locale}`, {
-        method: "POST",
-        body: {
-          email: passwordResetForm.value.email,
-        },
-      });
+      await $fetch<ResetTokenResponse>(
+        `${baseUrl}/reset-password/request?locale=${locale}`,
+        {
+          method: "POST",
+          body: {
+            email: passwordResetForm.value.email,
+          },
+        }
+      );
       loading.value = false;
       return true;
     } catch (error: unknown) {
@@ -195,16 +198,20 @@ export const useAuthStore = defineStore("authStore", () => {
       resetPasswordError.value = error;
       showErrorMessage.value = true;
       return false;
-    }
-    finally{
-      loading.value = false
+    } finally {
+      loading.value = false;
     }
   };
 
   const validateToken = async (token: string) => {
     try {
       loading.value = true;
-      await $fetch<ResetTokenResponse>(`${baseUrl}/reset/${token}`);
+      await $fetch<ResetTokenResponse>(
+        `${baseUrl}/reset-password/validate/${token}`,
+        {
+          method: "POST",
+        }
+      );
       loading.value = false;
       return true;
     } catch (error: unknown) {
@@ -212,17 +219,16 @@ export const useAuthStore = defineStore("authStore", () => {
       resetPasswordError.value = error;
       showErrorMessage.value = true;
       return false;
+    } finally {
+      loading.value = false;
     }
-    finally{
-      loading.value = false
-    }
-  }
+  };
 
   const sendNewPassword = async (token: string): Promise<boolean> => {
     try {
       loading.value = true;
       await $fetch<ResetTokenResponse>(
-        `${baseUrl}/reset-password/reset/${token}/new-password`,
+        `${baseUrl}/reset-password/${token}/new-password`,
         {
           method: "POST",
           body: {
@@ -237,9 +243,8 @@ export const useAuthStore = defineStore("authStore", () => {
       resetPasswordError.value = error;
       showErrorMessage.value = true;
       return false;
-    }
-    finally{
-      loading.value = false
+    } finally {
+      loading.value = false;
     }
   };
 
@@ -263,6 +268,6 @@ export const useAuthStore = defineStore("authStore", () => {
     fetchCurrentUser,
     editUser,
     resetPasswordRequest,
-    sendNewPassword
+    sendNewPassword,
   };
 });

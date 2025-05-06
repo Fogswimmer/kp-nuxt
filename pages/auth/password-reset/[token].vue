@@ -3,41 +3,40 @@
     <Head>
       <Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
     </Head>
-    <AuthCard :title="$t('auth.password_reset')">
-      <v-card>
-        <v-card-text class="pa-4">
-          <v-form ref="emailFormRef" class="mt-4">
-            <div class="d-flex flex-column ga-2">
-              <span class="text-caption text-secondary">{{
-                $t("forms.rules.password_requirement")
-              }}</span>
-              <v-text-field
-                v-model="passwordResetForm.newPassword"
-                :label="$t('auth.new_password')"
-                prepend-inner-icon="mdi-email-outline"
-                variant="outlined"
-                :rules="[required, passwordRule]"
-              />
-            </div>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn>{{ $t("auth.login") }}</v-btn>
 
-          <SubmitBtn :loading="loading" @click="handleNewPasswordSubmit" />
-        </v-card-actions>
-      </v-card>
-    </AuthCard>
+    <v-card>
+      <v-card-title>
+        {{ $t('auth.password_reset') }}
+      </v-card-title>
+      <v-card-subtitle>
+        <span class="text-caption text-secondary">{{
+          $t("forms.rules.password_requirement")
+        }}</span>
+      </v-card-subtitle>
+      <v-card-text class="pa-4">
+        <v-form ref="emailFormRef" class="mt-4">
+            <v-text-field
+              v-model="passwordResetForm.newPassword"
+              :label="$t('auth.new_password')"
+              prepend-inner-icon="mdi-email-outline"
+              variant="outlined"
+              :rules="[required, passwordRule]"
+            />
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn prepend-icon="mdi-close" @click="closeWindow">{{
+          $t("actions.close_window")
+        }}</v-btn>
+        <SubmitBtn :loading="loading" @click="handleNewPasswordSubmit" />
+      </v-card-actions>
+    </v-card>
+
     <v-snackbar
       v-model="showErrorMessage"
       color="error"
       :text="$t('auth.password_reset_messages.error')"
-    />
-    <v-snackbar
-      v-model="showSuccessMessage"
-      color="success"
-      :text="$t('auth.password_reset_messages.success')"
     />
   </div>
 </template>
@@ -51,22 +50,26 @@ const { loading, passwordResetForm, showErrorMessage } =
   storeToRefs(useAuthStore());
 const { required, password: passwordRule } = useValidation();
 const { sendNewPassword } = useAuthStore();
-const showSuccessMessage = ref<boolean>(false);
 
 const handleNewPasswordSubmit = async (): Promise<void> => {
   const token = useRoute().params.token as string;
   const success = await sendNewPassword(token);
   if (success) {
-    showSuccessMessage.value = true;
-    setTimeout(() => {
-      navigateTo("/auth/sign-in");
-    }, 2000);
+    navigateTo("/auth/password-reset/reset-success");
   }
 };
+const { t } = useI18n();
+const closeWindow = () => {
+  if (confirm(t("actions.close_window"))) {
+    close();
+  }
+};
+
 definePageMeta({
   name: "passwordReset",
   path: "/auth/password-reset/:token",
-  // middleware: ["validate-reset-token"],
+  middleware: ["validate-reset-token"],
+  layout: "auth",
 });
 </script>
 

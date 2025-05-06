@@ -132,6 +132,8 @@ export default {
     password_reset_messages: {
       success: "The password reset code has been sent to your email address.",
       error: "An error occurred while sending the password reset link.",
+      invalid_token: "The token is invalid",
+      reset_success: "Your password has been successfully updated. You may now leave this page."
     }
   },
   nav: {
@@ -200,6 +202,7 @@ export default {
   },
   actions: {
     title: "Actions",
+    close_window: "Close window",
     read_all: "Read all",
     login_required: "Login required",
     choose_cover: "Choose cover",
