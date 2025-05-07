@@ -58,6 +58,20 @@
         <v-progress-circular indeterminate color="primary" />
       </div>
     </template>
+    <v-bottom-sheet v-model="isOffline" inset>
+      <v-alert type="error" icon="mdi-connection">
+        <div class="w-100 d-flex align-center">
+          {{ $t("general.no_network") }}
+          <v-spacer />
+          <v-btn
+            prepend-icon="mdi-refresh"
+            variant="outlined"
+            @click="reload"
+            >{{ $t("actions.reload") }}</v-btn
+          >
+        </div>
+      </v-alert>
+    </v-bottom-sheet>
   </div>
 </template>
 
@@ -67,7 +81,6 @@ import { usePersonStore } from "~/stores/personStore";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import HomeWall from "~/components/Masonry/HomeWall.vue";
 import definePageTitle from "~/utils/definePageTitle";
-
 const {
   loading: filmLoading,
   filmsPresent,
@@ -84,7 +97,7 @@ const {
 
 const { locale } = useI18n();
 const localeRoute = useLocaleRoute();
-
+const isOffline = ref<boolean>(false);
 const fetchData = async (): Promise<void> => {
   await checkFilmsPresence();
   await checkPersonsPresence();
@@ -147,7 +160,12 @@ const personItems = computed((): Detail[] => {
   );
 });
 
+const reload = () => {
+  location.reload();
+};
+
 onMounted(async (): Promise<void> => {
+  isOffline.value = !navigator.onLine;
   await fetchData();
 });
 

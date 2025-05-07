@@ -1,7 +1,6 @@
 <template>
   <v-card
     v-if="present"
-    tag:section
     variant="text"
     max-width="1024"
     width="100%"

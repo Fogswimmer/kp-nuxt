@@ -7,6 +7,7 @@ export default {
     persons_list: "Les meilleurs acteurs, directeurs, producteurs, compositeurs, auteurs de tous les temps",
   },
   general: {
+    no_network: "Veuillez vérifier votre connexion réseau",
     show_more: "Voir plus",
     hide: "Cacher",
     max_file_size: "Taille maximale des fichiers - { size }",

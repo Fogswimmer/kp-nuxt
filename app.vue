@@ -18,7 +18,6 @@ onMounted(async () => {
 </script>
 
 <style lang="scss">
-$dark-bg: #1e1e1e;
 .page-enter-active,
 .page-leave-active {
   transition: all 0.4s;
@@ -45,13 +44,11 @@ $dark-bg: #1e1e1e;
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  
 }
 
 a {
   text-decoration: none;
   color: inherit;
-  
 }
 
 .img-blur {
@@ -75,13 +72,12 @@ p {
   backdrop-filter: blur(4rem) !important;
 }
 
-
 .bg-gradient {
   // background-image: linear-gradient(to right top, #0c151c, #0c151b, #0c151b, #03121b, #0b1a25);
-  background-image: url('./public/img/bg.png');
+  background-image: url("./public/img/bg.png");
+  background-color: #0c151c;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
 }
-
 </style>

@@ -8,6 +8,7 @@ export default {
       "Best actors, directors, producers, composers, writers of all time",
   },
   general: {
+    no_network: "Please, check your network connection",
     show_more: "Show more",
     hide: "Hide",
     max_file_size: "Max files size - { size }",
