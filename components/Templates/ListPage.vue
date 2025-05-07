@@ -1,5 +1,5 @@
 <template>
-  <div class="position-relative fill-height">
+  <v-layout min-height="calc(100vh - 80px)">
     <client-only>
       <v-navigation-drawer
         v-if="$vuetify.display.smAndDown"
@@ -44,77 +44,73 @@
         </div>
       </v-navigation-drawer>
     </client-only>
-
-    <v-sheet max-width="1200" class="mx-auto">
-      <v-toolbar class="glassed" elevation="5">
-        <template #prepend>
-          <BackBtn />
-        </template>
-        <v-toolbar-title>
-          <span class="text-lg-h5 font-weight-bold"> {{ listTitle }}</span>
-        </v-toolbar-title>
-        <template v-if="$vuetify.display.mdAndUp">
-          <v-pagination
-            v-model="currentPage"
-            :length="totalPages"
-            rounded="lg"
-            variant="tonal"
-            density="comfortable"
-            color="primary"
-            :total-visible="3"
-            @update:model-value="handlePageChange"
-          />
-          <v-spacer />
-        </template>
-        <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
-          <v-text-field
-            v-model="needle"
-            :placeholder="$t('actions.search')"
-            chips
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            variant="outlined"
-            density="comfortable"
-            clearable
-            @click:clear="needle = ''"
-            @update:model-value="$emit('update:search', $event)"
-          />
-        </v-responsive>
-        <template #append>
-          <v-btn
-            v-if="$vuetify.display.smAndDown"
-            icon
-            :color="showSearch ? 'primary' : ''"
-            @click="showSearch = !showSearch"
+    <v-app-bar>
+      <template #prepend>
+        <BackBtn />
+      </template>
+      <v-app-bar-title>
+        <span class="text-lg-h5 font-weight-bold"> {{ listTitle }}</span>
+      </v-app-bar-title>
+      <template v-if="$vuetify.display.mdAndUp">
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPages"
+          rounded="lg"
+          color="primary"
+          :total-visible="3"
+          @update:model-value="handlePageChange"
+        />
+        <v-spacer />
+      </template>
+      <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
+        <v-text-field
+          v-model="needle"
+          :placeholder="$t('actions.search')"
+          chips
+          hide-details
+          prepend-inner-icon="mdi-magnify"
+          variant="outlined"
+          density="comfortable"
+          clearable
+          @click:clear="needle = ''"
+          @update:model-value="$emit('update:search', $event)"
+        />
+      </v-responsive>
+      <template #append>
+        <v-btn
+          v-if="$vuetify.display.smAndDown"
+          icon
+          :color="showSearch ? 'primary' : ''"
+          @click="showSearch = !showSearch"
+        >
+          <v-icon>mdi-magnify</v-icon>
+          <v-tooltip activator="parent" location="bottom">
+            {{ $t("filters.title") }}
+          </v-tooltip>
+        </v-btn>
+        <v-btn
+          icon
+          :color="showFilters ? 'primary' : ''"
+          @click="showFilters = !showFilters"
+        >
+          <v-icon>{{ showFilters ? "mdi-filter-off" : "mdi-filter" }}</v-icon>
+          <v-tooltip activator="parent" location="bottom">
+            {{ $t("filters.title") }}</v-tooltip
           >
-            <v-icon>mdi-magnify</v-icon>
-            <v-tooltip activator="parent" location="bottom">
-              {{ $t("filters.title") }}
-            </v-tooltip>
-          </v-btn>
-          <v-btn
-            icon
-            :color="showFilters ? 'primary' : ''"
-            @click="showFilters = !showFilters"
-          >
-            <v-icon>{{ showFilters ? "mdi-filter-off" : "mdi-filter" }}</v-icon>
-            <v-tooltip activator="parent" location="bottom">
-              {{ $t("filters.title") }}</v-tooltip
-            >
-          </v-btn>
-          <v-btn
-            icon
-            :disabled="!isAuthenticated"
-            :to="$localeRoute(newPageLink)"
-          >
-            <v-icon>mdi-plus</v-icon>
-            <v-tooltip activator="parent" location="bottom">
-              {{ $t("actions.add") }}
-            </v-tooltip>
-          </v-btn>
-        </template>
-      </v-toolbar>
-
+        </v-btn>
+        <v-btn
+          icon
+          :disabled="!isAuthenticated"
+          :to="$localeRoute(newPageLink)"
+        >
+          <v-icon>mdi-plus</v-icon>
+          <v-tooltip activator="parent" location="bottom">
+            {{ $t("actions.add") }}
+          </v-tooltip>
+        </v-btn>
+      </template>
+    </v-app-bar>
+    <v-main>
       <v-card v-if="items.length">
         <div class="mt-2 w-100 d-flex align-center justify-center">
           <v-label v-if="needle && !loading && $vuetify.display.mdAndUp">
@@ -182,21 +178,22 @@
       >
         <v-label class="mt-2">{{ $t("general.no_results") }}</v-label>
       </div>
-    </v-sheet>
-    <v-pagination
-      v-if="$vuetify.display.smAndDown"
-      v-model="currentPage"
-      :length="totalPages"
-      rounded="lg"
-      variant="tonal"
-      density="comfortable"
-      color="primary"
-      class="position-absolute bottom-0 left-0 right-0 left-0 mb-4"
-      :total-visible="3"
-      @update:model-value="handlePageChange"
-    />
-    <slot name="empty-state" />
-  </div>
+
+      <slot name="empty-state" />
+    </v-main>
+    <v-app-bar v-if="$vuetify.display.smAndDown || limit > 5" location="bottom">
+      <div class="w-100">
+        <v-pagination
+          v-model="currentPage"
+          :length="totalPages"
+          rounded="lg"
+          color="primary"
+          :total-visible="3"
+          @update:model-value="handlePageChange"
+        />
+      </div>
+    </v-app-bar>
+  </v-layout>
 </template>
 
 <script lang="ts" setup>
@@ -207,8 +204,8 @@ import { useAuthStore } from "#imports";
 
 const { isAuthenticated } = useAuthStore();
 
-const AVATAR_DESKTOP: number = 100;
-const AVATAR_MOBILE: number = 60;
+const AVATAR_DESKTOP: number = 115;
+const AVATAR_MOBILE: number = 70;
 
 const emit = defineEmits<{
   (e: "update:page" | "delete:item" | "form:open", value: number): void;
@@ -223,7 +220,7 @@ defineProps<{
   paginationLabel?: string;
   newPageLink: string;
   listTitle?: string;
-  limit?: number;
+  limit: number;
 }>();
 
 const currentPage = ref<number>(1);

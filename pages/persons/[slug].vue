@@ -4,180 +4,177 @@
       <Title>{{ definePageTitle(personFullName) }}</Title>
       <Meta name="description" :content="person?.bio" />
     </Head>
-
-    <v-card variant="text" max-width="1200" class="mx-auto" rounded="lg">
-      <DetailCard
-        :film-variant="false"
-        :page-name="personFullName"
-        :cover="person?.cover || ''"
-        :is-auth="isAuthenticated"
-        :loading="loading"
-        :notification="!isAuthenticated"
-      >
-        <template #general_info>
-          <TopInfo
-            :loading="loading"
-            :general-info="computedPersonDetails"
-            :avatar="person?.avatar || ''"
-            :title="personFullName"
-            :subtitle="specialtyNames"
-            @avatar:edit="chooseAvatar"
-          />
-        </template>
-        <template #notification>
-          <NotAuthWarning v-if="!isAuthenticated" />
-        </template>
-        <template #menu>
-          <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
+    <DetailCard
+      :film-variant="false"
+      :page-name="personFullName"
+      :cover="person?.cover || ''"
+      :is-auth="isAuthenticated"
+      :loading="loading"
+      :notification="!isAuthenticated"
+    >
+      <template #general_info>
+        <TopInfo
+          :loading="loading"
+          :general-info="computedPersonDetails"
+          :avatar="person?.avatar || ''"
+          :title="personFullName"
+          :subtitle="specialtyNames"
+          @avatar:edit="chooseAvatar"
+        />
+      </template>
+      <template #notification>
+        <NotAuthWarning v-if="!isAuthenticated" />
+      </template>
+      <template #menu>
+        <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
+          <template #activator="{ props }">
+            <v-btn icon :disabled="!isAuthenticated" v-bind="props">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-list density="compact" class="bg-surface">
+            <v-list-item
+              :title="$t('actions.edit')"
+              prepend-icon="mdi-pencil"
+              value="edit"
+            >
+              <template #append>
+                <v-icon icon="mdi-menu-right" size="x-small" />
+              </template>
+              <v-menu activator="parent" submenu open-on-hover>
+                <v-list density="compact">
+                  <v-list-item
+                    :title="$t('pages.general_info')"
+                    prepend-icon="mdi-information"
+                    value="info"
+                    @click="generalInfoEdit = true"
+                  />
+                  <v-list-item
+                    :title="$t('pages.detailed_info')"
+                    prepend-icon="mdi-details"
+                    value="details"
+                    @click="handleBioEdit"
+                  />
+                  <v-list-item
+                    :title="$t('pages.gallery')"
+                    prepend-icon="mdi-view-gallery"
+                    value="gallery"
+                    @click="photoEditMode = true"
+                  />
+                </v-list>
+              </v-menu>
+            </v-list-item>
+            <v-list-item
+              :title="$t('actions.remove')"
+              prepend-icon="mdi-delete"
+              value="remove"
+              base-color="error"
+              @click="showDeleteWarning = true"
+            />
+          </v-list>
+        </v-menu>
+        <div v-else class="d-flex ga-1">
+          <v-menu>
             <template #activator="{ props }">
-              <v-btn icon :disabled="!isAuthenticated" v-bind="props">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
-            <v-list density="compact" class="bg-surface">
-              <v-list-item
-                :title="$t('actions.edit')"
+              <v-btn
+                v-bind="props"
+                :disabled="!isAuthenticated"
                 prepend-icon="mdi-pencil"
-                value="edit"
+                @click.prevent.stop
+                >{{ $t("actions.edit") }}</v-btn
               >
-                <template #append>
-                  <v-icon icon="mdi-menu-right" size="x-small" />
-                </template>
-                <v-menu activator="parent" submenu open-on-hover>
-                  <v-list density="compact">
-                    <v-list-item
-                      :title="$t('pages.general_info')"
-                      prepend-icon="mdi-information"
-                      value="info"
-                      @click="generalInfoEdit = true"
-                    />
-                    <v-list-item
-                      :title="$t('pages.detailed_info')"
-                      prepend-icon="mdi-details"
-                      value="details"
-                      @click="handleBioEdit"
-                    />
-                    <v-list-item
-                      :title="$t('pages.gallery')"
-                      prepend-icon="mdi-view-gallery"
-                      value="gallery"
-                      @click="photoEditMode = true"
-                    />
-                  </v-list>
-                </v-menu>
-              </v-list-item>
+            </template>
+            <v-list>
               <v-list-item
-                :title="$t('actions.remove')"
-                prepend-icon="mdi-delete"
-                value="remove"
-                base-color="error"
-                @click="showDeleteWarning = true"
+                :title="$t('pages.general_info')"
+                prepend-icon="mdi-information"
+                value="info"
+                @click="generalInfoEdit = true"
+              />
+              <v-list-item
+                :title="$t('pages.detailed_info')"
+                prepend-icon="mdi-details"
+                value="details"
+                @click="handleBioEdit"
+              />
+              <v-list-item
+                :title="$t('pages.gallery')"
+                prepend-icon="mdi-view-gallery"
+                value="gallery"
+                @click="photoEditMode = true"
               />
             </v-list>
           </v-menu>
-          <div v-else class="d-flex ga-1">
-            <v-menu>
-              <template #activator="{ props }">
-                <v-btn
-                  v-bind="props"
-                  :disabled="!isAuthenticated"
-                  prepend-icon="mdi-pencil"
-                  @click.prevent.stop
-                  >{{ $t("actions.edit") }}</v-btn
-                >
-              </template>
-              <v-list>
-                <v-list-item
-                  :title="$t('pages.general_info')"
-                  prepend-icon="mdi-information"
-                  value="info"
-                  @click="generalInfoEdit = true"
-                />
-                <v-list-item
-                  :title="$t('pages.detailed_info')"
-                  prepend-icon="mdi-details"
-                  value="details"
-                  @click="handleBioEdit"
-                />
-                <v-list-item
-                  :title="$t('pages.gallery')"
-                  prepend-icon="mdi-view-gallery"
-                  value="gallery"
-                  @click="photoEditMode = true"
-                />
-              </v-list>
-            </v-menu>
-            <v-btn
-              prepend-icon="mdi-delete"
-              :disabled="!isAuthenticated"
-              base-color="error"
-              @click="showDeleteWarning = true"
-              >{{ $t("actions.remove") }}</v-btn
-            >
-          </div>
-        </template>
-        <template #text>
-          <v-expansion-panels
-            v-model="mainAccordion"
-            variant="accordion"
-            bg-color="transparent"
+          <v-btn
+            prepend-icon="mdi-delete"
+            :disabled="!isAuthenticated"
+            base-color="error"
+            @click="showDeleteWarning = true"
+            >{{ $t("actions.remove") }}</v-btn
           >
-            <v-expansion-panel
-              id="bio"
-              value="bio"
-              tag="section"
-              :title="$t('pages.persons.bio')"
-            >
-              <v-expansion-panel-text>
-                <IndentedEditableText
-                  v-if="person?.bio"
-                  :edit-mode="bioEditMode"
-                  :messages="$t('pages.persons.edit_bio')"
-                  :text="person?.bio || ''"
-                  @sumbit:edit="submitBioEdit"
-                  @cancel:edit="cancelBioEdit"
-                />
-                <div v-else class="w-100 text-center">
-                  <span>{{ $t("general.no_data") }}</span>
-                </div>
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            <v-expansion-panel
-              v-if="person?.filmWorks"
-              id="filmography"
-              tag="section"
-              value="filmography"
-              :title="$t('pages.persons.filmography')"
-            >
-              <v-expansion-panel-text>
-                <Filmography :person="person" />
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-            <v-expansion-panel
-              id="gallery"
-              tag="section"
-              value="gallery"
-              :title="$t('pages.persons.photos')"
-            >
-              <v-expansion-panel-text>
-                <GalleryViewer
-                  :slider-arr="sliderGalleryArr || []"
-                  :disabled="!isAuthenticated"
-                  :gallery="person?.photos || []"
-                  :entity-name="personFullName"
-                  :loading="loading"
-                  with-avatar
-                  @editor:open="photoEditMode = true"
-                  @cover:set="handleSetCover"
-                  @avatar:set="handleChangeAvatar"
-                  @delete:img="handleDeleteImg"
-                />
-              </v-expansion-panel-text>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </template>
-      </DetailCard>
-    </v-card>
+        </div>
+      </template>
+      <template #text>
+        <v-expansion-panels
+          v-model="mainAccordion"
+          variant="accordion"
+          bg-color="transparent"
+        >
+          <v-expansion-panel
+            id="bio"
+            value="bio"
+            tag="section"
+            :title="$t('pages.persons.bio')"
+          >
+            <v-expansion-panel-text>
+              <IndentedEditableText
+                v-if="person?.bio"
+                :edit-mode="bioEditMode"
+                :messages="$t('pages.persons.edit_bio')"
+                :text="person?.bio || ''"
+                @sumbit:edit="submitBioEdit"
+                @cancel:edit="cancelBioEdit"
+              />
+              <div v-else class="w-100 text-center">
+                <span>{{ $t("general.no_data") }}</span>
+              </div>
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+          <v-expansion-panel
+            v-if="person?.filmWorks"
+            id="filmography"
+            tag="section"
+            value="filmography"
+            :title="$t('pages.persons.filmography')"
+          >
+            <v-expansion-panel-text>
+              <Filmography :person="person" />
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+          <v-expansion-panel
+            id="gallery"
+            tag="section"
+            value="gallery"
+            :title="$t('pages.persons.photos')"
+          >
+            <v-expansion-panel-text>
+              <GalleryViewer
+                :slider-arr="sliderGalleryArr || []"
+                :disabled="!isAuthenticated"
+                :gallery="person?.photos || []"
+                :entity-name="personFullName"
+                :loading="loading"
+                with-avatar
+                @editor:open="photoEditMode = true"
+                @cover:set="handleSetCover"
+                @avatar:set="handleChangeAvatar"
+                @delete:img="handleDeleteImg"
+              />
+            </v-expansion-panel-text>
+          </v-expansion-panel>
+        </v-expansion-panels>
+      </template>
+    </DetailCard>
     <BaseDialog
       v-model:opened="generalInfoEdit"
       :max-width="1000"
@@ -325,13 +322,9 @@ const handleBioEdit = (): void => {
 };
 
 const personFullName = computed((): string => {
-  const fullname = person.value
-    ? person.value.firstname + " " + person.value.lastname
-    : "";
-  return useInternationalName(
-    fullname,
-    person.value?.internationalName as string
-  );
+  return locale.value === "ru"
+    ? person.value?.firstname + " " + person.value?.lastname
+    : (person.value?.internationalName as string);
 });
 const computedGalleryEditTitle = computed((): string => {
   return t("pages.films.edit_gallery") + " " + personFullName.value;

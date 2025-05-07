@@ -8,7 +8,7 @@
     class="mx-auto"
   >
     <v-card-title>
-      <div class="pa-2 d-flex flex-column ga-2 mb-2">
+      <div class="d-flex flex-column ga-2">
         <h4 class="text-lg-h4 text-h5 text-center text-uppercase">
           {{ title }}
         </h4>

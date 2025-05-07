@@ -1,11 +1,11 @@
 <template>
-  <v-sheet min-height="300">
+  <v-sheet min-height="200">
     <div class="d-flex justify-center">
       <div class="position-absolute text-center" style="top: -50%">
         <div class="position-relative">
-          <div style="width: 300px" class="position-relative mx-auto">
+          <div style="width: 200px" class="position-relative mx-auto">
             <v-avatar
-              size="300"
+              size="200"
               border
               class="cursor-pointer"
               @click="showAvatarEditBtns = !showAvatarEditBtns"
@@ -42,7 +42,7 @@
             <div class="text-caption text-lg-subtitle-1">
               {{ generalInfo?.map((item: Detail) => item.value).join(", ") }}
             </div>
-            <div class="text-capitalize text-caption text-lg-subtitle-1">
+            <div class="text-capitalize text-caption text-lg-subtitle-2">
               {{ subtitle }}
             </div>
           </div>
