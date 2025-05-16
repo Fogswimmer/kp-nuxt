@@ -21,13 +21,13 @@
             <NotAuthWarning v-if="!isAuthenticated" />
           </template>
           <template #trailer>
-            <v-container>
+            <v-container fluid>
               <v-card v-if="!loading" class="pa-2">
                 <template #image>
                   <v-img :src="film?.poster || ''" cover class="img-blur" />
                 </template>
                 <v-row>
-                  <v-col cols="12" lg="3" md="4" sm="12">
+                  <v-col v-bind="colParams.poster">
                     <v-img
                       :src="film?.poster || ''"
                       cover
@@ -44,10 +44,7 @@
                   </v-col>
                   <v-col
                     v-if="$vuetify.display.mdAndUp"
-                    cols="12"
-                    lg="5"
-                    md="5"
-                    sm="12"
+                    v-bind="colParams.info"
                   >
                     <v-card border height="420" class="glassed" rounded="lg">
                       <div class="fill-height d-flex flex-column items-center">
@@ -57,10 +54,7 @@
                   </v-col>
                   <v-col
                     v-if="$vuetify.display.mdAndUp"
-                    cols="12"
-                    lg="4"
-                    md="3"
-                    sm="12"
+                    v-bind="colParams.rating"
                   >
                     <v-card border rounded="lg" class="glassed">
                       <Rating
@@ -109,7 +103,7 @@
             <main>
               <FilmExpansionPanels
                 :film="film || null"
-               :is-description-panel-open="isDescriptionPanelOpen"
+                :is-description-panel-open="isDescriptionPanelOpen"
               >
                 <template #general-info>
                   <FilmGeneralInfo :general-info="generalInfo" />
@@ -292,7 +286,7 @@ const comment = ref<string>("");
 const rating = ref<number>(5);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const isDescriptionPanelOpen = ref<boolean>(false)
+const isDescriptionPanelOpen = ref<boolean>(false);
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
   film,
@@ -319,6 +313,27 @@ const {
   deleteAssessmentById,
   GALLERY_SIZE,
 } = useFilmStore();
+
+const colParams = {
+  poster: {
+    cols: 12,
+    lg: 3,
+    md: 3,
+    sm: 12,
+  },
+  info: {
+    cols: 12,
+    lg: 5,
+    md: 5,
+    sm: 12,
+  },
+  rating: {
+    cols: 12,
+    lg: 4,
+    md: 4,
+    sm: 12,
+  },
+};
 
 const imagesToDelete = computed(() => {
   return film.value?.gallery
@@ -441,7 +456,7 @@ const handleEditDescription = async (): Promise<void> => {
   await nextTick(() => {
     if (descriptionPanelElement) {
       descriptionPanelElement.scrollIntoView({ behavior: "smooth" });
-      isDescriptionPanelOpen.value = !isDescriptionPanelOpen.value
+      isDescriptionPanelOpen.value = !isDescriptionPanelOpen.value;
     }
   });
 };

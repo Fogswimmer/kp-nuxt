@@ -1,11 +1,11 @@
 <template>
   <v-layout min-height="calc(100vh - 80px)">
     <client-only>
+      <v-navigation-drawer floating location="start" />
+      <v-navigation-drawer floating location="end" />
       <v-navigation-drawer
         v-if="$vuetify.display.smAndDown"
         v-model="showSearch"
-        order="1"
-        width="300"
         temporary
       >
         <div class="pa-2 flex flex-column ga-4">
@@ -13,11 +13,11 @@
             <v-text-field
               v-model="needle"
               :placeholder="$t('actions.search')"
+              :loading="loading"
               chips
               hide-details
               prepend-inner-icon="mdi-magnify"
               variant="outlined"
-              :loading="loading"
               clearable
               @click:clear="needle = ''"
               @update:model-value="$emit('update:search', $event)"

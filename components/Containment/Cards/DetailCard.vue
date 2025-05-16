@@ -31,14 +31,18 @@
           v-if="cover"
           :src="cover"
           scale="1.3"
-          height="300"
+          :height="$vuetify.display.mdAndUp ? 300 : 200"
           class="position-relative"
         >
           <template #placeholder>
             <ImgPlaceholder />
           </template>
           <template #error>
-            <v-sheet height="300" width="100%" class="default-cover" />
+            <v-sheet
+              :height="$vuetify.display.mdAndUp ? 300 : 200"
+              width="100%"
+              class="default-cover"
+            />
           </template>
         </v-parallax>
         <v-sheet

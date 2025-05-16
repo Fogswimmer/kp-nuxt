@@ -33,37 +33,39 @@
             </v-btn>
           </template>
           <v-list density="compact" class="bg-surface">
-            <v-list-item
-              :title="$t('actions.edit')"
-              prepend-icon="mdi-pencil"
-              value="edit"
-            >
-              <template #append>
-                <v-icon icon="mdi-menu-right" size="x-small" />
+            <v-list-group value="edit">
+              <template #activator="{ props }">
+                <v-list-item
+                  v-bind="props"
+                  :title="$t('actions.edit')"
+                  prepend-icon="mdi-pencil"
+                  value="edit"
+                >
+                  <template #append>
+                    <v-icon icon="mdi-menu-right" size="x-small" />
+                  </template>
+                </v-list-item>
               </template>
-              <v-menu activator="parent" submenu open-on-hover>
-                <v-list density="compact">
-                  <v-list-item
-                    :title="$t('pages.general_info')"
-                    prepend-icon="mdi-information"
-                    value="info"
-                    @click="generalInfoEdit = true"
-                  />
-                  <v-list-item
-                    :title="$t('pages.detailed_info')"
-                    prepend-icon="mdi-details"
-                    value="details"
-                    @click="handleBioEdit"
-                  />
-                  <v-list-item
-                    :title="$t('pages.gallery')"
-                    prepend-icon="mdi-view-gallery"
-                    value="gallery"
-                    @click="photoEditMode = true"
-                  />
-                </v-list>
-              </v-menu>
-            </v-list-item>
+
+              <v-list-item
+                :title="$t('pages.general_info')"
+                prepend-icon="mdi-information"
+                value="info"
+                @click="generalInfoEdit = true"
+              />
+              <v-list-item
+                :title="$t('pages.detailed_info')"
+                prepend-icon="mdi-details"
+                value="details"
+                @click="handleBioEdit"
+              />
+              <v-list-item
+                :title="$t('pages.gallery')"
+                prepend-icon="mdi-view-gallery"
+                value="gallery"
+                @click="photoEditMode = true"
+              />
+            </v-list-group>
             <v-list-item
               :title="$t('actions.remove')"
               prepend-icon="mdi-delete"

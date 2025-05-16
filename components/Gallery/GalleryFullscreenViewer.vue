@@ -15,7 +15,7 @@
               </v-btn>
             </template>
 
-            <v-list rounded="">
+            <v-list>
               <v-list-item
                 v-if="withAvatar"
                 :title="$t('actions.set_avatar')"
@@ -58,7 +58,6 @@
           >
             {{ $t("actions.set_poster") }}
           </v-btn>
-    
           <v-btn
             v-if="withAvatar"
             prepend-icon="mdi-image"
@@ -106,8 +105,8 @@
 
 <script lang="ts" setup>
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
-import { useAuthStore } from "~/stores/authStore";
 import ConfirmDialog from "../Dialogs/ConfirmDialog.vue";
+import { useAuthStore } from "~/stores/authStore";
 const emits = defineEmits<{
   (event: "close"): void;
   (

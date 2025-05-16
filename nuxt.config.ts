@@ -106,11 +106,11 @@ export default defineNuxtConfig({
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
-        "/uploads": {
-          target: `${process.env.BASE_URL}/uploads`,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/uploads/, ""),
-        },
+        // "/uploads": {
+        //   target: `${process.env.BASE_URL}/uploads`,
+        //   changeOrigin: true,
+        //   rewrite: (path) => path.replace(/^\/uploads/, ""),
+        // },
       },
     },
   },
