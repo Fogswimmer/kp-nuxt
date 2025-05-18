@@ -1,5 +1,6 @@
 export default {
   welcome: "Bienvenue",
+  language: "langue",
   logo_description:"Centre des cinéphiles",
   page_descriptions:{
     home: "Les meilleurs films et acteurs de tous les temps",
@@ -197,6 +198,7 @@ export default {
       title: "Thème",
       light: "Lumineux",
       dark: "Sombre",
+      system: "Système",
     },
     settings: "Paramètres",
   },

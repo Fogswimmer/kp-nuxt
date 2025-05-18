@@ -3,7 +3,7 @@
     border
     class="ma-4"
     :loading="loading"
-    :style="`background-image: linear-gradient(145deg , ${color} 0%, transparent 80%);`"
+    :style="computedStyle"
     density="compact"
   >
     <v-toolbar class="pa-2" density="compact" color="transparent">
@@ -39,7 +39,7 @@
     <v-divider />
 
     <div class="d-flex pa-2">
-      <span class="text-white mx-2 pa-2"> {{ comment.comment }}</span>
+      <span class="mx-2 pa-2"> {{ comment.comment }}</span>
       <v-spacer />
       <v-btn
         v-if="isAdmin || userId === comment.authorId"
@@ -75,7 +75,7 @@ interface Comment {
   createdAt: string;
   updatedAt: string;
 }
-defineProps<{
+const props = defineProps<{
   loading: boolean;
   index: number;
   comment: Comment;
@@ -94,6 +94,12 @@ const handleConfirm = (id: number) => {
   showDeleteConfirm.value = false;
   emits("confirm:delete", id);
 };
+const theme = useTheme();
+const computedStyle = computed(() => {
+  return theme.current.value.dark
+    ? `background-image: linear-gradient(145deg , ${props.color} 0%, transparent 80%)`
+    : "";
+});
 </script>
 
 <style></style>

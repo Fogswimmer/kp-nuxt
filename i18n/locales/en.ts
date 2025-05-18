@@ -1,5 +1,6 @@
 export default {
   welcome: "Welcome",
+  language: "language",
   logo_description: "Cinemalovers hub",
   page_descriptions: {
     home: "Best films and actors of all time",
@@ -199,6 +200,7 @@ export default {
       title: "Theme",
       light: "Light",
       dark: "Dark",
+      system: "System",
     },
     toggle_language: "Toggle Language",
     settings: "Settings",

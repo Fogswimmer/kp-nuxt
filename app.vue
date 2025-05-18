@@ -61,23 +61,24 @@ p {
 }
 
 .glassed {
-  background: rgba(0, 0, 0, 0.4) !important;
+  background: rgba(0, 0, 0, 0.01) !important;
   -webkit-backdrop-filter: blur(4rem) !important;
   backdrop-filter: blur(4rem) !important;
 }
 
 .dark-glassed {
-  background: rgba(5, 6, 10, 0.7) !important;
+  background: rgba(5, 6, 10, 0.1) !important;
   -webkit-backdrop-filter: blur(4rem) !important;
   backdrop-filter: blur(4rem) !important;
 }
 
-.bg-gradient {
-  // background-image: linear-gradient(to right top, #0c151c, #0c151b, #0c151b, #03121b, #0b1a25);
-  background-image: url("./public/img/bg.png");
-  background-color: #0c151c;
+
+.bg-dark {
+  background-image: radial-gradient(circle, #131f27, #08141b, #000000);
+  background-attachment: fixed;  
+}
+.bg-light {
+  background-image: radial-gradient(circle, #f0f0f0, #fcfcfc, #d0d0d0);
   background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 </style>

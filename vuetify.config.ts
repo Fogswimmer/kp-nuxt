@@ -1,5 +1,12 @@
 // vuetify.config.ts
 import { defineVuetifyConfiguration } from "vuetify-nuxt-module/custom-configuration";
+import { usePreferredDark } from "@vueuse/core";
+let defaultTheme = "dark";
+if (import.meta.client) {
+  const prefersDark = usePreferredDark();
+  defaultTheme = prefersDark.value ? "dark" : "light";
+}
+console.log(defaultTheme)
 
 export default defineVuetifyConfiguration({
   labComponents: true,
@@ -14,25 +21,28 @@ export default defineVuetifyConfiguration({
       variant: "filled",
     },
     VSheet: {
-      class: "glassed",
       border: true,
     },
     VExpansionPanels: {
-      class: "glassed",
       border: true,
-    },
-    VList: {
-      class: "glassed",
     },
   },
   theme: {
-    defaultTheme: "dark",
+    defaultTheme: defaultTheme,
     themes: {
+      light: {
+        dark: false,
+        colors: {
+          background: "#ffffff",
+          surface: "#ffffff",
+          primary: "#ffae00",
+        },
+      },
       dark: {
         dark: true,
         colors: {
           background: "#000000",
-          surface: "#0b1019",
+          surface: "#131f27",
           primary: "#ffae00",
         },
       },

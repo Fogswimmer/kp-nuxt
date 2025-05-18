@@ -1,5 +1,6 @@
 export default {
   welcome: "Добро пожаловать",
+  language: "язык",
   logo_description: "Для киноманов",
   page_descriptions: {
     home: "Лучшие фильмы и актеры всех времен",
@@ -157,6 +158,7 @@ export default {
       title: "Тема",
       light: "Светлая",
       dark: "Темная",
+      system: "Системная",
     },
     toggle_language: "Переключить язык",
     settings: "Настройки",

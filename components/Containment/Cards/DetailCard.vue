@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="text" max-width="1200" class="mx-auto" rounded="lg">
+  <v-card variant="text" max-width="1200" class="mx-auto" rounded="lg" border>
     <v-toolbar class="glassed">
       <template #prepend>
         <BackBtn />

@@ -23,7 +23,7 @@
           <template #trailer>
             <v-container fluid>
               <v-card v-if="!loading" class="pa-2">
-                <template #image>
+                <template v-if="theme.current.value.dark" #image>
                   <v-img :src="film?.poster || ''" cover class="img-blur" />
                 </template>
                 <v-row>
@@ -46,7 +46,7 @@
                     v-if="$vuetify.display.mdAndUp"
                     v-bind="colParams.info"
                   >
-                    <v-card border height="420" class="glassed" rounded="lg">
+                    <v-card border height="420" :class="theme.current.value.dark ? 'glassed' : ''" rounded="lg">
                       <div class="fill-height d-flex flex-column items-center">
                         <FilmGeneralInfo :general-info="generalInfo" />
                       </div>
@@ -56,7 +56,7 @@
                     v-if="$vuetify.display.mdAndUp"
                     v-bind="colParams.rating"
                   >
-                    <v-card border rounded="lg" class="glassed">
+                    <v-card border rounded="lg" :class="theme.current.value.dark ? 'glassed' : ''">
                       <Rating
                         :current-rating="film?.rating || ''"
                         :assessments="film?.assessments || []"
@@ -334,7 +334,7 @@ const colParams = {
     sm: 12,
   },
 };
-
+const theme = useTheme();
 const imagesToDelete = computed(() => {
   return film.value?.gallery
     .filter((_: string, index: number): boolean =>

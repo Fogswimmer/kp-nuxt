@@ -1,5 +1,5 @@
 <template>
-  <v-sheet min-height="200">
+  <v-sheet min-height="200" class="glassed">
     <div class="d-flex justify-center">
       <div class="position-absolute text-center" style="top: -50%">
         <div class="position-relative">
