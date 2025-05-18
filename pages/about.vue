@@ -4,7 +4,7 @@
       <Title>{{ definePageTitle($t("pages.about.title")) }}</Title>
     </Head>
     <v-card max-width="1000" class="mx-auto" border>
-      <v-toolbar class="glassed">
+      <v-toolbar>
         <template #prepend>
           <BackBtn />
         </template>
@@ -26,8 +26,8 @@
               >{{ showMore ? $t("general.hide") : $t("general.show_more") }}
             </v-btn>
 
-            <v-card v-if="showMore" border class="mt-2">
-              <v-toolbar class="glassed">
+            <v-card v-if="showMore" border class="mt-2" theme="dark">
+              <v-toolbar>
                 <v-tabs v-model="active">
                   <v-tab value="scheme" prepend-icon="mdi-image">{{
                     $t("pages.about.scheme")

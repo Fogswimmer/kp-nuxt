@@ -46,7 +46,12 @@
                     v-if="$vuetify.display.mdAndUp"
                     v-bind="colParams.info"
                   >
-                    <v-card border height="420" :class="theme.current.value.dark ? 'glassed' : ''" rounded="lg">
+                    <v-card
+                      border
+                      height="420"
+                      :class="theme.current.value.dark ? 'glassed' : ''"
+                      rounded="lg"
+                    >
                       <div class="fill-height d-flex flex-column items-center">
                         <FilmGeneralInfo :general-info="generalInfo" />
                       </div>
@@ -56,7 +61,11 @@
                     v-if="$vuetify.display.mdAndUp"
                     v-bind="colParams.rating"
                   >
-                    <v-card border rounded="lg" :class="theme.current.value.dark ? 'glassed' : ''">
+                    <v-card
+                      border
+                      rounded="lg"
+                      :class="theme.current.value.dark ? 'glassed' : ''"
+                    >
                       <Rating
                         :current-rating="film?.rating || ''"
                         :assessments="film?.assessments || []"
@@ -160,7 +169,9 @@
             </main>
           </template>
           <template #footer>
-            <div class="text-center w-100 text-caption ga-1 pa-2">
+            <div
+              class="text-center w-100 text-caption d-flex justify-center ga-1 pa-2"
+            >
               <span>{{ $t("general.published_by") }}</span>
               <nuxt-link class="text-secondary">{{
                 film?.publisherData ? film?.publisherData.name : ""

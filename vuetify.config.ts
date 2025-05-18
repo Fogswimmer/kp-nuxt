@@ -34,8 +34,6 @@ export default defineVuetifyConfiguration({
         dark: false,
         colors: {
           background: "#ffffff",
-          surface: "#ffffff",
-          primary: "#ffae00",
         },
       },
       dark: {

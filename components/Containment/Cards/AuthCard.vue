@@ -1,7 +1,7 @@
 <template>
   <div class="position-relative">
     <v-card
-      class="mx-auto glassed position-absolute right-0 left-0 top-0 ma-2"
+      class="mx-auto position-absolute right-0 left-0 top-0 ma-2"
       max-width="600"
       :style="
         $vuetify.display.mdAndUp
@@ -9,7 +9,7 @@
           : ''
       "
     >
-      <v-toolbar class="glassed">
+      <v-toolbar>
         <template #prepend>
           <BackBtn />
         </template>

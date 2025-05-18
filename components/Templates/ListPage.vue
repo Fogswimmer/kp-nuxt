@@ -1,8 +1,8 @@
 <template>
   <v-layout min-height="calc(100vh - 80px)">
     <client-only>
-      <v-navigation-drawer floating location="start" />
-      <v-navigation-drawer floating location="end" />
+      <v-navigation-drawer  location="start" />
+      <v-navigation-drawer  location="end" />
       <v-navigation-drawer
         v-if="$vuetify.display.smAndDown"
         v-model="showSearch"
