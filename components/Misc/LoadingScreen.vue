@@ -1,10 +1,12 @@
 <template>
-  <div
-    class="d-flex flex-column gap-2 align-center justify-center overlay bg-gradient"
-  >
-    <span class="text-center">{{ $t("state.loading") }}...</span>
-    <span class="progress mx-auto" />
-  </div>
+  <v-sheet height="100vh">
+    <div
+      class="d-flex flex-column fill-height gap-2 align-center justify-center overlay"
+    >
+      <span class="text-center">{{ $t("state.loading") }}...</span>
+      <v-progress-circular indeterminate color="primary" />
+    </div>
+  </v-sheet>
 </template>
 
 <script lang="ts" setup></script>

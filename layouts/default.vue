@@ -1,6 +1,9 @@
 <template>
   <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
-    <AppHeader :active-theme="activeTheme" @update:active-theme="activeTheme = $event"/>
+    <AppHeader
+      :active-theme="activeTheme"
+      @update:active-theme="activeTheme = $event"
+    />
     <v-main style="min-height: calc(100vh - 8px)">
       <div class="mt-2 fill-height">
         <slot />

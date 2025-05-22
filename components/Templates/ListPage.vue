@@ -44,7 +44,7 @@
         </div>
       </v-navigation-drawer>
     </client-only>
-    <v-app-bar>
+    <v-app-bar flat>
       <template #prepend>
         <BackBtn />
       </template>
