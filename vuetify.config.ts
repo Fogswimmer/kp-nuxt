@@ -13,6 +13,9 @@ export default defineVuetifyConfiguration({
     VTextField: {
       variant: "filled",
     },
+    VToolbar: {
+      color: "background"
+    },
     VSelect: {
       variant: "filled",
     },
@@ -38,7 +41,7 @@ export default defineVuetifyConfiguration({
       dark: {
         dark: true,
         colors: {
-          background: "#000000",
+          background: "#000203",
           surface: "#08141b",
           primary: "#ffae00",
         },

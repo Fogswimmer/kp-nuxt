@@ -51,9 +51,9 @@
           width="100%"
           class="default-cover"
         />
-        <v-sheet v-else class="w-100 glassed pa-2" min-height="400">
-          <slot name="trailer" />
-        </v-sheet>
+       
+          <slot name="top_film" />
+       
         <slot name="general_info" />
         <slot name="text" />
       </v-card>

@@ -5,118 +5,55 @@
       <Meta name="description" :content="film?.description" />
     </Head>
 
-        <DetailCard
-          :page-name="
-            useInternationalName(
-              film?.name as string,
-              film?.internationalName as string
-            )
-          "
-          :loading="loading"
-          :notification="!isAuthenticated"
-          trailer
-        >
-          <template #notification>
-            <NotAuthWarning v-if="!isAuthenticated" />
-          </template>
-          <template #trailer>
-            <v-container fluid>
-              <v-card v-if="!loading" class="pa-2">
-                <template v-if="theme.current.value.dark" #image>
-                  <v-img :src="film?.poster || ''" cover class="img-blur" />
-                </template>
-                <v-row>
-                  <v-col v-bind="colParams.poster">
-                    <v-img
-                      :src="film?.poster || ''"
-                      cover
-                      rounded="lg"
-                      height="420"
-                    >
-                      <template #placeholder>
-                        <ImgPlaceholder :loading="loading" />
-                      </template>
-                      <template #error>
-                        <ErrorPlaceHolder />
-                      </template>
-                    </v-img>
-                  </v-col>
-                  <v-col
-                    v-if="$vuetify.display.mdAndUp"
-                    v-bind="colParams.info"
-                  >
-                    <v-card
-                      border
-                      height="420"
-                      :class="theme.current.value.dark ? 'glassed' : ''"
-                      rounded="lg"
-                    >
-                      <div class="fill-height d-flex flex-column items-center">
-                        <FilmGeneralInfo :general-info="generalInfo" />
-                      </div>
-                    </v-card>
-                  </v-col>
-                  <v-col
-                    v-if="$vuetify.display.mdAndUp"
-                    v-bind="colParams.rating"
-                  >
-                    <v-card
-                      border
-                      rounded="lg"
-                      :class="theme.current.value.dark ? 'glassed' : ''"
-                    >
-                      <Rating
-                        :current-rating="film?.rating || ''"
-                        :assessments="film?.assessments || []"
-                        :assessments-graph="film?.assessmentsGraph || []"
-                        :is-assessing="isAssessing"
-                        :rating="rating"
-                        :comment="comment"
-                        @assession:submit="submitAssessment"
-                        @assession:enable="isAssessing = true"
-                        @assession:cancel="cancelAssessment"
-                        @comment:update="comment = $event"
-                        @rating:update="rating = $event"
-                      />
-                    </v-card>
-                  </v-col>
-                </v-row>
-              </v-card>
-              <div
-                v-else-if="$vuetify.display.mdAndUp"
-                class="d-flex ga-2 fill-height"
-              >
-                <v-skeleton-loader
-                  v-for="n in 3"
-                  :key="n"
-                  type="card"
+    <DetailCard
+      :page-name="
+        useInternationalName(
+          film?.name as string,
+          film?.internationalName as string
+        )
+      "
+      :loading="loading"
+      :notification="!isAuthenticated"
+      trailer
+    >
+      <template #notification>
+        <NotAuthWarning v-if="!isAuthenticated" />
+      </template>
+      <template #top_film>
+        <v-container fluid>
+          <v-card v-if="!loading" class="pa-2">
+            <v-row>
+              <v-col v-bind="colParams.poster">
+                <v-img
+                  :src="film?.poster || ''"
+                  cover
+                  rounded="lg"
                   height="420"
-                  width="calc(100% / 3)"
-                />
-              </div>
-              <v-skeleton-loader v-else type="card" height="420" />
-            </v-container>
-          </template>
-          <template #menu>
-            <DetailMenu
-              :is-authenticated="isAuthenticated"
-              @edit:general="handleGeneralInfoEdit"
-              @edit:description="handleEditDescription"
-              @edit:gallery="openGalleryEditor"
-              @edit:trailer="showLinkTrailerDialog = true"
-              @delete:film="showDeleteWarning = true"
-            />
-          </template>
-          <template #text>
-            <main>
-              <FilmExpansionPanels
-                :film="film || null"
-                :is-description-panel-open="isDescriptionPanelOpen"
-              >
-                <template #general-info>
-                  <FilmGeneralInfo :general-info="generalInfo" />
-                </template>
-                <template #rating>
+                >
+                  <template #placeholder>
+                    <ImgPlaceholder :loading="loading" />
+                  </template>
+                  <template #error>
+                    <ErrorPlaceHolder />
+                  </template>
+                </v-img>
+              </v-col>
+              <v-col v-if="$vuetify.display.mdAndUp" v-bind="colParams.info">
+                <v-card
+                  border
+                  height="420"
+                  rounded="lg"
+                >
+                  <div class="fill-height d-flex flex-column items-center">
+                    <FilmGeneralInfo :general-info="generalInfo" />
+                  </div>
+                </v-card>
+              </v-col>
+              <v-col v-if="$vuetify.display.mdAndUp" v-bind="colParams.rating">
+                <v-card
+                  border
+                  rounded="lg"
+                >
                   <Rating
                     :current-rating="film?.rating || ''"
                     :assessments="film?.assessments || []"
@@ -130,55 +67,107 @@
                     @comment:update="comment = $event"
                     @rating:update="rating = $event"
                   />
-                </template>
-                <template #gallery-viewer>
-                  <GalleryViewer
-                    :slider-arr="sliderGalleryArr || []"
-                    :disabled="!isAuthenticated"
-                    :gallery="film?.gallery || []"
-                    :entity-name="film?.name || ''"
-                    :loading="loading"
-                    :with-avatar="false"
-                    @poster:set="handleChangePoster"
-                    @editor:open="openGalleryEditor"
-                    @delete:img="handleDeleteImg"
-                  />
-                </template>
-                <template #description>
-                  <IndentedEditableText
-                    :edit-mode="editDescriptionMode"
-                    :messages="$t('pages.films.edit_description')"
-                    :text="film?.description || ''"
-                    @sumbit:edit="submitDescriptionEdit"
-                    @cancel:edit="cancelDescriptionEdit"
-                  />
-                </template>
-                <template #comments>
-                  <Comments
-                    :loading="loading"
-                    :assessments="film?.assessments || []"
-                    :comment="comment"
-                    @assession:submit="submitAssessment"
-                    @assession:enable="isAssessing = true"
-                    @assession:cancel="cancelAssessment"
-                    @assession:delete="deleteAssessment"
-                  />
-                </template>
-              </FilmExpansionPanels>
-            </main>
-          </template>
-          <template #footer>
-            <div
-              class="text-center w-100 text-caption d-flex justify-center ga-1 pa-2"
-            >
-              <span>{{ $t("general.published_by") }}</span>
-              <nuxt-link class="text-secondary">{{
-                film?.publisherData ? film?.publisherData.name : ""
-              }}</nuxt-link>
-              {{ film?.createdAt || "" }}
-            </div>
-          </template>
-        </DetailCard>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-card>
+          <div
+            v-else-if="$vuetify.display.mdAndUp"
+            class="d-flex ga-2 fill-height"
+          >
+            <v-skeleton-loader
+              v-for="n in 3"
+              :key="n"
+              type="card"
+              height="420"
+              width="calc(100% / 3)"
+            />
+          </div>
+          <v-skeleton-loader v-else type="card" height="420" />
+        </v-container>
+      </template>
+      <template #menu>
+        <DetailMenu
+          :is-authenticated="isAuthenticated"
+          @edit:general="handleGeneralInfoEdit"
+          @edit:description="handleEditDescription"
+          @edit:gallery="openGalleryEditor"
+          @edit:trailer="showLinkTrailerDialog = true"
+          @delete:film="showDeleteWarning = true"
+        />
+      </template>
+      <template #text>
+        <main>
+          <FilmExpansionPanels
+            :film="film || null"
+            :is-description-panel-open="isDescriptionPanelOpen"
+          >
+            <template #general-info>
+              <FilmGeneralInfo :general-info="generalInfo" />
+            </template>
+            <template #rating>
+              <Rating
+                :current-rating="film?.rating || ''"
+                :assessments="film?.assessments || []"
+                :assessments-graph="film?.assessmentsGraph || []"
+                :is-assessing="isAssessing"
+                :rating="rating"
+                :comment="comment"
+                @assession:submit="submitAssessment"
+                @assession:enable="isAssessing = true"
+                @assession:cancel="cancelAssessment"
+                @comment:update="comment = $event"
+                @rating:update="rating = $event"
+              />
+            </template>
+            <template #gallery-viewer>
+              <GalleryViewer
+                :slider-arr="sliderGalleryArr || []"
+                :disabled="!isAuthenticated"
+                :gallery="film?.gallery || []"
+                :entity-name="film?.name || ''"
+                :loading="loading"
+                :with-avatar="false"
+                @poster:set="handleChangePoster"
+                @editor:open="openGalleryEditor"
+                @delete:img="handleDeleteImg"
+              />
+            </template>
+            <template #description>
+              <IndentedEditableText
+                :edit-mode="editDescriptionMode"
+                :messages="$t('pages.films.edit_description')"
+                :text="film?.description || ''"
+                @sumbit:edit="submitDescriptionEdit"
+                @cancel:edit="cancelDescriptionEdit"
+              />
+            </template>
+            <template #comments>
+              <Comments
+                :loading="loading"
+                :assessments="film?.assessments || []"
+                :comment="comment"
+                @assession:submit="submitAssessment"
+                @assession:enable="isAssessing = true"
+                @assession:cancel="cancelAssessment"
+                @assession:delete="deleteAssessment"
+              />
+            </template>
+          </FilmExpansionPanels>
+        </main>
+      </template>
+      <template #footer>
+        <div
+          class="text-center bg-surface w-100 text-caption d-flex justify-center ga-1 pa-2"
+        >
+          <span>{{ $t("general.published_by") }}</span>
+          <nuxt-link class="text-secondary">{{
+            film?.publisherData ? film?.publisherData.name : ""
+          }}</nuxt-link>
+          {{ film?.createdAt || "" }}
+        </div>
+      </template>
+    </DetailCard>
     <ConfirmDialog
       v-model="showConfirmDialog"
       type="error"
