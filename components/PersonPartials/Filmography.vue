@@ -1,41 +1,42 @@
 <template>
-  <div>
+  <v-card>
     <template v-if="computedFilmographyDispay">
-      <v-list nav>
+      <v-list>
         <div
           v-for="(value, key, index) in person?.filmWorks"
           :key="index"
           class="my-2"
         >
-          <v-card
-            v-if="value && value.length > 0"
-            prepend-icon="mdi-format-list-bulleted"
-            :title="defineCardTitle(key)"
-          >
-            <v-divider />
-            <v-table hover>
-              <thead class="text-primary glassed">
-                <tr>
-                  <th style="width: 20%">
-                    {{ $t("pages.films.release_year") }}
-                  </th>
-                  <th>
-                    {{ $t("pages.films.name") }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(item, i) in value" :key="i">
-                  <td>{{ item.releaseYear || $t("general.no_data") }}</td>
-                  <td>
-                    <nuxt-link :to="$localeRoute(`/films/${item?.slug}`)" class="text-accent">
-                      {{ item?.name }}</nuxt-link
-                    >
-                  </td>
-                </tr>
-              </tbody>
-            </v-table>
-          </v-card>
+          <v-list-group v-if="value && value.length > 0" :value="key">
+            <template #activator="{ props }">
+              <v-list-item v-bind="props" prepend-icon="mdi-list-box">
+                <v-list-item-title>{{
+                  defineCardTitle(key)
+                }}</v-list-item-title>
+              </v-list-item>
+            </template>
+            <v-list-item
+              v-for="(item, i) in value"
+              :key="i"
+              :to="$localeRoute(`/films/${item?.slug}`)"
+              :value="item"
+            >
+              <v-list-item-title>
+                <nuxt-link class="text-primary">
+                  {{ item?.name }}
+                </nuxt-link>
+              </v-list-item-title>
+              <v-list-item-subtitle>
+                {{ item.releaseYear || $t("general.no_data") }}
+              </v-list-item-subtitle>
+            </v-list-item>
+            <v-divider
+              v-if="
+                person?.filmWorks &&
+                index < Object.keys(person.filmWorks).length - 1
+              "
+            />
+          </v-list-group>
         </div>
       </v-list>
     </template>
@@ -44,7 +45,7 @@
       :title="$t('empty_states.filmography')"
       icon="mdi-filmstrip"
     />
-  </div>
+  </v-card>
 </template>
 
 <script lang="ts" setup>

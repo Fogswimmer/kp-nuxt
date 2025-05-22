@@ -1,8 +1,8 @@
 <template>
   <v-layout min-height="calc(100vh - 80px)">
     <client-only>
-      <v-navigation-drawer  location="start" />
-      <v-navigation-drawer  location="end" />
+      <v-navigation-drawer location="start" />
+      <v-navigation-drawer location="end" />
       <v-navigation-drawer
         v-if="$vuetify.display.smAndDown"
         v-model="showSearch"
@@ -128,10 +128,12 @@
               rounded="lg"
               lines="two"
               class="my-2"
-              :title="item.title"
               :subtitle="item.value"
               :value="item"
             >
+              <template #title>
+                <span class="text-primary text-lg-h6">{{ item.title }}</span>
+              </template>
               <template #prepend>
                 <v-avatar
                   :size="

@@ -4,7 +4,7 @@
       class="d-flex flex-column fill-height gap-2 align-center justify-center overlay"
     >
       <span class="text-center">{{ $t("state.loading") }}...</span>
-      <v-progress-circular indeterminate color="primary" />
+      <span class="progress"> </span>
     </div>
   </v-sheet>
 </template>

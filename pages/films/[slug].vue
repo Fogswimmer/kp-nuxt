@@ -4,8 +4,7 @@
       <Title>{{ definePageTitle(film?.name || "") }}</Title>
       <Meta name="description" :content="film?.description" />
     </Head>
-    <v-sheet max-width="1200" class="mx-auto" rounded="lg">
-      <div>
+
         <DetailCard
           :page-name="
             useInternationalName(
@@ -180,8 +179,6 @@
             </div>
           </template>
         </DetailCard>
-      </div>
-    </v-sheet>
     <ConfirmDialog
       v-model="showConfirmDialog"
       type="error"

@@ -61,7 +61,7 @@ p {
 }
 
 .glassed {
-  background: rgba(0, 0, 0, 0.01) !important;
+  background: rgba(0, 0, 0, 0.5) !important;
   -webkit-backdrop-filter: blur(4rem) !important;
   backdrop-filter: blur(4rem) !important;
 }

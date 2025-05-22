@@ -7,7 +7,7 @@
   >
     <v-list-item-title>
       <div class="d-flex w-100 align-center">
-        <span class="text-lg-h5 text-truncate" style="max-width: 75%">{{
+        <span class="text-lg-h5 text-primary text-truncate" style="max-width: 75%">{{
           item.title
         }}</span>
         <v-spacer />
