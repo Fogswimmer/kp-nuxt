@@ -9,9 +9,9 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
   ],
   css: ["@/assets/css/globals.scss"],
-  ssr: true,
+  ssr: false,
   app: {
-    // baseURL: './',
+    baseURL: './',
     pageTransition: {
       name: "page",
       mode: "out-in", // default

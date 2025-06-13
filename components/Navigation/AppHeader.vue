@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar  scroll-behavior="hide">
+  <v-app-bar  scroll-behavior="hide" class="glassed" color="transparent">
     <v-app-bar-title>
       <Logo />
     </v-app-bar-title>

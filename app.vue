@@ -59,23 +59,15 @@ p {
   margin-top: 1rem;
   text-indent: 2rem !important;
 }
-
 .glassed {
-  background: rgba(0, 0, 0, 0.5) !important;
-  -webkit-backdrop-filter: blur(4rem) !important;
-  backdrop-filter: blur(4rem) !important;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-
-.dark-glassed {
-  background: rgba(5, 6, 10, 0.1) !important;
-  -webkit-backdrop-filter: blur(4rem) !important;
-  backdrop-filter: blur(4rem) !important;
-}
-
 
 .bg-dark {
   background-image: radial-gradient(circle, #131f27, #08141b, #000000);
-  background-attachment: fixed;  
+  background-attachment: fixed;
 }
 .bg-light {
   background-image: radial-gradient(circle, #f0f0f0, #fcfcfc, #d0d0d0);

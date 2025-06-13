@@ -52,7 +52,7 @@
           </template>
           <template #footer="{ pageCount }">
             <v-footer
-              class="justify-space-between text-subtitle-2 mt-2 glassed"
+              class="justify-space-between text-subtitle-2 mt-2 bg-surface"
             >
               <span> {{ $t("general.total") }}: {{ assessments.length }}</span>
               <ClientOnly>

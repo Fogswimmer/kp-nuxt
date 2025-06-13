@@ -1,7 +1,7 @@
 <template>
-  <v-card max-width="600" class="mx-auto">
+  <v-card max-width="600" class="mx-auto" variant="tonal">
     <v-card-text>
-      <v-alert variant="tonal" color="success">{{
+      <v-alert variant="outlined" color="success">{{
         $t("auth.password_reset_messages.reset_success")
       }}</v-alert>
       <div class="text-center mt-5">
