@@ -49,7 +49,7 @@
       </div>
     </div>
     <a
-      href="https://github.com/nebelschwimmer"
+      href="https://github.com/Fogswimmer"
       target="_blank"
       class="text-blue d-flex align-center justify-end ma-2 ga-2 flex-wrap"
       ><v-icon size="large">mdi-github</v-icon>GitHub</a
