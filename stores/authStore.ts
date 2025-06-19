@@ -17,8 +17,8 @@ export const useAuthStore = defineStore("authStore", () => {
     maxAge: 60 * 60 * 24 * 7,
     secure: true,
   });
-  const token = ref<string | null | undefined>(tokenCookie.value || null || "");
   const resetToken = ref<string | null | undefined>(null);
+  const token = ref<string | null | undefined>(tokenCookie.value || null || "");
   if (import.meta.server) {
     const headers = useRequestHeaders(["cookie"]);
     const cookieHeader = headers?.cookie || "";
@@ -60,27 +60,16 @@ export const useAuthStore = defineStore("authStore", () => {
     newPassword: "",
   });
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = async (locale: string) => {
     try {
       loading.value = true;
-      const response = await $fetch<CurrentUser>(`${baseUrl}/current-user`, {
-        headers: authHeaders.value,
-      });
+      const response = await $fetch<CurrentUser>(
+        `${baseUrl}/current-user?locale=${locale}`,
+        {
+          headers: authHeaders.value,
+        }
+      );
       currentUser.value = response;
-    } catch (error: unknown) {
-      console.log(error);
-    } finally {
-      loading.value = false;
-    }
-  };
-
-  const register = async () => {
-    try {
-      loading.value = true;
-      await $fetch<CurrentUser>(`${baseUrl}/register`, {
-        method: "POST",
-        body: userForm.value,
-      });
     } catch (error: unknown) {
       authError.value = error;
       showErrorMessage.value = true;
@@ -107,8 +96,24 @@ export const useAuthStore = defineStore("authStore", () => {
       loading.value = false;
     }
   };
+
+  const register = async () => {
+    try {
+      loading.value = true;
+      await $fetch<CurrentUser>(`${baseUrl}/register`, {
+        method: "POST",
+        body: userForm.value,
+      });
+    } catch (error: unknown) {
+      authError.value = error;
+      showErrorMessage.value = true;
+    } finally {
+      loading.value = false;
+    }
+  };
   const signOut = async () => {
     try {
+      loading.value = true;
       await $fetch<CurrentUser>(`${baseUrl}/logout`, {
         method: "POST",
       });
@@ -116,6 +121,8 @@ export const useAuthStore = defineStore("authStore", () => {
       token.value = null;
     } catch (error: unknown) {
       handleError(error);
+    } finally {
+      loading.value = false;
     }
   };
   const uploadAvatar = async (avatar: File, id: number) => {
@@ -224,11 +231,14 @@ export const useAuthStore = defineStore("authStore", () => {
     }
   };
 
-  const sendNewPassword = async (token: string): Promise<boolean> => {
+  const sendNewPassword = async (
+    token: string,
+    locale: string
+  ): Promise<boolean> => {
     try {
       loading.value = true;
       await $fetch<ResetTokenResponse>(
-        `${baseUrl}/reset-password/${token}/new-password`,
+        `${baseUrl}/reset-password/${token}/new-password?locale=${locale}`,
         {
           method: "POST",
           body: {
@@ -261,7 +271,6 @@ export const useAuthStore = defineStore("authStore", () => {
     resetToken,
     validateToken,
     register,
-    login,
     signOut,
     uploadAvatar,
     uploadCover,
@@ -269,5 +278,6 @@ export const useAuthStore = defineStore("authStore", () => {
     editUser,
     resetPasswordRequest,
     sendNewPassword,
+    login,
   };
 });

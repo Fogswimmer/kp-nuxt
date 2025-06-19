@@ -49,6 +49,7 @@
           block
           size="large"
           color="secondary"
+          :disabled="loading"
           prepend-icon="mdi-account-plus"
         >
           {{ $t("auth.register") }}
@@ -78,7 +79,7 @@ import { useAuthStore } from "~/stores/authStore";
 import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const visible = ref<boolean>(false);
 const localeRoute = useLocaleRoute();
 const loginFormRef = ref<HTMLFormElement | null>();
@@ -95,7 +96,7 @@ const validate = async () => {
     if (valid) {
       await login();
       if (!showErrorMessage.value) {
-        await fetchCurrentUser();
+        await fetchCurrentUser(locale.value);
         navigateTo(localeRoute("/"));
       }
     }

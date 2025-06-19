@@ -4,7 +4,7 @@
       <Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
     </Head>
 
-    <v-card variant="tonal">
+    <v-card variant="outlined">
       <v-card-title>
         {{ $t("auth.password_reset") }}
       </v-card-title>
@@ -49,12 +49,13 @@ const { loading, passwordResetForm, showErrorMessage } =
   storeToRefs(useAuthStore());
 const { required, password: passwordRule } = useValidation();
 const { sendNewPassword } = useAuthStore();
-
+const localeRoute = useLocaleRoute();
+const { locale } = useI18n();
 const handleNewPasswordSubmit = async (): Promise<void> => {
   const token = useRoute().params.token as string;
-  const success = await sendNewPassword(token);
+  const success = await sendNewPassword(token, locale);
   if (success) {
-    navigateTo("/auth/password-reset/reset-success");
+    navigateTo(localeRoute("/auth/password-reset/reset-success"));
   }
 };
 const { t } = useI18n();

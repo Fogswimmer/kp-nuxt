@@ -15,8 +15,8 @@
 <script lang="ts" setup>
 import EmptyPage from "~/components/Templates/EmptyPage.vue";
 definePageMeta({
-  name: "emptyHome",
-  path: "/empty-home",
+  name: "emptyPage",
+  path: "/empty-page",
 });
 </script>
 

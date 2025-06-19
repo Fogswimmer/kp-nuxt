@@ -1,5 +1,29 @@
 <template>
   <v-card :loading="loading" max-width="280" border class="mt-1">
+    <v-toolbar density="compact">
+      <v-toolbar-title>{{
+        currentUser?.displayName || currentUser?.username
+      }}</v-toolbar-title>
+
+      <v-btn
+        :title="$t('actions.edit')"
+        icon
+        size="small"
+        @click.stop="$emit('edit')"
+      >
+        <v-icon icon="mdi-pencil" />
+      </v-btn>
+      <v-btn
+        :title="$t('actions.edit')"
+        icon
+        color="warning"
+        size="small"
+        @click.stop="$emit('logout')"
+      >
+        <v-icon icon="mdi-logout" />
+      </v-btn>
+    </v-toolbar>
+    <v-divider />
     <section class="text-center pa-2">
       <div class="position-relative">
         <v-avatar
@@ -8,14 +32,15 @@
           class="cursor-pointer"
           @click.stop="showAvatarEditBtn = !showAvatarEditBtn"
         >
-          <v-img :src="currentUser?.avatar || ''" cover>
+          <v-img v-if="currentUser?.avatar" :src="currentUser?.avatar" cover>
             <template #placeholder>
-              <ImgLoader />
+              <ImgPlaceholder />
             </template>
             <template #error>
               <ErrorPlaceHolder />
             </template>
           </v-img>
+          <v-icon v-else icon="mdi-account" size="64" />
         </v-avatar>
         <v-fab
           :active="showAvatarEditBtn"
@@ -26,41 +51,22 @@
           @click.stop="$emit('avatar:edit')"
         />
       </div>
+      <v-divider class="mt-2" />
     </section>
-    <v-list nav density="compact">
-      <v-list-item class="text-caption">{{ computedLastLogin }}</v-list-item>
+    <v-list density="compact" nav>
+      <v-list-item :title="computedLastLogin"> </v-list-item>
       <v-list-item
         v-for="(info, i) in computedGeneralInfo"
         :key="i"
         :title="info.title"
-        :subtitle="info.value"
-        lines="two"
+        :subtitle="info.value || $t('general.no_data')"
       />
     </v-list>
-    <v-divider />
-    <v-card-actions>
-      <v-btn
-        :title="$t('actions.edit')"
-        prepend-icon="mdi-pencil"
-        size="small"
-        @click.stop="$emit('edit')"
-      >
-        {{ $t("actions.edit") }}
-      </v-btn>
-      <v-btn
-        prepend-icon="mdi-logout"
-        color="warning"
-        size="small"
-        @click.stop="$emit('logout')"
-      >
-        {{ $t("auth.sign_out") }}
-      </v-btn>
-    </v-card-actions>
   </v-card>
 </template>
 
 <script lang="ts" setup>
-import ImgLoader from "../Img/ImgPlaceholder.vue";
+import ImgPlaceholder from "../Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
 
 const props = defineProps<{

@@ -2,16 +2,16 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/i18n",
     "@pinia/nuxt",
-    "@nuxt/eslint",
     "@nuxt/image",
     "vuetify-nuxt-module",
     "@nuxt/test-utils/module",
     "nuxt-auth-utils",
+    "@nuxt/eslint",
   ],
   css: ["@/assets/css/globals.scss"],
-  ssr: false,
+  ssr: true,
   app: {
-    baseURL: './',
+    // baseURL: './',
     pageTransition: {
       name: "page",
       mode: "out-in", // default

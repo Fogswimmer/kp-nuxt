@@ -14,6 +14,7 @@
 				<v-btn prepend-icon="mdi-close" color="error" @click="$emit('cancel')">{{ $t("actions.cancel") }}</v-btn>
 				<v-btn
 					prepend-icon="mdi-check"
+					:loading="Boolean(loading)"
 					@click="$emit('confirm')"
 					>{{ $t("actions.confirm") }}</v-btn
 				>
@@ -27,6 +28,7 @@
 	defineProps<{
 		modelValue: boolean;
 		text?: string;
+		loading?: boolean;
 	}>();
 </script>
 

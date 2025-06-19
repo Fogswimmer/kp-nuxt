@@ -27,13 +27,14 @@
         />
       </template>
     </ListPage>
+    <PageLoader v-else />
   </div>
 </template>
 
 <script lang="ts" setup>
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
-
+import PageLoader from "~/components/Misc/PageLoader.vue";
 import { useFilmStore } from "~/stores/filmStore";
 import definePageTitle from "~/utils/definePageTitle";
 

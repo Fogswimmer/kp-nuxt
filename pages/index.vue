@@ -51,12 +51,7 @@
       </main>
     </template>
     <template v-else>
-      <div
-        style="height: calc(100vh - 100px)"
-        class="d-flex align-center justify-center"
-      >
-        <v-progress-circular indeterminate color="primary" />
-      </div>
+      <PageLoader/>
     </template>
     <v-bottom-sheet v-model="isOffline" inset>
       <v-alert type="error" icon="mdi-connection">
@@ -80,7 +75,9 @@ import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import HomeWall from "~/components/Masonry/HomeWall.vue";
+import PageLoader from "~/components/Misc/PageLoader.vue";
 import definePageTitle from "~/utils/definePageTitle";
+
 const {
   loading: filmLoading,
   filmsPresent,

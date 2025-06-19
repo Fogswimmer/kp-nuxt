@@ -12,7 +12,7 @@
               <v-text-field
                 v-model="passwordResetForm.email"
                 name="email"
-                :disabled="showSuccessMessage"
+                :disabled="showSuccessMessage || loading"
                 :label="$t('auth.password_reset_email')"
                 :placeholder="$t('auth.password_reset_email')"
                 prepend-inner-icon="mdi-email-outline"
@@ -51,7 +51,7 @@ const { loading, passwordResetForm, showErrorMessage } =
   storeToRefs(useAuthStore());
 const { resetPasswordRequest } = useAuthStore();
 const { required, email: emailRule } = useValidation();
-
+const localeRoute = useLocaleRoute();
 const { locale } = useI18n();
 const emailFormRef = ref<HTMLFormElement | null>(null);
 const isFormValid = ref<boolean>(false);
@@ -70,6 +70,9 @@ const handleValidationAndSubmit = async (): Promise<void> => {
     const success = await resetPasswordRequest(locale.value);
     if (success) {
       showSuccessMessage.value = true;
+      setTimeout(() => {
+        navigateTo(localeRoute("/auth/sign-in"));
+      }, 2000);
     }
   }
 };
@@ -77,6 +80,4 @@ definePageMeta({
   name: "passwordResetEmail",
   path: "/auth/password-reset",
 });
-
-
 </script>

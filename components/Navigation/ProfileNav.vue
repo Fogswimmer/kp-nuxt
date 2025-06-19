@@ -33,6 +33,9 @@
                       >
                     </v-avatar>
                   </template>
+                  <template #placeholder>
+                    <ImgPlaceholder />
+                  </template>
                 </v-img>
                 <v-icon v-else> mdi-account</v-icon>
               </v-avatar>
@@ -50,7 +53,9 @@
             <v-icon
               v-else
               :color="
-                $route.name && $route.name.toString().startsWith('signIn') ? 'primary' : ''
+                $route.name && $route.name.toString().startsWith('signIn')
+                  ? 'primary'
+                  : ''
               "
               @click="navigateTo($localeRoute('/profile'))"
             >
@@ -59,18 +64,17 @@
           </v-avatar>
         </v-card>
       </template>
-   
-        <ProfileCard
-          v-if="isAuthenticated && currentUser"
-          :current-user="currentUser"
-          :is-admin="isAdmin"
-          :loading="loading"
-          @edit="handleEdit"
-          @logout="showConfirmDialog = true"
-          @avatar:edit="showAvatarUploadDialog = true"
-          @close="showMenu = false"
-        />
- 
+
+      <ProfileCard
+        v-if="isAuthenticated && currentUser"
+        :current-user="currentUser"
+        :is-admin="isAdmin"
+        :loading="loading"
+        @edit="handleEdit"
+        @logout="showConfirmDialog = true"
+        @avatar:edit="showAvatarUploadDialog = true"
+        @close="showMenu = false"
+      />
     </v-menu>
     <ConfirmDialog
       v-model="showAvatarWarning"
@@ -80,6 +84,7 @@
     />
     <ConfirmDialog
       v-model="showConfirmDialog"
+      :loading="loading"
       :text="$t('auth.logout_confirm')"
       @cancel="showConfirmDialog = false"
       @confirm="handleSignOut"
@@ -142,6 +147,7 @@ import ProfileCard from "../Containment/Cards/ProfileCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import UserForm from "~/components/Forms/Auth/UserForm.vue";
+import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
 
 const { currentUser, isAuthenticated, token, loading, isAdmin, userForm } =
   storeToRefs(useAuthStore());
@@ -153,6 +159,8 @@ const handleSignOut = async (): Promise<void> => {
   await signOut();
   showConfirmDialog.value = false;
 };
+
+const { locale } = useI18n();
 
 const avatarFile = ref<File>();
 const editMode = ref<boolean>(false);
@@ -175,13 +183,13 @@ const handleUploadAvatar = async (files: File[]): Promise<void> => {
     }
   }
   showAvatarUploadDialog.value = false;
-  await fetchCurrentUser();
+  await fetchCurrentUser(locale.value);
 };
 
 const replaceAvatar = async () => {
   const id = Number(currentUser.value?.id);
   await uploadAvatar(avatarFile.value as File, id || 0);
-  await fetchCurrentUser();
+  await fetchCurrentUser(locale.value);
   showAvatarWarning.value = false;
 };
 
@@ -202,7 +210,7 @@ onMounted(async (): Promise<void> => {
     token.value &&
     !["signIn", "signUp"].includes(route.name as string)
   ) {
-    await fetchCurrentUser();
+    await fetchCurrentUser(locale.value);
   }
 });
 </script>
