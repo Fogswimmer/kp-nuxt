@@ -1,7 +1,6 @@
 <template>
   <v-scroll-x-transition>
-    <v-card rounded="lg">
-      <v-divider />
+    <div>
       <v-card-text>
         <div>
           <span>{{ $t("actions.limit") }}</span>
@@ -21,7 +20,7 @@
             />
           </v-chip-group>
         </div>
-
+        <v-divider />
         <div>
           <span>{{ $t("filters.order.title") }}</span>
           <v-chip-group
@@ -40,7 +39,7 @@
             />
           </v-chip-group>
         </div>
-
+        <v-divider />
         <div>
           <span>{{ $t("filters.sort.title") }}:</span>
           <v-chip-group
@@ -60,7 +59,7 @@
           </v-chip-group>
         </div>
       </v-card-text>
-    </v-card>
+    </div>
   </v-scroll-x-transition>
 </template>
 

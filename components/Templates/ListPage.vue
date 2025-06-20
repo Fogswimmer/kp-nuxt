@@ -1,12 +1,11 @@
 <template>
-  <v-layout min-height="calc(100vh - 80px)">
+  <div>
     <client-only>
-      <v-navigation-drawer
+      <v-dialog
         v-if="$vuetify.display.smAndDown"
         v-model="showSearch"
-        temporary
       >
-        <div class="pa-2 flex flex-column ga-4">
+        <v-sheet class="pa-2">
           <div class="d-flex ga-2">
             <v-text-field
               v-model="needle"
@@ -30,8 +29,8 @@
             }}</span>
             <span v-else>{{ $t("search.no_result") }}</span>
           </v-label>
-        </div>
-      </v-navigation-drawer>
+        </v-sheet>
+      </v-dialog>
       <v-navigation-drawer v-model="showFilters" width="300" location="end">
         <div class="pa-2 flex flex-column ga-4">
           <CloseBtn
@@ -49,17 +48,6 @@
       <v-app-bar-title>
         <span class="text-lg-h5 font-weight-bold"> {{ listTitle }}</span>
       </v-app-bar-title>
-      <template v-if="$vuetify.display.mdAndUp">
-        <v-pagination
-          v-model="currentPage"
-          :length="totalPages"
-          rounded="lg"
-          color="primary"
-          :total-visible="3"
-          @update:model-value="handlePageChange"
-        />
-        <v-spacer />
-      </template>
       <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
         <v-text-field
           v-model="needle"
@@ -108,8 +96,9 @@
         </v-btn>
       </template>
     </v-app-bar>
-    <v-main>
-      <v-card v-if="items.length">
+
+    <main class="pa-2">
+      <template v-if="items.length">
         <div class="mt-2 w-100 d-flex align-center justify-center">
           <v-label v-if="needle && !loading && $vuetify.display.mdAndUp">
             <span v-if="items.length">{{
@@ -118,7 +107,7 @@
           </v-label>
         </div>
 
-        <div v-if="!loading" class="pa-2">
+        <template v-if="!loading">
           <GradientWrapper v-for="(item, i) in items" :key="i">
             <v-list-item
               :to="$localeRoute(item.to || '/')"
@@ -133,11 +122,7 @@
                 <span class="text-primary text-lg-h6">{{ item.title }}</span>
               </template>
               <template #prepend>
-                <v-avatar
-                  :size="
-                    $vuetify.display.mdAndUp ? AVATAR_DESKTOP : AVATAR_MOBILE
-                  "
-                >
+                <v-avatar :size="100">
                   <v-img :src="item.avatar">
                     <template #placeholder>
                       <v-sheet height="100%">
@@ -158,19 +143,17 @@
               </template>
             </v-list-item>
           </GradientWrapper>
-        </div>
+        </template>
         <v-skeleton-loader
           v-for="n in limit"
           v-else-if="items.length"
           :key="n"
           rounded="lg"
-          :height="
-            ($vuetify.display.mdAndUp ? AVATAR_DESKTOP : AVATAR_MOBILE) + 30
-          "
+          :height="130"
           class="ma-2 glassed"
           type="list-item-avatar-three-line"
         />
-      </v-card>
+      </template>
       <div
         v-else-if="!loading"
         class="d-flex flex-column align-center justify-center"
@@ -180,8 +163,8 @@
       </div>
 
       <slot name="empty-state" />
-    </v-main>
-    <v-app-bar v-if="$vuetify.display.smAndDown || limit > 5" location="bottom">
+    </main>
+    <v-app-bar location="bottom">
       <div class="w-100">
         <v-pagination
           v-model="currentPage"
@@ -193,7 +176,7 @@
         />
       </div>
     </v-app-bar>
-  </v-layout>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -203,9 +186,6 @@ import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import { useAuthStore } from "#imports";
 
 const { isAuthenticated } = useAuthStore();
-
-const AVATAR_DESKTOP: number = 115;
-const AVATAR_MOBILE: number = 70;
 
 const emit = defineEmits<{
   (e: "update:page" | "delete:item" | "form:open", value: number): void;
