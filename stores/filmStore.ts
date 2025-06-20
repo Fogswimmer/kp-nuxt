@@ -277,8 +277,9 @@ export const useFilmStore = defineStore("films", () => {
       filmsPresent.value = response?.present || false;
     } catch (error: unknown) {
       handleError(error);
-      loading.value = false;
       return false;
+    } finally {
+      loading.value = false;
     }
   };
 

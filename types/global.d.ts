@@ -1,4 +1,4 @@
-import 'youtube';
+import "youtube";
 declare global {
   interface Window {
     YT: typeof YT | undefined;
@@ -130,10 +130,10 @@ declare global {
   }
 
   interface FilmWork {
-    actedInfilms: [IFilm]
-    directedFilms: [IFilm]
-    producedFilms: [IFilm]
-    composedFilms: [IFilm]
+    actedInfilms: [IFilm];
+    directedFilms: [IFilm];
+    producedFilms: [IFilm];
+    composedFilms: [IFilm];
   }
   interface IPersonForm {
     id: number | null;
@@ -173,7 +173,7 @@ declare global {
 
   interface ICheckEmptyResponse {
     present: boolean;
-}
+  }
 
   interface ISpecialistsListResponse {
     actors: {
@@ -215,7 +215,7 @@ declare global {
     favorites: number[];
     about: string;
     lastLogin: Date;
-    roles: ERole[]|[];
+    roles: ERole[] | [];
     about: string;
     assessments: IAssessment[];
   }
@@ -230,7 +230,5 @@ declare global {
     value: string;
     title: string;
   }
-
-
 }
 export {};

@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="text" max-width="1200" class="mx-auto" rounded="lg" border>
+  <v-card>
     <v-toolbar>
       <template #prepend>
         <BackBtn />
@@ -26,7 +26,7 @@
       <template v-if="loading" #loader>
         <v-progress-linear indeterminate color="primary" />
       </template>
-      <v-card>
+      <v-sheet>
         <v-parallax
           v-if="cover"
           :src="cover"
@@ -51,12 +51,10 @@
           width="100%"
           class="default-cover"
         />
-       
-          <slot name="top_film" />
-       
+        <slot name="top_film" />
         <slot name="general_info" />
         <slot name="text" />
-      </v-card>
+      </v-sheet>
     </v-card>
     <slot name="footer" />
   </v-card>

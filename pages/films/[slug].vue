@@ -551,5 +551,6 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "filmDetails",
   path: "/films/:slug",
+  layout: "list"
 });
 </script>
