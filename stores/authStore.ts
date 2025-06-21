@@ -257,6 +257,10 @@ export const useAuthStore = defineStore("authStore", () => {
       loading.value = false;
     }
   };
+  const clearError = () => {
+    authError.value = null;
+    showErrorMessage.value = false;
+  };
 
   return {
     currentUser,
@@ -279,5 +283,6 @@ export const useAuthStore = defineStore("authStore", () => {
     resetPasswordRequest,
     sendNewPassword,
     login,
+    clearError,
   };
 });

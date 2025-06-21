@@ -1,6 +1,7 @@
 export default {
   welcome: "Welcome",
   language: "language",
+  contents: "Contents",
   logo_description: "Cinemalovers hub",
   page_descriptions: {
     home: "Best films and actors of all time",
@@ -259,8 +260,8 @@ export default {
     limit: "Limit",
     order: "Order",
     filters: "Filters",
-    asc: "Old first",
-    desc: "New first",
+    asc: "Ascending",
+    desc: "Descending",
     edit_cover: "Edit cover",
     edit_poster: "Edit poster",
     delete_cover: "Delete cover",
@@ -428,9 +429,11 @@ export default {
         backend: "Backend",
         language: "Programming language",
         main_framework: "Main framework",
-        additional_framework: "Additional framework",
+        additional_framework: "UI framework",
         important_packages: "Important packages",
         internationalization: "Internationalization",
+        message_brocker: "Message broker",
+        cache_db: "Caching db"
       },
       dev_prod: {
         title: "DevOps stack",
@@ -559,8 +562,8 @@ export default {
     display: "Display",
     order: {
       title: "Order",
-      asc: "Old first",
-      desc: "New first",
+      asc: "Ascending",
+      desc: "Descending",
     },
     sort: {
       title: "Sort",

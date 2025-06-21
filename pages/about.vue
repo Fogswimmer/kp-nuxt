@@ -3,7 +3,7 @@
     <Head>
       <Title>{{ definePageTitle($t("pages.about.title")) }}</Title>
     </Head>
-    <v-card max-width="1000" class="mx-auto" border>
+    <v-card variant="text">
       <v-toolbar>
         <template #prepend>
           <BackBtn />
@@ -17,7 +17,6 @@
         <v-expansion-panel :title="$t('pages.about.stack')" value="stack">
           <v-expansion-panel-text>
             <StackList />
-
             <v-btn
               :prepend-icon="showMore ? 'mdi-menu-up' : 'mdi-menu-down'"
               block
@@ -25,8 +24,7 @@
               @click="showMore = !showMore"
               >{{ showMore ? $t("general.hide") : $t("general.show_more") }}
             </v-btn>
-
-            <v-card v-if="showMore" border class="mt-2" theme="dark">
+            <v-card v-if="showMore" border class="mt-2">
               <v-toolbar>
                 <v-tabs v-model="active">
                   <v-tab value="scheme" prepend-icon="mdi-image">{{
@@ -41,7 +39,7 @@
                 <v-tabs-window v-model="active">
                   <v-tabs-window-item value="scheme">
                     <v-img
-                      src="public/img/scheme-no-bg.png"
+                      src="public/img/scheme.webp"
                       alt="scheme"
                       height="400"
                     >
@@ -86,6 +84,7 @@ definePageMeta({
   name: "about",
   path: "/about",
   title: "About",
+  layout: "list"
 });
 </script>
 

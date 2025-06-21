@@ -2,9 +2,7 @@
   <v-card
     v-if="present"
     variant="text"
-    max-width="1024"
     width="100%"
-    class="mx-auto"
   >
     <v-card-title>
       <div class="d-flex flex-column ga-2">

@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" class="pa-2" variant="text" border>
+  <v-card rounded="lg" class="pa-2" variant="text" border min-height="50">
     <div
       v-if="!editMode"
       :class="['text-body-1 pa-2', { 'text-body-2': compact }]"
@@ -13,8 +13,12 @@
         >
           {{ paragraph }}
         </p>
+        <ExpandBtn
+          v-if="props.text.length > 100"
+          :expanded="!isTruncated"
+          @toggle:expanded="isTruncated = !isTruncated"
+        />
       </div>
-
       <v-skeleton-loader v-else type="text" />
     </div>
     <v-confirm-edit
@@ -39,9 +43,8 @@
         </v-card>
       </template>
     </v-confirm-edit>
-    <v-card-actions>
+    <v-card-actions v-if="editMode">
       <v-btn
-      v-if="editMode"
         block
         prepend-icon="mdi-close"
         color="warning"
@@ -54,6 +57,7 @@
 </template>
 
 <script lang="ts" setup>
+import ExpandBtn from "../Containment/Btns/ExpandBtn.vue";
 const props = defineProps<{
   editMode: boolean;
   text: string;
@@ -68,15 +72,17 @@ defineEmits<{
 
 const editModeText = ref<string>(props.text);
 const visibleParagraphs = ref(new Set<number>());
-const formattedText = computed(() =>
-  props.text
+const isTruncated = ref<boolean>(props.text.length > 100);
+const formattedText = computed(() => {
+  return props.text
     ? props.text
         .trim()
         .split("\n")
         .map((p) => p.replace(/[\u200B\r\t\xa0]/g, "").trim())
         .filter((p) => p.length > 0)
-    : []
-);
+        .slice(0, isTruncated.value ? 1 : undefined)
+    : [];
+});
 </script>
 
 <style sroped>

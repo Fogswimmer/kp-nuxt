@@ -12,7 +12,7 @@
           <template #activator="{ props }">
             <v-list-item
               v-bind="props"
-              prepend-icon="mdi-account-circle"
+              prepend-icon="mdi-pencil"
               :title="$t('actions.edit')"
             />
           </template>

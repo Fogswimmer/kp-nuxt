@@ -81,6 +81,10 @@ const filmItems = computed((): Detail[] => {
           avatar: film.poster || film.gallery[0] || "",
           to: "/films/" + film.slug,
           createdAt: film.createdAt || "",
+          rating: film.rating || 0,
+          releaseYear: film.releaseYear || 0,
+          publisherData: film.publisherData || "",
+          id: film.id || 0,
         };
       })
     : [];
@@ -125,6 +129,7 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "films",
   path: "/films",
+  layout:"list",
   key: (route) => route.fullPath,
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
+  <v-layout class="bg-gradient">
     <v-main class="container">
       <slot />
     </v-main>
@@ -15,5 +15,6 @@ const theme = useTheme();
   height: 100vh;
   display: grid;
   place-items: center;
+  place-content: center;
 }
 </style>

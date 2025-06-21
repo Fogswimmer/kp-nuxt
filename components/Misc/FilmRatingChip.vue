@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{ rating: string }>();
+defineProps<{ rating: string|number }>();
 </script>
 
 <style></style>

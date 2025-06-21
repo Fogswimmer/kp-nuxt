@@ -1,10 +1,7 @@
 <template>
   <div>
     <client-only>
-      <v-dialog
-        v-if="$vuetify.display.smAndDown"
-        v-model="showSearch"
-      >
+      <v-dialog v-if="$vuetify.display.smAndDown" v-model="showSearch">
         <v-sheet class="pa-2">
           <div class="d-flex ga-2">
             <v-text-field
@@ -109,39 +106,83 @@
 
         <template v-if="!loading">
           <GradientWrapper v-for="(item, i) in items" :key="i">
-            <v-list-item
-              :to="$localeRoute(item.to || '/')"
-              border
-              rounded="lg"
-              lines="two"
-              class="my-2"
-              :subtitle="item.value"
-              :value="item"
-            >
-              <template #title>
-                <span class="text-primary text-lg-h6">{{ item.title }}</span>
-              </template>
-              <template #prepend>
-                <v-avatar :size="100">
-                  <v-img :src="item.avatar">
-                    <template #placeholder>
-                      <v-sheet height="100%">
+            <v-list>
+              <v-list-item
+                border
+                rounded="lg"
+                lines="three"
+                class="overflow-x-hidden"
+                :value="item"
+                :to="$localeRoute(item.to || '/')"
+              >
+                <template #title>
+                <div class="text-primary text-lg-h6 d-flex ga-1">
+                    <span>{{ item.title }}</span>
+                    <span v-if="item.releaseYear">({{ item.releaseYear }})</span>
+                </div>
+                </template>
+                <template #subtitle>
+                  {{ item.value }}
+                </template>
+                <template #prepend>
+                  <v-avatar :size="94">
+                    <v-img :src="item.avatar">
+                      <template #placeholder>
+                        <v-sheet height="100%">
+                          <div
+                            class="d-flex align-center justify-center fill-height"
+                          >
+                            <v-icon icon="mdi-image-off" />
+                          </div>
+                        </v-sheet>
+                      </template>
+                    </v-img>
+                  </v-avatar>
+                </template>
+                <template v-if="$vuetify.display.mdAndUp" #append>
+                  <v-sheet
+                    height="94"
+                    rounded="lg"
+                    class="ml-2 cursor-default"
+                    width="130"
+                  >
+                    <div
+                      class="d-flex flex-column align-center justify-center fill-height"
+                    >
+                      <v-rating
+                        v-if="item.rating"
+                        :model-value="item.rating"
+                        readonly
+                        density="compact"
+                        size="x-small"
+                        color="yellow-darken-2"
+                      ></v-rating>
+
+                      <v-chip variant="plain" size="x-small">
+                        {{
+                          $t("general.created_at") + ": " + item.createdAt
+                        }}</v-chip
+                      >
+                      <v-chip
+                        v-if="item.publisherData?.name"
+                        variant="plain"
+                        size="x-small"
+                      >
                         <div
-                          class="d-flex align-center justify-center fill-height"
+                          class="d-inline-block text-truncate"
+                          style="width: 100px"
                         >
-                          <v-icon icon="mdi-image-off" />
+                          <span> {{ $t("general.published_by") + ": " }} </span>
+                          <nuxt-link class="text-secondary">
+                            {{ item.publisherData?.name }}
+                          </nuxt-link>
                         </div>
-                      </v-sheet>
-                    </template>
-                  </v-img>
-                </v-avatar>
-              </template>
-              <template v-if="$vuetify.display.mdAndUp" #append>
-                <v-chip variant="tonal" density="compact">
-                  {{ $t("general.created_at") + ": " + item.createdAt }}</v-chip
-                >
-              </template>
-            </v-list-item>
+                      </v-chip>
+                    </div>
+                  </v-sheet>
+                </template>
+              </v-list-item>
+            </v-list>
           </GradientWrapper>
         </template>
         <v-skeleton-loader
@@ -149,7 +190,7 @@
           v-else-if="items.length"
           :key="n"
           rounded="lg"
-          :height="130"
+          :height="140"
           class="ma-2 glassed"
           type="list-item-avatar-three-line"
         />
@@ -164,7 +205,7 @@
 
       <slot name="empty-state" />
     </main>
-    <v-app-bar location="bottom">
+    <v-app-bar location="bottom" order="1" permanent>
       <div class="w-100">
         <v-pagination
           v-model="currentPage"
@@ -184,6 +225,7 @@ import BackBtn from "../Containment/Btns/BackBtn.vue";
 import CloseBtn from "../Containment/Btns/CloseBtn.vue";
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import { useAuthStore } from "#imports";
+import FilmRatingChip from "../Misc/FilmRatingChip.vue";
 
 const { isAuthenticated } = useAuthStore();
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-toolbar>
+      <v-toolbar :extended="$vuetify.display.smAndDown">
         <v-alert
           icon="mdi-information"
           border="start"
@@ -16,14 +16,35 @@
               </template>
               <template v-else> {{ $t("general.max_files_error") }}! </template>
             </v-chip>
-            <v-spacer></v-spacer>
-            <v-chip label color="warning" prepend-icon="mdi-alert">{{
-              $t("general.max_file_size", {
-                size: humanFileSize(MAX_UPLOAD_SIZE),
-              })
-            }}</v-chip>
+            <v-spacer />
+            <v-chip
+              v-if="$vuetify.display.mdAndUp"
+              label
+              color="warning"
+              prepend-icon="mdi-alert"
+              >{{
+                $t("general.max_file_size", {
+                  size: humanFileSize(MAX_UPLOAD_SIZE),
+                })
+              }}</v-chip
+            >
           </div>
         </v-alert>
+        <template #extension v-if="$vuetify.display.smAndDown">
+          <div class="text-center w-100">
+            <v-chip
+              v-if="$vuetify.display.smAndDown"
+              label
+              color="warning"
+              prepend-icon="mdi-alert"
+              >{{
+                $t("general.max_file_size", {
+                  size: humanFileSize(MAX_UPLOAD_SIZE),
+                })
+              }}</v-chip
+            >
+          </div>
+        </template>
       </v-toolbar>
       <v-file-upload
         v-model="previews"

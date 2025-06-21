@@ -1,6 +1,7 @@
 export default {
   welcome: "Добро пожаловать",
   language: "язык",
+  contents: "Содержание",
   logo_description: "Для киноманов",
   page_descriptions: {
     home: "Лучшие фильмы и актеры всех времен",
@@ -22,7 +23,7 @@ export default {
     see_all: "Показать все",
     created_at: "Создано",
     updated_at: "Обновлено",
-    published_by: "Опубликовал",
+    published_by: "Публикация",
     total: "Всего",
     year: "Год",
     years: "Лет",
@@ -228,8 +229,8 @@ export default {
     limit: "Записей на стр.",
     order: "Порядок",
     filters: "Фильтры",
-    asc: "Сначала старые",
-    desc: "Сначала новые",
+    asc: "По возрастанию",
+    desc: "По убыванию",
     edit_cover: "Изменить обложку",
     edit_poster: "Изменить постер",
     delete_cover: "Удалить обложку",
@@ -428,7 +429,7 @@ export default {
         backend: "Backend",
         language: "Язык программирования",
         main_framework: "Основной фреймворк",
-        additional_framework: "Дополнительный фреймворк",
+        additional_framework: "UI фреймворк",
         important_packages: "Важные пакеты",
         internationalization: "Интернационализация",
       },
@@ -440,6 +441,8 @@ export default {
           pipeline: "Пайплайн",
           containerisation: "Контейнеризация",
           scripts: "Скрипты",
+          message_brocker: "Брокер сообщений",
+          cache_db: "БД кэша"
         },
       },
       author: {
@@ -539,8 +542,8 @@ export default {
     display: "Показать",
     order: {
       title: "Порядок",
-      asc: "Cначала старые",
-      desc: "Cначала новые",
+      asc: "По возрастанию",
+      desc: "По убыванию",
     },
     sort: {
       title: "Сортировать по",

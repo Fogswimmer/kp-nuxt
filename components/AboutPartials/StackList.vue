@@ -51,6 +51,22 @@
         <v-img width="32" height="32" src="/public/img/psql.svg" class="me-8" />
       </template>
     </v-list-item>
+    <v-list-item
+      :title="$t('pages.about.dev_prod.table_headers.message_brocker')"
+      subtitle="RabbitMQ"
+    >
+      <template #prepend>
+        <v-icon color="orange" size="x-large">mdi-rabbit</v-icon></template
+      >
+    </v-list-item>
+      <v-list-item
+      :title="$t('pages.about.dev_prod.table_headers.cache_db')"
+      subtitle="Redis"
+    >
+      <template #prepend>
+        <v-icon color="red" size="x-large">mdi-database</v-icon></template
+      >
+    </v-list-item>
 
     <v-list-subheader> Devops </v-list-subheader>
     <v-list-item

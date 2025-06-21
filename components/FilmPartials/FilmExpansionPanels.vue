@@ -1,8 +1,5 @@
 <template>
-  <v-expansion-panels
-    v-model="accordion"
-    variant="accordion"
-  >
+  <v-expansion-panels v-model="accordion" variant="accordion" multiple>
     <v-expansion-panel
       v-if="$vuetify.display.smAndDown"
       id="general-info"
@@ -25,7 +22,22 @@
         <slot name="rating" />
       </v-expansion-panel-text>
     </v-expansion-panel>
-    <v-expansion-panel :title="$t('pages.films.starring')" value="starring">
+    <v-expansion-panel
+      id="description"
+      :title="$t('pages.films.description')"
+      tag="section"
+      value="description"
+    >
+      <v-expansion-panel-text>
+        <slot name="description" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+    <v-expansion-panel
+      id="starring"
+      :title="$t('pages.films.starring')"
+      value="starring"
+      tag="section"
+    >
       <v-expansion-panel-text>
         <v-list rounded="lg" border>
           <v-list-item
@@ -53,7 +65,12 @@
         </v-list>
       </v-expansion-panel-text>
     </v-expansion-panel>
-    <v-expansion-panel value="team" :title="$t('pages.films.team')">
+    <v-expansion-panel
+      id="team"
+      value="team"
+      :title="$t('pages.films.team')"
+      tag="section"
+    >
       <v-expansion-panel-text>
         <v-list rounded="lg" border>
           <v-list-item
@@ -83,16 +100,6 @@
       </v-expansion-panel-text>
     </v-expansion-panel>
     <v-expansion-panel
-      id="description"
-      :title="$t('pages.films.description')"
-      tag="section"
-      value="description"
-    >
-      <v-expansion-panel-text>
-        <slot name="description" />
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-    <v-expansion-panel
       id="gallery"
       value="gallery"
       tag="section"
@@ -103,9 +110,9 @@
       </v-expansion-panel-text>
     </v-expansion-panel>
     <v-expansion-panel
-      id="rating"
+      id="comments"
       tag="section"
-      value="rating"
+      value="comments"
       :title="$t('pages.films.comments')"
     >
       <v-expansion-panel-text>
@@ -117,14 +124,16 @@
 
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
+
 defineEmits<{
   (e: "description:change", value: boolean): void;
 }>();
+const display = useDisplay();
 const props = defineProps<{
   film: IFilm | null;
   isDescriptionPanelOpen: boolean;
 }>();
-const accordion = ref<string[]>([]);
+const accordion = ref<string[]>(["description"]);
 const starring = computed((): Detail[] => {
   return props.film
     ? props.film.actorsData?.map((person: FilmPerson): Detail => {
@@ -166,6 +175,12 @@ watch(
     }
   }
 );
+
+onMounted(() => {
+  if (display.name.value === "xs") {
+    accordion.value = [];
+  }
+});
 </script>
 
 <style></style>

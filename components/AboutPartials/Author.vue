@@ -57,6 +57,8 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
+</script>
 
 <style></style>

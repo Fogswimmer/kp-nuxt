@@ -1,11 +1,11 @@
 <template>
-  <div class="fill-height">
+  <div>
     <Head>
       <Title>{{ definePageTitle($t("pages.home.title")) }}</Title>
       <Meta name="description" :content="$t('page_descriptions.home')" />
     </Head>
     <template v-if="filmsPresent && personsPresent">
-      <main class="d-flex flex-column ga-2 overflow-y-hidden">
+      <div class="d-flex flex-column ga-2 overflow-y-hidden">
         <MasonrySection
           v-if="latestFilms.length > 0"
           :present="filmsPresent"
@@ -48,7 +48,7 @@
             />
           </template>
         </MasonrySection>
-      </main>
+      </div>
     </template>
     <template v-else>
       <PageLoader/>

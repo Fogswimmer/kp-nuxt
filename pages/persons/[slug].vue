@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div v-scroll="onScroll">
     <Head>
       <Title>{{ definePageTitle(personFullName) }}</Title>
       <Meta name="description" :content="person?.bio" />
     </Head>
     <DetailCard
+      :page-contents="pageContents"
       :film-variant="false"
       :page-name="personFullName"
       :cover="person?.cover || ''"
@@ -18,7 +19,7 @@
           :general-info="computedPersonDetails"
           :avatar="person?.avatar || ''"
           :title="personFullName"
-          :subtitle="specialtyNames"
+          :subtitle="person?.specialtyNames || []"
           @avatar:edit="chooseAvatar"
         />
       </template>
@@ -76,37 +77,39 @@
           </v-list>
         </v-menu>
         <div v-else class="d-flex ga-1">
-          <v-menu>
-            <template #activator="{ props }">
-              <v-btn
-                v-bind="props"
-                :disabled="!isAuthenticated"
-                prepend-icon="mdi-pencil"
-                @click.prevent.stop
-                >{{ $t("actions.edit") }}</v-btn
-              >
-            </template>
-            <v-list>
-              <v-list-item
-                :title="$t('pages.general_info')"
-                prepend-icon="mdi-information"
-                value="info"
-                @click="generalInfoEdit = true"
-              />
-              <v-list-item
-                :title="$t('pages.detailed_info')"
-                prepend-icon="mdi-details"
-                value="details"
-                @click="handleBioEdit"
-              />
-              <v-list-item
-                :title="$t('pages.gallery')"
-                prepend-icon="mdi-view-gallery"
-                value="gallery"
-                @click="photoEditMode = true"
-              />
-            </v-list>
-          </v-menu>
+          <client-only>
+            <v-menu>
+              <template #activator="{ props }">
+                <v-btn
+                  v-bind="props"
+                  :disabled="!isAuthenticated"
+                  prepend-icon="mdi-pencil"
+                  @click.prevent.stop
+                  >{{ $t("actions.edit") }}</v-btn
+                >
+              </template>
+              <v-list>
+                <v-list-item
+                  :title="$t('pages.general_info')"
+                  prepend-icon="mdi-information"
+                  value="info"
+                  @click="generalInfoEdit = true"
+                />
+                <v-list-item
+                  :title="$t('pages.detailed_info')"
+                  prepend-icon="mdi-details"
+                  value="details"
+                  @click="handleBioEdit"
+                />
+                <v-list-item
+                  :title="$t('pages.gallery')"
+                  prepend-icon="mdi-view-gallery"
+                  value="gallery"
+                  @click="photoEditMode = true"
+                />
+              </v-list>
+            </v-menu>
+          </client-only>
           <v-btn
             prepend-icon="mdi-delete"
             :disabled="!isAuthenticated"
@@ -120,7 +123,7 @@
         <v-expansion-panels
           v-model="mainAccordion"
           variant="accordion"
-          bg-color="transparent"
+          multiple
         >
           <v-expansion-panel
             id="bio"
@@ -280,7 +283,7 @@ const bioEditMode = ref<boolean>(false);
 const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const mainAccordion = ref<string[]>([]);
+const mainAccordion = ref<string[]>(["bio"]);
 const coverFile = ref<File>();
 const avatarFile = ref<File | null>(null);
 const { isAuthenticated } = storeToRefs(useAuthStore());
@@ -299,6 +302,42 @@ const {
   clearPersonForm,
   GALLERY_SIZE,
 } = usePersonStore();
+
+const pageContents = computed(() => [
+  {
+    title: t("pages.persons.bio"),
+    value: "bio",
+    icon: "mdi-information",
+  },
+  {
+    title: t("pages.persons.filmography"),
+    value: "filmography",
+    icon: "mdi-movie-open",
+  },
+  {
+    title: t("pages.persons.photos"),
+    value: "gallery",
+    icon: "mdi-view-gallery",
+  },
+]);
+const activeContentItem = ref(pageContents.value[0].value);
+const onScroll = (): void => {
+  const sections = document.querySelectorAll("section");
+  const scrollPosition = window.scrollY + 100;
+
+  for (const section of sections) {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+
+    if (
+      scrollPosition >= sectionTop &&
+      scrollPosition < sectionTop + sectionHeight
+    ) {
+      activeContentItem.value = section.id;
+      break;
+    }
+  }
+};
 
 const imagesToDelete = computed(() => {
   return person.value?.photos
@@ -361,12 +400,6 @@ const uploadCount = computed((): number => {
   return person.value?.photos.length
     ? sliderGalleryArr.value.filter((item: string) => item === "").length
     : GALLERY_SIZE;
-});
-
-const specialtyNames = computed((): string => {
-  return person.value?.specialtyNames
-    ? person.value.specialtyNames.join(", ")
-    : "";
 });
 
 const submitGeneralInfoEdit = async (): Promise<void> => {
@@ -504,6 +537,7 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "personDetails",
   path: "/persons/:slug",
+  layout: "list",
 });
 </script>
 

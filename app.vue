@@ -64,13 +64,35 @@ p {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+body {
+  background-color: #fcfcfc;
+}
 
-.bg-dark {
-  background-image: radial-gradient(circle, #131f27, #08141b, #000000);
+.bg-gradient {
+  background-image: radial-gradient(circle, #131f27, #07141b, #090a0c);
   background-attachment: fixed;
 }
-.bg-light {
-  background-image: radial-gradient(circle, #f0f0f0, #fcfcfc, #d0d0d0);
+
+
+
+@media(prefers-color-scheme: dark) {
+.bg-gradient {
+  background-image: radial-gradient(circle, #131f27, #07141b, #090a0c);
   background-attachment: fixed;
 }
+  body {
+    background-color: #07141b;
+  }
+}
+@media(prefers-color-scheme: light) {
+
+  .bg-gradient {
+    background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
+    background-attachment: fixed;
+  }
+  body {
+    background-color: #fcfcfc;
+  }
+}
+
 </style>

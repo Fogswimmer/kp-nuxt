@@ -57,6 +57,29 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
+  redis:
+    container_name: redis
+    image: redis
+    ports: ["6379:6379"]
+    networks:
+      - app-network
+  rabbitmq:
+    container_name: rmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - app-network
 
 volumes:
   postgres_data:

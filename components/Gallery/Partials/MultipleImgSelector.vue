@@ -1,60 +1,58 @@
 <template>
-  <v-card>
-    <v-card-text>
-      <v-item-group
-        v-model="selectedItems"
-        multiple
-        @update:model-value="$emit('update:selected', $event)"
-      >
-        <v-container>
-          <v-row>
-            <v-col
-              v-for="(img, index) in sliderGalleryArr"
-              :key="index"
-              cols="auto"
-            >
-              <v-item v-slot="{ isSelected, selectedClass, toggle }">
-                <v-sheet class="text-center">
-                  <v-card
-                    v-if="img"
-                    :value="index"
-                    rounded="lg"
-                    :color="isSelected ? 'error' : ''"
-                    :class="[
-                      'd-flex align-center justify-center',
-                      selectedClass,
-                    ]"
-                    :height="cardHeight"
-                    :width="cardHeight ? cardHeight * 0.75 : 0"
-                    :image="img || ''"
-                    @click="toggle"
-                  >
-                    <v-scroll-y-transition>
-                      <div
-                        v-if="isSelected"
-                        :class="[
-                          'd-flex fill-height w-100 flex-column align-center justify-center position-relative',
-                          { 'bg-selected-remove': isSelected },
-                        ]"
-                      >
-                        <v-btn icon variant="tonal" color="white">
-                          <v-icon size="x-large" class="position-absolute">{{
-                            img ? "mdi-close" : "mdi-plus"
-                          }}</v-icon>
-                        </v-btn>
-                      </div>
-                    </v-scroll-y-transition>
-                  </v-card>
-                  <v-label v-if="img" class="mt-2">{{
-                    $t("general.img") + " " + (index + 1)
-                  }}</v-label>
-                </v-sheet>
-              </v-item>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-item-group>
-    </v-card-text>
+  <v-card class="pa-2">
+    <v-item-group
+      v-model="selectedItems"
+      multiple
+      @update:model-value="$emit('update:selected', $event)"
+    >
+      <v-container style="max-height: calc(100vh - 120px); overflow-y: auto">
+        <v-row>
+          <v-col
+            v-for="(img, index) in sliderGalleryArr"
+            :key="index"
+            cols="12"
+            sm="12"
+            md="6"
+            lg="3"
+          >
+            <v-item v-slot="{ isSelected, selectedClass, toggle }">
+              <v-sheet v-if="img" class="text-center">
+                <v-card
+                  :value="index"
+                  rounded="lg"
+                  :color="isSelected ? 'error' : ''"
+                  :class="['d-flex align-center justify-center', selectedClass]"
+                  :height="cardHeight"
+                  :image="img || ''"
+                  @click="toggle"
+                >
+                  <v-scroll-y-transition>
+                    <div
+                      v-if="isSelected"
+                      :class="[
+                        'd-flex fill-height w-100 flex-column align-center justify-center position-relative',
+                        { 'bg-selected-remove': isSelected },
+                      ]"
+                    >
+                      <v-btn icon variant="tonal" color="white">
+                        <v-icon size="x-large" class="position-absolute">{{
+                          img ? "mdi-close" : "mdi-plus"
+                        }}</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-scroll-y-transition>
+                </v-card>
+              </v-sheet>
+              <div v-if="img" class="w-100 text-center">
+                <v-chip label class="ma-2">{{
+                  img ? $t("general.img") + " " + (index + 1) : ""
+                }}</v-chip>
+              </div>
+            </v-item>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-item-group>
     <template #actions>
       <v-spacer />
       <v-btn

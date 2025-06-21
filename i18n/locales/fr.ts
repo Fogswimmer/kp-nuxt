@@ -1,6 +1,7 @@
 export default {
   welcome: "Bienvenue",
   language: "langue",
+  contents: "Contenu",
   logo_description:"Centre des cinéphiles",
   page_descriptions:{
     home: "Les meilleurs films et acteurs de tous les temps",
@@ -258,8 +259,8 @@ export default {
     limit: "Limite",
     order: "Order",
     filters: "Filtres",
-    asc: "Sauf les vieux",
-    desc: "Sauf les nouveraux",
+    asc: "Ascendant",
+    desc: "Descendant",
     edit_cover: "Modifier la couverture",
     edit_poster: "Modifier l'affiche",
     delete_cover: "Supprimer la couverture",
@@ -424,7 +425,7 @@ export default {
         backend: "Backend",
         language: "Langue de programmation",
         main_framework: "Framework principal",
-        additional_framework: "Framework supplémentaire",
+        additional_framework: "Framework UI",
         important_packages: "Packages indispensables",
         internationalization: "Internationalisation",
       },
@@ -436,6 +437,8 @@ export default {
           pipeline: "Pipeline",
           containerisation: "Conteneurisation",
           scripts: "Scripts",
+          message_brocker: "Brocker messages",
+          cache_db: "Db mise en cache"
         },
       },
       author: {
@@ -542,8 +545,8 @@ export default {
 		display: "Afficher",
 		order: {
 			title: "Ordre",
-			asc: "Sauf les vieux",
-			desc: "Sauf les nouveaux",
+			asc: "Ascendant",
+			desc: "Descendant",
 		},
 		sort: {
 			title: "Trier",

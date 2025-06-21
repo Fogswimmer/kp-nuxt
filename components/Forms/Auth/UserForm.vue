@@ -95,11 +95,11 @@ const {
   onlyNums: onlyNumsRule,
   password: passwordRule,
   maxLength,
+  minLength,
 } = useValidation();
 
 const maxLoginLengthRule = maxLength(MAX_LOGIN_LENGTH);
-const minLoginLengthRule = maxLength(MIN_LOGIN_LENGTH);
-
+const minLoginLengthRule = minLength(MIN_LOGIN_LENGTH);
 const maxAboutLengthRule = maxLength(500);
 
 const handleUpdateModelValue = (): void => {

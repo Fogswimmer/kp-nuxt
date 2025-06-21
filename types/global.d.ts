@@ -83,6 +83,8 @@ declare global {
     createdAt?: string;
     updatedAt?: string;
     publishedBy?: string;
+    publisherData?: FilmPerson;
+    releaseYear?: number | null;
   }
 
   interface IFilmForm {
@@ -229,6 +231,12 @@ declare global {
   interface IOption {
     value: string;
     title: string;
+  }
+
+  interface PageContentItems {
+    title: string;
+    value: string;
+    icon: string
   }
 }
 export {};

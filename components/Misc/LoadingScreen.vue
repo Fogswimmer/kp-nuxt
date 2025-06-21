@@ -1,7 +1,7 @@
 <template>
-  <v-sheet height="100vh">
+  <v-sheet height="100vh" class="overlay">
     <div
-      class="d-flex flex-column fill-height gap-2 align-center justify-center overlay"
+      class="d-flex flex-column fill-height gap-2 align-center justify-center"
     >
       <span class="text-center">{{ $t("state.loading") }}...</span>
       <span class="progress"> </span>

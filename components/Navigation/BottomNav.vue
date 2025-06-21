@@ -1,6 +1,10 @@
 <template>
   <client-only>
-    <v-bottom-navigation v-if="$vuetify.display.smAndDown" grow density="comfortable">
+    <v-bottom-navigation
+      v-if="$vuetify.display.smAndDown"
+      grow
+    
+    >
       <v-btn
         :active="computedActiveNavBtn.home"
         value="home"
@@ -25,11 +29,14 @@
         :to="$localeRoute('/about')"
         icon="mdi-information"
       />
+      <ProfileNav bottom/>
     </v-bottom-navigation>
   </client-only>
 </template>
 
 <script lang="ts" setup>
+import ProfileNav from "./ProfileNav.vue";
+
 const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
   const route = useRoute();
   const routeName = (route.name as string) || "";
@@ -41,6 +48,7 @@ const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
     about: routeName.startsWith("about"),
   };
 });
+const showMenu = ref<boolean>(false);
 </script>
 
 <style></style>

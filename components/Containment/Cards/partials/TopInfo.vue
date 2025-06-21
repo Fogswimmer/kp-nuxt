@@ -1,14 +1,17 @@
 <template>
-  <v-sheet min-height="200" class="glassed">
+  <v-sheet :height="$vuetify.display.smAndDown ? 220 : 300" class="glassed">
     <div class="d-flex justify-center">
       <div class="position-absolute text-center" style="top: -50%">
         <div class="position-relative">
-          <div style="width: 200px" class="position-relative mx-auto">
+          <div
+            :style="`width: ${$vuetify.display.smAndDown ? 200 : 300}px; height: ${$vuetify.display.smAndDown ? 200 : 300}px;`"
+            class="position-relative mx-auto"
+          >
             <v-avatar
-              size="200"
+              :size="$vuetify.display.smAndDown ? 200 : 300"
               border
               class="cursor-pointer"
-              @click="showAvatarEditBtns = !showAvatarEditBtns"
+              @click="showFullScrenView = true"
             >
               <v-img :src="avatar || ''" cover>
                 <template #placeholder>
@@ -23,27 +26,26 @@
                 </template>
               </v-img>
             </v-avatar>
-            <v-fab
-              :active="showAvatarEditBtns"
-              :disabled="!isAuthenticated"
-              absolute
-              color="secondary"
-              location="bottom end"
-              icon="mdi-pencil"
-              @click="handleEditAvatar"
-            />
           </div>
         </div>
         <template v-if="!loading">
-          <div class="d-flex flex-column ga-1 justify-center align-center">
-            <span class="text-h5 font-weight-bold text-primary text-center">
+          <div class="d-flex flex-column ga-2 justify-center align-center">
+            <span
+              class="text-h5 text-lg-h4 font-weight-bold text-primary text-center"
+            >
               {{ title }}</span
             >
-            <div class="text-caption text-lg-subtitle-1">
+            <div class="text-body-1 text-lg-h6">
               {{ generalInfo?.map((item: Detail) => item.value).join(", ") }}
             </div>
-            <div class="text-capitalize text-caption text-lg-subtitle-2">
-              {{ subtitle }}
+            <div class="d-flex ga-1">
+              <v-chip
+                v-for="(item, i) in subtitle"
+                :key="i"
+                class="text-caption text-lg-body-1"
+              >
+                {{ item }}
+              </v-chip>
             </div>
           </div>
         </template>
@@ -55,31 +57,40 @@
         </template>
       </div>
     </div>
+    <BaseDialog
+      v-model:opened="showFullScrenView"
+      :loading="loading"
+      :title="title as string || ''"
+      @close="showFullScrenView = false"
+    >
+      <template #text>
+        <v-img
+          :src="avatar || ''"
+          cover
+          height="100%"
+          width="100%"
+        ></v-img>
+      </template>
+    </BaseDialog>
   </v-sheet>
 </template>
 
 <script lang="ts" setup>
-import { useAuthStore } from "~/stores/authStore";
 import ErrorPlaceHolder from "../../Img/ErrorPlaceHolder.vue";
-defineProps<{
+import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
+
+const props = defineProps<{
   title: string | Detail[];
-  subtitle: string | Detail[];
+  subtitle: string | string[];
   generalInfo: Detail[];
   avatar: string;
   loading: boolean;
 }>();
 
-const { isAuthenticated } = storeToRefs(useAuthStore());
+const { t } = useI18n();
 
-const showAvatarEditBtns = ref<boolean>(false);
-const emit = defineEmits<{
-  (event: "avatar:edit"): void;
-}>();
+const showFullScrenView = ref<boolean>(false);
 
-const handleEditAvatar = (): void => {
-  emit("avatar:edit");
-  showAvatarEditBtns.value = false;
-};
 </script>
 
 <style>

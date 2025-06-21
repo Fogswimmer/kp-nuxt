@@ -2,6 +2,7 @@
   <v-btn
     variant="plain"
     :prepend-icon="expanded ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+    block
     @click="$emit('toggle:expanded')"
     >{{
       !expanded
@@ -13,7 +14,9 @@
 
 <script lang="ts" setup>
 defineProps<{ expanded: boolean; what?: string }>();
-defineEmits(["toggle:expanded"]);
+defineEmits<{
+  (e: "toggle:expanded"): void;
+}>();
 </script>
 
 <style></style>

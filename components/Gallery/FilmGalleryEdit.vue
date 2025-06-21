@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" class="pa-2 mb-3">
+  <v-card>
     <v-tabs v-model="active">
       <v-tab value="poster" prepend-icon="mdi-post" color="primary">{{
         $t("actions.edit_poster")
@@ -19,7 +19,7 @@
         >{{ $t("actions.remove") }}</v-tab
       >
     </v-tabs>
-    <v-card-text>
+    <div class="mt-2 pa-2">
       <v-tabs-window v-model="active">
         <v-tabs-window-item value="poster">
           <SingleImgSelector
@@ -46,7 +46,7 @@
           />
         </v-tabs-window-item>
       </v-tabs-window>
-    </v-card-text>
+    </div>
   </v-card>
 </template>
 

@@ -63,5 +63,6 @@ watchEffect(() => {
 definePageMeta({
   name: "signUp",
   title: "Sign up",
+  layout: "auth",
 });
 </script>

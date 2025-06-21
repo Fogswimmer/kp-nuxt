@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar  scroll-behavior="hide" class="glassed" color="transparent">
+  <v-app-bar scroll-behavior="hide" flat>
     <v-app-bar-title>
       <Logo />
     </v-app-bar-title>
@@ -11,20 +11,10 @@
     <template #append>
       <div class="d-flex ga-1 align-center mr-2">
         <ProfileNav />
-        <v-menu>
-          <template #activator="{ props }">
-            <v-btn v-bind="props" icon>
-              <v-icon>mdi-cog</v-icon>
-            </v-btn>
-          </template>
-          <v-list nav>
-            <LocaleHandleSelect />
-            <ToggleThemeSelect
-              :active-theme="activeTheme"
-              @update:activeTheme="$emit('update:activeTheme', $event)"
-            />
-          </v-list>
-        </v-menu>
+        <SettingsBtn
+          :active-theme="activeTheme"
+          @update:active-theme="$emit('update:activeTheme', $event)"
+        />
       </div>
     </template>
   </v-app-bar>
@@ -33,9 +23,9 @@
 <script lang="ts" setup>
 import NavBtns from "~/components/Navigation/NavBtns.vue";
 import Logo from "~/components/Misc/Logo.vue";
-import LocaleHandleSelect from "../Containment/Btns/LocaleHandleSelect.vue";
 import ProfileNav from "./ProfileNav.vue";
-import ToggleThemeSelect from "../Containment/Btns/ToggleThemeSelect.vue";
+import SettingsBtn from "../Containment/Btns/SettingsBtn.vue";
+
 defineProps<{
   activeTheme: string;
 }>();

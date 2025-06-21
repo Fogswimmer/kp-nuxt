@@ -4,15 +4,13 @@
     :max-width="maxWidth ? maxWidth : 800"
     :fullscreen="$vuetify.display.mobile"
   >
-    <v-card :loading="loading">
+    <v-card :loading="loading" variant="text" height="100%">
       <v-toolbar :title="title">
         <template #append>
           <CloseBtn @close="$emit('close')" />
         </template>
       </v-toolbar>
-      <v-card-text>
         <slot name="text" />
-      </v-card-text>
     </v-card>
   </v-dialog>
 </template>

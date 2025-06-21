@@ -53,7 +53,7 @@ const localeRoute = useLocaleRoute();
 const { locale } = useI18n();
 const handleNewPasswordSubmit = async (): Promise<void> => {
   const token = useRoute().params.token as string;
-  const success = await sendNewPassword(token, locale);
+  const success = await sendNewPassword(token, locale.value);
   if (success) {
     navigateTo(localeRoute("/auth/password-reset/reset-success"));
   }

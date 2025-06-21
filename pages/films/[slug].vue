@@ -4,7 +4,6 @@
       <Title>{{ definePageTitle(film?.name || "") }}</Title>
       <Meta name="description" :content="film?.description" />
     </Head>
-
     <DetailCard
       :page-name="
         useInternationalName(
@@ -14,6 +13,7 @@
       "
       :loading="loading"
       :notification="!isAuthenticated"
+      :page-contents="pageContents"
       trailer
     >
       <template #notification>
@@ -21,14 +21,16 @@
       </template>
       <template #top_film>
         <v-container fluid>
-          <v-card v-if="!loading" class="pa-2">
+          <v-card v-if="!loading" class="pa-2" variant="text">
             <v-row>
               <v-col v-bind="colParams.poster">
                 <v-img
                   :src="film?.poster || ''"
                   cover
                   rounded="lg"
-                  height="420"
+                  :height="TOP_CARDS_HEIGHT"
+                  class="cursor-pointer"
+                  @click="showFullScreenViewer = true"
                 >
                   <template #placeholder>
                     <ImgPlaceholder :loading="loading" />
@@ -39,21 +41,14 @@
                 </v-img>
               </v-col>
               <v-col v-if="$vuetify.display.mdAndUp" v-bind="colParams.info">
-                <v-card
-                  border
-                  height="420"
-                  rounded="lg"
-                >
+                <v-card border :height="TOP_CARDS_HEIGHT" rounded="lg">
                   <div class="fill-height d-flex flex-column items-center">
                     <FilmGeneralInfo :general-info="generalInfo" />
                   </div>
                 </v-card>
               </v-col>
               <v-col v-if="$vuetify.display.mdAndUp" v-bind="colParams.rating">
-                <v-card
-                  border
-                  rounded="lg"
-                >
+                <v-card border rounded="lg" :height="TOP_CARDS_HEIGHT">
                   <Rating
                     :current-rating="film?.rating || ''"
                     :assessments="film?.assessments || []"
@@ -79,11 +74,11 @@
               v-for="n in 3"
               :key="n"
               type="card"
-              height="420"
+              :height="TOP_CARDS_HEIGHT"
               width="calc(100% / 3)"
             />
           </div>
-          <v-skeleton-loader v-else type="card" height="420" />
+          <v-skeleton-loader v-else type="card" :height="TOP_CARDS_HEIGHT" />
         </v-container>
       </template>
       <template #menu>
@@ -225,6 +220,21 @@
         />
       </template>
     </BaseDialog>
+    <BaseDialog
+      v-model:opened="showFullScreenViewer"
+      :loading="loading"
+      :title="computedPosterTitle"
+      @close="showFullScreenViewer = false"
+    >
+      <template #text>
+        <v-img
+          :src="film?.poster || ''"
+          cover
+          height="100%"
+          width="100%"
+        ></v-img>
+      </template>
+    </BaseDialog>
     <SuccessSnackbar
       v-model:show="showSnackbar"
       @close="showSnackbar = false"
@@ -263,8 +273,8 @@ import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
-
-const GALLERY_CARD_HEIGHT: number = 300;
+const GALLERY_CARD_HEIGHT: number = 400;
+const TOP_CARDS_HEIGHT: number = 450;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
@@ -284,6 +294,7 @@ const rating = ref<number>(5);
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const isDescriptionPanelOpen = ref<boolean>(false);
+const showFullScreenViewer = ref<boolean>(false);
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const {
   film,
@@ -331,7 +342,39 @@ const colParams = {
     sm: 12,
   },
 };
-const theme = useTheme();
+
+const pageContents = computed(() => [
+  {
+    title: t("pages.films.description"),
+    value: "description",
+    icon: "mdi-information-outline",
+  },
+  {
+    title: t("pages.films.starring"),
+    value: "starring",
+    icon: "mdi-star",
+  },
+  {
+    title: t("pages.films.team"),
+    value: "team",
+    icon: "mdi-account-group",
+  },
+  {
+    title: t("pages.films.gallery"),
+    value: "gallery",
+    icon: "mdi-image-multiple",
+  },
+  {
+    title: t("pages.films.comments"),
+    value: "comments",
+    icon: "mdi-comment",
+  },
+]);
+
+const computedPosterTitle = computed((): string => {
+  return `${film.value?.name}: ${t("pages.films.poster")}`;
+});
+
 const imagesToDelete = computed(() => {
   return film.value?.gallery
     .filter((_: string, index: number): boolean =>
@@ -551,6 +594,6 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
   name: "filmDetails",
   path: "/films/:slug",
-  layout: "list"
+  layout: "list",
 });
 </script>

@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div v-if="!bottom" class="flex-grow-1">
     <v-btn
       v-if="!isAuthenticated && $vuetify.display.mdAndUp"
       :active="$route.name === 'signIn'"
       prepend-icon="mdi-login"
       variant="tonal"
+      block
       :to="$localeRoute('/auth/sign-in')"
     >
       {{ $t("auth.sign_in") }}
@@ -41,7 +42,12 @@
               </v-avatar>
             </template>
           </v-list-item>
-          <v-avatar v-else v-bind="props" class="cursor-pointer" border>
+          <v-avatar
+            v-else-if="!bottom"
+            v-bind="props"
+            class="cursor-pointer"
+            border
+          >
             <v-img v-if="currentUser?.avatar" :src="currentUser?.avatar || ''">
               <template #error>
                 <v-avatar border>
@@ -57,7 +63,6 @@
                   ? 'primary'
                   : ''
               "
-              @click="navigateTo($localeRoute('/profile'))"
             >
               mdi-account</v-icon
             >
@@ -138,6 +143,26 @@
       </template>
     </BaseDialog>
   </div>
+  <v-menu v-else v-model="showMenu">
+    <template #activator="{ props }">
+      <v-btn
+        v-bind="props"
+        icon="mdi-account"
+        value="profile"
+        :to="!isAuthenticated && !currentUser ? $localeRoute('/auth/sign-in') : ''"
+      />
+    </template>
+    <ProfileCard
+      v-if="isAuthenticated && currentUser"
+      :current-user="currentUser"
+      :is-admin="isAdmin"
+      :loading="loading"
+      @edit="handleEdit"
+      @logout="showConfirmDialog = true"
+      @avatar:edit="showAvatarUploadDialog = true"
+      @close="showMenu = false"
+    />
+  </v-menu>
 </template>
 
 <script lang="ts" setup>
@@ -148,6 +173,10 @@ import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import UserForm from "~/components/Forms/Auth/UserForm.vue";
 import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
+
+defineProps<{
+  bottom?: boolean;
+}>();
 
 const { currentUser, isAuthenticated, token, loading, isAdmin, userForm } =
   storeToRefs(useAuthStore());
