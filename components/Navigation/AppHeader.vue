@@ -10,6 +10,7 @@
     <v-spacer v-if="$vuetify.display.mdAndUp" />
     <template #append>
       <div class="d-flex ga-1 align-center mr-2">
+        <ProfileNav v-if="$vuetify.display.mdAndUp" />
         <SettingsBtn
           :active-theme="activeTheme"
           @update:active-theme="$emit('update:activeTheme', $event)"
