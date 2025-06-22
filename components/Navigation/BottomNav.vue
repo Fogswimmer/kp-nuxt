@@ -24,13 +24,13 @@
         :to="$localeRoute('/persons')"
         icon="mdi-account-group"
       />
-      <v-btn
+      <!-- <v-btn
         :active="computedActiveNavBtn.about"
         value="about"
         density="compact"
         :to="$localeRoute('/about')"
         icon="mdi-information"
-      />
+      /> -->
       <ProfileNav v-if="showProfileNav" bottom/>
     </v-bottom-navigation>
   </client-only>

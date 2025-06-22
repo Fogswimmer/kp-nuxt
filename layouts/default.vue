@@ -10,13 +10,13 @@
     <BottomNav show-profile-nav />
     <client-only>
       <v-navigation-drawer
-        v-if="$vuetify.display.smAndDown"
+        v-if="$vuetify.display.mdAndUp"
         location="start"
         floating
         color="transparent"
       ></v-navigation-drawer>
       <v-navigation-drawer
-        v-if="$vuetify.display.smAndDown"
+        v-if="$vuetify.display.mdAndUp"
         location="end"
         floating
         color="transparent"
