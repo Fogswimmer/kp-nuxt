@@ -17,26 +17,23 @@
         <ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
       </v-navigation-drawer>
     </client-only>
-    <v-card>
-      <template #image>
-        
+    <v-app-bar>
+      <template #prepend>
+        <BackBtn />
       </template>
-      <v-toolbar>
-        <template #prepend>
-          <BackBtn />
-        </template>
-        <v-toolbar-title>
-          <span v-if="!loading" class="font-weight-bold"> {{ pageName }} </span>
-          <v-skeleton-loader v-else type="text" height="30" />
-        </v-toolbar-title>
-        <div
-          v-if="$vuetify.display.mdAndUp && notification"
-          class="d-flex justify-center pa-2"
-        >
-          <slot name="notification" />
-        </div>
-        <slot name="menu" />
-      </v-toolbar>
+      <v-app-bar-title>
+        <span v-if="!loading" class="font-weight-bold"> {{ pageName }} </span>
+        <v-skeleton-loader v-else type="text" height="30" />
+      </v-app-bar-title>
+      <div
+        v-if="$vuetify.display.mdAndUp && notification"
+        class="d-flex justify-center pa-2"
+      >
+        <slot name="notification" />
+      </div>
+      <slot name="menu" />
+    </v-app-bar>
+    <v-card>
       <div
         v-if="$vuetify.display.smAndDown && notification"
         class="d-flex justify-center pa-2 text-caption"
