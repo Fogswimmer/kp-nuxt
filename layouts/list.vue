@@ -33,9 +33,6 @@ const theme = useTheme();
 const defaultTheme = useDefaultTheme();
 const activeTheme = ref(defaultTheme.value);
 
-onMounted(() => {
-  theme.global.name.value = defaultTheme.value;
-});
 </script>
 
 <style></style>
