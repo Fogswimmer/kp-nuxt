@@ -149,18 +149,17 @@
                     width="130"
                     :border="false"
                   >
-                    <div
-                  
-                      class="d-flex flex-column align-center justify-center fill-height"
-                    >
-                      <v-rating
-                        v-if="item.rating"
-                        :model-value="item.rating"
-                        readonly
-                        density="compact"
-                        size="x-small"
-                        color="yellow-darken-2"
-                      ></v-rating>
+                    <div class="d-flex flex-column justify-center fill-height">
+                      <div class="w-100 text-center">
+                        <v-rating
+                          v-if="item.rating"
+                          :model-value="item.rating"
+                          readonly
+                          density="compact"
+                          size="x-small"
+                          color="yellow-darken-2"
+                        ></v-rating>
+                      </div>
 
                       <v-chip variant="plain" size="x-small">
                         {{
