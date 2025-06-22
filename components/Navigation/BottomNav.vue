@@ -3,29 +3,32 @@
     <v-bottom-navigation
       v-if="$vuetify.display.smAndDown"
       grow
-    
     >
       <v-btn
         :active="computedActiveNavBtn.home"
         value="home"
         :to="$localeRoute('/')"
+        density="compact"
         icon="mdi-home"
       />
       <v-btn
         :active="computedActiveNavBtn.films"
         value="films"
         :to="$localeRoute('/films')"
+        density="compact"
         icon="mdi-filmstrip"
       />
       <v-btn
         :active="computedActiveNavBtn.persons"
         value="persons"
+        density="compact"
         :to="$localeRoute('/persons')"
         icon="mdi-account-group"
       />
       <v-btn
         :active="computedActiveNavBtn.about"
         value="about"
+        density="compact"
         :to="$localeRoute('/about')"
         icon="mdi-information"
       />
@@ -52,7 +55,7 @@ const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
     about: routeName.startsWith("about"),
   };
 });
-const showMenu = ref<boolean>(false);
+
 </script>
 
 <style></style>

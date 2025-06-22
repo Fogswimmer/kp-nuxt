@@ -90,6 +90,7 @@
         v-bind="props"
         icon="mdi-account"
         value="profile"
+        density="compact"
         :to="
           !isAuthenticated && !currentUser ? $localeRoute('/auth/sign-in') : ''
         "

@@ -83,7 +83,7 @@
           :show-arrows="galleryContent.length > 1"
           color="primary"
           progress="primary"
-          height="800"
+          height="calc(100vh - 100px)"
         >
           <v-carousel-item
             v-for="(item, i) in galleryContent"
