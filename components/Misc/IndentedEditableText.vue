@@ -14,7 +14,7 @@
           {{ paragraph }}
         </p>
         <ExpandBtn
-          v-if="props.text.length > 100"
+          v-if="text.length > 100 && text.split('\n').length > 1"
           :expanded="!isTruncated"
           @toggle:expanded="isTruncated = !isTruncated"
         />
