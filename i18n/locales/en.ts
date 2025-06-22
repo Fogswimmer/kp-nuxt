@@ -26,7 +26,7 @@ export default {
     created_at: "Created at",
     updated_at: "Updated at",
     year: "Year",
-    years: "Years",
+    years: "years",
     years_old: "y.o.",
     empty: "Empty",
     no_cover: "No cover",

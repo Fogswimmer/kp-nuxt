@@ -84,7 +84,6 @@ const filmItems = computed((): Detail[] => {
           rating: film.rating || 0,
           releaseYear: film.releaseYear || 0,
           publisherData: film.publisherData || "",
-          id: film.id || 0,
         };
       })
     : [];

@@ -6,7 +6,6 @@
     </Head>
     <DetailCard
       :page-contents="pageContents"
-      :film-variant="false"
       :page-name="personFullName"
       :cover="person?.cover || ''"
       :is-auth="isAuthenticated"
@@ -375,15 +374,13 @@ const computedPersonDetails = computed((): Detail[] => {
     {
       title: t("forms.person.gender"),
       value: person.value?.gender || "",
-      icon: "mdi-gender-male-female",
     },
     {
       title: t("forms.person.birthday"),
       value:
         locale.value === "ru"
           ? `${declineInRussian(person.value?.age || 0, ["год", "года", "лет"])}`
-          : `${person.value?.age}`,
-      icon: "mdi-calendar",
+          : `${person.value?.age} ${t("general.years_old")}`,
     },
   ];
 });

@@ -13,7 +13,6 @@
 
 <script lang="ts" setup>
 defineProps<{ show: boolean }>();
-// defineEmits(["scroll:top"]);
 defineEmits<{
   (e: "scroll:top"): void;
 }>();

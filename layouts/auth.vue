@@ -8,6 +8,11 @@
 
 <script lang="ts" setup>
 const theme = useTheme();
+const defaultTheme = useDefaultTheme();
+
+onMounted(() => {
+  theme.global.name.value = defaultTheme.value;
+});
 </script>
 
 <style>

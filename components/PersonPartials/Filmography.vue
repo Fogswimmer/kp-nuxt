@@ -23,7 +23,12 @@
             >
               <v-list-item-title>
                 <nuxt-link class="text-primary">
-                  {{ item?.name }}
+                  {{
+                    useInternationalName(
+                      item?.name as string,
+                      item?.internationalName as string
+                    )
+                  }}
                 </nuxt-link>
               </v-list-item-title>
               <v-list-item-subtitle>

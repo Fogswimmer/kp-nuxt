@@ -60,16 +60,11 @@
     <BaseDialog
       v-model:opened="showFullScrenView"
       :loading="loading"
-      :title="title as string || ''"
+      :title="(title as string) || ''"
       @close="showFullScrenView = false"
     >
       <template #text>
-        <v-img
-          :src="avatar || ''"
-          cover
-          height="100%"
-          width="100%"
-        ></v-img>
+        <v-img :src="avatar || ''" cover height="100%" width="100%"></v-img>
       </template>
     </BaseDialog>
   </v-sheet>
@@ -90,7 +85,6 @@ const props = defineProps<{
 const { t } = useI18n();
 
 const showFullScrenView = ref<boolean>(false);
-
 </script>
 
 <style>

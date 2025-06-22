@@ -104,7 +104,7 @@ const personItems = computed((): Detail[] => {
         to: "/persons/" + person?.slug || "",
         createdAt: person?.createdAt || "",
         updatedAt: person?.updatedAt || "",
-        publishedBy: person?.publisherData.name || "",
+        publisherData: person?.publisherData || "",
       };
     })
   );

@@ -150,6 +150,7 @@
                     :border="false"
                   >
                     <div
+                  
                       class="d-flex flex-column align-center justify-center fill-height"
                     >
                       <v-rating
