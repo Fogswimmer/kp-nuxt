@@ -7,7 +7,7 @@
     <v-main style="min-height: calc(100vh - 8px)" v-scroll="onScroll">
       <slot />
     </v-main>
-    <BottomNav />
+    <BottomNav show-profile-nav/>
     <v-navigation-drawer
       location="start"
       floating
