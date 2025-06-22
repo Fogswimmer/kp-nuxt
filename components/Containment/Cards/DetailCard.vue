@@ -1,20 +1,22 @@
 <template>
   <div v-scroll="onScroll">
-    <v-navigation-drawer location="end" width="300">
-      <v-card :title="$t('contents')" variant="text">
-        <v-divider></v-divider>
-        <v-list nav>
-          <v-list-item
-            v-for="item in pageContents"
-            :key="item.title"
-            :title="item.title"
-            :prepend-icon="item.icon"
-            :active="activeContentItem === item.value"
-          ></v-list-item>
-        </v-list>
-      </v-card>
-      <ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
-    </v-navigation-drawer>
+    <client-only>
+      <v-navigation-drawer location="end" width="300">
+        <v-card :title="$t('contents')" variant="text">
+          <v-divider></v-divider>
+          <v-list nav>
+            <v-list-item
+              v-for="item in pageContents"
+              :key="item.title"
+              :title="item.title"
+              :prepend-icon="item.icon"
+              :active="activeContentItem === item.value"
+            ></v-list-item>
+          </v-list>
+        </v-card>
+        <ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
+      </v-navigation-drawer>
+    </client-only>
     <v-card>
       <template #image>
         
