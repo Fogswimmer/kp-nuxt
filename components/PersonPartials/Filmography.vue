@@ -20,6 +20,7 @@
               :key="i"
               :to="$localeRoute(`/films/${item?.slug}`)"
               :value="item"
+              :prepend-avatar="item?.poster || ''"
             >
               <v-list-item-title>
                 <nuxt-link class="text-primary">
