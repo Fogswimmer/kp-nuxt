@@ -69,30 +69,23 @@ body {
 }
 
 .bg-gradient {
-  background-image: radial-gradient(circle, #131f27, #07141b, #090a0c);
+  background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
   background-attachment: fixed;
 }
 
+.bg-dark {
+    background-image: radial-gradient(circle, #131f27, #07141b, #090a0c);
+    background-attachment: fixed;
+}
 
-
-@media(prefers-color-scheme: dark) {
-.bg-gradient {
-  background-image: radial-gradient(circle, #131f27, #07141b, #090a0c);
+.bg-light{
+    background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
   background-attachment: fixed;
 }
+
+@media (prefers-color-scheme: dark) {
   body {
     background-color: #07141b;
   }
 }
-@media(prefers-color-scheme: light) {
-
-  .bg-gradient {
-    background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
-    background-attachment: fixed;
-  }
-  body {
-    background-color: #fcfcfc;
-  }
-}
-
 </style>

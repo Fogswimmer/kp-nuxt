@@ -81,67 +81,6 @@
         @close="showMenu = false"
       />
     </v-menu>
-    <ConfirmDialog
-      v-model="showAvatarWarning"
-      :text="$t('general.img_replacement_warning')"
-      @cancel="showAvatarWarning = false"
-      @confirm="replaceAvatar"
-    />
-    <ConfirmDialog
-      v-model="showConfirmDialog"
-      :loading="loading"
-      :text="$t('auth.logout_confirm')"
-      @cancel="showConfirmDialog = false"
-      @confirm="handleSignOut"
-    />
-    <BaseDialog
-      v-model:opened="editMode"
-      :loading="loading"
-      :title="$t('pages.profile.edit')"
-      @close="editMode = false"
-    >
-      <template #text>
-        <v-card>
-          <v-card-text>
-            <UserForm
-              :user-form="userForm"
-              :is-new="false"
-              :loading="loading"
-              @update:model-value="userForm = $event"
-              @form:submit="submitEdit"
-            />
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer />
-            <v-btn
-              prepend-icon="mdi-check"
-              color="primary"
-              @click="submitEdit"
-              >{{ $t("actions.submit") }}</v-btn
-            >
-          </v-card-actions>
-        </v-card>
-      </template>
-    </BaseDialog>
-    <BaseDialog
-      v-model:opened="showAvatarUploadDialog"
-      :title="
-        currentUser?.avatar
-          ? $t('pages.profile.change_avatar')
-          : $t('pages.profile.upload_avatar')
-      "
-      :loading="loading"
-      @close="showAvatarUploadDialog = false"
-    >
-      >
-      <template #text>
-        <GalleryUploader
-          :upload-count="1"
-          :upload-error="false"
-          @files:upload="handleUploadAvatar"
-        />
-      </template>
-    </BaseDialog>
   </div>
   <v-menu v-else v-model="showMenu">
     <template #activator="{ props }">
@@ -149,7 +88,9 @@
         v-bind="props"
         icon="mdi-account"
         value="profile"
-        :to="!isAuthenticated && !currentUser ? $localeRoute('/auth/sign-in') : ''"
+        :to="
+          !isAuthenticated && !currentUser ? $localeRoute('/auth/sign-in') : ''
+        "
       />
     </template>
     <ProfileCard
@@ -163,6 +104,64 @@
       @close="showMenu = false"
     />
   </v-menu>
+  <ConfirmDialog
+    v-model="showAvatarWarning"
+    :text="$t('general.img_replacement_warning')"
+    @cancel="showAvatarWarning = false"
+    @confirm="replaceAvatar"
+  />
+  <ConfirmDialog
+    v-model="showConfirmDialog"
+    :loading="loading"
+    :text="$t('auth.logout_confirm')"
+    @cancel="showConfirmDialog = false"
+    @confirm="handleSignOut"
+  />
+  <BaseDialog
+    v-model:opened="editMode"
+    :loading="loading"
+    :title="$t('pages.profile.edit')"
+    @close="editMode = false"
+  >
+    <template #text>
+      <v-card>
+        <v-card-text>
+          <UserForm
+            :user-form="userForm"
+            :is-new="false"
+            :loading="loading"
+            @update:model-value="userForm = $event"
+            @form:submit="submitEdit"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn prepend-icon="mdi-check" color="primary" @click="submitEdit">{{
+            $t("actions.submit")
+          }}</v-btn>
+        </v-card-actions>
+      </v-card>
+    </template>
+  </BaseDialog>
+  <BaseDialog
+    v-model:opened="showAvatarUploadDialog"
+    :title="
+      currentUser?.avatar
+        ? $t('pages.profile.change_avatar')
+        : $t('pages.profile.upload_avatar')
+    "
+    :loading="loading"
+    @close="showAvatarUploadDialog = false"
+  >
+    >
+    <template #text>
+      <GalleryUploader
+        :upload-count="1"
+        :upload-error="false"
+        @files:upload="handleUploadAvatar"
+      />
+    </template>
+  </BaseDialog>
 </template>
 
 <script lang="ts" setup>

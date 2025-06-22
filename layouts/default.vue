@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="bg-gradient">
+  <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
     <AppHeader
       :active-theme="activeTheme"
       @update:active-theme="activeTheme = $event"

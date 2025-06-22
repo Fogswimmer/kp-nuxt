@@ -116,10 +116,12 @@
                 :to="$localeRoute(item.to || '/')"
               >
                 <template #title>
-                <div class="text-primary text-lg-h6 d-flex ga-1">
-                    <span>{{ item.title }}</span>
-                    <span v-if="item.releaseYear">({{ item.releaseYear }})</span>
-                </div>
+                  <div class="text-primary text-lg-h6 d-flex ga-1">
+                    <span class="text-truncate">{{ item.title }}</span>
+                    <span v-if="item.releaseYear"
+                      >({{ item.releaseYear }})</span
+                    >
+                  </div>
                 </template>
                 <template #subtitle>
                   {{ item.value }}
@@ -145,6 +147,7 @@
                     rounded="lg"
                     class="ml-2 cursor-default"
                     width="130"
+                    :border="false"
                   >
                     <div
                       class="d-flex flex-column align-center justify-center fill-height"

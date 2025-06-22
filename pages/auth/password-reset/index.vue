@@ -76,8 +76,14 @@ const handleValidationAndSubmit = async (): Promise<void> => {
     }
   }
 };
+onMounted(() => {
+  const { clearError } = useAuthStore();
+  clearError();
+});
+
 definePageMeta({
   name: "passwordResetEmail",
   path: "/auth/password-reset",
+  layout: "auth",
 });
 </script>

@@ -29,13 +29,17 @@
         :to="$localeRoute('/about')"
         icon="mdi-information"
       />
-      <ProfileNav bottom/>
+      <ProfileNav v-if="showProfileNav" bottom/>
     </v-bottom-navigation>
   </client-only>
 </template>
 
 <script lang="ts" setup>
 import ProfileNav from "./ProfileNav.vue";
+
+defineProps<{
+  showProfileNav?: boolean;
+}>()
 
 const computedActiveNavBtn = computed((): { [key: string]: boolean } => {
   const route = useRoute();

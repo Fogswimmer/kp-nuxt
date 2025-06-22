@@ -6,34 +6,71 @@
     <AuthCard :title="$t('auth.sign_in')">
       <v-form ref="loginFormRef" class="mt-4">
         <div class="d-flex flex-column ga-2">
-          <v-text-field v-model="userForm.username" :label="$t('auth.login')"
-            :placeholder="$t('auth.login_placeholder')" prepend-inner-icon="mdi-account-key" variant="outlined"
-            :rules="requiredRules" />
-          <v-text-field v-model="userForm.password" :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="visible ? 'text' : 'password'" :label="$t('auth.password')"
-            :placeholder="$t('auth.password_placeholder')" prepend-inner-icon="mdi-lock-outline" variant="outlined"
-            :rules="requiredRules" @click:append-inner="visible = !visible" />
+          <v-text-field
+            v-model="userForm.username"
+            :label="$t('auth.login')"
+            :placeholder="$t('auth.login_placeholder')"
+            prepend-inner-icon="mdi-account-key"
+            variant="outlined"
+            :rules="[requiredRule]"
+          />
+          <v-text-field
+            v-model="userForm.password"
+            :append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
+            :type="visible ? 'text' : 'password'"
+            :label="$t('auth.password')"
+            :placeholder="$t('auth.password_placeholder')"
+            prepend-inner-icon="mdi-lock-outline"
+            variant="outlined"
+            :rules="[requiredRule]"
+            @click:append-inner="visible = !visible"
+          />
         </div>
         <v-label>
           <NuxtLink :to="localeRoute('/auth/password-reset')">
-            {{ $t("auth.forgot_password") }}</NuxtLink>
+            {{ $t("auth.forgot_password") }}</NuxtLink
+          >
         </v-label>
       </v-form>
       <div class="d-flex flex-column ga-4 mt-10">
-        <v-btn color="primary" size="large" variant="tonal" block :loading="loading" @click="validate">
+        <v-btn
+          color="primary"
+          size="large"
+          variant="tonal"
+          block
+          :loading="loading"
+          @click="validate"
+        >
           {{ $t("auth.sign_in") }}
         </v-btn>
-        <v-btn to="/auth/sign-up" variant="outlined" block size="large" color="secondary" :disabled="loading"
-          prepend-icon="mdi-account-plus">
+        <v-btn
+          to="/auth/sign-up"
+          variant="outlined"
+          block
+          size="large"
+          color="secondary"
+          :disabled="loading"
+          prepend-icon="mdi-account-plus"
+        >
           {{ $t("auth.register") }}
         </v-btn>
 
-        <v-btn prepend-icon="mdi-account-off" variant="plain" block size="large" to="/">
+        <v-btn
+          prepend-icon="mdi-account-off"
+          variant="plain"
+          block
+          size="large"
+          :to="$localeRoute('/')"
+        >
           {{ $t("auth.continue_as_guest") }}
         </v-btn>
       </div>
     </AuthCard>
-    <v-snackbar v-model="showErrorMessage" color="error" :text="$t('auth.invalid_credentials')" />
+    <v-snackbar
+      v-model="showErrorMessage"
+      color="error"
+      :text="$t('auth.invalid_credentials')"
+    />
   </div>
 </template>
 
@@ -47,12 +84,11 @@ const visible = ref<boolean>(false);
 const localeRoute = useLocaleRoute();
 const loginFormRef = ref<HTMLFormElement | null>();
 const { login, fetchCurrentUser } = useAuthStore();
-const requiredRules = [
-  (value: string) => {
-    if (value) return true;
-    return t("forms.rules.required");
-  },
-];
+
+const {
+  required: requiredRule,
+} = useValidation();
+
 const validate = async () => {
   if (loginFormRef.value) {
     const { valid } = await loginFormRef.value.validate();
@@ -74,6 +110,7 @@ onMounted(() => {
 definePageMeta({
   name: "signIn",
   title: "Sign in",
+  path: "/auth/sign-in",
   layout: "auth",
 });
 </script>

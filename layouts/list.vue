@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="bg-gradient">
+  <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
     <v-navigation-drawer width="300">
       <Logo />
       <v-divider />
@@ -18,7 +18,7 @@
     <v-main style="min-height: calc(100vh - 8px)">
       <slot />
     </v-main>
-    <BottomNav />
+    <BottomNav show-profile-nav />
   </v-layout>
 </template>
 
