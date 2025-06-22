@@ -2,7 +2,7 @@
   <div v-scroll="onScroll">
     <client-only>
       <v-navigation-drawer
-        v-if="$vuetify.display.smAndDown"
+        v-if="$vuetify.display.mdAndUp"
         location="end"
         width="300"
       >
