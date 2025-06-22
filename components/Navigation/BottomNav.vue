@@ -1,6 +1,7 @@
 <template>
   <client-only>
     <v-bottom-navigation
+      grow
       v-if="$vuetify.display.smAndDown"
     >
       <v-btn
@@ -24,13 +25,13 @@
         :to="$localeRoute('/persons')"
         icon="mdi-account-group"
       />
-      <!-- <v-btn
+      <v-btn
         :active="computedActiveNavBtn.about"
         value="about"
         density="compact"
         :to="$localeRoute('/about')"
         icon="mdi-information"
-      /> -->
+      />
       <ProfileNav v-if="showProfileNav" bottom/>
     </v-bottom-navigation>
   </client-only>
