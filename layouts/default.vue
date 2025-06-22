@@ -39,4 +39,8 @@ const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
+onMounted(() => {
+  theme.global.name.value = defaultTheme.value;
+});
+
 </script>

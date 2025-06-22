@@ -25,7 +25,7 @@
       v-else
       v-model="editModeText"
       @save="$emit('sumbit:edit', editModeText)"
-    >
+      >
       <template #default="{ model: proxyModel, actions }">
         <v-card variant="outlined">
           <template #text>
@@ -83,6 +83,7 @@ const formattedText = computed(() => {
         .slice(0, isTruncated.value ? 1 : undefined)
     : [];
 });
+
 </script>
 
 <style sroped>
