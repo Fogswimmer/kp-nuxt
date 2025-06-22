@@ -7,15 +7,23 @@
     <v-main style="min-height: calc(100vh - 8px)" v-scroll="onScroll">
       <slot />
     </v-main>
-    <BottomNav show-profile-nav/>
-    <v-navigation-drawer
-      location="start"
-      floating
-      color="transparent"
-    ></v-navigation-drawer>
-    <v-navigation-drawer location="end" floating color="transparent">
-      <ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
-    </v-navigation-drawer>
+    <BottomNav show-profile-nav />
+    <client-only>
+      <v-navigation-drawer
+        v-if="$vuetify.display.smAndDown"
+        location="start"
+        floating
+        color="transparent"
+      ></v-navigation-drawer>
+      <v-navigation-drawer
+        v-if="$vuetify.display.smAndDown"
+        location="end"
+        floating
+        color="transparent"
+      >
+        <ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
+      </v-navigation-drawer>
+    </client-only>
   </v-layout>
 </template>
 
@@ -42,5 +50,4 @@ const scrollToTop = () => {
 onMounted(() => {
   theme.global.name.value = defaultTheme.value;
 });
-
 </script>

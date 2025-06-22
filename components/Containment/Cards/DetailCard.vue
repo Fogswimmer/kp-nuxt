@@ -1,7 +1,11 @@
 <template>
   <div v-scroll="onScroll">
     <client-only>
-      <v-navigation-drawer location="end" width="300">
+      <v-navigation-drawer
+        v-if="$vuetify.display.smAndDown"
+        location="end"
+        width="300"
+      >
         <v-card :title="$t('contents')" variant="text">
           <v-divider></v-divider>
           <v-list nav>

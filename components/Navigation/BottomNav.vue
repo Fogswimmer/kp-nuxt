@@ -2,7 +2,6 @@
   <client-only>
     <v-bottom-navigation
       v-if="$vuetify.display.smAndDown"
-      grow
     >
       <v-btn
         :active="computedActiveNavBtn.home"

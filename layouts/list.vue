@@ -1,20 +1,22 @@
 <template>
   <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
-    <v-navigation-drawer width="300">
-      <Logo />
-      <v-divider />
-      <DrawerNavList />
-      <template #append>
+    <client-only>
+      <v-navigation-drawer v-if="$vuetify.display.smAndDown" width="300">
+        <Logo />
         <v-divider />
-        <div class="pa-2 d-flex align-center">
-          <ProfileNav />
-          <SettingsBtn
-            :active-theme="activeTheme"
-            @update:active-theme="activeTheme = $event"
-          />
-        </div>
-      </template>
-    </v-navigation-drawer>
+        <DrawerNavList />
+        <template #append>
+          <v-divider />
+          <div class="pa-2 d-flex align-center">
+            <ProfileNav />
+            <SettingsBtn
+              :active-theme="activeTheme"
+              @update:active-theme="activeTheme = $event"
+            />
+          </div>
+        </template>
+      </v-navigation-drawer>
+    </client-only>
     <v-main style="min-height: calc(100vh - 8px)">
       <slot />
     </v-main>
@@ -32,7 +34,6 @@ import SettingsBtn from "~/components/Containment/Btns/SettingsBtn.vue";
 const theme = useTheme();
 const defaultTheme = useDefaultTheme();
 const activeTheme = ref(defaultTheme.value);
-
 </script>
 
 <style></style>
