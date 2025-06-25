@@ -163,7 +163,6 @@ definePageMeta({
     name: "persons",
     path: "/persons",
     layout: "list",
-    key: (route) => route.fullPath,
 });
 </script>
 

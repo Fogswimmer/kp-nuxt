@@ -232,11 +232,5 @@ declare global {
         value: string;
         title: string;
     }
-
-    interface PageContentItems {
-        title: string;
-        value: string;
-        icon: string;
-    }
 }
 export {};

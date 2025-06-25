@@ -4,279 +4,347 @@
             <Title>{{ definePageTitle(film?.name || "") }}</Title>
             <Meta name="description" :content="film?.description" />
         </Head>
-        <DetailCard
-            :page-name="
-                useInternationalName(
-                    film?.name as string,
-                    film?.internationalName as string,
-                )
-            "
-            :loading="loading"
-            :notification="!isAuthenticated"
-            :page-contents="pageContents"
-            trailer
-        >
-            <template #notification>
-                <NotAuthWarning v-if="!isAuthenticated" />
-            </template>
-            <template #top_film>
-                <v-container fluid>
-                    <v-card v-if="!loading" class="pa-2" variant="text">
-                        <v-row>
-                            <v-col v-bind="colParams.poster">
-                                <v-img
-                                    :src="film?.poster || ''"
-                                    cover
-                                    rounded="lg"
-                                    :height="TOP_CARDS_HEIGHT"
-                                    class="cursor-pointer"
-                                    @click="showFullScreenViewer = true"
-                                >
+        <NuxtLayout name="right-drawer">
+            <v-list variant="plain">
+                <v-list-subheader>{{
+                    $t("pages.films.starring")
+                }}</v-list-subheader>
+                <v-list-item
+                    v-for="(actor, index) in starring"
+                    :key="index"
+                    :title="actor.value"
+                    :value="index"
+                    :to="$localeRoute(actor.to || '/')"
+                >
+                    <template #prepend>
+                        <v-avatar size="64">
+                            <v-img v-if="actor.avatar" :src="actor.avatar">
+                                <template #placeholder>
+                                    <v-icon size="x-small">mdi-account</v-icon>
+                                </template>
+                                <template #error>
+                                    <ErrorPlaceHolder />
+                                </template>
+                            </v-img>
+                            <v-icon v-else icon="mdi-account" />
+                        </v-avatar>
+                    </template>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-subheader>{{
+                    $t("pages.films.team")
+                }}</v-list-subheader>
+                <v-list variant="plain">
+                    <v-list-item
+                        v-for="(person, index) in team"
+                        :key="index"
+                        rounded="lg"
+                        :subtitle="$t(person.title)"
+                        :title="person.value"
+                        :value="index"
+                        :to="$localeRoute(person.to || '/')"
+                    >
+                        <template #prepend>
+                            <v-avatar size="64">
+                                <v-img :src="person.avatar">
                                     <template #placeholder>
-                                        <ImgPlaceholder :loading="loading" />
+                                        <v-icon size="x-small"
+                                            >mdi-account</v-icon
+                                        >
                                     </template>
                                     <template #error>
                                         <ErrorPlaceHolder />
                                     </template>
                                 </v-img>
-                            </v-col>
-                            <v-col
-                                v-if="$vuetify.display.mdAndUp"
-                                v-bind="colParams.info"
-                            >
-                                <v-card
-                                    border
-                                    :height="TOP_CARDS_HEIGHT"
-                                    rounded="lg"
-                                >
-                                    <div
-                                        class="fill-height d-flex flex-column items-center"
+                            </v-avatar>
+                        </template>
+                    </v-list-item>
+                </v-list>
+            </v-list>
+        </NuxtLayout>
+        <NuxtLayout name="detail">
+            <DetailCard
+                :page-name="
+                    useInternationalName(
+                        film?.name as string,
+                        film?.internationalName as string,
+                    )
+                "
+                :loading="loading"
+                :notification="!isAuthenticated"
+                trailer
+            >
+                <template #notification>
+                    <NotAuthWarning v-if="!isAuthenticated" />
+                </template>
+                <template #top_film>
+                    <v-container fluid>
+                        <v-card v-if="!loading" class="pa-2" variant="text">
+                            <v-row>
+                                <v-col v-bind="colParams.poster">
+                                    <v-img
+                                        :src="film?.poster || ''"
+                                        cover
+                                        rounded="lg"
+                                        :height="TOP_CARDS_HEIGHT"
+                                        class="cursor-pointer"
+                                        @click="showFullScreenViewer = true"
                                     >
-                                        <FilmGeneralInfo
-                                            :general-info="generalInfo"
-                                        />
-                                    </div>
-                                </v-card>
-                            </v-col>
-                            <v-col
-                                v-if="$vuetify.display.mdAndUp"
-                                v-bind="colParams.rating"
-                            >
-                                <v-card
-                                    border
-                                    rounded="lg"
-                                    :height="TOP_CARDS_HEIGHT"
+                                        <template #placeholder>
+                                            <ImgPlaceholder
+                                                :loading="loading"
+                                            />
+                                        </template>
+                                        <template #error>
+                                            <ErrorPlaceHolder />
+                                        </template>
+                                    </v-img>
+                                </v-col>
+                                <v-col
+                                    v-if="$vuetify.display.mdAndUp"
+                                    v-bind="colParams.info"
                                 >
-                                    <Rating
-                                        :current-rating="film?.rating || ''"
-                                        :assessments="film?.assessments || []"
-                                        :assessments-graph="
-                                            film?.assessmentsGraph || []
-                                        "
-                                        :is-assessing="isAssessing"
-                                        :rating="rating"
-                                        :comment="comment"
-                                        @assession:submit="submitAssessment"
-                                        @assession:enable="isAssessing = true"
-                                        @assession:cancel="cancelAssessment"
-                                        @comment:update="comment = $event"
-                                        @rating:update="rating = $event"
-                                    />
-                                </v-card>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                    <div
-                        v-else-if="$vuetify.display.mdAndUp"
-                        class="d-flex ga-2 fill-height"
-                    >
+                                    <v-card
+                                        border
+                                        :height="TOP_CARDS_HEIGHT"
+                                        rounded="lg"
+                                    >
+                                        <div
+                                            class="fill-height d-flex flex-column items-center"
+                                        >
+                                            <FilmGeneralInfo
+                                                :general-info="generalInfo"
+                                            />
+                                        </div>
+                                    </v-card>
+                                </v-col>
+                                <v-col
+                                    v-if="$vuetify.display.mdAndUp"
+                                    v-bind="colParams.rating"
+                                >
+                                    <v-card
+                                        border
+                                        rounded="lg"
+                                        :height="TOP_CARDS_HEIGHT"
+                                    >
+                                        <Rating
+                                            :current-rating="film?.rating || ''"
+                                            :assessments="
+                                                film?.assessments || []
+                                            "
+                                            :assessments-graph="
+                                                film?.assessmentsGraph || []
+                                            "
+                                            :is-assessing="isAssessing"
+                                            :rating="rating"
+                                            :comment="comment"
+                                            @assession:submit="submitAssessment"
+                                            @assession:enable="
+                                                isAssessing = true
+                                            "
+                                            @assession:cancel="cancelAssessment"
+                                            @comment:update="comment = $event"
+                                            @rating:update="rating = $event"
+                                        />
+                                    </v-card>
+                                </v-col>
+                            </v-row>
+                        </v-card>
+                        <div
+                            v-else-if="$vuetify.display.mdAndUp"
+                            class="d-flex ga-2 fill-height"
+                        >
+                            <v-skeleton-loader
+                                v-for="n in 3"
+                                :key="n"
+                                type="card"
+                                :height="TOP_CARDS_HEIGHT"
+                                width="calc(100% / 3)"
+                            />
+                        </div>
                         <v-skeleton-loader
-                            v-for="n in 3"
-                            :key="n"
+                            v-else
                             type="card"
                             :height="TOP_CARDS_HEIGHT"
-                            width="calc(100% / 3)"
                         />
-                    </div>
-                    <v-skeleton-loader
-                        v-else
-                        type="card"
-                        :height="TOP_CARDS_HEIGHT"
+                    </v-container>
+                </template>
+                <template #menu>
+                    <DetailMenu
+                        :is-authenticated="isAuthenticated"
+                        @edit:general="handleGeneralInfoEdit"
+                        @edit:description="handleEditDescription"
+                        @edit:gallery="openGalleryEditor"
+                        @edit:trailer="showLinkTrailerDialog = true"
+                        @delete:film="showDeleteWarning = true"
                     />
-                </v-container>
-            </template>
-            <template #menu>
-                <DetailMenu
-                    :is-authenticated="isAuthenticated"
-                    @edit:general="handleGeneralInfoEdit"
-                    @edit:description="handleEditDescription"
-                    @edit:gallery="openGalleryEditor"
-                    @edit:trailer="showLinkTrailerDialog = true"
-                    @delete:film="showDeleteWarning = true"
-                />
-            </template>
-            <template #text>
-                <main>
-                    <FilmExpansionPanels
-                        :film="film || null"
-                        :is-description-panel-open="isDescriptionPanelOpen"
+                </template>
+                <template #text>
+                    <main>
+                        <FilmExpansionPanels
+                            :team="team"
+                            :starring="starring"
+                            :is-description-panel-open="isDescriptionPanelOpen"
+                        >
+                            <template #general-info>
+                                <FilmGeneralInfo :general-info="generalInfo" />
+                            </template>
+                            <template #rating>
+                                <Rating
+                                    :current-rating="film?.rating || ''"
+                                    :assessments="film?.assessments || []"
+                                    :assessments-graph="
+                                        film?.assessmentsGraph || []
+                                    "
+                                    :is-assessing="isAssessing"
+                                    :rating="rating"
+                                    :comment="comment"
+                                    @assession:submit="submitAssessment"
+                                    @assession:enable="isAssessing = true"
+                                    @assession:cancel="cancelAssessment"
+                                    @comment:update="comment = $event"
+                                    @rating:update="rating = $event"
+                                />
+                            </template>
+                            <template #gallery-viewer>
+                                <GalleryViewer
+                                    :slider-arr="sliderGalleryArr || []"
+                                    :disabled="!isAuthenticated"
+                                    :gallery="film?.gallery || []"
+                                    :entity-name="film?.name || ''"
+                                    :loading="loading"
+                                    :with-avatar="false"
+                                    @poster:set="handleChangePoster"
+                                    @editor:open="openGalleryEditor"
+                                    @delete:img="handleDeleteImg"
+                                />
+                            </template>
+                            <template #description>
+                                <IndentedEditableText
+                                    :edit-mode="editDescriptionMode"
+                                    :messages="
+                                        $t('pages.films.edit_description')
+                                    "
+                                    :text="film?.description || ''"
+                                    @sumbit:edit="submitDescriptionEdit"
+                                    @cancel:edit="cancelDescriptionEdit"
+                                />
+                            </template>
+                            <template #comments>
+                                <Comments
+                                    :loading="loading"
+                                    :assessments="film?.assessments || []"
+                                    :comment="comment"
+                                    @assession:submit="submitAssessment"
+                                    @assession:enable="isAssessing = true"
+                                    @assession:cancel="cancelAssessment"
+                                    @assession:delete="deleteAssessment"
+                                />
+                            </template>
+                        </FilmExpansionPanels>
+                    </main>
+                </template>
+                <template #footer>
+                    <div
+                        class="text-center bg-surface w-100 text-caption d-flex justify-center ga-1 pa-2"
                     >
-                        <template #general-info>
-                            <FilmGeneralInfo :general-info="generalInfo" />
-                        </template>
-                        <template #rating>
-                            <Rating
-                                :current-rating="film?.rating || ''"
-                                :assessments="film?.assessments || []"
-                                :assessments-graph="
-                                    film?.assessmentsGraph || []
-                                "
-                                :is-assessing="isAssessing"
-                                :rating="rating"
-                                :comment="comment"
-                                @assession:submit="submitAssessment"
-                                @assession:enable="isAssessing = true"
-                                @assession:cancel="cancelAssessment"
-                                @comment:update="comment = $event"
-                                @rating:update="rating = $event"
-                            />
-                        </template>
-                        <template #gallery-viewer>
-                            <GalleryViewer
-                                :slider-arr="sliderGalleryArr || []"
-                                :disabled="!isAuthenticated"
-                                :gallery="film?.gallery || []"
-                                :entity-name="film?.name || ''"
-                                :loading="loading"
-                                :with-avatar="false"
-                                @poster:set="handleChangePoster"
-                                @editor:open="openGalleryEditor"
-                                @delete:img="handleDeleteImg"
-                            />
-                        </template>
-                        <template #description>
-                            <IndentedEditableText
-                                :edit-mode="editDescriptionMode"
-                                :messages="$t('pages.films.edit_description')"
-                                :text="film?.description || ''"
-                                @sumbit:edit="submitDescriptionEdit"
-                                @cancel:edit="cancelDescriptionEdit"
-                            />
-                        </template>
-                        <template #comments>
-                            <Comments
-                                :loading="loading"
-                                :assessments="film?.assessments || []"
-                                :comment="comment"
-                                @assession:submit="submitAssessment"
-                                @assession:enable="isAssessing = true"
-                                @assession:cancel="cancelAssessment"
-                                @assession:delete="deleteAssessment"
-                            />
-                        </template>
-                    </FilmExpansionPanels>
-                </main>
-            </template>
-            <template #footer>
-                <div
-                    class="text-center bg-surface w-100 text-caption d-flex justify-center ga-1 pa-2"
-                >
-                    <span>{{ $t("general.published_by") }}</span>
-                    <nuxt-link class="text-secondary">{{
-                        film?.publisherData ? film?.publisherData.name : ""
-                    }}</nuxt-link>
-                    {{ film?.createdAt || "" }}
-                </div>
-            </template>
-        </DetailCard>
-        <ConfirmDialog
-            v-model="showConfirmDialog"
-            type="error"
-            :text="$t('forms.film.gallery_item_delete_confirm')"
-            :loading="loading"
-            @confirm="handleGalleryItemsDelete"
-            @cancel="showConfirmDialog = false"
-        />
-        <BaseDialog
-            v-model:opened="generalInfoEdit"
-            :max-width="800"
-            :title="$t('pages.films.edit') + ' ' + film?.name"
-            :loading="loading"
-            @close="generalInfoEdit = false"
-        >
-            <template #text>
-                <FilmForm
-                    :film-form="filmForm"
-                    :show-description="false"
-                    :genres="genres"
-                    :actors="actors"
-                    :directors="directors"
-                    :producers="producers"
-                    :writers="writers"
-                    :composers="composers"
-                    :is-valid="isFormValid"
-                    @validate="isFormValid = $event"
-                    @form:submit="sumbitEdit"
-                    @update:model-value="filmForm = $event"
-                />
-            </template>
-        </BaseDialog>
-        <BaseDialog
-            v-model:opened="editGalleryMode"
-            :loading="loading"
-            :title="computedGalleryEditTitle"
-            :max-width="1200"
-            @close="editGalleryMode = false"
-        >
-            <template #text>
-                <FilmGalleryEdit
-                    v-model:selected="selectedImagesIndices"
-                    :active-tab="activeTab"
-                    :film="film"
-                    :slider-arr="sliderGalleryArr || []"
-                    :upload-count="uploadCount"
-                    :edit-mode="editGalleryMode"
-                    :upload-disabled="uploadCount === 0"
-                    :remove-disabled="!film?.gallery.length"
-                    :card-height="GALLERY_CARD_HEIGHT"
-                    @poster:change="handleChangePoster"
-                    @update:selected="selectedImagesIndices = $event"
-                    @delete:selected="showConfirmDialog = true"
-                    @upload:gallery="handleGalleryUpload"
-                />
-            </template>
-        </BaseDialog>
-        <BaseDialog
-            v-model:opened="showFullScreenViewer"
-            :loading="loading"
-            :title="computedPosterTitle"
-            @close="showFullScreenViewer = false"
-        >
-            <template #text>
-                <v-img
-                    :src="film?.poster || ''"
-                    cover
-                    height="100%"
-                    width="100%"
-                ></v-img>
-            </template>
-        </BaseDialog>
-        <SuccessSnackbar
-            v-model:show="showSnackbar"
-            @close="showSnackbar = false"
-        />
-        <ConfirmDialog
-            v-model="showDeleteWarning"
-            :text="$t('general.entity_delete_warning')"
-            @cancel="showDeleteWarning = false"
-            @confirm="handleFilmDelete"
-        />
-        <ConfirmDialog
-            v-model="showPosterSetDialog"
-            :text="$t('actions.set_poster') + '?'"
-            @cancel="showPosterSetDialog = false"
-            @confirm="setAsPosterAfterUpload"
-        />
+                        <span>{{ $t("general.published_by") }}</span>
+                        <nuxt-link class="text-secondary">{{
+                            film?.publisherData ? film?.publisherData.name : ""
+                        }}</nuxt-link>
+                        {{ film?.createdAt || "" }}
+                    </div>
+                </template>
+            </DetailCard>
+            <ConfirmDialog
+                v-model="showConfirmDialog"
+                type="error"
+                :text="$t('forms.film.gallery_item_delete_confirm')"
+                :loading="loading"
+                @confirm="handleGalleryItemsDelete"
+                @cancel="showConfirmDialog = false"
+            />
+            <BaseDialog
+                v-model:opened="generalInfoEdit"
+                :max-width="800"
+                :title="$t('pages.films.edit') + ' ' + film?.name"
+                :loading="loading"
+                @close="generalInfoEdit = false"
+            >
+                <template #text>
+                    <FilmForm
+                        :film-form="filmForm"
+                        :show-description="false"
+                        :genres="genres"
+                        :actors="actors"
+                        :directors="directors"
+                        :producers="producers"
+                        :writers="writers"
+                        :composers="composers"
+                        :is-valid="isFormValid"
+                        @validate="isFormValid = $event"
+                        @form:submit="sumbitEdit"
+                        @update:model-value="filmForm = $event"
+                    />
+                </template>
+            </BaseDialog>
+            <BaseDialog
+                v-model:opened="editGalleryMode"
+                :loading="loading"
+                :title="computedGalleryEditTitle"
+                :max-width="1200"
+                @close="editGalleryMode = false"
+            >
+                <template #text>
+                    <FilmGalleryEdit
+                        v-model:selected="selectedImagesIndices"
+                        :active-tab="activeTab"
+                        :film="film"
+                        :slider-arr="sliderGalleryArr || []"
+                        :upload-count="uploadCount"
+                        :edit-mode="editGalleryMode"
+                        :upload-disabled="uploadCount === 0"
+                        :remove-disabled="!film?.gallery.length"
+                        :card-height="GALLERY_CARD_HEIGHT"
+                        @poster:change="handleChangePoster"
+                        @update:selected="selectedImagesIndices = $event"
+                        @delete:selected="showConfirmDialog = true"
+                        @upload:gallery="handleGalleryUpload"
+                    />
+                </template>
+            </BaseDialog>
+            <BaseDialog
+                v-model:opened="showFullScreenViewer"
+                :loading="loading"
+                :title="computedPosterTitle"
+                @close="showFullScreenViewer = false"
+            >
+                <template #text>
+                    <v-img
+                        :src="film?.poster || ''"
+                        cover
+                        height="100%"
+                        width="100%"
+                    ></v-img>
+                </template>
+            </BaseDialog>
+            <SuccessSnackbar
+                v-model:show="showSnackbar"
+                @close="showSnackbar = false"
+            />
+            <ConfirmDialog
+                v-model="showDeleteWarning"
+                :text="$t('general.entity_delete_warning')"
+                @cancel="showDeleteWarning = false"
+                @confirm="handleFilmDelete"
+            />
+            <ConfirmDialog
+                v-model="showPosterSetDialog"
+                :text="$t('actions.set_poster') + '?'"
+                @cancel="showPosterSetDialog = false"
+                @confirm="setAsPosterAfterUpload"
+            />
+        </NuxtLayout>
     </div>
 </template>
 
@@ -299,6 +367,7 @@ import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
+
 const GALLERY_CARD_HEIGHT: number = 400;
 const TOP_CARDS_HEIGHT: number = 450;
 
@@ -369,34 +438,6 @@ const colParams = {
     },
 };
 
-const pageContents = computed(() => [
-    {
-        title: t("pages.films.description"),
-        value: "description",
-        icon: "mdi-information-outline",
-    },
-    {
-        title: t("pages.films.starring"),
-        value: "starring",
-        icon: "mdi-star",
-    },
-    {
-        title: t("pages.films.team"),
-        value: "team",
-        icon: "mdi-account-group",
-    },
-    {
-        title: t("pages.films.gallery"),
-        value: "gallery",
-        icon: "mdi-image-multiple",
-    },
-    {
-        title: t("pages.films.comments"),
-        value: "comments",
-        icon: "mdi-comment",
-    },
-]);
-
 const computedPosterTitle = computed((): string => {
     return `${film.value?.name}: ${t("pages.films.poster")}`;
 });
@@ -461,6 +502,41 @@ const generalInfo = computed((): Detail[] => {
 
 const computedGalleryEditTitle = computed((): string => {
     return t("pages.films.edit_gallery");
+});
+
+const starring = computed((): Detail[] => {
+    return film.value
+        ? film.value.actorsData?.map((person: FilmPerson): Detail => {
+              return {
+                  title: "",
+                  value: person?.name || "",
+                  to: "/persons/" + person?.slug || "",
+                  avatar: person.avatar || "",
+              };
+          })
+        : [];
+});
+
+const team = computed((): Detail[] => {
+    const teamMembersTitles = [
+        "forms.film.director",
+        "forms.film.writer",
+        "forms.film.producer",
+        "forms.film.composer",
+        "forms.film.actors",
+    ];
+    return film.value
+        ? film.value.teamData?.map(
+              (person: FilmPerson, index: number): Detail => {
+                  return {
+                      title: teamMembersTitles[index],
+                      value: person?.name || "",
+                      to: "/persons/" + person?.slug || "",
+                      avatar: person.avatar || "",
+                  };
+              },
+          )
+        : [];
 });
 
 const fetchData = async (): Promise<void> => {
@@ -624,6 +700,5 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
     name: "filmDetails",
     path: "/films/:slug",
-    layout: "list",
 });
 </script>

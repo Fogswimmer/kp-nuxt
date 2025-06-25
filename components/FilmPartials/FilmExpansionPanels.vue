@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panels v-model="accordion" variant="accordion" multiple>
+    <v-expansion-panels v-model="accordion" variant="accordion">
         <v-expansion-panel
             v-if="$vuetify.display.smAndDown"
             id="general-info"
@@ -33,6 +33,7 @@
             </v-expansion-panel-text>
         </v-expansion-panel>
         <v-expansion-panel
+            v-if="$vuetify.display.smAndDown"
             id="starring"
             :title="$t('pages.films.starring')"
             value="starring"
@@ -68,6 +69,7 @@
             </v-expansion-panel-text>
         </v-expansion-panel>
         <v-expansion-panel
+            v-if="$vuetify.display.smAndDown"
             id="team"
             value="team"
             :title="$t('pages.films.team')"
@@ -134,44 +136,11 @@ defineEmits<{
 }>();
 const display = useDisplay();
 const props = defineProps<{
-    film: IFilm | null;
     isDescriptionPanelOpen: boolean;
+    team: Detail[];
+    starring: Detail[];
 }>();
 const accordion = ref<string[]>(["description"]);
-const starring = computed((): Detail[] => {
-    return props.film
-        ? props.film.actorsData?.map((person: FilmPerson): Detail => {
-              return {
-                  title: "",
-                  value: person?.name || "",
-                  to: "/persons/" + person?.slug || "",
-                  avatar: person.avatar || "",
-              };
-          })
-        : [];
-});
-
-const team = computed((): Detail[] => {
-    const teamMembersTitles = [
-        "forms.film.director",
-        "forms.film.writer",
-        "forms.film.producer",
-        "forms.film.composer",
-        "forms.film.actors",
-    ];
-    return props.film
-        ? props.film.teamData?.map(
-              (person: FilmPerson, index: number): Detail => {
-                  return {
-                      title: teamMembersTitles[index],
-                      value: person?.name || "",
-                      to: "/persons/" + person?.slug || "",
-                      avatar: person.avatar || "",
-                  };
-              },
-          )
-        : [];
-});
 
 watch(
     () => props.isDescriptionPanelOpen,

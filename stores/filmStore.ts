@@ -111,7 +111,7 @@ export const useFilmStore = defineStore("films", () => {
             );
             film.value = response;
         } catch (error: unknown) {
-            handleError(error);
+            handleError(error, true);
         } finally {
             loading.value = false;
         }
@@ -178,7 +178,7 @@ export const useFilmStore = defineStore("films", () => {
             loading.value = false;
             return true;
         } catch (error: unknown) {
-            handleError(error);
+            handleError(error, true);
             return false;
         }
     };
@@ -197,7 +197,7 @@ export const useFilmStore = defineStore("films", () => {
             loading.value = false;
             return true;
         } catch (error: unknown) {
-            handleError(error);
+            handleError(error, true);
             return false;
         }
     };
@@ -294,7 +294,7 @@ export const useFilmStore = defineStore("films", () => {
             );
             filmsPresent.value = response?.present || false;
         } catch (error: unknown) {
-            handleError(error);
+            handleError(error, true);
             return false;
         } finally {
             loading.value = false;

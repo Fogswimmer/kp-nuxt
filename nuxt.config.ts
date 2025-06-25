@@ -82,9 +82,6 @@ export default defineNuxtConfig({
 
     vite: {
         logLevel: "info",
-        optimizeDeps: {
-            include: ["@yeger/vue-masonry-wall"],
-        },
         build: {
             sourcemap: true,
         },

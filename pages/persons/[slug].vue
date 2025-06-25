@@ -1,11 +1,10 @@
 <template>
-    <div v-scroll="onScroll">
+    <div>
         <Head>
             <Title>{{ definePageTitle(personFullName) }}</Title>
             <Meta name="description" :content="person?.bio" />
         </Head>
         <DetailCard
-            :page-contents="pageContents"
             :page-name="personFullName"
             :cover="person?.cover || ''"
             :is-auth="isAuthenticated"
@@ -305,41 +304,7 @@ const {
     GALLERY_SIZE,
 } = usePersonStore();
 
-const pageContents = computed(() => [
-    {
-        title: t("pages.persons.bio"),
-        value: "bio",
-        icon: "mdi-information",
-    },
-    {
-        title: t("pages.persons.filmography"),
-        value: "filmography",
-        icon: "mdi-movie-open",
-    },
-    {
-        title: t("pages.persons.photos"),
-        value: "gallery",
-        icon: "mdi-view-gallery",
-    },
-]);
-const activeContentItem = ref(pageContents.value[0].value);
-const onScroll = (): void => {
-    const sections = document.querySelectorAll("section");
-    const scrollPosition = window.scrollY + 100;
 
-    for (const section of sections) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-
-        if (
-            scrollPosition >= sectionTop &&
-            scrollPosition < sectionTop + sectionHeight
-        ) {
-            activeContentItem.value = section.id;
-            break;
-        }
-    }
-};
 
 const imagesToDelete = computed(() => {
     return person.value?.photos
@@ -537,7 +502,7 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
     name: "personDetails",
     path: "/persons/:slug",
-    layout: "list",
+    layout: "detail",
 });
 </script>
 

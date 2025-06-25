@@ -78,20 +78,20 @@ const fetchData = async (): Promise<void> => {
 const filmItems = computed((): Detail[] => {
     return films.value[0] !== null
         ? films.value?.map((film: IFilm) => {
-              return {
-                  title: useInternationalName(
-                      film.name,
-                      film.internationalName,
-                  ),
-                  value: film.description || "",
-                  avatar: film.poster || film.gallery[0] || "",
-                  to: "/films/" + film.slug,
-                  createdAt: film.createdAt || "",
-                  rating: film.rating || 0,
-                  releaseYear: film.releaseYear || 0,
-                  publisherData: film.publisherData || "",
-              };
-          })
+                return {
+                    title: useInternationalName(
+                        film.name,
+                        film.internationalName,
+                    ),
+                    value: film.description || "",
+                    avatar: film.poster || film.gallery[0] || "",
+                    to: "/films/" + film.slug,
+                    createdAt: film.createdAt || "",
+                    rating: film.rating || 0,
+                    releaseYear: film.releaseYear || 0,
+                    publisherData: film.publisherData || "",
+                };
+            })
         : [];
 });
 

@@ -20,7 +20,7 @@
 definePageMeta({
     name: "passwordResetInvalidToken",
     path: "/auth/password-reset/invalid",
-    layout: "auth",
+    layout: "content-center",
 });
 </script>
 

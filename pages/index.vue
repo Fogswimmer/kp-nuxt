@@ -113,36 +113,36 @@ const fetchData = async (): Promise<void> => {
 const latestFilmItems = computed((): Detail[] => {
     return latestFilms.value[0] !== null
         ? latestFilms.value?.map((film: IFilm) => {
-              return {
-                  title: useInternationalName(
-                      film.name,
-                      film.internationalName,
-                  ),
-                  value: film.description || "",
-                  rating: film.rating || "0",
-                  avatar: film.poster || film.gallery[0] || "",
-                  to: "/films/" + film.slug,
-                  createdAt: film.createdAt || "",
-              };
-          })
+                return {
+                    title: useInternationalName(
+                        film.name,
+                        film.internationalName,
+                    ),
+                    value: film.description || "",
+                    rating: film.rating || "0",
+                    avatar: film.poster || film.gallery[0] || "",
+                    to: "/films/" + film.slug,
+                    createdAt: film.createdAt || "",
+                };
+            })
         : [];
 });
 
 const topFilmItems = computed((): Detail[] => {
     return topFilms.value[0] !== null
         ? topFilms.value?.map((film: IFilm) => {
-              return {
-                  title: useInternationalName(
-                      film.name,
-                      film.internationalName,
-                  ),
-                  value: film.description || "",
-                  rating: film.rating || "0",
-                  avatar: film.poster || film.gallery[0] || "",
-                  to: "/films/" + film.slug,
-                  createdAt: film.createdAt || "",
-              };
-          })
+                return {
+                    title: useInternationalName(
+                        film.name,
+                        film.internationalName,
+                    ),
+                    value: film.description || "",
+                    rating: film.rating || "0",
+                    avatar: film.poster || film.gallery[0] || "",
+                    to: "/films/" + film.slug,
+                    createdAt: film.createdAt || "",
+                };
+            })
         : [];
 });
 
@@ -176,5 +176,6 @@ definePageMeta({
     name: "home",
     path: "/",
     description: "Home page",
+    layout: "home",
 });
 </script>

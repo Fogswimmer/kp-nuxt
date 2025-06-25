@@ -229,7 +229,7 @@ export const usePersonStore = defineStore("persons", () => {
             );
             personsPresent.value = response?.present || false;
         } catch (error: unknown) {
-            handleError(error);
+            handleError(error, true);
         } finally {
             loading.value = false;
         }

@@ -109,6 +109,6 @@ definePageMeta({
     name: "signIn",
     title: "Sign in",
     path: "/auth/sign-in",
-    layout: "auth",
+    layout: "content-center",
 });
 </script>
