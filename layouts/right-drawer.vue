@@ -1,8 +1,10 @@
 <template>
     <div>
-        <v-navigation-drawer location="end">
-            <slot />
-        </v-navigation-drawer>
+        <ClientOnly>
+                <v-navigation-drawer location="end">
+                    <slot />
+                </v-navigation-drawer>
+        </ClientOnly>
     </div>
 </template>
 
