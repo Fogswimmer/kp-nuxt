@@ -1,27 +1,27 @@
 <template>
-  <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
-    <client-only>
-      <v-navigation-drawer v-if="$vuetify.display.mdAndUp" width="300">
-        <Logo />
-        <v-divider />
-        <DrawerNavList />
-        <template #append>
-          <v-divider />
-          <div class="pa-2 d-flex align-center">
-            <ProfileNav />
-            <SettingsBtn
-              :active-theme="activeTheme"
-              @update:active-theme="activeTheme = $event"
-            />
-          </div>
-        </template>
-      </v-navigation-drawer>
-    </client-only>
-    <v-main style="min-height: calc(100vh - 8px)">
-      <slot />
-    </v-main>
-    <BottomNav show-profile-nav />
-  </v-layout>
+    <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
+        <client-only>
+            <v-navigation-drawer v-if="$vuetify.display.mdAndUp" width="300">
+                <Logo />
+                <v-divider />
+                <DrawerNavList />
+                <template #append>
+                    <v-divider />
+                    <div class="pa-2 d-flex align-center">
+                        <ProfileNav />
+                        <SettingsBtn
+                            :active-theme="activeTheme"
+                            @update:active-theme="activeTheme = $event"
+                        />
+                    </div>
+                </template>
+            </v-navigation-drawer>
+        </client-only>
+        <v-main style="min-height: calc(100vh - 8px)">
+            <slot />
+        </v-main>
+        <BottomNav show-profile-nav />
+    </v-layout>
 </template>
 
 <script lang="ts" setup>

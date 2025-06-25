@@ -1,4 +1,7 @@
-export default <T extends unknown[]>(fn: (...args: T) => void, delay: number) => {
+export default <T extends unknown[]>(
+    fn: (...args: T) => void,
+    delay: number,
+) => {
     let timeoutId: ReturnType<typeof setTimeout>;
     return (...args: T) => {
         clearTimeout(timeoutId);
