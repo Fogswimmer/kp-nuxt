@@ -370,7 +370,7 @@ import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
 
 const GALLERY_CARD_HEIGHT: number = 400;
-const TOP_CARDS_HEIGHT: number = 450;
+const TOP_CARDS_HEIGHT: number = 410;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
@@ -497,6 +497,22 @@ const generalInfo = computed((): Detail[] => {
             title: "forms.film.age",
             value: film.value?.age + "+" || "",
             icon: "mdi-account-supervisor",
+        },
+        {
+            title: "pages.films.budget",
+            value: film.value?.budget,
+            icon: "mdi-currency-usd",
+        },
+        {
+            title: "pages.films.fees",
+            value: film.value?.fees,
+            icon: "mdi-cash",
+        },
+        {
+            title: "pages.films.country",
+            value: film.value?.country,
+            icon: "mdi-flag",
+            flag: countryCodeToEmoji(filmForm.value?.countryCode || "")
         },
     ];
 

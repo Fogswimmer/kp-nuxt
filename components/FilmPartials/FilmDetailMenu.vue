@@ -44,7 +44,7 @@
                 <template #activator="{ props }">
                     <v-btn
                         v-bind="props"
-                        :disabled="isAuthenticated"
+                        :disabled="!isAuthenticated"
                         prepend-icon="mdi-pencil"
                         >{{ $t("actions.edit") }}</v-btn
                     >
