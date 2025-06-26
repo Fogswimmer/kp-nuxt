@@ -17,7 +17,7 @@
                     :to="$localeRoute(actor.to || '/')"
                 >
                     <template #prepend>
-                        <v-avatar size="64">
+                        <v-avatar>
                             <v-img v-if="actor.avatar" :src="actor.avatar">
                                 <template #placeholder>
                                     <v-icon size="x-small">mdi-account</v-icon>
@@ -45,7 +45,7 @@
                         :to="$localeRoute(person.to || '/')"
                     >
                         <template #prepend>
-                            <v-avatar size="64">
+                            <v-avatar>
                                 <v-img :src="person.avatar">
                                     <template #placeholder>
                                         <v-icon size="x-small"
@@ -170,7 +170,7 @@
                     </v-container>
                 </template>
                 <template #menu>
-                    <DetailMenu
+                    <FilmDetailMenu
                         :is-authenticated="isAuthenticated"
                         @edit:general="handleGeneralInfoEdit"
                         @edit:description="handleEditDescription"
@@ -282,6 +282,7 @@
                         :writers="writers"
                         :composers="composers"
                         :is-valid="isFormValid"
+                        :countries="countries"
                         @validate="isFormValid = $event"
                         @form:submit="sumbitEdit"
                         @update:model-value="filmForm = $event"
@@ -360,7 +361,7 @@ import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
 import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
 import Comments from "~/components/FilmPartials/Assessment/Comments.vue";
-import DetailMenu from "~/components/FilmPartials/DetailMenu.vue";
+import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
 import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import FilmExpansionPanels from "~/components/FilmPartials/FilmExpansionPanels.vue";
 import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
@@ -401,6 +402,7 @@ const {
     writers,
     directors,
     loading,
+    countries,
 } = storeToRefs(useFilmStore());
 const {
     editFilm,
@@ -414,6 +416,7 @@ const {
     deleteFilm,
     fetchSpecialists,
     deleteAssessmentById,
+    fetchCountries,
     GALLERY_SIZE,
 } = useFilmStore();
 
@@ -507,13 +510,13 @@ const computedGalleryEditTitle = computed((): string => {
 const starring = computed((): Detail[] => {
     return film.value
         ? film.value.actorsData?.map((person: FilmPerson): Detail => {
-              return {
-                  title: "",
-                  value: person?.name || "",
-                  to: "/persons/" + person?.slug || "",
-                  avatar: person.avatar || "",
-              };
-          })
+                return {
+                    title: "",
+                    value: person?.name || "",
+                    to: "/persons/" + person?.slug || "",
+                    avatar: person.avatar || "",
+                };
+            })
         : [];
 });
 
@@ -527,17 +530,17 @@ const team = computed((): Detail[] => {
     ];
     return film.value
         ? film.value.teamData?.map(
-              (person: FilmPerson, index: number): Detail => {
-                  return {
-                      title: teamMembersTitles[index],
-                      value: person?.name || "",
-                      to: "/persons/" + person?.slug || "",
-                      avatar: person.avatar || "",
-                  };
-              },
-          )
+                (person: FilmPerson, index: number): Detail => {
+                    return {
+                        title: teamMembersTitles[index],
+                        value: person?.name || "",
+                        to: "/persons/" + person?.slug || "",
+                        avatar: person.avatar || "",
+                    };
+                },
+            )
         : [];
-});
+    });
 
 const fetchData = async (): Promise<void> => {
     const slug = useRoute().params.slug.toString();
@@ -547,6 +550,7 @@ const fetchData = async (): Promise<void> => {
         fetchFilmDetails(slug, locale.value),
         fetchFilmForm(slug, locale.value),
         fetchSpecialists(),
+        fetchCountries(locale.value),
     ]);
 };
 

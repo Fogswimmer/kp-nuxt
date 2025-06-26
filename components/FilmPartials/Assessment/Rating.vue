@@ -30,7 +30,7 @@
             </div>
         </v-card-text>
     </v-card>
-    <v-card height="230" variant="text">
+    <v-card variant="text">
         <v-card-text>
             <AssessmentGraph
                 :graph-data="sortedGraphData"

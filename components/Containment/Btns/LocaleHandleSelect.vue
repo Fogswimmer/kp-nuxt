@@ -38,11 +38,6 @@ const languageOptions = [
     },
 ] as LanguageOptions[];
 
-const computedBadgeFlag = computed((): string => {
-    return (
-        languageOptions.find((item) => item.value === locale.value)?.flag || ""
-    );
-});
 </script>
 
 <style></style>

@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card style="max-height: calc(100vh - 120px); overflow-y: auto">
         <v-card-text>
             <v-form ref="formRef" @submit.prevent>
                 <v-text-field
@@ -29,7 +29,32 @@
                     prepend-inner-icon="mdi-movie-play"
                     @update:model-value="handleUpdateModelValue"
                 />
-                <v-combobox
+                <v-autocomplete
+                    v-model="form.countryCode"
+                    name="countryCode"
+                    :items="mappedCountries"
+                    :rules="[requiredRule]"
+                    :label="$t('pages.films.country')"
+                    item-value="value"
+                    item-title="name"
+                    prepend-inner-icon="mdi-flag"
+                    @update:model-value="handleUpdateModelValue"
+                />
+                <v-text-field
+                    v-model="form.budget"
+                    name="budget"
+                    :label="$t('pages.films.budget')"
+                    prepend-inner-icon="mdi-currency-usd"
+                    @update:model-value="handleUpdateModelValue"
+                />
+                <v-text-field
+                    v-model="form.fees"
+                    name="fees"
+                    :label="$t('pages.films.fees')"
+                    prepend-inner-icon="mdi-cash"
+                    @update:model-value="handleUpdateModelValue"
+                />
+                <v-autocomplete
                     v-model.number="form.releaseYear"
                     name="releaseYear"
                     :rules="[
@@ -208,6 +233,7 @@ const props = defineProps<{
     writers: Partial<IPerson>[];
     composers: Partial<IPerson>[];
     directors: Partial<IPerson>[];
+    countries: CountryAlpha2Name;
     loading?: boolean;
 }>();
 
@@ -239,6 +265,13 @@ const handleValidationAndSubmit = async (): Promise<void> => {
         emit("form:submit");
     }
 };
+
+const mappedCountries = computed(() => {
+    return Object.entries(props.countries).map(([value, name]) => ({
+        value,
+        name,
+    }));
+});
 
 watch(
     (): Partial<IFilm> => props.filmForm,

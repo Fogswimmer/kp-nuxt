@@ -30,7 +30,9 @@ export const useFilmStore = defineStore("films", () => {
         duration: "",
         gallery: [],
         poster: "",
-        trailer: "",
+        countryCode: "",
+        budget: null,
+        fees: null,
     };
     const GALLERY_SIZE: number = 8;
     const film = ref<IFilm | null>(null);
@@ -49,6 +51,7 @@ export const useFilmStore = defineStore("films", () => {
     const composers = ref<Partial<IPerson>[]>([]);
     const filmsPresent = ref<boolean>(false);
     const filmForm = ref<Partial<IFilm>>({ ...defaultFilmValues });
+    const countries = ref<CountryAlpha2Name>({});
     const fetchFilteredFilms = async (
         limit: number,
         offset: number,
@@ -141,6 +144,20 @@ export const useFilmStore = defineStore("films", () => {
                 `${baseUrl}/genres/translations?locale=${locale}`,
             );
             genres.value = response || [];
+        } catch (error: unknown) {
+            handleError(error);
+        } finally {
+            loading.value = false;
+        }
+    };
+
+    const fetchCountries = async (locale: string): Promise<void> => {
+        try {
+            loading.value = true;
+            const response = await $fetch<CountryAlpha2Name>(
+                `${baseUrl}/countries/translations?locale=${locale}`,
+            );
+            countries.value = response || [];
         } catch (error: unknown) {
             handleError(error);
         } finally {
@@ -332,6 +349,7 @@ export const useFilmStore = defineStore("films", () => {
         GALLERY_SIZE,
         filmsPresent,
         topFilms,
+        countries,
         fetchFilteredFilms,
         fetchGenres,
         addFilm,
@@ -348,5 +366,6 @@ export const useFilmStore = defineStore("films", () => {
         fetchSpecialists,
         deleteAssessmentById,
         fetchTopFilms,
+        fetchCountries,
     };
 });

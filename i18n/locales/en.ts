@@ -320,6 +320,7 @@ export default {
                 406: "Not acceptable",
                 408: "Request timeout",
                 409: "Conflict",
+                422: "Unprocessable Entity",
             },
         },
     },
@@ -345,6 +346,9 @@ export default {
         },
         films: {
             title: "Films",
+            country: "Country",
+            budget: "Budget",
+            fees: "Fees",
             poster: "Poster",
             edit_description: "Edit description",
             edit_gallery: "Edit gallery",

@@ -22,6 +22,8 @@
             >
                 <v-icon icon="mdi-logout" />
             </v-btn>
+            <v-divider vertical inset></v-divider>
+            <CloseBtn @close="$emit('close')" size="small" />
         </v-toolbar>
         <v-divider />
         <section class="text-center pa-2">
@@ -72,6 +74,7 @@
 <script lang="ts" setup>
 import ImgPlaceholder from "../Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "../Img/ErrorPlaceHolder.vue";
+import CloseBtn from "../Btns/CloseBtn.vue";
 
 const props = defineProps<{
     currentUser: CurrentUser;

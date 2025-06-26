@@ -51,6 +51,10 @@ declare global {
         trailer: string | null;
         slug: string | null;
         assessmentsGraph: AssessmentsGraph[];
+        country: string| null;
+        countryCode: string;
+        budget: number| null;
+        fees: number| null;
     }
     interface AssessmentsGraph {
         rating: number;
@@ -77,7 +81,7 @@ declare global {
         id?: number | null;
         subtitle?: string;
         icon?: string;
-        to?: string;
+        to?: string | RouteLocationResolvedGeneric;
         rating?: number | string | null;
         avatar?: string;
         createdAt?: string;
@@ -85,6 +89,8 @@ declare global {
         publishedBy?: string;
         publisherData?: FilmPerson;
         releaseYear?: number | null;
+        tooltip?: boolean;
+        flag?: string;
     }
 
     interface IFilmForm {
@@ -103,6 +109,9 @@ declare global {
         duration: string | number | Date | null;
         gallery: string[] | [];
         cover: string | null;
+        countryCode: string;
+        budget: number| null;
+        fees: number| null;
     }
     interface IGenre {
         name: string;
@@ -231,6 +240,10 @@ declare global {
     interface IOption {
         value: string;
         title: string;
+    }
+
+    interface CountryAlpha2Name {
+        [key: string]: string;
     }
 }
 export {};
