@@ -6,7 +6,7 @@
                     <div class="d-flex ga-1 align-center w-100">
                         <v-chip
                             :color="stripeColor(data.rating)"
-                            size="x-small"
+                            size="small"
                             prepend-icon="mdi-star"
                             >{{ data.rating }}</v-chip
                         >
@@ -16,7 +16,7 @@
                     </div>
                     <div class="d-flex ga-1 align-center justify-between">
                         <v-progress-linear
-                            height="8"
+                            height="10"
                             rounded
                             rounded-bar
                             :model-value="(data.count / total) * 20"

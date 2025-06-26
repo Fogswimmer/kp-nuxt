@@ -370,7 +370,7 @@ import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
 
 const GALLERY_CARD_HEIGHT: number = 400;
-const TOP_CARDS_HEIGHT: number = 410;
+const TOP_CARDS_HEIGHT: number = 470;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();

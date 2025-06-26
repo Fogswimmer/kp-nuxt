@@ -1,5 +1,5 @@
 <template>
-    <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
+    <div :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
         <client-only>
             <v-navigation-drawer>
                 <Logo />
@@ -16,11 +16,13 @@
                 </template>
             </v-navigation-drawer>
         </client-only>
-        <v-main style="min-height: calc(100vh - 8px)" v-scroll="onScroll">
-            <slot />
-        </v-main>
+        <v-layout>
+            <v-main style="min-height: calc(100vh - 8px)" v-scroll="onScroll">
+                <slot />
+            </v-main>
+        </v-layout>
         <BottomNav show-profile-nav />
-    </v-layout>
+    </div>
 </template>
 
 <script lang="ts" setup>
