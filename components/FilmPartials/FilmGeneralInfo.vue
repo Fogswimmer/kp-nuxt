@@ -11,7 +11,7 @@
             </v-list-item-title>
             <template #prepend>
                 <v-icon v-if="!detail.flag">{{ detail.icon }}</v-icon>
-                <v-avatar v-else>{{ detail.flag }}</v-avatar>
+                <v-avatar v-else class="pr-4">{{ detail.flag }}</v-avatar>
             </template>
         </v-list-item>
     </v-list>
