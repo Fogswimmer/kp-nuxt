@@ -3,12 +3,12 @@
         <Head>
             <Title>{{ definePageTitle($t("nav.films_add")) }}</Title>
         </Head>
-        <v-card class="mx-auto" style="max-width: 800px" :loading="loading">
-            <v-toolbar :title="$t('nav.films_add')">
+        <v-card :loading="loading">
+            <v-app-bar :title="$t('nav.films_add')">
                 <template #prepend>
                     <BackBtn />
                 </template>
-            </v-toolbar>
+            </v-app-bar>
             <v-stepper
                 v-if="personsPresent"
                 v-model="step"
@@ -48,6 +48,7 @@
                             :producers="producers"
                             :writers="writers"
                             :composers="composers"
+                            :countries="countries || []"
                             show-description
                             @form:submit="handleGeneralInfoSubmit"
                             @update:model-value="updateForm"
@@ -111,6 +112,7 @@ const {
     producers,
     writers,
     directors,
+    countries,
 } = storeToRefs(useFilmStore());
 const {
     addFilm,
@@ -119,6 +121,7 @@ const {
     uploadGallery,
     clearFilmForm,
     editFilm,
+    fetchCountries,
     GALLERY_SIZE,
 } = useFilmStore();
 
@@ -137,6 +140,7 @@ const fetchData = async (): Promise<void> => {
         await Promise.allSettled([
             fetchGenres(locale.value),
             fetchSpecialists(),
+            fetchCountries(locale.value)
         ]);
     } else {
         navigateTo(localeRoute("/films/persons-empty"));
@@ -214,7 +218,7 @@ definePageMeta({
     name: "newFilm",
     path: "/films/new",
     middleware: ["auth"],
-    key: (route) => route.fullPath,
+    layout: 'list'
 });
 </script>
 

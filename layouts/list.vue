@@ -16,6 +16,7 @@
                     </div>
                 </template>
             </v-navigation-drawer>
+            <v-navigation-drawer location="end"></v-navigation-drawer>
         </client-only>
         <v-main style="min-height: calc(100vh - 8px)">
             <slot />

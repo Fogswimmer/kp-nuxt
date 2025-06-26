@@ -47,9 +47,7 @@
                     name="genderId"
                     item-value="value"
                     item-title="name"
-                    prepend-inner-icon="
-  		mdi-gender-male-female
-  		"
+                    prepend-inner-icon="mdi-gender-male-female"
                     :items="genders"
                     :rules="[requiredRule]"
                     :hint="$t('forms.person.gender_hint')"

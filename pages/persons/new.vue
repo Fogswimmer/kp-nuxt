@@ -3,12 +3,12 @@
         <Head>
             <Title>{{ definePageTitle($t("forms.person.add")) }}</Title>
         </Head>
-        <v-card class="mx-auto" style="max-width: 800px" :loading="loading">
-            <v-toolbar :title="$t('forms.person.add')">
+        <v-card :loading="loading">
+            <v-app-bar :title="$t('forms.person.add')">
                 <template #prepend>
                     <BackBtn />
                 </template>
-            </v-toolbar>
+            </v-app-bar>
 
             <v-stepper v-model="step" :mobile="!$vuetify.display.mdAndUp">
                 <v-stepper-header>
@@ -211,6 +211,7 @@ definePageMeta({
     name: "newPerson",
     path: "/persons/new",
     middleware: ["auth"],
+    layout: 'list'
 });
 </script>
 
