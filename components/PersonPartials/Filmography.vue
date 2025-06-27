@@ -1,5 +1,5 @@
 <template>
-    <v-card>
+    <v-card variant="text">
         <template v-if="computedFilmographyDispay">
             <v-list>
                 <div
