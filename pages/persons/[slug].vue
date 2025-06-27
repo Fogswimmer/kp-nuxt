@@ -192,7 +192,6 @@
                 @close="generalInfoEdit = false"
             >
                 <template #text>
-                    <v-card>
                         <PersonForm
                             :loading="loading"
                             :person-form="personForm"
@@ -202,7 +201,6 @@
                             @form:submit="submitGeneralInfoEdit"
                             @update:model-value="personForm = $event"
                         />
-                    </v-card>
                 </template>
             </BaseDialog>
             <SuccessSnackbar
