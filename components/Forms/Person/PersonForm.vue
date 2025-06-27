@@ -1,5 +1,5 @@
 <template>
-    <v-card variant="text" flat>
+    <v-card tyle="max-height: calc(100vh - 120px); overflow-y: auto">
         <v-card-text>
             <v-form ref="formRef">
                 <v-text-field
@@ -77,6 +77,7 @@
                     @update:model-value="handleUpdateModelValue"
                 />
                 <v-textarea
+                    v-if="showBio"
                     v-model="form.bio"
                     name="bio"
                     density="compact"
@@ -115,6 +116,7 @@ const props = defineProps<{
     genders: IGender[];
     specialties: ISpecialty[];
     loading: boolean;
+    showBio: boolean;
 }>();
 
 const formRef = ref<HTMLFormElement>();

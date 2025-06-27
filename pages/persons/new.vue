@@ -48,6 +48,7 @@
                             :person-form="personForm"
                             :genders="genders"
                             :specialties="specialties"
+                            show-bio
                             @form:submit="handleGeneralInfoSubmit"
                             @update:model-value="personForm = $event"
                         />

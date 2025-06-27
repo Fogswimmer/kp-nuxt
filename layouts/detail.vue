@@ -31,8 +31,6 @@ import BottomNav from "~/components/Navigation/BottomNav.vue";
 import Logo from "~/components/Misc/Logo.vue";
 import ProfileNav from "~/components/Navigation/ProfileNav.vue";
 import SettingsBtn from "~/components/Containment/Btns/SettingsBtn.vue";
-import ScrollTopFab from "~/components/Containment/Btns/ScrollTopFab.vue";
-
 const activePage = computed(() => {
     const routename = useRoute().name;
     return routename ? routename.toString() : "";

@@ -6,8 +6,6 @@
     >
         <v-card
             :loading="loading"
-            height="100%"
-            style="height: 100vh; overflow-y: auto"
         >
             <v-toolbar :title="title">
                 <template #append>

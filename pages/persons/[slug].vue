@@ -194,6 +194,7 @@
                 <template #text>
                         <PersonForm
                             :loading="loading"
+                            :show-bio="false"
                             :person-form="personForm"
                             :genders="genders"
                             :specialties="specialties"
