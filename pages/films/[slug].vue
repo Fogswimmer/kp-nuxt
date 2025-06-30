@@ -5,7 +5,7 @@
             <Meta name="description" :content="film?.description" />
         </Head>
         <NuxtLayout name="right-drawer">
-            <v-card class="mt-2">
+            <v-card variant="text" class="mt-2">
                 <v-card-title>{{
                     $t("pages.films.related_persons")
                 }}</v-card-title>
