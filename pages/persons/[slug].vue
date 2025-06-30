@@ -151,7 +151,6 @@
                             </v-expansion-panel-text>
                         </v-expansion-panel>
                         <v-expansion-panel
-                            v-if="person?.filmWorks && $vuetify.display.smAndDown"
                             id="filmography"
                             tag="section"
                             value="filmography"

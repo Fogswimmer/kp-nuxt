@@ -346,6 +346,7 @@ export default {
         },
         films: {
             title: "Films",
+            related_persons: "Related persons",
             country: "Country",
             budget: "Budget",
             fees: "Fees",

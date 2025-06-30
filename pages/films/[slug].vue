@@ -5,36 +5,43 @@
             <Meta name="description" :content="film?.description" />
         </Head>
         <NuxtLayout name="right-drawer">
-            <v-list variant="plain">
-                <v-list-subheader>{{
-                    $t("pages.films.starring")
-                }}</v-list-subheader>
-                <v-list-item
-                    v-for="(actor, index) in starring"
-                    :key="index"
-                    :title="actor.value"
-                    :value="index"
-                    :to="$localeRoute(actor.to || '/')"
-                >
-                    <template #prepend>
-                        <v-avatar>
-                            <v-img v-if="actor.avatar" :src="actor.avatar">
-                                <template #placeholder>
-                                    <v-icon size="x-small">mdi-account</v-icon>
-                                </template>
-                                <template #error>
-                                    <ErrorPlaceHolder />
-                                </template>
-                            </v-img>
-                            <v-icon v-else icon="mdi-account" />
-                        </v-avatar>
-                    </template>
-                </v-list-item>
-                <v-divider></v-divider>
-                <v-list-subheader>{{
-                    $t("pages.films.team")
-                }}</v-list-subheader>
+            <v-card variant="plain" class="mt-2">
+                <v-card-title>{{
+                    $t("pages.films.related_persons")
+                }}</v-card-title>
+                <v-divider class="mt-2"></v-divider>
                 <v-list variant="plain">
+                    <v-list-subheader>{{
+                        $t("pages.films.starring")
+                    }}</v-list-subheader>
+                    <v-list-item
+                        v-for="(actor, index) in starring"
+                        :key="index"
+                        :title="actor.value"
+                        :value="index"
+                        :to="$localeRoute(actor.to || '/')"
+                    >
+                        <template #prepend>
+                            <v-avatar>
+                                <v-img v-if="actor.avatar" :src="actor.avatar">
+                                    <template #placeholder>
+                                        <v-icon size="x-small"
+                                            >mdi-account</v-icon
+                                        >
+                                    </template>
+                                    <template #error>
+                                        <ErrorPlaceHolder />
+                                    </template>
+                                </v-img>
+                                <v-icon v-else icon="mdi-account" />
+                            </v-avatar>
+                        </template>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-subheader>{{
+                        $t("pages.films.team")
+                    }}</v-list-subheader>
+
                     <v-list-item
                         v-for="(person, index) in team"
                         :key="index"
@@ -60,7 +67,7 @@
                         </template>
                     </v-list-item>
                 </v-list>
-            </v-list>
+            </v-card>
         </NuxtLayout>
         <NuxtLayout name="detail">
             <DetailCard
@@ -512,7 +519,7 @@ const generalInfo = computed((): Detail[] => {
             title: "pages.films.country",
             value: film.value?.country,
             icon: "mdi-flag",
-            flag: countryCodeToEmoji(filmForm.value?.countryCode || "")
+            flag: countryCodeToEmoji(filmForm.value?.countryCode || ""),
         },
     ];
 
@@ -526,13 +533,13 @@ const computedGalleryEditTitle = computed((): string => {
 const starring = computed((): Detail[] => {
     return film.value
         ? film.value.actorsData?.map((person: FilmPerson): Detail => {
-                return {
-                    title: "",
-                    value: person?.name || "",
-                    to: "/persons/" + person?.slug || "",
-                    avatar: person.avatar || "",
-                };
-            })
+              return {
+                  title: "",
+                  value: person?.name || "",
+                  to: "/persons/" + person?.slug || "",
+                  avatar: person.avatar || "",
+              };
+          })
         : [];
 });
 
@@ -546,17 +553,17 @@ const team = computed((): Detail[] => {
     ];
     return film.value
         ? film.value.teamData?.map(
-                (person: FilmPerson, index: number): Detail => {
-                    return {
-                        title: teamMembersTitles[index],
-                        value: person?.name || "",
-                        to: "/persons/" + person?.slug || "",
-                        avatar: person.avatar || "",
-                    };
-                },
-            )
+              (person: FilmPerson, index: number): Detail => {
+                  return {
+                      title: teamMembersTitles[index],
+                      value: person?.name || "",
+                      to: "/persons/" + person?.slug || "",
+                      avatar: person.avatar || "",
+                  };
+              },
+          )
         : [];
-    });
+});
 
 const fetchData = async (): Promise<void> => {
     const slug = useRoute().params.slug.toString();

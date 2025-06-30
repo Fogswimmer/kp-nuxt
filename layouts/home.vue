@@ -33,8 +33,8 @@ import BottomNav from "~/components/Navigation/BottomNav.vue";
 import ScrollTopFab from "~/components/Containment/Btns/ScrollTopFab.vue";
 
 const defaultTheme = useDefaultTheme();
-const activeTheme = ref<string>(defaultTheme.value);
 const theme = useTheme();
+const activeTheme = ref(theme.global.name.value);
 const scrollOffset = ref<number>(0);
 const showScrollBtn = ref<boolean>(false);
 
@@ -48,6 +48,10 @@ const scrollToTop = () => {
 };
 
 onMounted(() => {
-    theme.global.name.value = defaultTheme.value;
+    if (!localStorage.getItem('theme')) {
+        theme.global.name.value = defaultTheme.value
+        localStorage.setItem('theme', defaultTheme.value);
+    } 
+    theme.global.name.value = localStorage.getItem('theme') || defaultTheme.value;;
 });
 </script>

@@ -327,8 +327,8 @@ export default {
     },
     pages: {
         network_error: "Erreur de connexion",
-        general_info: "Informations generales",
-        detailed_info: "Informations detallées",
+        general_info: "Informations générales",
+        detailed_info: "Informations détallées",
         gallery: "Galerie",
         home: {
             title: "Accueil",
@@ -348,6 +348,7 @@ export default {
             title: "Films",
             trailer: "Trailer",
             poster: "Poster",
+            related_persons: "Personnes liées",
             country: "Pays",
             budget: "Budget",
             fees: "Frais",

@@ -344,6 +344,7 @@ export default {
             title: "Фильмы",
             poster: "Постер",
             trailer: "Трейлер",
+            related_persons: "Связанные персоны",
             country: "Страна",
             budget: "Бюджет",
             fees: "Кассовый сбор",
