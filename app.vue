@@ -2,9 +2,7 @@
     <LoadingScreen v-if="isLoading" />
     <NuxtLayout>
         <NuxtLoadingIndicator color="rgb(255, 174, 0)" />
-        <NuxtPage
-            :style="`background-color: ${theme.current.value.dark ? '#07141b' : '#fcfcfc'};`"
-        />
+        <NuxtPage />
     </NuxtLayout>
 </template>
 
@@ -82,5 +80,13 @@ p {
 .bg-light {
     background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
     background-attachment: fixed;
+}
+body {
+    background-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #07141b;
+    }
 }
 </style>

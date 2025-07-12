@@ -9,9 +9,9 @@ export default defineNuxtConfig({
         "@nuxt/eslint",
     ],
     css: ["@/assets/css/globals.scss"],
-    ssr: true,
+    ssr: false,
     app: {
-        // baseURL: './',
+        baseURL:'/',
         pageTransition: {
             name: "page",
             mode: "out-in", // default
@@ -85,13 +85,6 @@ export default defineNuxtConfig({
         build: {
             sourcemap: true,
         },
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    api: "modern-compiler", // or "modern"
-                },
-            },
-        },
         server: {
             hmr: {
                 timeout: 30000,
@@ -103,11 +96,11 @@ export default defineNuxtConfig({
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api/, ""),
                 },
-                "/uploads": {
-                    target: `${process.env.BASE_URL}/uploads`,
-                    changeOrigin: true,
-                    rewrite: (path) => path.replace(/^\/uploads/, ""),
-                },
+                // "/uploads": {
+                //     target: `${process.env.BASE_URL}/uploads`,
+                //     changeOrigin: true,
+                //     rewrite: (path) => path.replace(/^\/uploads/, ""),
+                // },
             },
         },
     },

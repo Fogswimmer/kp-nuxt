@@ -105,7 +105,7 @@ const fetchData = async (): Promise<void> => {
     if (personsPresent.value) {
         await listPopularActors(locale.value);
     }
-    if (!filmsPresent.value && !personsPresent.value) {
+    if (!filmsPresent.value || !personsPresent.value) {
         navigateTo(localeRoute("/empty-page"));
     }
 };
