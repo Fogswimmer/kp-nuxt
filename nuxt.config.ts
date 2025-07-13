@@ -9,9 +9,8 @@ export default defineNuxtConfig({
         "@nuxt/eslint",
     ],
     css: ["@/assets/css/globals.scss"],
-    ssr: false,
+    ssr: true,
     app: {
-        baseURL:'/',
         pageTransition: {
             name: "page",
             mode: "out-in", // default
