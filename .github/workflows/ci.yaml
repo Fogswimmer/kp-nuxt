@@ -1,0 +1,70 @@
+name: Nuxt 3 Deployment
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repo
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            - name: Install PNPM
+              run: npm i -g pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build Nuxt app
+              run: pnpm run build
+
+            - name: Archive .output folder
+              run: tar -czf nuxt-output.tar.gz .output
+
+            - name: Upload build artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: nuxt-build
+                  path: nuxt-output.tar.gz
+                  retention-days: 1
+
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Download build artifact
+              uses: actions/download-artifact@v4
+              with:
+                  name: nuxt-build
+                  path: .
+
+            - name: Extract artifact
+              run: tar -xzf nuxt-output.tar.gz
+
+            - name: Check extracted files
+              run: ls -la .output
+
+            - name: Rsync deploy
+              run: |
+                  echo "$SSH_PRIVATE_KEY" > key.pem
+                  chmod 600 key.pem
+                  rsync -avz -e "ssh -i key.pem -o StrictHostKeyChecking=no" .output/ $SSH_USER@$SSH_HOST:$PROJECT_FOLDER
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  SSH_USER: ${{ secrets.SSH_USER }}
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+                  PROJECT_FOLDER: ${{ secrets.PROJECT_FOLDER }}
+            # - name: SFTP Deploy
+            #   run: |
+            #       echo "put -r .output/* ${{ secrets.PROJECT_FOLDER }}" > sftp_commands.txt
+            #       sftp -b sftp_commands.txt -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
