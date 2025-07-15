@@ -3,7 +3,7 @@
         <NuxtLayout name="right-drawer">
             <v-card v-if="computedFilmographyDispay" variant="text">
                 <v-card-title>{{
-                    $t("pages.persons.filmography")
+                    $t("pages.persons.related_films")
                 }}</v-card-title>
                 <v-divider class="mt-2"></v-divider>
 
@@ -195,11 +195,17 @@
                     </div>
                 </template>
                 <template #text>
-
-                        <v-card
+                    <v-expansion-panels
+                        v-if="$vuetify.display.smAndDown"
+                        v-model="mainAccordion"
+                    >
+                        <v-expansion-panel
+                            id="bio"
+                            value="bio"
+                            tag="section"
                             :title="$t('pages.persons.bio')"
                         >
-                            <v-card-text>
+                            <v-expansion-panel-text>
                                 <IndentedEditableText
                                     v-if="person?.bio"
                                     :edit-mode="bioEditMode"
@@ -211,8 +217,32 @@
                                 <div v-else class="w-100 text-center">
                                     <span>{{ $t("general.no_data") }}</span>
                                 </div>
-                            </v-card-text>
-                        </v-card>
+                            </v-expansion-panel-text>
+                        </v-expansion-panel>
+                        <v-expansion-panel
+                            id="filmography"
+                            tag="section"
+                            value="filmography"
+                            :title="$t('pages.persons.filmography')"
+                        >
+                            <v-expansion-panel-text>
+                                <Filmography :person="person" />
+                            </v-expansion-panel-text>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+                    <v-card v-else :title="$t('pages.persons.bio')">
+                        <IndentedEditableText
+                            v-if="person?.bio"
+                            :edit-mode="bioEditMode"
+                            :messages="$t('pages.persons.edit_bio')"
+                            :text="person?.bio || ''"
+                            @sumbit:edit="submitBioEdit"
+                            @cancel:edit="cancelBioEdit"
+                        />
+                        <div v-else class="w-100 text-center">
+                            <span>{{ $t("general.no_data") }}</span>
+                        </div>
+                    </v-card>
                 </template>
             </DetailCard>
             <BaseDialog
