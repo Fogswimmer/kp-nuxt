@@ -258,7 +258,7 @@ const handleUploadAvatar = async (files: File[]): Promise<void> => {
         }
     }
     showAvatarUploadDialog.value = false;
-    await fetchCurrentUser();
+    await fetchCurrentUser(locale.value);
 };
 
 const handleEdit = () => {
@@ -274,14 +274,14 @@ const submitEdit = async () => {
 const replaceAvatar = async () => {
     const id = Number(currentUser.value?.id);
     await uploadAvatar(avatarFile.value as File, id || 0);
-    await fetchCurrentUser();
+    await fetchCurrentUser(locale.value);
     showAvatarWarning.value = false;
 };
 
 const replaceCover = async () => {
     const id = Number(currentUser.value?.id);
     await uploadCover(coverFile.value as File, id || 0);
-    await fetchCurrentUser();
+    await fetchCurrentUser(locale.value);
     showCoverWarning.value = false;
 };
 
@@ -297,12 +297,12 @@ const computedGeneralInfo = computed((): Detail[] => {
             value:
                 locale.value === "ru"
                     ? declineInRussian(currentUser.value?.age || 0, [
-                          "год",
-                          "года",
-                          "лет",
-                      ])
+                            "год",
+                            "года",
+                            "лет",
+                        ])
                     : currentUser.value?.age + " " + t("general.years_old") ||
-                      "",
+                        "",
             icon: "mdi-cake",
         },
     ];

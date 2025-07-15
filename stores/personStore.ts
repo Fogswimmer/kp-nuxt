@@ -251,7 +251,7 @@ export const usePersonStore = defineStore("persons", () => {
 
     const deleteGalleryItems = async (
         fileNames: string[],
-    ): Promise<boolean> => {
+    ): Promise<void> => {
         try {
             loading.value = true;
             const id = person.value?.id || 0;
@@ -264,10 +264,10 @@ export const usePersonStore = defineStore("persons", () => {
             );
             personForm.value = response || {};
             loading.value = false;
-            return true;
         } catch (error: unknown) {
             handleError(error);
-            return false;
+        } finally {
+            loading.value = false;
         }
     };
 

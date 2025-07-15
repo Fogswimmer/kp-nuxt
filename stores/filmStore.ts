@@ -248,7 +248,7 @@ export const useFilmStore = defineStore("films", () => {
 
     const deleteGalleryItems = async (
         fileNames: string[],
-    ): Promise<boolean> => {
+    ): Promise<void> => {
         try {
             loading.value = true;
             const id = film.value?.id || 0;
@@ -260,11 +260,10 @@ export const useFilmStore = defineStore("films", () => {
                 },
             );
             filmForm.value = response || {};
-            loading.value = false;
-            return true;
         } catch (error: unknown) {
             handleError(error);
-            return false;
+        } finally {
+            loading.value = false;
         }
     };
 

@@ -322,6 +322,7 @@ export default {
                 408: "Temps d’attente d’une requête du client, écoulé côté serveur",
                 409: "La requête ne peut être traitée à la suite d'un conflit avec l'état actuel du serveur",
                 422: "Unprocessable Entity",
+                502: "Bad gateway"
             },
         },
     },
@@ -366,7 +367,6 @@ export default {
             description: "Description",
             duration: "Durée",
             genre: "Genre",
-
             no_preview: "Aucun poster",
             gallery: "Galerie",
             no_gallery: "Galerie vide",
@@ -393,6 +393,7 @@ export default {
             trailer_error: "Le trailer n'a pas pu charger",
         },
         persons: {
+            related_films: "Films liés",
             title: "Personnes",
             details: "Details de la personne",
             list: "Liste des personnes",

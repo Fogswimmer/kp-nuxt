@@ -1,5 +1,5 @@
 <template>
-    <v-expansion-panels v-model="accordion" variant="accordion">
+    <v-expansion-panels v-model="accordion">
         <v-expansion-panel
             v-if="$vuetify.display.smAndDown"
             id="general-info"
@@ -103,16 +103,6 @@
                         </template>
                     </v-list-item>
                 </v-list>
-            </v-expansion-panel-text>
-        </v-expansion-panel>
-        <v-expansion-panel
-            id="gallery"
-            value="gallery"
-            tag="section"
-            :title="$t('pages.films.gallery')"
-        >
-            <v-expansion-panel-text>
-                <slot name="gallery-viewer" />
             </v-expansion-panel-text>
         </v-expansion-panel>
         <v-expansion-panel

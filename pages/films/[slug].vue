@@ -16,7 +16,7 @@
                     }}</v-list-subheader>
                     <v-list-item
                         v-for="(actor, index) in starring"
-                        :key="index"
+                        :key="actor?.id || 0 + index"
                         :title="actor.value"
                         :value="index"
                         :to="$localeRoute(actor.to || '/')"
@@ -44,8 +44,7 @@
 
                     <v-list-item
                         v-for="(person, index) in team"
-                        :key="index"
-                        rounded="lg"
+                        :key="person?.id || 0 + index"
                         :subtitle="$t(person.title)"
                         :title="person.value"
                         :value="index"
@@ -79,8 +78,23 @@
                 "
                 :loading="loading"
                 :notification="!isAuthenticated"
-                trailer
+                no-cover
             >
+                <template #publisher-info>
+                    <v-chip size="small">
+                        <div class="d-flex ga-2">
+                            <span>{{ $t("general.published_by") }}:</span>
+                            <nuxt-link class="text-secondary">{{
+                                film?.publisherData
+                                    ? film?.publisherData.name
+                                    : ""
+                            }}</nuxt-link>
+                            <span>{{
+                                dateFormatter(film?.createdAt || "")
+                            }}</span>
+                        </div>
+                    </v-chip>
+                </template>
                 <template #notification>
                     <NotAuthWarning v-if="!isAuthenticated" />
                 </template>
@@ -95,12 +109,26 @@
                                         rounded="lg"
                                         :height="TOP_CARDS_HEIGHT"
                                         class="cursor-pointer"
-                                        @click="showFullScreenViewer = true"
+                                        @click="
+                                            showFullScreenPoster(
+                                                film?.poster || '',
+                                            )
+                                        "
                                     >
                                         <template #placeholder>
                                             <ImgPlaceholder
+                                                v-if="loading"
                                                 :loading="loading"
                                             />
+                                            <v-sheet v-else height="100%">
+                                                <div
+                                                    class="fill-height d-flex justify-center align-center"
+                                                >
+                                                    <v-icon
+                                                        >mdi-filmstrip</v-icon
+                                                    >
+                                                </div>
+                                            </v-sheet>
                                         </template>
                                         <template #error>
                                             <ErrorPlaceHolder />
@@ -213,19 +241,6 @@
                                     @rating:update="rating = $event"
                                 />
                             </template>
-                            <template #gallery-viewer>
-                                <GalleryViewer
-                                    :slider-arr="sliderGalleryArr || []"
-                                    :disabled="!isAuthenticated"
-                                    :gallery="film?.gallery || []"
-                                    :entity-name="film?.name || ''"
-                                    :loading="loading"
-                                    :with-avatar="false"
-                                    @poster:set="handleChangePoster"
-                                    @editor:open="openGalleryEditor"
-                                    @delete:img="handleDeleteImg"
-                                />
-                            </template>
                             <template #description>
                                 <IndentedEditableText
                                     :edit-mode="editDescriptionMode"
@@ -250,17 +265,6 @@
                             </template>
                         </FilmExpansionPanels>
                     </main>
-                </template>
-                <template #footer>
-                    <div
-                        class="text-center bg-surface w-100 text-caption d-flex justify-center ga-1 pa-2"
-                    >
-                        <span>{{ $t("general.published_by") }}</span>
-                        <nuxt-link class="text-secondary">{{
-                            film?.publisherData ? film?.publisherData.name : ""
-                        }}</nuxt-link>
-                        {{ film?.createdAt || "" }}
-                    </div>
                 </template>
             </DetailCard>
             <ConfirmDialog
@@ -321,21 +325,22 @@
                     />
                 </template>
             </BaseDialog>
-            <BaseDialog
-                v-model:opened="showFullScreenViewer"
-                :loading="loading"
-                :title="computedPosterTitle"
+            <GalleryFullscreenViewer
+                v-model:show-gallery="showFullScreenViewer"
+                v-model:active-img-index="activeImg"
+                :gallery-content="film?.gallery || []"
+                :name="
+                    useInternationalName(
+                        film?.name as string,
+                        film?.internationalName as string,
+                    )
+                "
+                :no-content-label="$t('pages.films.no_gallery')"
+                :with-avatar="false"
                 @close="showFullScreenViewer = false"
-            >
-                <template #text>
-                    <v-img
-                        :src="film?.poster || ''"
-                        cover
-                        height="100%"
-                        width="100%"
-                    ></v-img>
-                </template>
-            </BaseDialog>
+                @poster:set="handleChangePoster"
+                @delete:img="handleDeleteImg"
+            />
             <SuccessSnackbar
                 v-model:show="showSnackbar"
                 @close="showSnackbar = false"
@@ -357,15 +362,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useFilmStore } from "~/stores/filmStore";
-import { useAuthStore } from "~/stores/authStore";
 import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import FilmGalleryEdit from "~/components/Gallery/FilmGalleryEdit.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import FilmForm from "~/components/Forms/Film/FilmForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
-import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
 import Comments from "~/components/FilmPartials/Assessment/Comments.vue";
 import FilmDetailMenu from "~/components/FilmPartials/FilmDetailMenu.vue";
@@ -375,6 +377,10 @@ import Rating from "~/components/FilmPartials/Assessment/Rating.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
+import GalleryFullscreenViewer from "~/components/Gallery/GalleryFullscreenViewer.vue";
+
+import { useFilmStore } from "~/stores/filmStore";
+import { useAuthStore } from "~/stores/authStore";
 
 const GALLERY_CARD_HEIGHT: number = 400;
 const TOP_CARDS_HEIGHT: number = 470;
@@ -430,26 +436,33 @@ const {
 const colParams = {
     poster: {
         cols: 12,
-        lg: 3,
-        md: 3,
+        xl: 3,
+        lg: 4,
+        md: 4,
         sm: 12,
     },
     info: {
         cols: 12,
-        lg: 5,
-        md: 5,
+        xl: 5,
+        lg: 4,
+        md: 4,
         sm: 12,
     },
     rating: {
         cols: 12,
+        xl: 4,
         lg: 4,
         md: 4,
         sm: 12,
     },
 };
 
-const computedPosterTitle = computed((): string => {
-    return `${film.value?.name}: ${t("pages.films.poster")}`;
+const activeImg = computed(() => {
+    return film.value
+        ? film.value?.gallery.findIndex(
+              (img: string) => img === film.value?.poster || "",
+          )
+        : 0;
 });
 
 const imagesToDelete = computed(() => {
@@ -473,16 +486,11 @@ const generalInfo = computed((): Detail[] => {
                 film.value?.internationalName as string,
             ),
             icon: "mdi-movie",
-            tooltip: film.value && film.value.name?.length > 60 ? true : false,
         },
         {
             title: "forms.film.slogan",
             value: film.value?.slogan || "",
             icon: "mdi-format-title",
-            tooltip:
-                film.value?.slogan && film.value?.slogan?.length > 60
-                    ? true
-                    : false,
         },
         {
             title: "forms.film.duration",
@@ -492,13 +500,9 @@ const generalInfo = computed((): Detail[] => {
         {
             title: "forms.film.genres",
             value: film.value?.genreNames
-                ? film.value?.genreNames.join(", ")
+                ? film.value.genreNames.join(", ")
                 : "",
             icon: "mdi-filmstrip",
-            tooltip:
-                film.value && film.value?.genreNames.join(", ").length > 120
-                    ? true
-                    : false,
         },
         {
             title: "forms.film.age",
@@ -535,6 +539,7 @@ const starring = computed((): Detail[] => {
         ? film.value.actorsData?.map((person: FilmPerson): Detail => {
               return {
                   title: "",
+                  id: person.id,
                   value: person?.name || "",
                   to: "/persons/" + person?.slug || "",
                   avatar: person.avatar || "",
@@ -556,6 +561,7 @@ const team = computed((): Detail[] => {
               (person: FilmPerson, index: number): Detail => {
                   return {
                       title: teamMembersTitles[index],
+                      id: person.id,
                       value: person?.name || "",
                       to: "/persons/" + person?.slug || "",
                       avatar: person.avatar || "",
@@ -655,6 +661,7 @@ const handleGalleryItemsDelete = async (): Promise<void> => {
 };
 
 const handleDeleteImg = async (index: number): Promise<void> => {
+    console.log(index);
     selectedImagesIndices.value.push(index);
     await handleGalleryItemsDelete();
 };
@@ -670,15 +677,16 @@ const handleGalleryUpload = async (files: File[]): Promise<void> => {
 };
 
 const handleChangePoster = async (index: number): Promise<void> => {
-    filmForm.value.poster = film.value?.gallery[index - 1] || "";
-    await editFilm(locale.value);
-    editGalleryMode.value = false;
-    await fetchData();
+    console.log(index);
+    filmForm.value.poster = film.value?.gallery[index] || "";
     await nextTick(() => {
         if (!film.value?.poster) {
             showPosterSetDialog.value = true;
         }
     });
+    await editFilm(locale.value);
+    editGalleryMode.value = false;
+    await fetchData();
 };
 
 const setAsPosterAfterUpload = async (): Promise<void> => {
@@ -705,6 +713,12 @@ const deleteAssessment = async (assessmentId: number): Promise<void> => {
     const filmId: number = film.value?.id || 0;
     await deleteAssessmentById(filmId, assessmentId);
     await fetchData();
+};
+
+const showFullScreenPoster = (poster: string) => {
+    if (poster) {
+        showFullScreenViewer.value = true;
+    } else editGalleryMode.value = true;
 };
 
 watch(

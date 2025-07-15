@@ -12,7 +12,7 @@
         </v-btn>
         <v-menu v-else v-model="showMenu" location="bottom center">
             <template #activator="{ props }">
-                <v-card variant="text">
+                <v-card variant="text" max-width="200">
                     <v-list-item
                         v-if="$vuetify.display.mdAndUp"
                         v-bind="props"
@@ -23,6 +23,7 @@
                             currentUser?.username ||
                             ''
                         "
+                        :subtitle="currentUser?.email || ''"
                     >
                         <template #prepend>
                             <v-avatar v-if="isAuthenticated">
@@ -43,11 +44,6 @@
                                 </v-img>
                                 <v-icon v-else> mdi-account</v-icon>
                             </v-avatar>
-                        </template>
-                        <template #subtitle>
-                            <span class="text-truncate">
-                                {{ currentUser?.email }}</span
-                            >
                         </template>
                     </v-list-item>
                     <v-avatar

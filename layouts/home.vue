@@ -13,12 +13,14 @@
                 v-if="$vuetify.display.mdAndUp"
                 location="start"
                 floating
+                width="400"
                 color="transparent"
             ></v-navigation-drawer>
             <v-navigation-drawer
                 v-if="$vuetify.display.mdAndUp"
                 location="end"
                 floating
+                width="400"
                 color="transparent"
             >
                 <ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
@@ -51,7 +53,7 @@ onMounted(() => {
     if (!localStorage.getItem('theme')) {
         theme.global.name.value = defaultTheme.value
         localStorage.setItem('theme', defaultTheme.value);
-    } 
+    }
     theme.global.name.value = localStorage.getItem('theme') || defaultTheme.value;;
 });
 </script>

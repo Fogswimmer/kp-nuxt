@@ -76,10 +76,11 @@
 
 <script lang="ts" setup>
 import { useAuthStore } from "~/stores/authStore";
+
 import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
-const { t, locale } = useI18n();
+const { locale } = useI18n();
 const visible = ref<boolean>(false);
 const localeRoute = useLocaleRoute();
 const loginFormRef = ref<HTMLFormElement | null>();

@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <v-app-bar>
+    <v-card flat>
+        <v-toolbar>
             <template #prepend>
                 <BackBtn />
             </template>
-            <v-app-bar-title>
+            <v-toolbar-title>
                 <span v-if="!loading" class="font-weight-bold">
                     {{ pageName }}
                 </span>
                 <v-skeleton-loader v-else type="text" height="30" />
-            </v-app-bar-title>
+            </v-toolbar-title>
             <div
                 v-if="$vuetify.display.mdAndUp && notification"
                 class="d-flex justify-center pa-2"
@@ -17,8 +17,8 @@
                 <slot name="notification" />
             </div>
             <slot name="menu" />
-        </v-app-bar>
-        <v-card>
+        </v-toolbar>
+        <div>
             <div
                 v-if="$vuetify.display.smAndDown && notification"
                 class="d-flex justify-center pa-2 text-caption"
@@ -30,11 +30,11 @@
                     <v-progress-linear indeterminate color="primary" />
                 </template>
                 <v-card>
-                    <v-img
+                    <v-parallax
                         v-if="cover"
                         :src="cover"
                         cover
-                        :height="$vuetify.display.mdAndUp ? 300 : 200"
+                        :height="$vuetify.display.mdAndUp ? 550 : 400"
                         class="position-relative"
                     >
                         <template #placeholder>
@@ -42,7 +42,7 @@
                         </template>
                         <template #error>
                             <v-sheet
-                                :height="$vuetify.display.mdAndUp ? 300 : 200"
+                                :height="$vuetify.display.mdAndUp ? 550 : 400"
                                 width="100%"
                                 :class="
                                     theme.current.value.dark
@@ -51,10 +51,10 @@
                                 "
                             />
                         </template>
-                    </v-img>
+                    </v-parallax>
                     <v-sheet
-                        v-else-if="!trailer"
-                        :height="$vuetify.display.mdAndUp ? 300 : 200"
+                        v-else-if="!noCover"
+                        :height="$vuetify.display.mdAndUp ? 550 : 400"
                         width="100%"
                         :class="
                             theme.current.value.dark
@@ -63,20 +63,25 @@
                         "
                     />
                     <slot name="top_film" />
-                    <slot name="general_info" />
-                    <slot name="text" />
                 </v-card>
+                <div class="position-absolute bottom-0 left-0 right-0">
+                    <slot name="general_info" />
+                </div>
             </v-card>
-            <slot name="footer" />
-        </v-card>
-    </div>
+        </div>
+        <slot name="text" />
+        <v-footer height="70">
+            <v-spacer></v-spacer>
+            <slot name="publisher-info"></slot>
+        </v-footer>
+    </v-card>
 </template>
 
 <script lang="ts" setup>
 import BackBtn from "../Btns/BackBtn.vue";
 import ImgPlaceholder from "../Img/ImgPlaceholder.vue";
 
-const props = defineProps<{
+defineProps<{
     pageName?: string;
     title?: string;
     loading: boolean;
@@ -84,11 +89,8 @@ const props = defineProps<{
     drawer?: boolean;
     notification?: boolean;
     poster?: boolean;
-    trailer?: boolean;
+    noCover?: boolean;
 }>();
-
-
-
 
 const theme = useTheme();
 </script>

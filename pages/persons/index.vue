@@ -39,6 +39,7 @@ import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import PageLoader from "~/components/Misc/PageLoader.vue";
+
 import { usePersonStore } from "~/stores/personStore";
 
 const { locale, t } = useI18n();
@@ -100,6 +101,7 @@ const personItems = computed((): Detail[] => {
                 createdAt: person?.createdAt || "",
                 updatedAt: person?.updatedAt || "",
                 publisherData: person?.publisherData || "",
+                rating: null
             };
         })
     );

@@ -21,9 +21,7 @@ const emit = defineEmits<{
 }>();
 const theme = useTheme();
 const toggleTheme = () => {
-    theme.global.name.value = theme.global.current.value.dark
-        ? "light"
-        : "dark";
+    theme.toggle();
     localStorage.setItem("theme", theme.global.name.value);
     emit("update:activeTheme", theme.global.name.value);
 };

@@ -1,5 +1,5 @@
 <template>
-    <v-sheet :height="$vuetify.display.smAndDown ? 220 : 300" class="glassed">
+    <v-sheet :height="$vuetify.display.smAndDown ? 220 : 300" :class="theme.current.value.dark ? 'dark-glassed' : 'light-glassed'">
         <div class="d-flex justify-center">
             <div class="position-absolute text-center" style="top: -50%">
                 <div class="position-relative">
@@ -11,7 +11,7 @@
                             :size="$vuetify.display.smAndDown ? 200 : 300"
                             border
                             class="cursor-pointer"
-                            @click="showFullScrenView = true"
+                            @click="handleShowFullScreenView"
                         >
                             <v-img :src="avatar || ''" cover>
                                 <template #placeholder>
@@ -20,8 +20,13 @@
                                             class="fill-height d-flex align-center justify-center"
                                         >
                                             <v-progress-circular
+                                                v-if="loading"
                                                 indeterminate
                                             />
+
+                                            <v-icon v-else size="x-large"
+                                                >mdi-account</v-icon
+                                            >
                                         </div>
                                     </v-sheet>
                                 </template>
@@ -67,39 +72,47 @@
                 </template>
             </div>
         </div>
-        <BaseDialog
-            v-model:opened="showFullScrenView"
-            :loading="loading"
-            :title="(title as string) || ''"
+        <GalleryFullscreenViewer
+            v-model:show-gallery="showFullScrenView"
+            v-model:active-img-index="active"
+            :gallery-content="gallery || []"
+            :name="title"
+            with-avatar
             @close="showFullScrenView = false"
-        >
-            <template #text>
-                <v-img
-                    :src="avatar || ''"
-                    cover
-                    height="100%"
-                    width="100%"
-                ></v-img>
-            </template>
-        </BaseDialog>
+            @avatar:set="$emit('avatar:set', $event)"
+            @delete:img="$emit('delete:img', $event)"
+        />
     </v-sheet>
 </template>
 
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../../Img/ErrorPlaceHolder.vue";
-import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
+import GalleryFullscreenViewer from "~/components/Gallery/GalleryFullscreenViewer.vue";
 
 const props = defineProps<{
-    title: string | Detail[];
+    title: string;
     subtitle: string | string[];
     generalInfo: Detail[];
     avatar: string;
+    gallery: string[];
+    activeImg: number;
     loading: boolean;
 }>();
 
-const { t } = useI18n();
+const active = ref(props.activeImg);
+const theme = useTheme();
+const emit = defineEmits<{
+    (e: "delete:img", index: number): void;
+    (e: "avatar:set", index: number): void;
+    (e: "gallery:open"): void;
+}>();
 
 const showFullScrenView = ref<boolean>(false);
+const handleShowFullScreenView = () => {
+    if (props.avatar) {
+        showFullScrenView.value = true;
+    } else emit('gallery:open');
+};
 </script>
 
 <style>

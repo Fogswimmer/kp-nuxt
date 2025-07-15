@@ -4,11 +4,11 @@
             <Title>{{ definePageTitle($t("nav.films_add")) }}</Title>
         </Head>
         <v-card :loading="loading">
-            <v-app-bar :title="$t('nav.films_add')">
+            <v-toolbar :title="$t('nav.films_add')">
                 <template #prepend>
                     <BackBtn />
                 </template>
-            </v-app-bar>
+            </v-toolbar>
             <v-stepper
                 v-if="personsPresent"
                 v-model="step"
@@ -88,6 +88,9 @@
         <v-snackbar v-model="showErrorSnackbar" color="error">
             {{ $t("toast.messages.error.add") }}
         </v-snackbar>
+        <ClientOnly>
+            <v-navigation-drawer location="end"> </v-navigation-drawer>
+        </ClientOnly>
     </div>
 </template>
 
@@ -96,7 +99,7 @@ import FilmForm from "~/components/Forms/Film/FilmForm.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
-import definePageTitle from "~/utils/definePageTitle";
+
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 
@@ -140,7 +143,7 @@ const fetchData = async (): Promise<void> => {
         await Promise.allSettled([
             fetchGenres(locale.value),
             fetchSpecialists(),
-            fetchCountries(locale.value)
+            fetchCountries(locale.value),
         ]);
     } else {
         navigateTo(localeRoute("/films/persons-empty"));
@@ -193,7 +196,6 @@ const handleSetPoster = async (id: number): Promise<void> => {
 const updateForm = (value: IFilm) => {
     const transformedValue = {
         ...value,
-        trailer: youtubeUrlToEmbed(value.trailer),
     };
     filmForm.value = transformedValue;
 };
@@ -218,7 +220,7 @@ definePageMeta({
     name: "newFilm",
     path: "/films/new",
     middleware: ["auth"],
-    layout: 'list'
+    layout: "list",
 });
 </script>
 

@@ -36,7 +36,12 @@
 <script lang="ts" setup>
 import RegistrationForm from "~/components/Forms/Auth/UserForm.vue";
 import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
+
 import { useAuthStore } from "~/stores/authStore";
+
+interface AuthError {
+    message: string;
+}
 
 const { register } = useAuthStore();
 const localeRoute = useLocaleRoute();
@@ -48,10 +53,6 @@ const submit = async () => {
         navigateTo(localeRoute("/auth/sign-in"));
     }
 };
-
-interface AuthError {
-    message: string;
-}
 
 const errorMessage = ref<AuthError>({ message: "" });
 watchEffect(() => {

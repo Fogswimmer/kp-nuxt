@@ -16,7 +16,6 @@
                     </div>
                 </template>
             </v-navigation-drawer>
-            <v-navigation-drawer location="end"></v-navigation-drawer>
         </client-only>
         <v-main style="min-height: calc(100vh - 8px)">
             <slot />
@@ -40,7 +39,7 @@ onMounted(() => {
     if (!localStorage.getItem('theme')) {
         theme.global.name.value = defaultTheme.value
         localStorage.setItem('theme', defaultTheme.value);
-    } 
+    }
     theme.global.name.value = localStorage.getItem('theme') || defaultTheme.value;;
 });
 </script>

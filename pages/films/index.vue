@@ -38,8 +38,9 @@
 import ListPage from "~/components/Templates/ListPage.vue";
 import Filters from "~/components/Misc/Filters.vue";
 import PageLoader from "~/components/Misc/PageLoader.vue";
-import { useFilmStore } from "~/stores/filmStore";
 import definePageTitle from "~/utils/definePageTitle";
+
+import { useFilmStore } from "~/stores/filmStore";
 
 const { films, loading, totalPages, currentPage, filmsPresent } =
     storeToRefs(useFilmStore());

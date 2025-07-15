@@ -321,6 +321,7 @@ export default {
                 408: "Request timeout",
                 409: "Conflict",
                 422: "Unprocessable Entity",
+                502: "Bad gateway"
             },
         },
     },
@@ -393,6 +394,7 @@ export default {
             trailer_error: "Trailer not available",
         },
         persons: {
+            related_films: "Related films",
             firstname: "Firstname",
             details: "Person details",
             title: "Persons",

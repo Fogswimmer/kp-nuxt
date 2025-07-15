@@ -52,8 +52,9 @@ const { loading, passwordResetForm, showErrorMessage } =
     storeToRefs(useAuthStore());
 const { required, password: passwordRule } = useValidation();
 const { sendNewPassword } = useAuthStore();
-const localeRoute = useLocaleRoute();
 const { locale } = useI18n();
+const localeRoute = useLocaleRoute();
+
 const handleNewPasswordSubmit = async (): Promise<void> => {
     const token = useRoute().params.token as string;
     const success = await sendNewPassword(token, locale.value);

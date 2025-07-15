@@ -51,7 +51,7 @@
         </v-slide-group>
         <GalleryFullscreenViewer
             v-model:show-gallery="fullscreenMode"
-            v-model:active-img="activeImg"
+            v-model:active-img-index="activeImg"
             :gallery-content="gallery"
             :name="entityName"
             :no-content-label="$t('pages.films.no_gallery')"

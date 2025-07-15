@@ -71,12 +71,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useFilmStore } from "~/stores/filmStore";
-import { usePersonStore } from "~/stores/personStore";
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import HomeWall from "~/components/Masonry/HomeWall.vue";
 import PageLoader from "~/components/Misc/PageLoader.vue";
-import definePageTitle from "~/utils/definePageTitle";
+
+import { useFilmStore } from "~/stores/filmStore";
+import { usePersonStore } from "~/stores/personStore";
 
 const {
     loading: filmLoading,

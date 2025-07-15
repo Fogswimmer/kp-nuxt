@@ -93,6 +93,7 @@ import StackList from "~/components/AboutPartials/StackList.vue";
 const accordion = ref<string[]>(["stack"]);
 const active = ref<string>("scheme");
 const showMore = ref<boolean>(false);
+
 definePageMeta({
     name: "about",
     path: "/about",

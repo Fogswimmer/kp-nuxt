@@ -3,13 +3,13 @@
         <Head>
             <Title>{{ definePageTitle($t("forms.person.add")) }}</Title>
         </Head>
+        <ClientOnly> </ClientOnly>
         <v-card :loading="loading">
-            <v-app-bar :title="$t('forms.person.add')">
+            <v-toolbar-bar :title="$t('forms.person.add')" flat>
                 <template #prepend>
                     <BackBtn />
                 </template>
-            </v-app-bar>
-
+            </v-toolbar-bar>
             <v-stepper v-model="step" :mobile="!$vuetify.display.mdAndUp">
                 <v-stepper-header>
                     <v-stepper-item
@@ -93,16 +93,19 @@
         <v-snackbar v-model="showErrorSnackbar" color="error">
             {{ $t("toast.messages.error.add") }}
         </v-snackbar>
+        <ClientOnly>
+            <v-navigation-drawer location="end"> </v-navigation-drawer>
+        </ClientOnly>
     </div>
 </template>
 
 <script lang="ts" setup>
-import { usePersonStore } from "~/stores/personStore";
 import PersonForm from "~/components/Forms/Person/PersonForm.vue";
 import GalleryUploader from "~/components/Gallery/GalleryUploader.vue";
 import SingleImgSelector from "~/components/Gallery/Partials/SingleImgSelector.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
-import definePageTitle from "~/utils/definePageTitle";
+
+import { usePersonStore } from "~/stores/personStore";
 
 const { locale } = useI18n();
 const localeRoute = useLocaleRoute();
@@ -212,7 +215,7 @@ definePageMeta({
     name: "newPerson",
     path: "/persons/new",
     middleware: ["auth"],
-    layout: 'list'
+    layout: "list",
 });
 </script>
 

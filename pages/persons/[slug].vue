@@ -1,8 +1,52 @@
 <template>
-   <div>
-    <NuxtLayout name="right-drawer">
-    </NuxtLayout>
+    <div>
+        <NuxtLayout name="right-drawer">
+            <v-card v-if="computedFilmographyDispay" variant="text">
+                <v-card-title>{{
+                    $t("pages.persons.filmography")
+                }}</v-card-title>
+                <v-divider class="mt-2"></v-divider>
 
+                <v-list>
+                    <div
+                        v-for="(value, key, index) in person?.filmWorks"
+                        :key="index"
+                        class="my-2"
+                    >
+                        <v-list-subheader>
+                            {{ defineCardTitle(key) }}
+                        </v-list-subheader>
+                        <v-list-item
+                            v-for="(item, i) in value"
+                            :key="i"
+                            :to="$localeRoute(`/films/${item?.slug}`)"
+                            :value="item"
+                            :prepend-avatar="item?.poster || ''"
+                        >
+                            <v-list-item-title>
+                                <nuxt-link class="text-primary">
+                                    {{
+                                        useInternationalName(
+                                            item?.name as string,
+                                            item?.internationalName as string,
+                                        )
+                                    }}
+                                </nuxt-link>
+                            </v-list-item-title>
+                            <v-list-item-subtitle>
+                                {{ item.releaseYear || $t("general.no_data") }}
+                            </v-list-item-subtitle>
+                        </v-list-item>
+                        <v-divider
+                            v-if="
+                                person?.filmWorks &&
+                                index < Object.keys(person.filmWorks).length - 1
+                            "
+                        />
+                    </div>
+                </v-list>
+            </v-card>
+        </NuxtLayout>
         <NuxtLayout name="detail">
             <Head>
                 <Title>{{ definePageTitle(personFullName) }}</Title>
@@ -15,6 +59,21 @@
                 :loading="loading"
                 :notification="!isAuthenticated"
             >
+                <template #publisher-info>
+                    <v-chip size="small">
+                        <div class="d-flex ga-2">
+                            <span>{{ $t("general.published_by") }}:</span>
+                            <nuxt-link class="text-secondary">{{
+                                person?.publisherData
+                                    ? person?.publisherData.name
+                                    : ""
+                            }}</nuxt-link>
+                            <span>{{
+                                dateFormatter(person?.createdAt || "")
+                            }}</span>
+                        </div>
+                    </v-chip>
+                </template>
                 <template #general_info>
                     <TopInfo
                         :loading="loading"
@@ -22,16 +81,27 @@
                         :avatar="person?.avatar || ''"
                         :title="personFullName"
                         :subtitle="person?.specialtyNames || []"
-                        @avatar:edit="chooseAvatar"
+                        :active-img="activeImg"
+                        :gallery="person?.photos || []"
+                        @avatar:set="handleChangeAvatar"
+                        @delete:img="handleDeleteImg"
+                        @gallery:open="photoEditMode = true"
                     />
                 </template>
                 <template #notification>
                     <NotAuthWarning v-if="!isAuthenticated" />
                 </template>
                 <template #menu>
-                    <v-menu v-if="$vuetify.display.smAndDown" location="bottom end">
+                    <v-menu
+                        v-if="$vuetify.display.smAndDown"
+                        location="bottom end"
+                    >
                         <template #activator="{ props }">
-                            <v-btn icon :disabled="!isAuthenticated" v-bind="props">
+                            <v-btn
+                                icon
+                                :disabled="!isAuthenticated"
+                                v-bind="props"
+                            >
                                 <v-icon>mdi-dots-vertical</v-icon>
                             </v-btn>
                         </template>
@@ -52,7 +122,7 @@
                                         </template>
                                     </v-list-item>
                                 </template>
-    
+
                                 <v-list-item
                                     :title="$t('pages.general_info')"
                                     prepend-icon="mdi-information"
@@ -125,18 +195,11 @@
                     </div>
                 </template>
                 <template #text>
-                    <v-expansion-panels
-                        v-model="mainAccordion"
-                        variant="accordion"
-                        multiple
-                    >
-                        <v-expansion-panel
-                            id="bio"
-                            value="bio"
-                            tag="section"
+
+                        <v-card
                             :title="$t('pages.persons.bio')"
                         >
-                            <v-expansion-panel-text>
+                            <v-card-text>
                                 <IndentedEditableText
                                     v-if="person?.bio"
                                     :edit-mode="bioEditMode"
@@ -148,40 +211,8 @@
                                 <div v-else class="w-100 text-center">
                                     <span>{{ $t("general.no_data") }}</span>
                                 </div>
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                        <v-expansion-panel
-                            id="filmography"
-                            tag="section"
-                            value="filmography"
-                            :title="$t('pages.persons.filmography')"
-                        >
-                            <v-expansion-panel-text>
-                                <Filmography :person="person" />
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                        <v-expansion-panel
-                            id="gallery"
-                            tag="section"
-                            value="gallery"
-                            :title="$t('pages.persons.photos')"
-                        >
-                            <v-expansion-panel-text>
-                                <GalleryViewer
-                                    :slider-arr="sliderGalleryArr || []"
-                                    :disabled="!isAuthenticated"
-                                    :gallery="person?.photos || []"
-                                    :entity-name="personFullName"
-                                    :loading="loading"
-                                    with-avatar
-                                    @editor:open="photoEditMode = true"
-                                    @cover:set="handleSetCover"
-                                    @avatar:set="handleChangeAvatar"
-                                    @delete:img="handleDeleteImg"
-                                />
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
+                            </v-card-text>
+                        </v-card>
                 </template>
             </DetailCard>
             <BaseDialog
@@ -191,16 +222,16 @@
                 @close="generalInfoEdit = false"
             >
                 <template #text>
-                        <PersonForm
-                            :loading="loading"
-                            :show-bio="false"
-                            :person-form="personForm"
-                            :genders="genders"
-                            :specialties="specialties"
-                            @validate="isFormValid = $event"
-                            @form:submit="submitGeneralInfoEdit"
-                            @update:model-value="personForm = $event"
-                        />
+                    <PersonForm
+                        :loading="loading"
+                        :show-bio="false"
+                        :person-form="personForm"
+                        :genders="genders"
+                        :specialties="specialties"
+                        @validate="isFormValid = $event"
+                        @form:submit="submitGeneralInfoEdit"
+                        @update:model-value="personForm = $event"
+                    />
                 </template>
             </BaseDialog>
             <SuccessSnackbar
@@ -238,7 +269,7 @@
                 type="error"
                 :text="$t('forms.film.gallery_item_delete_confirm')"
                 :loading="loading"
-                @confirm="handlePhotosDelete"
+                @confirm="handleGalleryItemsDelete"
             />
             <ConfirmDialog
                 v-model="showCoverReplacementWarning"
@@ -253,7 +284,7 @@
                 @confirm="handlePersonDelete"
             />
         </NuxtLayout>
-   </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -269,6 +300,7 @@ import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import Filmography from "~/components/PersonPartials/Filmography.vue";
 import definePageTitle from "~/utils/definePageTitle";
+
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
 
@@ -307,8 +339,6 @@ const {
     GALLERY_SIZE,
 } = usePersonStore();
 
-
-
 const imagesToDelete = computed(() => {
     return person.value?.photos
         .filter((_: string, index: number): boolean =>
@@ -320,6 +350,21 @@ const imagesToDelete = computed(() => {
             return fileName ? fileName.split(".")[0] : "";
         });
 }) as ComputedRef<string[]>;
+
+const activeImg = ref<number>(
+    person.value
+        ? person.value?.photos.findIndex(
+              (img: string) => img === person.value?.avatar || "",
+          )
+        : 0,
+);
+
+const computedFilmographyDispay = computed(() => {
+    return (
+        person.value?.filmWorks &&
+        Object.values(person.value?.filmWorks).some((value) => value.length > 0)
+    );
+});
 
 const handleBioEdit = (): void => {
     bioEditMode.value = true;
@@ -390,17 +435,7 @@ const cancelBioEdit = () => {
 };
 
 const handleChangeAvatar = async (index: number): Promise<void> => {
-    console.log(index);
-    personForm.value.avatar = person.value?.photos[index - 1] || "";
-    await editPerson();
-    photoEditMode.value = false;
-    await fetchData();
-    showSnackbar.value = !showSnackbar.value;
-};
-
-const handleSetCover = async (index: number): Promise<void> => {
-    console.log(index);
-    personForm.value.cover = person.value?.photos[index - 1] || "";
+    personForm.value.avatar = person.value?.photos[index] || "";
     await editPerson();
     photoEditMode.value = false;
     await fetchData();
@@ -461,15 +496,13 @@ const replaceCover = async (): Promise<void> => {
     showSnackbar.value = !showSnackbar.value;
 };
 
-const handlePhotosDelete = async () => {};
-
 const handlePersonDelete = async (): Promise<void> => {
     const personId: number = person.value?.id || 0;
     await removePerson(personId);
     navigateTo(localeRoute("/persons"));
 };
 
-const handleGalleryItemsDelete = async () => {
+const handleGalleryItemsDelete = async (): Promise<void> => {
     await deleteGalleryItems(imagesToDelete.value);
     await fetchData();
     await nextTick(() => {
@@ -492,6 +525,23 @@ const fetchData = async (): Promise<void> => {
         fetchGenders(locale.value),
         fetchSpecialties(locale.value),
     ]);
+};
+
+const defineCardTitle = (key: string) => {
+    switch (key) {
+        case "actedInFilms":
+            return t("pages.persons.featuredInFilms");
+        case "directedFilms":
+            return t("pages.persons.directed_films");
+        case "writtenFilms":
+            return t("pages.persons.written_films");
+        case "producedFilms":
+            return t("pages.persons.produced_films");
+        case "composedFilms":
+            return t("pages.persons.composed_films");
+        default:
+            return key;
+    }
 };
 
 onBeforeUnmount((): void => {

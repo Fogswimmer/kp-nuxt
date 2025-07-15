@@ -33,16 +33,14 @@
                 width="300"
                 location="end"
             >
-                <div class="pa-2 flex flex-column ga-4">
-                    <CloseBtn
-                        v-if="$vuetify.display.smAndDown"
-                        @close="showFilters = false"
-                    />
-                    <slot name="filters" />
-                </div>
+                <v-card flat>
+                    <v-card-text>
+                        <slot name="filters"></slot>
+                    </v-card-text>
+                </v-card>
             </v-navigation-drawer>
         </client-only>
-        <v-app-bar flat>
+        <v-toolbar>
             <template #prepend>
                 <BackBtn />
             </template>
@@ -51,6 +49,16 @@
                     {{ listTitle }}</span
                 >
             </v-app-bar-title>
+            <v-btn
+                v-if="$vuetify.display.mdAndUp"
+                color="secondary"
+                variant="tonal"
+                prepend-icon="mdi-plus"
+                :text="$t('actions.add')"
+                class="mr-2"
+                :to="$localeRoute(newPageLink)"
+                :disabled="!isAuthenticated"
+            />
             <v-responsive v-if="$vuetify.display.mdAndUp" max-width="400">
                 <v-text-field
                     v-model="needle"
@@ -59,7 +67,7 @@
                     hide-details
                     prepend-inner-icon="mdi-magnify"
                     variant="outlined"
-                    density="comfortable"
+                    density="compact"
                     clearable
                     @click:clear="needle = ''"
                     @update:model-value="$emit('update:search', $event)"
@@ -73,23 +81,9 @@
                     @click="showSearch = !showSearch"
                 >
                     <v-icon>mdi-magnify</v-icon>
-                    <v-tooltip activator="parent" location="bottom">
-                        {{ $t("filters.title") }}
-                    </v-tooltip>
                 </v-btn>
                 <v-btn
-                    icon
-                    :color="showFilters ? 'primary' : ''"
-                    @click="showFilters = !showFilters"
-                >
-                    <v-icon>{{
-                        showFilters ? "mdi-filter-off" : "mdi-filter"
-                    }}</v-icon>
-                    <v-tooltip activator="parent" location="bottom">
-                        {{ $t("filters.title") }}</v-tooltip
-                    >
-                </v-btn>
-                <v-btn
+                    v-if="$vuetify.display.smAndDown"
                     icon
                     :disabled="!isAuthenticated"
                     :to="$localeRoute(newPageLink)"
@@ -99,29 +93,41 @@
                         {{ $t("actions.add") }}
                     </v-tooltip>
                 </v-btn>
+                <v-btn
+                    v-if="$vuetify.display.smAndDown"
+                    icon
+                    :color="showFilters ? 'primary' : ''"
+                    @click="showFilters = !showFilters"
+                >
+                    <v-icon>mdi-filter</v-icon>
+                </v-btn>
             </template>
-        </v-app-bar>
+        </v-toolbar>
 
-        <main class="pa-2">
+        <main>
             <template v-if="items.length">
-                <div class="mt-2 w-100 d-flex align-center justify-center">
-                    <v-label
-                        v-if="needle && !loading && $vuetify.display.mdAndUp"
+                <v-sheet v-if="needle && !loading && $vuetify.display.mdAndUp">
+                    <div
+                        class="mt-2 w-100 fill-height d-flex align-center justify-center"
                     >
-                        <span v-if="items.length">{{
-                            $t("search.request_result", { count: items.length })
-                        }}</span>
-                    </v-label>
-                </div>
+                        <v-label>
+                            <span v-if="items.length">{{
+                                $t("search.request_result", {
+                                    count: items.length,
+                                })
+                            }}</span>
+                        </v-label>
+                    </div>
+                </v-sheet>
 
                 <template v-if="!loading">
-                    <GradientWrapper v-for="(item, i) in items" :key="i">
-                        <v-list>
+                    <div class="pa-2 overflow-x-hidden">
+                        <GradientWrapper v-for="(item, i) in items" :key="i">
                             <v-list-item
                                 border
                                 rounded="lg"
                                 lines="three"
-                                class="overflow-x-hidden"
+                                class="my-2"
                                 :value="item"
                                 :to="$localeRoute(item.to || '/')"
                             >
@@ -141,7 +147,11 @@
                                     {{ item.value }}
                                 </template>
                                 <template #prepend>
-                                    <v-avatar :size="94">
+                                    <v-avatar
+                                        :size="
+                                            $vuetify.display.smAndDown ? 84 : 100
+                                        "
+                                    >
                                         <v-img :src="item.avatar">
                                             <template #placeholder>
                                                 <v-sheet height="100%">
@@ -163,28 +173,28 @@
                                 >
                                     <v-sheet
                                         height="94"
+                                        width="160"
                                         rounded="lg"
                                         class="ml-2 cursor-default"
-                                        width="130"
-                                        :border="false"
+                                        color="transparent"
                                     >
                                         <div
                                             class="d-flex flex-column justify-center fill-height"
                                         >
                                             <div class="w-100 text-center">
                                                 <v-rating
-                                                    v-if="item.rating"
+                                                    v-if="item.rating !== null"
                                                     :model-value="item.rating"
                                                     readonly
                                                     density="compact"
-                                                    size="x-small"
+                                                    size="small"
                                                     color="yellow-darken-2"
                                                 ></v-rating>
                                             </div>
 
                                             <v-chip
                                                 variant="plain"
-                                                size="x-small"
+                                                size="small"
                                             >
                                                 {{
                                                     $t("general.created_at") +
@@ -195,11 +205,11 @@
                                             <v-chip
                                                 v-if="item.publisherData?.name"
                                                 variant="plain"
-                                                size="x-small"
+                                                size="small"
                                             >
                                                 <div
                                                     class="d-inline-block text-truncate"
-                                                    style="width: 100px"
+                                                    style="width: 150px"
                                                 >
                                                     <span>
                                                         {{
@@ -222,29 +232,32 @@
                                     </v-sheet>
                                 </template>
                             </v-list-item>
-                        </v-list>
-                    </GradientWrapper>
+                        </GradientWrapper>
+                    </div>
                 </template>
-                <v-skeleton-loader
-                    v-for="n in limit"
-                    v-else-if="items.length"
-                    :key="n"
-                    rounded="lg"
-                    :height="140"
-                    class="ma-2 glassed"
-                    type="list-item-avatar-three-line"
-                />
+                <v-list v-else-if="items.length">
+                    <v-skeleton-loader
+                        v-for="n in limit"
+                        :key="n"
+                        rounded="lg"
+                        :height="140"
+                        class="ma-2 glassed"
+                        type="list-item-avatar-three-line"
+                    />
+                </v-list>
             </template>
-            <div
-                v-else-if="!loading"
-                class="d-flex flex-column align-center justify-center"
-                style="height: 50vh"
-            >
-                <v-label class="mt-2">{{ $t("general.no_results") }}</v-label>
-            </div>
-
+            <v-sheet v-else-if="!loading" height="100%">
+                <div
+                    class="d-flex flex-column align-center justify-center fill-height"
+                >
+                    <v-label class="mt-2">{{
+                        $t("general.no_results")
+                    }}</v-label>
+                </div>
+            </v-sheet>
             <slot name="empty-state" />
         </main>
+
         <v-app-bar location="bottom" order="1" permanent>
             <div class="w-100">
                 <v-pagination
@@ -262,10 +275,8 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Containment/Btns/BackBtn.vue";
-import CloseBtn from "../Containment/Btns/CloseBtn.vue";
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import { useAuthStore } from "#imports";
-import FilmRatingChip from "../Misc/FilmRatingChip.vue";
 
 const { isAuthenticated } = useAuthStore();
 
@@ -286,7 +297,7 @@ defineProps<{
 }>();
 
 const currentPage = ref<number>(1);
-const showFilters = ref<boolean>(false);
+const showFilters = ref<boolean>(true);
 const showSearch = ref<boolean>(false);
 const needle = ref<string>("");
 const handlePageChange = (page: number): void => {

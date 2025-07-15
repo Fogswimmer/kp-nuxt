@@ -16,7 +16,6 @@ onMounted(async () => {
     });
 });
 
-const theme = useTheme();
 </script>
 
 <style lang="scss">
@@ -61,8 +60,13 @@ p {
     margin-top: 1rem;
     text-indent: 2rem !important;
 }
-.glassed {
-    background: rgba(255, 255, 255, 0.1);
+.light-glassed {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.dark-glassed {
+    background: rgba(34, 34, 34, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }

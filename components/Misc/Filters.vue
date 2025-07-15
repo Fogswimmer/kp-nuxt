@@ -1,66 +1,60 @@
 <template>
-    <v-scroll-x-transition>
-        <div>
-            <v-card-text>
-                <div>
-                    <span>{{ $t("actions.limit") }}</span>
-                    <v-chip-group
-                        v-model="selectedLimit"
-                        mandatory
-                        column
-                        selected-class="text-primary"
-                        @update:model-value="$emit('update:limit', $event)"
-                    >
-                        <v-chip
-                            v-for="(limit, index) in limitOptions"
-                            :key="index"
-                            :value="limit"
-                            :text="limit.title"
-                            filter
-                        />
-                    </v-chip-group>
-                </div>
-                <v-divider />
-                <div>
-                    <span>{{ $t("filters.order.title") }}</span>
-                    <v-chip-group
-                        v-model="selectedOrder"
-                        mandatory
-                        column
-                        selected-class="text-primary"
-                        @update:model-value="$emit('update:order', $event)"
-                    >
-                        <v-chip
-                            v-for="(order, index) in orderOptions"
-                            :key="index"
-                            :value="order"
-                            filter
-                            :text="order.title"
-                        />
-                    </v-chip-group>
-                </div>
-                <v-divider />
-                <div>
-                    <span>{{ $t("filters.sort.title") }}:</span>
-                    <v-chip-group
-                        v-model="selectedSortOption"
-                        mandatory
-                        column
-                        selected-class="text-secondary"
-                        @update:model-value="$emit('update:sort', $event)"
-                    >
-                        <v-chip
-                            v-for="(sort, index) in sortOptions"
-                            :key="index"
-                            :value="sort"
-                            filter
-                            :text="sort.title"
-                        />
-                    </v-chip-group>
-                </div>
-            </v-card-text>
-        </div>
-    </v-scroll-x-transition>
+    <div>
+        <span>{{ $t("actions.limit") }}</span>
+        <v-chip-group
+            v-model="selectedLimit"
+            mandatory
+            column
+            selected-class="text-primary"
+            @update:model-value="$emit('update:limit', $event)"
+        >
+            <v-chip
+                v-for="(limit, index) in limitOptions"
+                :key="index"
+                :value="limit"
+                :text="limit.title"
+                filter
+            />
+        </v-chip-group>
+    </div>
+    <v-divider />
+    <div>
+        <span>{{ $t("filters.order.title") }}</span>
+        <v-chip-group
+            v-model="selectedOrder"
+            mandatory
+            column
+            selected-class="text-primary"
+            @update:model-value="$emit('update:order', $event)"
+        >
+            <v-chip
+                v-for="(order, index) in orderOptions"
+                :key="index"
+                :value="order"
+                filter
+                :text="order.title"
+            />
+        </v-chip-group>
+    </div>
+    <v-divider />
+    <div>
+        <span>{{ $t("filters.sort.title") }}:</span>
+        <v-chip-group
+            v-model="selectedSortOption"
+            mandatory
+            column
+            selected-class="text-secondary"
+            @update:model-value="$emit('update:sort', $event)"
+        >
+            <v-chip
+                v-for="(sort, index) in sortOptions"
+                :key="index"
+                :value="sort"
+                filter
+                :text="sort.title"
+            />
+        </v-chip-group>
+    </div>
 </template>
 
 <script lang="ts" setup>
