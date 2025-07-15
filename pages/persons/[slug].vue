@@ -1,9 +1,9 @@
 <template>
     <div>
-        <NuxtLayout name="right-drawer">
+        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
             <v-card v-if="computedFilmographyDispay" variant="text">
                 <v-card-title>{{
-                    $t("pages.persons.related_films")
+                    $t("pages.persons.filmography")
                 }}</v-card-title>
                 <v-divider class="mt-2"></v-divider>
 

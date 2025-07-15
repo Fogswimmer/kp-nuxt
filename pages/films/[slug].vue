@@ -4,7 +4,7 @@
             <Title>{{ definePageTitle(film?.name || "") }}</Title>
             <Meta name="description" :content="film?.description" />
         </Head>
-        <NuxtLayout name="right-drawer">
+        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
             <v-card variant="text" class="mt-2">
                 <v-card-title>{{
                     $t("pages.films.related_persons")
@@ -217,6 +217,7 @@
                 <template #text>
                     <main>
                         <FilmExpansionPanels
+                            v-if="$vuetify.display.smAndDown"
                             :team="team"
                             :starring="starring"
                             :is-description-panel-open="isDescriptionPanelOpen"
@@ -264,6 +265,72 @@
                                 />
                             </template>
                         </FilmExpansionPanels>
+                        <template v-else>
+                            <v-container>
+                                <v-row>
+                                    <v-col>
+                                        <v-card
+                                            :title="
+                                                $t('pages.films.description')
+                                            "
+                                            prepend-icon="mdi-text"
+                                        >
+                                            <v-card-text>
+                                                <IndentedEditableText
+                                                    :edit-mode="
+                                                        editDescriptionMode
+                                                    "
+                                                    :messages="
+                                                        $t(
+                                                            'pages.films.edit_description',
+                                                        )
+                                                    "
+                                                    :text="
+                                                        film?.description || ''
+                                                    "
+                                                    @sumbit:edit="
+                                                        submitDescriptionEdit
+                                                    "
+                                                    @cancel:edit="
+                                                        cancelDescriptionEdit
+                                                    "
+                                                />
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-card
+                                            :title="$t('pages.films.comments')"
+                                            prepend-icon="mdi-comment"
+                                        >
+                                            <v-card-text>
+                                                <Comments
+                                                    :loading="loading"
+                                                    :assessments="
+                                                        film?.assessments || []
+                                                    "
+                                                    :comment="comment"
+                                                    @assession:submit="
+                                                        submitAssessment
+                                                    "
+                                                    @assession:enable="
+                                                        isAssessing = true
+                                                    "
+                                                    @assession:cancel="
+                                                        cancelAssessment
+                                                    "
+                                                    @assession:delete="
+                                                        deleteAssessment
+                                                    "
+                                                />
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                            </v-container>
+                        </template>
                     </main>
                 </template>
             </DetailCard>

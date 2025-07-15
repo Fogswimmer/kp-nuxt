@@ -1,66 +1,90 @@
 <template>
-    <div :class="$vuetify.display.smAndDown ? 'text-center' : ''">
-        <v-avatar
-            size="250"
-            :class="[{ 'float-left mr-10': $vuetify.display.mdAndUp }]"
-        >
-            <v-img
-                src="/public/img/nebelschwimmer_avatar.jpg"
-                alt="Author"
-                class="fill-height"
-            >
-                <template #placeholder>
-                    <ImgPlaceholder icon="mdi-account" />
-                </template>
-            </v-img>
-        </v-avatar>
+    <v-card
+        prepend-avatar="/public/img/nebelschwimmer_avatar.jpg"
+        :title="$t('pages.about.author.name')"
+        :subtitle="$t('pages.about.author.subtitle')"
+        flat
+    >
+        <template #append>
+        </template>
+        <v-divider></v-divider>
+        <v-card-text>
+            <v-list :nav="compact">
+                <v-list-item
+                    >{{ $t("pages.about.author.first_section") }}:</v-list-item
+                >
 
-        <div class="d-flex flex-column ga-2">
-            <h5 class="text-primary text-h6">
-                {{ $t("pages.about.author.name") }}
-            </h5>
-            <div>{{ $t("pages.about.author.first_section") }}:</div>
-            <v-divider />
-            <div class="d-flex flex-column ga-2">
-                <div class="d-flex align-center ga-2">
-                    <v-icon color="blue" size="large">mdi-react</v-icon>React JS
-                </div>
+                <v-list-item  title="React JS">
+                    <template #prepend>
+                        <v-icon color="blue">mdi-react</v-icon>
+                    </template>
+                </v-list-item>
+                <v-list-item
 
-                <div class="d-flex align-center ga-2">
-                    <v-icon size="large" color="green">mdi-nodejs</v-icon>
-                    Node JS
-                </div>
-                <div class="d-flex align-center ga-2">
-                    <v-icon size="large" color="pink">mdi-jquery</v-icon>
-                    jQuery
-                </div>
-            </div>
-            <v-divider />
-            <div class="d-flex ga-2 align-center">
-                <span> {{ $t("pages.about.author.second_section") }}:</span>
-                <div class="d-flex align-center ga-1">
-                    <v-icon color="blue" size="x-large">mdi-language-go</v-icon>
-                    Golang
-                </div>
-                <div class="d-flex align-center ga-1">
-                    <v-icon color="purple" size="x-large"
-                        >mdi-all-inclusive</v-icon
-                    >
-                    DevOps
-                </div>
-            </div>
-        </div>
-        <a
+                    title="Express JS"
+                >
+                    <template #prepend>
+                        <v-icon color="green">mdi-nodejs</v-icon>
+                    </template>
+                </v-list-item>
+                <v-list-item
+                    title="Nest JS"
+                >
+                    <template #prepend>
+                        <v-icon color="pink-accent-3">mdi-nodejs</v-icon>
+                    </template>
+                </v-list-item>
+                <v-list-item title="jQuery">
+                    <template #prepend>
+                        <v-icon color="pink">mdi-jquery</v-icon>
+                    </template>
+                </v-list-item>
+                <v-list-item title="Go">
+                    <template #prepend>
+                        <v-icon color="blue">mdi-language-go</v-icon>
+                    </template>
+                </v-list-item>
+                <v-list-item title="Laravel">
+                    <template #prepend>
+                        <v-icon color="orange">mdi-laravel</v-icon>
+                    </template>
+                </v-list-item>
+                <v-divider />
+                <v-list-subheader
+                    >{{
+                        $t("pages.about.author.second_section")
+                    }}:</v-list-subheader
+                >
+                <v-list-item title="Devops">
+                    <template #prepend>
+                        <v-icon color="purple">mdi-all-inclusive</v-icon>
+                    </template>
+                </v-list-item>
+                <v-list-item title="Security">
+                    <template #prepend>
+                        <v-icon color="red">mdi-lock</v-icon>
+                    </template>
+                </v-list-item>
+            </v-list>
+            <v-divider class="my-2"></v-divider>
+            <v-btn
+            prepend-icon="mdi-github"
             href="https://github.com/Fogswimmer"
             target="_blank"
-            class="text-blue d-flex align-center justify-end ma-2 ga-2 flex-wrap"
-            ><v-icon size="large">mdi-github</v-icon>GitHub</a
-        >
-    </div>
+            color="blue"
+            block
+            variant="tonal"
+            >
+            Github
+            </v-btn>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script lang="ts" setup>
-import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
+defineProps<{
+    compact: boolean;
+}>();
 </script>
 
 <style></style>

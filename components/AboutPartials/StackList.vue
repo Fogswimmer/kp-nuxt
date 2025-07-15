@@ -6,17 +6,20 @@
             :subtitle="$t('pages.about.table_headers.language')"
         >
             <template #prepend>
-                <v-icon size="x-large" color="blue"
-                    >mdi-language-typescript
-                </v-icon>
+                <v-icon color="blue">mdi-language-typescript </v-icon>
             </template>
         </v-list-item>
         <v-list-item
-            title="Nuxt 3"
+            title="Vue 3"
             :subtitle="$t('pages.about.table_headers.main_framework')"
         >
             <template #prepend>
-                <v-icon size="x-large" color="green-accent-3">mdi-nuxt </v-icon>
+                <v-icon color="teal">mdi-vuejs </v-icon>
+            </template>
+        </v-list-item>
+        <v-list-item title="Nuxt 3" subtitle="SSR">
+            <template #prepend>
+                <v-icon color="green-accent-3">mdi-nuxt </v-icon>
             </template>
         </v-list-item>
         <v-list-item
@@ -24,22 +27,18 @@
             :subtitle="$t('pages.about.table_headers.additional_framework')"
         >
             <template #prepend>
-                <v-icon size="x-large" color="light-blue-accent-4"
-                    >mdi-vuetify
-                </v-icon>
+                <v-icon color="light-blue-accent-4">mdi-vuetify </v-icon>
             </template>
         </v-list-item>
 
-        <v-list-subheader> Backend </v-list-subheader>
+        <v-list-subheader>Backend</v-list-subheader>
 
         <v-list-item
             title="Php 8.3"
             :subtitle="$t('pages.about.table_headers.language')"
         >
             <template #prepend>
-                <v-icon size="x-large" color="deep-purple-lighten-3"
-                    >mdi-language-php
-                </v-icon>
+                <v-icon color="deep-purple-lighten-3">mdi-language-php </v-icon>
             </template>
         </v-list-item>
         <v-list-item
@@ -47,7 +46,7 @@
             :subtitle="$t('pages.about.table_headers.main_framework')"
         >
             <template #prepend>
-                <v-icon color="purple" size="x-large">mdi-symfony</v-icon>
+                <v-icon color="purple">mdi-symfony</v-icon>
             </template>
         </v-list-item>
         <v-list-item title="Postgres 16" subtitle="DB">
@@ -56,43 +55,39 @@
                     width="32"
                     height="32"
                     src="/public/img/psql.svg"
-                    class="me-8"
+                    class="me-6"
                 />
             </template>
         </v-list-item>
         <v-list-item
-            :title="$t('pages.about.dev_prod.table_headers.message_brocker')"
-            subtitle="RabbitMQ"
+            title="RabbitMQ"
+            :subtitle="$t('pages.about.dev_prod.table_headers.message_brocker')"
         >
             <template #prepend>
-                <v-icon color="orange" size="x-large"
-                    >mdi-rabbit</v-icon
-                ></template
+                <v-icon color="orange">mdi-rabbit</v-icon></template
             >
         </v-list-item>
         <v-list-item
-            :title="$t('pages.about.dev_prod.table_headers.cache_db')"
-            subtitle="Redis"
+            title="Redis"
+            :subtitle="$t('pages.about.dev_prod.table_headers.cache_db')"
         >
             <template #prepend>
-                <v-icon color="red" size="x-large"
-                    >mdi-database</v-icon
-                ></template
+                <v-icon color="red">mdi-database</v-icon></template
             >
         </v-list-item>
 
-        <v-list-subheader> Devops </v-list-subheader>
+        <v-list-subheader>Devops</v-list-subheader>
         <v-list-item
             title="Git"
             :subtitle="$t('pages.about.dev_prod.table_headers.version_control')"
         >
             <template #prepend>
-                <v-icon color="orange" size="x-large">mdi-git</v-icon>
+                <v-icon color="orange">mdi-git</v-icon>
             </template>
         </v-list-item>
         <v-list-item title="Bash" subtitle="CI/CD">
             <template #prepend>
-                <v-icon color="green" size="x-large">mdi-bash</v-icon>
+                <v-icon color="green">mdi-bash</v-icon>
             </template>
         </v-list-item>
         <v-list-item
@@ -102,7 +97,7 @@
             "
         >
             <template #prepend>
-                <v-icon size="x-large" color="blue">mdi-docker</v-icon>
+                <v-icon color="blue">mdi-docker</v-icon>
             </template>
         </v-list-item>
     </v-list>

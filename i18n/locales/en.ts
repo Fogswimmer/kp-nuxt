@@ -464,8 +464,8 @@ export default {
                 first_section:
                     "This project is a demonstration of my current skills in web development. In addition to the stack used in the project, I have experience working with",
                 second_section: "Growth directions",
-                subtitle: "Contacts",
-                name: "Andrey Diakov, fullstack developer",
+                subtitle: "Fullstack developer",
+                name: "Andrey Diakov",
                 stack: "My stack",
             },
         },
