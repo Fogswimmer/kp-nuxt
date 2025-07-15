@@ -1,7 +1,7 @@
 <template>
     <div>
         <ClientOnly>
-                <v-navigation-drawer location="end">
+                <v-navigation-drawer location="end" width="300">
                     <slot />
                 </v-navigation-drawer>
         </ClientOnly>

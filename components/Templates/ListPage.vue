@@ -277,6 +277,7 @@
 import BackBtn from "../Containment/Btns/BackBtn.vue";
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import { useAuthStore } from "#imports";
+import { fa } from "vuetify/locale";
 
 const { isAuthenticated } = useAuthStore();
 
@@ -295,9 +296,10 @@ defineProps<{
     listTitle?: string;
     limit: number;
 }>();
+const display = useDisplay();
 
 const currentPage = ref<number>(1);
-const showFilters = ref<boolean>(true);
+const showFilters = ref<boolean>(display.mdAndUp ? true : false);
 const showSearch = ref<boolean>(false);
 const needle = ref<string>("");
 const handlePageChange = (page: number): void => {
