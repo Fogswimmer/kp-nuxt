@@ -3,7 +3,7 @@ name: Nuxt 3 Deployment
 on:
     push:
         branches:
-            - dev
+            - main
 
 jobs:
     build:
