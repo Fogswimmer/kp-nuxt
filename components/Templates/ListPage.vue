@@ -299,7 +299,7 @@ defineProps<{
 const display = useDisplay();
 
 const currentPage = ref<number>(1);
-const showFilters = ref<boolean>(display.mdAndUp ? true : false);
+const showFilters = ref<boolean>(true);
 const showSearch = ref<boolean>(false);
 const needle = ref<string>("");
 const handlePageChange = (page: number): void => {
@@ -311,6 +311,12 @@ const closeMobileSearch = (): void => {
     showSearch.value = false;
     needle.value = "";
 };
+
+onMounted(() => {
+    if (display.smAndDown.value) {
+        showFilters.value = false;
+    }
+})
 </script>
 
 <style></style>

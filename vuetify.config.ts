@@ -1,6 +1,14 @@
 // vuetify.config.ts
 import { defineVuetifyConfiguration } from "vuetify-nuxt-module/custom-configuration";
 
+import { usePreferredDark } from "@vueuse/core";
+
+let defaultTheme = "light";
+
+if (import.meta.client) {
+    const prefersDark = usePreferredDark();
+    defaultTheme = prefersDark.value ? "dark" : "light";
+}
 export default defineVuetifyConfiguration({
     labComponents: true,
     defaults: {
@@ -18,7 +26,7 @@ export default defineVuetifyConfiguration({
         },
     },
     theme: {
-        defaultTheme: 'system',
+        defaultTheme: defaultTheme,
         themes: {
             light: {
                 dark: false,

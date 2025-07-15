@@ -4,7 +4,16 @@
             <Title>{{ definePageTitle($t("pages.about.title")) }}</Title>
         </Head>
         <Nuxt-Layout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-            <Author compact />
+            <v-card :title="$t('pages.about.stack')" prepend-icon="mdi-tools">
+                <StackList />
+                <v-divider></v-divider>
+                <div class="w-100 text-center">
+                    <span class="text-h6">
+                        {{ $t("pages.about.author.title") }}</span
+                    >
+                </div>
+                <Author compact />
+            </v-card>
         </Nuxt-Layout>
 
         <Nuxt-Layout name="list">
@@ -17,66 +26,60 @@
                 </v-toolbar-title>
             </v-toolbar>
 
-            <v-container fluid>
-                <v-row>
-                    <v-col cols="12" lg="4">
-                        <v-card
-                            :title="$t('pages.about.stack')"
-                            prepend-icon="mdi-tools"
+            <v-card>
+                <v-toolbar color="surface">
+                    <v-toolbar-title> Devops </v-toolbar-title>
+                    <v-tabs v-model="active">
+                        <v-tab value="scheme" prepend-icon="mdi-image">{{
+                            $t("pages.about.scheme")
+                        }}</v-tab>
+                        <v-tab value="code" prepend-icon="mdi-code-tags"
+                            >compose.yaml</v-tab
                         >
-                            <StackList />
-                        </v-card>
-                    </v-col>
-                    <v-col>
-                        <v-card height="100%">
-                            <v-toolbar color="surface">
-                                <v-toolbar-title> Devops </v-toolbar-title>
-                                <v-tabs v-model="active">
-                                    <v-tab
-                                        value="scheme"
-                                        prepend-icon="mdi-image"
-                                        >{{ $t("pages.about.scheme") }}</v-tab
+                    </v-tabs>
+                </v-toolbar>
+                <v-card-text>
+                    <v-tabs-window v-model="active">
+                        <v-tabs-window-item value="scheme">
+                            <v-sheet>
+                                <div
+                                    class="fill-height d-flex justify-center align-center pa-2"
+                                >
+                                    <v-img
+                                        src="public/img/scheme.webp"
+                                        alt="scheme"
+                                        :class="
+                                            theme.current.value.dark
+                                                ? ''
+                                                : 'inverted'
+                                        "
+                                        :height="$vuetify.display.mdAndUp ? 500 : 300"
                                     >
-                                    <v-tab
-                                        value="code"
-                                        prepend-icon="mdi-code-tags"
-                                        >compose.yaml</v-tab
-                                    >
-                                </v-tabs>
-                            </v-toolbar>
-                            <v-card-text>
-                                <v-tabs-window v-model="active">
-                                    <v-tabs-window-item value="scheme">
-                                        <v-sheet height="100%">
-                                            <div
-                                                class="fill-height d-flex justify-center align-center"
-                                            >
-                                                <v-img
-                                                    src="public/img/scheme.webp"
-                                                    alt="scheme"
-                                                    :class="theme.current.value.dark ? '' :  'inverted'"
-                                                >
-                                                    <template #placeholder>
-                                                        <ImgPlaceholder />
-                                                    </template>
-                                                </v-img>
-                                            </div>
-                                        </v-sheet>
-                                    </v-tabs-window-item>
-                                    <v-tabs-window-item value="code">
-                                        <ComposeYamlCode />
-                                    </v-tabs-window-item>
-                                </v-tabs-window>
-                            </v-card-text>
-                        </v-card>
-                    </v-col>
-                </v-row>
-                <v-row v-if="$vuetify.display.smAndDown">
-                    <v-col>
-                        <Author :compact="false" />
-                    </v-col>
-                </v-row>
-            </v-container>
+                                        <template #placeholder>
+                                            <ImgPlaceholder />
+                                        </template>
+                                    </v-img>
+                                </div>
+                            </v-sheet>
+                        </v-tabs-window-item>
+                        <v-tabs-window-item value="code">
+                            <ComposeYamlCode />
+                        </v-tabs-window-item>
+                    </v-tabs-window>
+                </v-card-text>
+            </v-card>
+
+            <template v-if="$vuetify.display.smAndDown">
+                <v-col>
+                    <StackList />
+                    <div class="w-100 text-center">
+                        <span class="text-h6">
+                            {{ $t("pages.about.author.title") }}</span
+                        >
+                    </div>
+                    <Author :compact="false" />
+                </v-col>
+            </template>
         </Nuxt-Layout>
     </div>
 </template>
