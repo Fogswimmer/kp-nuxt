@@ -10,13 +10,13 @@
                 >
                     <div class="d-flex align-center">
                         <v-chip label>
-                            <template v-if="!uploadError">
+                            <div v-if="!uploadError">
                                 {{ $t("general.available_for_upload") }}:
                                 {{ computedUploadCount }}
-                            </template>
-                            <template v-else>
+                            </div>
+                            <span v-else>
                                 {{ $t("general.max_files_error") }}!
-                            </template>
+                            </span>
                         </v-chip>
                         <v-spacer />
                         <v-chip
@@ -94,9 +94,9 @@
         </v-card>
         <v-snackbar
             v-model="showMaxFileSizeNotification"
-            persistent
             closable
             color="error"
+            @update:model-value="handleUpdateShowNotification"
         >
             {{
                 $t("general.max_file_size_error", {
@@ -145,6 +145,11 @@ onBeforeUnmount((): void => {
 
 const calculateTotalFilesize = (files: File[]): number => {
     return files.reduce((total, file) => total + file.size, 0);
+};
+
+const handleUpdateShowNotification = (value: boolean): void => {
+    showMaxFileSizeNotification.value = value;
+    previews.value = [];
 };
 
 watch(previews, (newPreviews): void => {
