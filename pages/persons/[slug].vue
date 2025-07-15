@@ -230,18 +230,16 @@
                             </v-expansion-panel-text>
                         </v-expansion-panel>
                     </v-expansion-panels>
-                    <v-card v-else :title="$t('pages.persons.bio')">
-                        <IndentedEditableText
-                            v-if="person?.bio"
-                            :edit-mode="bioEditMode"
-                            :messages="$t('pages.persons.edit_bio')"
-                            :text="person?.bio || ''"
-                            @sumbit:edit="submitBioEdit"
-                            @cancel:edit="cancelBioEdit"
-                        />
-                        <div v-else class="w-100 text-center">
-                            <span>{{ $t("general.no_data") }}</span>
-                        </div>
+                    <v-card v-else :title="$t('pages.persons.bio')" prepend-icon="mdi-feather" class="mt-2">
+                        <v-card-text>
+                            <IndentedEditableText
+                                :edit-mode="bioEditMode"
+                                :messages="$t('pages.persons.edit_bio')"
+                                :text="person?.bio || ''"
+                                @sumbit:edit="submitBioEdit"
+                                @cancel:edit="cancelBioEdit"
+                            />
+                        </v-card-text>
                     </v-card>
                 </template>
             </DetailCard>

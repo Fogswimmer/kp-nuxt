@@ -1,5 +1,9 @@
 <template>
-    <v-sheet :height="$vuetify.display.smAndDown ? 220 : 300" :class="theme.current.value.dark ? 'dark-glassed' : 'light-glassed'">
+    <v-sheet 
+    :height="$vuetify.display.smAndDown ? 220 : 300" 
+    :class="theme.current.value.dark ? 'dark-glassed' : 'light-glassed'"
+    :border="false"
+    >
         <div class="d-flex justify-center">
             <div class="position-absolute text-center" style="top: -50%">
                 <div class="position-relative">

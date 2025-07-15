@@ -30,7 +30,7 @@
             <template #title>
                 <div class="d-flex flex-column">
                     <span
-                        class="text-body-2 text-lg-text-body-1 font-weight-bold text-truncate"
+                        class="text-body-2 text-lg-text-body-1 font-weight-bold text-truncate text-secondary"
                         >{{
                             comment.authorName ? comment.authorName : "???"
                         }}</span

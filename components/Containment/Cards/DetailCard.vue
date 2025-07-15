@@ -25,11 +25,11 @@
             >
                 <slot name="notification" />
             </div>
-            <v-card>
+            <v-card flat>
                 <template v-if="loading" #loader>
                     <v-progress-linear indeterminate color="primary" />
                 </template>
-                <v-card>
+                <v-card flat>
                     <v-parallax
                         v-if="cover"
                         :src="cover"

@@ -58,13 +58,19 @@ jobs:
               run: |
                   echo "$SSH_PRIVATE_KEY" > key.pem
                   chmod 600 key.pem
-                  rsync -avz -e "ssh -i key.pem -o StrictHostKeyChecking=no" .output/ $SSH_USER@$SSH_HOST:$PROJECT_FOLDER
+                  rsync -az --delete -e "ssh -i key.pem -o StrictHostKeyChecking=no" .output/ $SSH_USER@$SSH_HOST:$PROJECT_FOLDER
               env:
                   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   PROJECT_FOLDER: ${{ secrets.PROJECT_FOLDER }}
-            # - name: SFTP Deploy
-            #   run: |
-            #       echo "put -r .output/* ${{ secrets.PROJECT_FOLDER }}" > sftp_commands.txt
-            #       sftp -b sftp_commands.txt -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+            - name: Restart Nuxt container
+              run: |
+                ssh -i key.pem -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST <<'EOF'
+                  cd $PROJECT_FOLDER
+                  docker compose build nuxt
+                  docker compose restart nuxt
+                EOF
+            - name: Cleanup
+              run: |
+                rm -f key.pem

@@ -100,7 +100,7 @@
                 </template>
                 <template #top_film>
                     <v-container fluid>
-                        <v-card v-if="!loading" class="pa-2" variant="text">
+                        <v-card v-if="!loading" class="pa-2" flat>
                             <v-row>
                                 <v-col v-bind="colParams.poster">
                                     <v-img
@@ -135,14 +135,14 @@
                                         </template>
                                     </v-img>
                                 </v-col>
+                                <v-divider vertical></v-divider>
                                 <v-col
                                     v-if="$vuetify.display.mdAndUp"
                                     v-bind="colParams.info"
                                 >
                                     <v-card
-                                        border
+                                        flat
                                         :height="TOP_CARDS_HEIGHT"
-                                        rounded="lg"
                                     >
                                         <div
                                             class="fill-height d-flex flex-column items-center"
@@ -153,13 +153,13 @@
                                         </div>
                                     </v-card>
                                 </v-col>
+                                <v-divider vertical></v-divider>
                                 <v-col
                                     v-if="$vuetify.display.mdAndUp"
                                     v-bind="colParams.rating"
                                 >
                                     <v-card
-                                        border
-                                        rounded="lg"
+                                        flat
                                         :height="TOP_CARDS_HEIGHT"
                                     >
                                         <Rating
@@ -266,7 +266,7 @@
                             </template>
                         </FilmExpansionPanels>
                         <template v-else>
-                            <v-container>
+                            <v-container fluid>
                                 <v-row>
                                     <v-col>
                                         <v-card
@@ -504,14 +504,14 @@ const colParams = {
     poster: {
         cols: 12,
         xl: 3,
-        lg: 4,
+        lg: 3,
         md: 4,
         sm: 12,
     },
     info: {
         cols: 12,
         xl: 5,
-        lg: 4,
+        lg: 5,
         md: 4,
         sm: 12,
     },

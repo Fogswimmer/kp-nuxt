@@ -66,7 +66,7 @@ p {
     -webkit-backdrop-filter: blur(10px);
 }
 .dark-glassed {
-    background: rgba(34, 34, 34, 0.8);
+    background: rgba(34, 34, 34, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
