@@ -32,7 +32,7 @@ export default defineNuxtConfig({
         vueI18n: "./i18n.config.ts",
         strategy: "prefix_and_default",
         defaultLocale: "ru",
-        baseUrl: process.env.BASE_URL,
+        baseUrl: process.env.NUXT_BASE_URL,
         locales: [
             {
                 code: "ru",
@@ -60,7 +60,7 @@ export default defineNuxtConfig({
                 name: "myProvider",
                 provider: "~/providers/my-provider.ts",
                 options: {
-                    baseUrl: process.env.BASE_URL,
+                    baseUrl: process.env.NUXT_BASE_URL,
                     modifiers: {
                         fit: "cover",
                     },
@@ -71,11 +71,8 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
-            apiBase: process.env.API_BASE_URL,
-            appName: process.env.APP_NAME,
-        },
-        private: {
-            nitroSecret: process.env.NITRO_SECRET,
+            apiBase: process.env.NUXT_API_BASE_URL,
+            appName: process.env.NUXT_APP_NAME,
         },
     },
 
@@ -91,7 +88,7 @@ export default defineNuxtConfig({
             },
             proxy: {
                 "/api": {
-                    target: process.env.API_BASE_URL,
+                    target: process.env.NUXT_API_BASE_URL,
                     changeOrigin: true,
                     rewrite: (path) => path.replace(/^\/api/, ""),
                 },

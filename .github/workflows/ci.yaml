@@ -1,78 +1,83 @@
 name: Nuxt 3 Deployment
 
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout repo
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-            - name: Install PNPM
-              run: npm i -g pnpm
+      - name: Install PNPM
+        run: npm i -g pnpm
 
-            - name: Install dependencies
-              run: pnpm install --frozen-lockfile
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
-            - name: Build Nuxt app
-              run: pnpm run build
+      - name: Build Nuxt app
+        run: pnpm run build
+        env:
+          NUXT_BASE_URL: ${{ secrets.NUXT_BASE_URL }}
+          NUXT_API_BASE_URL: ${{ secrets.NUXT_API_BASE_URL }}
+          NUXT_APP_NAME: ${{ secrets.NUXT_APP_NAME }}
+          NUXT_SESSION_PASSWORD: ${{ secrets.NUXT_SESSION_PASSWORD }}
+          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+      - name: Archive .output folder
+        run: tar -czf nuxt-output.tar.gz .output
 
-            - name: Archive .output folder
-              run: tar -czf nuxt-output.tar.gz .output
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuxt-build
+          path: nuxt-output.tar.gz
+          retention-days: 1
 
-            - name: Upload build artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: nuxt-build
-                  path: nuxt-output.tar.gz
-                  retention-days: 1
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-    deploy:
-        needs: build
-        runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nuxt-build
+          path: .
 
-        steps:
-            - name: Download build artifact
-              uses: actions/download-artifact@v4
-              with:
-                  name: nuxt-build
-                  path: .
+      - name: Extract artifact
+        run: tar -xzf nuxt-output.tar.gz
 
-            - name: Extract artifact
-              run: tar -xzf nuxt-output.tar.gz
+      - name: Check extracted files
+        run: ls -la .output
 
-            - name: Check extracted files
-              run: ls -la .output
-
-            - name: Upload Nuxt output
-              uses: appleboy/scp-action@v0.1.4
-              with:
-                host: ${{ secrets.SSH_HOST }}
-                username: ${{ secrets.SSH_USER }}
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                source: ".output"
-                target: "${{ secrets.PROJECT_FOLDER }}"
-            - name: Restart Nuxt container via SSH
-              uses: appleboy/ssh-action@v1.0.3
-              with:
-                host: ${{ secrets.SSH_HOST }}
-                username: ${{ secrets.SSH_USER }}
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                script: |
-                  cd ${{ secrets.PROJECT_FOLDER }}
-                  cd ..
-                  docker compose build nuxt
-                  docker compose restart nuxt
-            - name: Cleanup
-              run: |
-                rm -f key.pem
+      - name: Upload Nuxt output
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ".output"
+          target: "${{ secrets.PROJECT_FOLDER }}"
+      - name: Restart Nuxt container via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.PROJECT_FOLDER }}
+            cd ..
+            docker compose build nuxt
+            docker compose restart nuxt
+      - name: Cleanup
+        run: |
+          rm -f key.pem
