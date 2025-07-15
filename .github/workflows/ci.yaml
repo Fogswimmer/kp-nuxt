@@ -64,18 +64,17 @@ jobs:
                   SSH_USER: ${{ secrets.SSH_USER }}
                   SSH_HOST: ${{ secrets.SSH_HOST }}
                   PROJECT_FOLDER: ${{ secrets.PROJECT_FOLDER }}
-            - name: Restart Nuxt container
-              run: |
-                ssh -i key.pem -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST <<'EOF'
-                  cd $PROJECT_FOLDER
+            - name: Restart Nuxt container via SSH
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                  cd ${{ secrets.PROJECT_FOLDER }}
+                  cd ..
                   docker compose build nuxt
                   docker compose restart nuxt
-                EOF
-              env:
-                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-                  SSH_USER: ${{ secrets.SSH_USER }}
-                  SSH_HOST: ${{ secrets.SSH_HOST }}
-                  PROJECT_FOLDER: ${{ secrets.PROJECT_FOLDER }}
             - name: Cleanup
               run: |
                 rm -f key.pem

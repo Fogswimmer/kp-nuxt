@@ -106,23 +106,9 @@
                             </v-btn>
                         </template>
                         <v-list density="compact" class="bg-surface">
-                            <v-list-group value="edit">
-                                <template #activator="{ props }">
-                                    <v-list-item
-                                        v-bind="props"
-                                        :title="$t('actions.edit')"
-                                        prepend-icon="mdi-pencil"
-                                        value="edit"
-                                    >
-                                        <template #append>
-                                            <v-icon
-                                                icon="mdi-menu-right"
-                                                size="x-small"
-                                            />
-                                        </template>
-                                    </v-list-item>
-                                </template>
-
+                            <v-list-subheader value="edit">
+                                {{ $t('actions.edit') }}
+                            </v-list-subheader>
                                 <v-list-item
                                     :title="$t('pages.general_info')"
                                     prepend-icon="mdi-information"
@@ -141,7 +127,7 @@
                                     value="gallery"
                                     @click="photoEditMode = true"
                                 />
-                            </v-list-group>
+                            <v-divider></v-divider>
                             <v-list-item
                                 :title="$t('actions.remove')"
                                 prepend-icon="mdi-delete"
