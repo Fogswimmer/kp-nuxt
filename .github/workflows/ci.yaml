@@ -56,6 +56,16 @@ jobs:
             - name: Extract artifact
               run: tar -xzf nuxt-output.tar.gz
 
+            - name: Debug SSH Connection
+              run: |
+                  echo "$SSH_PRIVATE_KEY" > key.pem
+                  chmod 600 key.pem
+                  ssh -vvv -i key.pem -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST 'pwd'
+              env:
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                  SSH_USER: ${{ secrets.SSH_USER }}
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+
             - name: Upload Nuxt output
               uses: appleboy/scp-action@v0.1.4
               with:
