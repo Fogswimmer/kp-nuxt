@@ -76,7 +76,6 @@
                     touch
                     hide-delimiter-background
                     :show-arrows="galleryContent.length > 1"
-                    color="primary"
                     progress="primary"
                     height="calc(100vh - 100px)"
                     @update:model-value="handleUpdateCarouselOpenImgIndex"

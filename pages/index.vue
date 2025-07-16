@@ -13,11 +13,71 @@
                     :title="$t('pages.home.newest')"
                 >
                     <template #default>
-                        <HomeWall
-                            :items="latestFilmItems"
-                            :loading="filmLoading"
-                            :sidebar="false"
-                        />
+                        <v-carousel
+                            v-model="currentFilm"
+                            :height="$vuetify.display.mdAndUp ? 700 : 300"
+                            hide-delimiter-background
+                            progress="primary"
+                            color="primary"
+                        >
+                            <v-carousel-item
+                                v-for="(item, i) in latestFilmItems"
+                                :key="i"
+                                :value="item"
+                                touch
+                                progress="primary"
+                            >
+                                <v-container fluid>
+                                    <v-row>
+                                        <v-col>
+                                            <v-img :src="item.avatar"></v-img>
+                                        </v-col>
+                                        <v-col>
+                                            <v-card height="100%" flat>
+                                                <v-card-title
+                                                    class="text-center text-secondary text-h5"
+                                                >
+                                                    {{ item.title }} ({{
+                                                        item.releaseYear
+                                                    }})
+                                                </v-card-title>
+                                                <v-card-subtitle
+                                                    class="text-center"
+                                                >
+                                                    <v-rating
+                                                        :model-value="
+                                                            item.rating || 0
+                                                        "
+                                                        density="comfortable"
+                                                        color="yellow-darken-2"
+                                                    ></v-rating>
+                                                </v-card-subtitle>
+                                                <v-card-text>
+                                                    {{ item.subtitle }}
+                                                </v-card-text>
+                                            </v-card>
+                                        </v-col>
+                                    </v-row>
+                                </v-container>
+                                <!-- <div class="w-100">
+                                    <v-card-title
+                                        class="text-center text-secondary text-h5"
+                                    >
+                                        {{ item.title }} ({{
+                                            item.releaseYear
+                                        }})
+                                    </v-card-title>
+                                    <v-card-subtitle class="text-center">
+                                        <v-rating
+                                            :model-value="item.rating || 0"
+                                            density="comfortable"
+                                            size="small"
+                                            color="yellow-darken-2"
+                                        ></v-rating>
+                                    </v-card-subtitle>
+                                </div> -->
+                            </v-carousel-item>
+                        </v-carousel>
                     </template>
                 </MasonrySection>
                 <MasonrySection
@@ -74,6 +134,8 @@
 import MasonrySection from "~/components/Masonry/partials/MasonrySection.vue";
 import HomeWall from "~/components/Masonry/HomeWall.vue";
 import PageLoader from "~/components/Misc/PageLoader.vue";
+import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
+import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
@@ -95,6 +157,7 @@ const {
 const { locale } = useI18n();
 const localeRoute = useLocaleRoute();
 const isOffline = ref<boolean>(false);
+
 const fetchData = async (): Promise<void> => {
     await checkFilmsPresence();
     await checkPersonsPresence();
@@ -113,36 +176,41 @@ const fetchData = async (): Promise<void> => {
 const latestFilmItems = computed((): Detail[] => {
     return latestFilms.value[0] !== null
         ? latestFilms.value?.map((film: IFilm) => {
-                return {
-                    title: useInternationalName(
-                        film.name,
-                        film.internationalName,
-                    ),
-                    value: film.description || "",
-                    rating: film.rating || "0",
-                    avatar: film.poster || film.gallery[0] || "",
-                    to: "/films/" + film.slug,
-                    createdAt: film.createdAt || "",
-                };
-            })
+              return {
+                  title: useInternationalName(
+                      film.name,
+                      film.internationalName,
+                  ),
+                  subtitle: film.description,
+                  id: film.id,
+                  releaseYear: film.releaseYear,
+                  value: film.description || "",
+                  rating: film.rating || "0",
+                  avatar: film.poster || film.gallery[0] || "",
+                  to: "/films/" + film.slug,
+                  createdAt: film.createdAt || "",
+              };
+          })
         : [];
 });
+
+const currentFilm = ref<Detail>(latestFilmItems.value[0]);
 
 const topFilmItems = computed((): Detail[] => {
     return topFilms.value[0] !== null
         ? topFilms.value?.map((film: IFilm) => {
-                return {
-                    title: useInternationalName(
-                        film.name,
-                        film.internationalName,
-                    ),
-                    value: film.description || "",
-                    rating: film.rating || "0",
-                    avatar: film.poster || film.gallery[0] || "",
-                    to: "/films/" + film.slug,
-                    createdAt: film.createdAt || "",
-                };
-            })
+              return {
+                  title: useInternationalName(
+                      film.name,
+                      film.internationalName,
+                  ),
+                  value: film.description || "",
+                  rating: film.rating || "0",
+                  avatar: film.poster || film.gallery[0] || "",
+                  to: "/films/" + film.slug,
+                  createdAt: film.createdAt || "",
+              };
+          })
         : [];
 });
 
@@ -179,3 +247,11 @@ definePageMeta({
     layout: "home",
 });
 </script>
+
+<style>
+.carousel-card {
+    position: absolute;
+    left: 25%;
+    right: 25%;
+}
+</style>

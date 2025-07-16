@@ -53,7 +53,7 @@ a {
 }
 
 .img-blur {
-    filter: blur(1rem) brightness(0.5);
+    filter: blur(1rem);
 }
 
 p {
