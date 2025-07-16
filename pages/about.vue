@@ -12,7 +12,7 @@
                         {{ $t("pages.about.author.title") }}</span
                     >
                 </div>
-                <Author compact />
+                <Author :compact="false" />
             </v-card>
         </Nuxt-Layout>
 
