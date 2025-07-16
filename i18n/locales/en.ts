@@ -467,6 +467,8 @@ export default {
                 subtitle: "Fullstack developer",
                 name: "Andrey Diakov",
                 stack: "My stack",
+                about: "About",
+                bio: "",
             },
         },
     },

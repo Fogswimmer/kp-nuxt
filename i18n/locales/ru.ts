@@ -461,6 +461,8 @@ export default {
                 second_section: "Направления саморазвития",
                 name: "Андрей Дьяков",
                 stack: "Мой стек",
+                about: "О себе",
+                bio: "",
             },
         },
     },

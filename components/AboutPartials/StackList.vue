@@ -52,10 +52,10 @@
         <v-list-item title="Postgres 16" subtitle="DB">
             <template #prepend>
                 <v-img
-                    width="32"
-                    height="32"
+                    width="22"
+                    height="22"
                     src="/public/img/psql.svg"
-                    class="me-6"
+                    class="ml-1 me-8"
                 />
             </template>
         </v-list-item>
@@ -88,6 +88,11 @@
         <v-list-item title="Bash" subtitle="CI/CD">
             <template #prepend>
                 <v-icon color="green">mdi-bash</v-icon>
+            </template>
+        </v-list-item>
+        <v-list-item title="Github Actions" subtitle="CI/CD">
+            <template #prepend>
+                <v-icon color="black">mdi-github</v-icon>
             </template>
         </v-list-item>
         <v-list-item
