@@ -56,9 +56,6 @@ jobs:
             - name: Extract artifact
               run: tar -xzf nuxt-output.tar.gz
 
-            - name: Check extracted files
-              run: ls -la .output
-
             - name: Upload Nuxt output
               uses: appleboy/scp-action@v0.1.4
               with:
