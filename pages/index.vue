@@ -271,9 +271,8 @@ const personItems = computed((): Detail[] => {
 							])
 						: filmsCount + " " + t("pages.films.title"),
 			});
-			const personFullName = person.firstname + " " + person.lastname;
 			return {
-				title: getName(personFullName, person.internationalName || ""),
+				title: getName(person.name, person.internationalName || ""),
 				value: "",
 				rating: filmsCountLabel,
 				avatar: person?.avatar || "",
