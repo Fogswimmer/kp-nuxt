@@ -214,14 +214,14 @@ const fetchData = async (): Promise<void> => {
 		navigateTo(localeRoute("/empty-page"));
 	}
 };
-
+const getName = useInternationalName();
 const latestFilmItems = computed((): Detail[] => {
 	return latestFilms.value[0] !== null
 		? latestFilms.value?.map((film: IFilm) => {
 				return {
-					title: useInternationalName(
-						film.name,
-						film.internationalName,
+					title: getName(
+						film?.name || "",
+						film?.internationalName || "",
 					),
 					subtitle: film.description,
 					id: film.id,
@@ -242,9 +242,9 @@ const topFilmItems = computed((): Detail[] => {
 	return topFilms.value[0] !== null
 		? topFilms.value?.map((film: IFilm) => {
 				return {
-					title: useInternationalName(
-						film.name,
-						film.internationalName,
+					title: getName(
+						film?.name || "",
+						film?.internationalName || "",
 					),
 					value: film.description || "",
 					rating: film.rating || "0",
@@ -269,13 +269,11 @@ const personItems = computed((): Detail[] => {
 								"фильма",
 								"фильмов",
 							])
-						: filmsCount + ' ' +  t("pages.films.title")
+						: filmsCount + " " + t("pages.films.title"),
 			});
+			const personFullName = person.firstname + " " + person.lastname;
 			return {
-				title: useInternationalName(
-					person.name as IPerson["firstname"],
-					person.internationalName,
-				),
+				title: getName(personFullName, person.internationalName || ""),
 				value: "",
 				rating: filmsCountLabel,
 				avatar: person?.avatar || "",
