@@ -1,6 +1,6 @@
 <template>
 	<v-lazy transition="fade-transition" min-height="100">
-		<v-card flat border>
+		<v-card flat >
 			<template v-if="assessments.length > 0">
 				<v-data-iterator
 					:items="assementsWithColors"

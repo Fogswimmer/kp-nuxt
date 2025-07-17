@@ -1,6 +1,6 @@
 <template>
 	<v-card flat>
-		<v-toolbar>
+		<!-- <v-toolbar>
 			<template #prepend>
 				<BackBtn />
 			</template>
@@ -17,7 +17,7 @@
 				<slot name="notification" />
 			</div>
 			<slot name="menu" />
-		</v-toolbar>
+		</v-toolbar> -->
 		<div>
 			<div
 				v-if="$vuetify.display.smAndDown && notification"

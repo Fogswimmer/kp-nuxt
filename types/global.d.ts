@@ -88,6 +88,7 @@ declare global {
 		releaseYear?: number | null;
 		tooltip?: boolean;
 		flag?: string;
+		chipsArr?: {name: string, to: string | RouteLocationResolvedGeneric}[];
 	}
 
 	interface IFilmForm {

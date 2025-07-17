@@ -25,7 +25,7 @@ export default {
 		created_at: "Создано",
 		updated_at: "Обновлено",
 		published_by: "Публикация",
-		total: "Всего",
+		total: "Всего: {count}",
 		year: "Год",
 		years: "Лет",
 		years_old: "Лет",

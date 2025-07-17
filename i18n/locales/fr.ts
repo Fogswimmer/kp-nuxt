@@ -24,7 +24,7 @@ export default {
 		created_at: "Créé",
 		updated_at: "Mis à jour",
 		published_by: "Publié par",
-		total: "Total",
+		total: "Total: {count}",
 		year: "Année",
 		years: "Années",
 		years_old: "ans",

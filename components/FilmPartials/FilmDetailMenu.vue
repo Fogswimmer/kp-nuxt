@@ -90,7 +90,6 @@ defineProps<{
 defineEmits<{
 	(
 		event:
-			| "edit:trailer"
 			| "edit:general"
 			| "edit:description"
 			| "edit:gallery"

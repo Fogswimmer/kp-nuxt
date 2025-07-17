@@ -52,7 +52,7 @@ a {
 }
 
 .img-blur {
-	filter: blur(16px);
+	filter: blur(8px);
 }
 
 .img-blur::before {

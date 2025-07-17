@@ -1,5 +1,5 @@
 <template>
-	<v-card rounded="lg" class="pa-2" variant="text" border min-height="50">
+	<v-card rounded="lg" class="pa-2" variant="text" min-height="50">
 		<div
 			v-if="!editMode"
 			:class="['text-body-1 pa-2', { 'text-body-2': compact }]"

@@ -1,39 +1,46 @@
 <template>
-	<v-list-item
-		lines="three"
-		:to="$localeRoute(item.to || '/')"
-		rounded="lg"
-		border
-	>
+	<v-list-item lines="two" rounded="lg" border>
 		<v-list-item-title>
 			<div class="d-flex w-100 align-center">
-				<span
+				<nuxt-link
 					class="text-lg-h5 text-primary text-truncate"
 					style="max-width: 75%"
-					>{{ item.title }}</span
+					:to="item.to ? $localeRoute(item.to) : '/'"
+					>{{ item.title }}</nuxt-link
 				>
 				<v-spacer />
 				<FilmRatingChip
-					v-if="item.rating"
+					v-if="item.rating && !withChips"
 					:rating="item?.rating.toString()"
 				/>
+				<v-chip v-else variant="plain">{{ item.rating }}</v-chip>
 			</div>
 		</v-list-item-title>
 		<v-list-item-subtitle>
-			{{ item.value || $t("general.no_data") }}
+			<span v-if="item.value">{{ item.value }}</span>
 		</v-list-item-subtitle>
 		<template #prepend>
-			<v-avatar :size="$vuetify.display.mdAndUp ? 124 : 64">
-				<v-img :src="item?.avatar || ''">
-					<template #placeholder>
-						<ImgPlaceholder :loading="loading" icon="mdi-image" />
-					</template>
-					<template #error>
-						<ErrorPlaceHolder />
-					</template>
-				</v-img>
-			</v-avatar>
+			<nuxt-link :to="item.to ? $localeRoute(item.to) : '/'" class="mr-2">
+				<v-avatar :size="$vuetify.display.mdAndUp ? 112 : 64">
+					<v-img :src="item?.avatar || ''">
+						<template #placeholder>
+							<ImgPlaceholder
+								:loading="loading"
+								icon="mdi-image"
+							/>
+						</template>
+						<template #error>
+							<ErrorPlaceHolder />
+						</template>
+					</v-img>
+				</v-avatar>
+			</nuxt-link>
 		</template>
+		<v-chip-group v-if="withChips">
+			<v-chip v-for="(chip, i) in item.chipsArr" :key="i" :to="chip.to">{{
+				chip.name
+			}}</v-chip>
+		</v-chip-group>
 	</v-list-item>
 </template>
 
@@ -44,6 +51,7 @@ import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue"
 defineProps<{
 	item: Detail;
 	loading: boolean;
+	withChips?: boolean;
 }>();
 </script>
 

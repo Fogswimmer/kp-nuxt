@@ -22,7 +22,7 @@ export default {
 		img_broken: "Broken image",
 		see_all: "See all",
 		about: "About project",
-		total: "Total",
+		total: "Total: {count}",
 		published_by: "Published by",
 		created_at: "Created at",
 		updated_at: "Updated at",

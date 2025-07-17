@@ -1,5 +1,5 @@
 <template>
-	<v-card v-if="present" rounded="lg" height="100%">
+	<v-card rounded="lg" height="100%">
 		<v-card-title>
 			<div class="d-flex flex-column ga-1">
 				<h4 class="text-lg-h4 text-h5 text-center text-uppercase">
@@ -16,7 +16,6 @@
 import SectionDivider from "~/components/Misc/SectionDivider.vue";
 
 defineProps<{
-	present: boolean;
 	title: string;
 }>();
 </script>

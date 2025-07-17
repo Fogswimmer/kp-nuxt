@@ -117,34 +117,31 @@
 					<v-row>
 						<v-col cols="12" xl="6" lg="12" md="12" sm="12">
 							<HomeSection
-								v-if="popularActors.length > 0"
-								:present="personsPresent"
-								:loading="personLoading"
+								v-if="
+									popularActors.length > 0 && personsPresent
+								"
 								:title="$t('pages.home.popular_actors')"
-								type="listItem"
+								:loading="personLoading"
 							>
 								<template #default>
 									<HomeWall
 										:items="personItems"
 										:loading="personLoading"
-										:sidebar="false"
+										with-chips
 									/>
 								</template>
 							</HomeSection>
 						</v-col>
 						<v-col>
 							<HomeSection
-								v-if="topFilms.length > 0"
-								:present="filmsPresent"
+								v-if="topFilms.length > 0 && filmsPresent"
 								:loading="filmLoading"
 								:title="$t('pages.home.top', topFilms.length)"
-								type="listItem"
 							>
 								<template #default>
 									<HomeWall
 										:items="topFilmItems"
 										:loading="filmLoading"
-										:sidebar="false"
 									/>
 								</template>
 							</HomeSection>
@@ -170,12 +167,6 @@
 				</div>
 			</v-alert>
 		</v-bottom-sheet>
-		<v-footer v-if="$vuetify.display.mdAndUp" class="position-absolute right-0 left-0">
-			<div class="d-flex flex-column ga-2 justify-center align-center w-100">
-				<a href="https://github.com/Fogswimmer" class="text-primary">© Fogswimmer (Andrey Dyakov)</a>
-				<span>2024 - {{ formatDate(new Date(), "YYYY") }}</span>
-			</div>
-		</v-footer>
 	</div>
 </template>
 
@@ -188,7 +179,6 @@ import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
-import { formatDate } from "@vueuse/core";
 
 const { t } = useI18n();
 
@@ -270,19 +260,33 @@ const personItems = computed((): Detail[] => {
 	return (
 		popularActors.value &&
 		popularActors.value?.map((person: IPerson): Detail => {
+			const filmsCount = person.filmWorks.actedInFilms.length;
+			const filmsCountLabel = t("general.total", {
+				count:
+					locale.value == "ru"
+						? declineInRussian(filmsCount, [
+								"фильм",
+								"фильма",
+								"фильмов",
+							])
+						: filmsCount + ' ' +  t("pages.films.title")
+			});
 			return {
 				title: useInternationalName(
 					person.name as IPerson["firstname"],
 					person.internationalName,
 				),
-				value:
-					t("pages.persons.featuredInFilms") +
-						": " +
-						person.filmWorks.actedInFilms
-							.map((film) => film.name)
-							.join(", ") || "",
+				value: "",
+				rating: filmsCountLabel,
 				avatar: person?.avatar || "",
-				to: "/persons/" + person?.slug || "",
+				to: localeRoute("/persons/" + person?.slug) || "",
+				chipsArr:
+					person.filmWorks.actedInFilms.map((film) => {
+						return {
+							name: film.name,
+							to: localeRoute("/films/" + film.slug),
+						};
+					}) || [],
 			};
 		})
 	);

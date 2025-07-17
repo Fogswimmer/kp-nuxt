@@ -1,5 +1,42 @@
 <template>
 	<div>
+		<v-app-bar order="1">
+			<template #prepend>
+				<BackBtn />
+			</template>
+			<v-app-bar-title>
+				<span
+					v-if="!loading && $vuetify.display.smAndDown"
+					class="font-weight-bold"
+				>
+					{{
+						useInternationalName(
+							film?.name as string,
+							film?.internationalName as string,
+						)
+					}}
+				</span>
+
+				<v-breadcrumbs
+					v-if="!loading && $vuetify.display.mdAndUp"
+					:items="breadCrumbs"
+				></v-breadcrumbs>
+			</v-app-bar-title>
+			<div
+				v-if="$vuetify.display.mdAndUp && !isAuthenticated"
+				class="d-flex justify-center pa-2"
+			>
+				<NotAuthWarning v-if="!isAuthenticated" />
+			</div>
+			<FilmDetailMenu
+				:is-authenticated="isAuthenticated"
+				@edit:general="handleGeneralInfoEdit"
+				@edit:description="handleEditDescription"
+				@edit:gallery="openGalleryEditor"
+				@edit:trailer="showLinkTrailerDialog = true"
+				@delete:film="showDeleteWarning = true"
+			/>
+		</v-app-bar>
 		<Head>
 			<Title>{{ definePageTitle(film?.name || "") }}</Title>
 			<Meta name="description" :content="film?.description" />
@@ -94,9 +131,6 @@
 							}}</span>
 						</div>
 					</v-chip>
-				</template>
-				<template #notification>
-					<NotAuthWarning v-if="!isAuthenticated" />
 				</template>
 				<template #top_film>
 					<v-container fluid>
@@ -198,16 +232,6 @@
 						/>
 					</v-container>
 				</template>
-				<template #menu>
-					<FilmDetailMenu
-						:is-authenticated="isAuthenticated"
-						@edit:general="handleGeneralInfoEdit"
-						@edit:description="handleEditDescription"
-						@edit:gallery="openGalleryEditor"
-						@edit:trailer="showLinkTrailerDialog = true"
-						@delete:film="showDeleteWarning = true"
-					/>
-				</template>
 				<template #text>
 					<main>
 						<FilmExpansionPanels
@@ -264,6 +288,7 @@
 								<v-row>
 									<v-col>
 										<v-card
+											border
 											:title="
 												$t('pages.films.description')
 											"
@@ -296,6 +321,7 @@
 								<v-row>
 									<v-col>
 										<v-card
+											border
 											:title="$t('pages.films.comments')"
 											prepend-icon="mdi-comment"
 										>
@@ -439,6 +465,7 @@ import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue"
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import FilmGeneralInfo from "~/components/FilmPartials/FilmGeneralInfo.vue";
 import GalleryFullscreenViewer from "~/components/Gallery/GalleryFullscreenViewer.vue";
+import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 
 import { useFilmStore } from "~/stores/filmStore";
 import { useAuthStore } from "~/stores/authStore";
@@ -537,6 +564,25 @@ const imagesToDelete = computed(() => {
 			return fileName.split(".")[0];
 		});
 }) as ComputedRef<string[]>;
+
+const breadCrumbs = computed(() => {
+	return [
+		{
+			title: t("pages.home.title"),
+			to: localeRoute("/"),
+		},
+		{
+			title: t("pages.films.title"),
+			to: localeRoute("/films"),
+		},
+		{
+			title: useInternationalName(
+				film.value?.name as string,
+				film.value?.internationalName as string,
+			),
+		},
+	];
+});
 
 const generalInfo = computed((): Detail[] => {
 	const info = [

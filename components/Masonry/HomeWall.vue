@@ -13,6 +13,7 @@
 					v-intersect="useIntersection(index, visibleItems)"
 					:item="item"
 					:loading="loading"
+					:with-chips="withChips"
 				/>
 			</GradientWrapper>
 		</div>
@@ -28,6 +29,7 @@ const visibleItems = ref(new Set<number>());
 defineProps<{
 	items: Detail[];
 	loading: boolean;
+	withChips?: boolean;
 }>();
 </script>
 

@@ -1,12 +1,43 @@
 <template>
 	<div>
+		<v-app-bar order="1">
+			<template #prepend>
+				<BackBtn />
+			</template>
+			<v-app-bar-title>
+				<span
+					v-if="!loading && $vuetify.display.smAndDown"
+					class="font-weight-bold"
+				>
+					{{
+						useInternationalName(
+							personFullName,
+							person?.internationalName as string,
+						)
+					}}
+				</span>
+
+				<v-breadcrumbs
+					v-if="!loading && $vuetify.display.mdAndUp"
+					:items="breadCrumbs"
+				></v-breadcrumbs>
+			</v-app-bar-title>
+			<template #append>
+				<PersonDetailMenu
+					:is-authenticated="isAuthenticated"
+					@edit:general="generalInfoEdit = true"
+					@edit:bio="handleBioEdit"
+					@edit:gallery="photoEditMode = true"
+					@delete:film="showDeleteWarning = true"
+				/>
+			</template>
+		</v-app-bar>
 		<NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
 			<v-card v-if="computedFilmographyDispay" variant="text">
 				<v-card-title>{{
 					$t("pages.persons.filmography")
 				}}</v-card-title>
 				<v-divider class="mt-2"></v-divider>
-
 				<v-list>
 					<div
 						v-for="(value, key, index) in person?.filmWorks"
@@ -91,95 +122,7 @@
 				<template #notification>
 					<NotAuthWarning v-if="!isAuthenticated" />
 				</template>
-				<template #menu>
-					<v-menu
-						v-if="$vuetify.display.smAndDown"
-						location="bottom end"
-					>
-						<template #activator="{ props }">
-							<v-btn
-								icon
-								:disabled="!isAuthenticated"
-								v-bind="props"
-							>
-								<v-icon>mdi-dots-vertical</v-icon>
-							</v-btn>
-						</template>
-						<v-list density="compact" class="bg-surface">
-							<v-list-subheader value="edit">
-								{{ $t("actions.edit") }}
-							</v-list-subheader>
-							<v-list-item
-								:title="$t('pages.general_info')"
-								prepend-icon="mdi-information"
-								value="info"
-								@click="generalInfoEdit = true"
-							/>
-							<v-list-item
-								:title="$t('pages.detailed_info')"
-								prepend-icon="mdi-details"
-								value="details"
-								@click="handleBioEdit"
-							/>
-							<v-list-item
-								:title="$t('pages.gallery')"
-								prepend-icon="mdi-view-gallery"
-								value="gallery"
-								@click="photoEditMode = true"
-							/>
-							<v-divider></v-divider>
-							<v-list-item
-								:title="$t('actions.remove')"
-								prepend-icon="mdi-delete"
-								value="remove"
-								base-color="error"
-								@click="showDeleteWarning = true"
-							/>
-						</v-list>
-					</v-menu>
-					<div v-else class="d-flex ga-1">
-						<client-only>
-							<v-menu>
-								<template #activator="{ props }">
-									<v-btn
-										v-bind="props"
-										:disabled="!isAuthenticated"
-										prepend-icon="mdi-pencil"
-										@click.prevent.stop
-										>{{ $t("actions.edit") }}</v-btn
-									>
-								</template>
-								<v-list>
-									<v-list-item
-										:title="$t('pages.general_info')"
-										prepend-icon="mdi-information"
-										value="info"
-										@click="generalInfoEdit = true"
-									/>
-									<v-list-item
-										:title="$t('pages.detailed_info')"
-										prepend-icon="mdi-details"
-										value="details"
-										@click="handleBioEdit"
-									/>
-									<v-list-item
-										:title="$t('pages.gallery')"
-										prepend-icon="mdi-view-gallery"
-										value="gallery"
-										@click="photoEditMode = true"
-									/>
-								</v-list>
-							</v-menu>
-						</client-only>
-						<v-btn
-							prepend-icon="mdi-delete"
-							:disabled="!isAuthenticated"
-							base-color="error"
-							@click="showDeleteWarning = true"
-							>{{ $t("actions.remove") }}</v-btn
-						>
-					</div>
-				</template>
+				<template #menu> </template>
 				<template #text>
 					<v-expansion-panels
 						v-if="$vuetify.display.smAndDown"
@@ -311,7 +254,6 @@ import DetailCard from "~/components/Containment/Cards/DetailCard.vue";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
 import PersonForm from "~/components/Forms/Person/PersonForm.vue";
 import IndentedEditableText from "~/components/Misc/IndentedEditableText.vue";
-import GalleryViewer from "~/components/Gallery/GalleryViewer.vue";
 import PersonGalleryEdit from "~/components/Gallery/PersonGalleryEdit.vue";
 import ConfirmDialog from "~/components/Dialogs/ConfirmDialog.vue";
 import SuccessSnackbar from "~/components/Misc/SuccessSnackbar.vue";
@@ -319,6 +261,7 @@ import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import Filmography from "~/components/PersonPartials/Filmography.vue";
 import definePageTitle from "~/utils/definePageTitle";
+import PersonDetailMenu from "~/components/PersonPartials/PersonDetailMenu.vue";
 
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
@@ -401,8 +344,30 @@ const personFullName = computed((): string => {
 		? person.value?.firstname + " " + person.value?.lastname
 		: (person.value?.internationalName as string);
 });
+
 const computedGalleryEditTitle = computed((): string => {
 	return t("pages.films.edit_gallery") + " " + personFullName.value;
+});
+
+const breadCrumbs = computed(() => {
+	return [
+		{
+			title: t("pages.home.title"),
+			to: localeRoute("/"),
+		},
+		{
+			title: t("pages.persons.title"),
+			to: localeRoute("/films"),
+		},
+		{
+			title: personFullName.value
+				? useInternationalName(
+						personFullName.value as string,
+						person.value?.internationalName as string,
+					)
+				: "",
+		},
+	];
 });
 const computedPersonDetails = computed((): Detail[] => {
 	return [
