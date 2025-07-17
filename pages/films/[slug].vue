@@ -2,7 +2,7 @@
 	<div>
 		<v-app-bar order="1">
 			<template #prepend>
-				<BackBtn v-if="$vuetify.display.smAndDown"/>
+				<BackBtn v-if="$vuetify.display.smAndDown" />
 			</template>
 			<v-app-bar-title>
 				<span
@@ -10,10 +10,7 @@
 					class="font-weight-bold"
 				>
 					{{
-						useInternationalName(
-							film?.name as string,
-							film?.internationalName as string,
-						)
+						getName(film?.name || "", film?.internationalName || "")
 					}}
 				</span>
 
@@ -105,17 +102,7 @@
 			</v-card>
 		</NuxtLayout>
 		<NuxtLayout name="detail">
-			<DetailCard
-				:page-name="
-					useInternationalName(
-						film?.name as string,
-						film?.internationalName as string,
-					)
-				"
-				:loading="loading"
-				:notification="!isAuthenticated"
-				no-cover
-			>
+			<DetailCard :loading="loading" no-cover>
 				<template #publisher-info>
 					<v-chip size="small">
 						<div class="d-flex ga-2">
@@ -415,12 +402,7 @@
 				v-model:show-gallery="showFullScreenViewer"
 				v-model:active-img-index="activeImg"
 				:gallery-content="film?.gallery || []"
-				:name="
-					useInternationalName(
-						film?.name as string,
-						film?.internationalName as string,
-					)
-				"
+				:name="getName(film?.name || '', film?.internationalName || '')"
 				:no-content-label="$t('pages.films.no_gallery')"
 				:with-avatar="false"
 				@close="showFullScreenViewer = false"
@@ -543,7 +525,7 @@ const colParams = {
 		sm: 12,
 	},
 };
-
+const getName = useInternationalName();
 const activeImg = computed(() => {
 	return film.value
 		? film.value?.gallery.findIndex(
@@ -575,10 +557,12 @@ const breadCrumbs = computed(() => {
 			to: localeRoute("/films"),
 		},
 		{
-			title: useInternationalName(
-				film.value?.name as string,
-				film.value?.internationalName as string,
-			),
+			title: film.value
+				? getName(
+						film.value?.name || "",
+						film.value?.internationalName || "",
+					)
+				: "",
 		},
 	];
 });
@@ -587,9 +571,9 @@ const generalInfo = computed((): Detail[] => {
 	const info = [
 		{
 			title: "forms.film.name",
-			value: useInternationalName(
-				film?.value?.name as string,
-				film.value?.internationalName as string,
+			value: getName(
+				film.value?.name || "",
+				film.value?.internationalName || "",
 			),
 			icon: "mdi-movie",
 		},
@@ -646,7 +630,10 @@ const starring = computed((): Detail[] => {
 				return {
 					title: "",
 					id: person.id,
-					value: person?.name || "",
+					value: getName(
+						person?.name || "",
+						person.internationalName || "",
+					),
 					to: "/persons/" + person?.slug || "",
 					avatar: person.avatar || "",
 				};

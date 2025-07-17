@@ -70,6 +70,7 @@ declare global {
 		id: number;
 		slug: string;
 		name?: string;
+		internationalName: string;
 		avatar?: string;
 	}
 	interface Detail {
@@ -120,7 +121,7 @@ declare global {
 		firstname: string;
 		lastname: string;
 		internationalName: string;
-		name?: string;
+		name: string;
 		photos: string[] | [];
 		gender: string;
 		genderId: number;

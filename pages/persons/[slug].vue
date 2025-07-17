@@ -10,15 +10,12 @@
 					class="font-weight-bold"
 				>
 					{{
-						useInternationalName(
-							personFullName,
-							person?.internationalName as string,
-						)
+							getName(personFullName, person?.internationalName || "")
 					}}
 				</span>
 
 				<v-breadcrumbs
-					v-if="!loading && $vuetify.display.mdAndUp"
+					v-if="person && $vuetify.display.mdAndUp"
 					:items="breadCrumbs"
 				></v-breadcrumbs>
 			</v-app-bar-title>
@@ -57,10 +54,7 @@
 							<v-list-item-title>
 								<nuxt-link class="text-primary">
 									{{
-										useInternationalName(
-											item?.name as string,
-											item?.internationalName as string,
-										)
+										getName(item.name, item?.internationalName || "")
 									}}
 								</nuxt-link>
 							</v-list-item-title>
@@ -271,6 +265,7 @@ import { useAuthStore } from "~/stores/authStore";
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
 
+const getName = useInternationalName();
 const isFormValid = ref<boolean>(false);
 const showSnackbar = ref<boolean>(false);
 const showDeleteWarning = ref<boolean>(false);
@@ -352,16 +347,16 @@ const personFullName = computed((): string => {
 });
 
 const breadCrumbs = computed(() => {
+	if (!person.value) return [];
+
 	const displayName =
-		locale.value === "ru" && person.value
+		locale.value === "ru"
 			? `${person.value.firstname || ""} ${person.value.lastname || ""}`.trim()
-			: person.value?.internationalName || "";
-	console.log(
-		useInternationalName(
-			displayName,
-			person.value?.internationalName as string,
-		),
-	);
+			: person.value.internationalName || "";
+
+	const nameToShow = displayName
+		? 	getName(personFullName.value, person.value?.internationalName || "")
+		: "";
 
 	return [
 		{
@@ -373,15 +368,11 @@ const breadCrumbs = computed(() => {
 			to: localeRoute("/persons"),
 		},
 		{
-			title: displayName
-				? useInternationalName(
-						displayName,
-						person.value?.internationalName as string,
-					)
-				: "",
+			title: nameToShow,
 		},
 	];
 });
+
 const computedPersonDetails = computed((): Detail[] => {
 	return [
 		{

@@ -86,15 +86,18 @@ const fetchData = async (): Promise<void> => {
 	}
 };
 
+const getName = useInternationalName();
+
+
 const personItems = computed((): Detail[] => {
 	return (
 		persons.value &&
 		persons.value?.map((person): Detail => {
+			const personFullName = person.firstname + " " + person.lastname;
+					
+		
 			return {
-				title: useInternationalName(
-					person.firstname + " " + person.lastname,
-					person.internationalName,
-				),
+				title: getName(personFullName, person.internationalName || ""),
 				value: person?.specialtyNames.join(", "),
 				avatar: person?.avatar || "",
 				to: "/persons/" + person?.slug || "",

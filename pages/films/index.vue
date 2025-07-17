@@ -76,13 +76,15 @@ const fetchData = async (): Promise<void> => {
 	}
 };
 
+const getName = useInternationalName();
+
 const filmItems = computed((): Detail[] => {
 	return films.value[0] !== null
 		? films.value?.map((film: IFilm) => {
 				return {
-					title: useInternationalName(
-						film.name,
-						film.internationalName,
+					title:  getName(
+						film?.name || "",
+						film?.internationalName || "",
 					),
 					value: film.description || "",
 					avatar: film.poster || film.gallery[0] || "",
