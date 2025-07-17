@@ -279,7 +279,6 @@
 import BackBtn from "../Containment/Btns/BackBtn.vue";
 import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
 import { useAuthStore } from "#imports";
-import { fa } from "vuetify/locale";
 
 const { isAuthenticated } = useAuthStore();
 

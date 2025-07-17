@@ -2,7 +2,7 @@
 	<div>
 		<v-app-bar order="1">
 			<template #prepend>
-				<BackBtn />
+				<BackBtn v-if="$vuetify.display.smAndDown"/>
 			</template>
 			<v-app-bar-title>
 				<span
@@ -36,14 +36,6 @@
 				@edit:trailer="showLinkTrailerDialog = true"
 				@delete:film="showDeleteWarning = true"
 			/>
-			<template #extension 	v-if="$vuetify.display.smAndDown && !isAuthenticated">
-				<div
-			
-				class="d-flex justify-center pa-2"
-			>
-				<NotAuthWarning />
-			</div>
-			</template>
 		</v-app-bar>
 		<Head>
 			<Title>{{ definePageTitle(film?.name || "") }}</Title>
@@ -61,7 +53,7 @@
 					}}</v-list-subheader>
 					<v-list-item
 						v-for="(actor, index) in starring"
-						:key="actor?.id || 0 + index"
+						:key="`starring-${actor?.id || 'unknown'}-${index}`"
 						:title="actor.value"
 						:value="index"
 						:to="$localeRoute(actor.to || '/')"
@@ -86,10 +78,9 @@
 					<v-list-subheader>{{
 						$t("pages.films.team")
 					}}</v-list-subheader>
-
 					<v-list-item
 						v-for="(person, index) in team"
-						:key="person?.id || 0 + index"
+						:key="`team-${person?.id || 'unknown'}-${index}`"
 						:subtitle="$t(person.title)"
 						:title="person.value"
 						:value="index"

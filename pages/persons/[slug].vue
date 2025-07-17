@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<v-app-bar order="1">
-			<template #prepend>
+			<template #prepend v-if="$vuetify.display.smAndDown">
 				<BackBtn />
 			</template>
 			<v-app-bar-title>
@@ -31,14 +31,6 @@
 					@delete:film="showDeleteWarning = true"
 				/>
 			</template>
-			<template
-				#extension
-				v-if="$vuetify.display.smAndDown && !isAuthenticated"
-			>
-				<div class="d-flex justify-center pa-2">
-					<NotAuthWarning />
-				</div>
-			</template>
 		</v-app-bar>
 		<NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
 			<v-card v-if="computedFilmographyDispay" variant="text">
@@ -49,7 +41,7 @@
 				<v-list>
 					<div
 						v-for="(value, key, index) in person?.filmWorks"
-						:key="index"
+						:key="`filmwork-category-${key}-${index}`"
 						class="my-2"
 					>
 						<v-list-subheader>
@@ -57,7 +49,7 @@
 						</v-list-subheader>
 						<v-list-item
 							v-for="(item, i) in value"
-							:key="i"
+							:key="`filmwork-${key}-${item?.slug || item?.id || i}`"
 							:to="$localeRoute(`/films/${item?.slug}`)"
 							:value="item"
 							:prepend-avatar="item?.poster || ''"
@@ -81,6 +73,7 @@
 								person?.filmWorks &&
 								index < Object.keys(person.filmWorks).length - 1
 							"
+							:key="`divider-${key}-${index}`"
 						/>
 					</div>
 				</v-list>
@@ -348,17 +341,28 @@ const handleBioEdit = (): void => {
 	}
 };
 
+const computedGalleryEditTitle = computed((): string => {
+	return t("pages.films.edit_gallery") + " " + personFullName.value;
+});
+
 const personFullName = computed((): string => {
 	return locale.value === "ru"
 		? person.value?.firstname + " " + person.value?.lastname
 		: (person.value?.internationalName as string);
 });
 
-const computedGalleryEditTitle = computed((): string => {
-	return t("pages.films.edit_gallery") + " " + personFullName.value;
-});
-
 const breadCrumbs = computed(() => {
+	const displayName =
+		locale.value === "ru" && person.value
+			? `${person.value.firstname || ""} ${person.value.lastname || ""}`.trim()
+			: person.value?.internationalName || "";
+	console.log(
+		useInternationalName(
+			displayName,
+			person.value?.internationalName as string,
+		),
+	);
+
 	return [
 		{
 			title: t("pages.home.title"),
@@ -366,12 +370,12 @@ const breadCrumbs = computed(() => {
 		},
 		{
 			title: t("pages.persons.title"),
-			to: localeRoute("/films"),
+			to: localeRoute("/persons"),
 		},
 		{
-			title: personFullName.value
+			title: displayName
 				? useInternationalName(
-						personFullName.value as string,
+						displayName,
 						person.value?.internationalName as string,
 					)
 				: "",
@@ -444,16 +448,6 @@ const handleAvatarUpload = async (files: File[]): Promise<void> => {
 	photoEditMode.value = false;
 	await fetchData();
 	showSnackbar.value = !showSnackbar.value;
-};
-
-const chooseAvatar = (): void => {
-	if (person.value?.avatar) {
-		photoEditMode.value = true;
-		activeTab.value = 0;
-	} else {
-		photoEditMode.value = true;
-		activeTab.value = 2;
-	}
 };
 
 const handlePhotosUpload = async (files: File[]): Promise<void> => {
