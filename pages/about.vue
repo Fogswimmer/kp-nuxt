@@ -23,8 +23,11 @@
 			</v-row>
 			<v-row>
 				<v-col>
-					<v-card>
-						<v-toolbar color="surface">
+					<v-card variant="outlined">
+						<v-toolbar >
+                            <template #prepend>
+                                <v-icon class="ml-2">mdi-all-inclusive</v-icon>
+                            </template>
 							<v-toolbar-title> Devops </v-toolbar-title>
 							<v-tabs v-model="active">
 								<v-tab

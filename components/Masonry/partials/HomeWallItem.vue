@@ -13,7 +13,7 @@
 					v-if="item.rating && !withChips"
 					:rating="item?.rating.toString()"
 				/>
-				<v-chip v-else variant="plain">{{ item.rating }}</v-chip>
+				<v-chip v-else-if="$vuetify.display.mdAndUp" variant="plain">{{ item.rating }}</v-chip>
 			</div>
 		</v-list-item-title>
 		<v-list-item-subtitle>
@@ -48,6 +48,7 @@
 import FilmRatingChip from "~/components/Misc/FilmRatingChip.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
+import vuetifyConfig from "~/vuetify.config";
 defineProps<{
 	item: Detail;
 	loading: boolean;

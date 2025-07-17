@@ -2,15 +2,16 @@
 	<v-card
 		prepend-icon="mdi-account-hard-hat"
 		:title="$t('pages.about.author.title')"
-		flat
 		height="100%"
+		variant="outlined"
+		color="primary"
 	>
 		<v-divider></v-divider>
 		<v-card-text>
 			<v-container>
 				<v-row>
 					<v-col cols="12" xl="6" lg="12" md="12" sm="12">
-						<v-card height="100%" class="text-center" flat>
+						<v-card  class="text-center" >
 							<v-card-title class="text-h5">{{
 								$t("pages.about.author.name")
 							}}</v-card-title>
@@ -18,7 +19,7 @@
 								Fullstack developer
 							</v-card-subtitle>
 							<v-card-text>
-								<v-avatar size="250">
+								<v-avatar size="200">
 									<v-img
 										src="/public/img/nebelschwimmer_avatar.jpg"
 									></v-img>
@@ -31,9 +32,9 @@
 									block
 									href="https://github.com/Fogswimmer"
 									target="_blank"
-									color="blue"
+									
 									variant="tonal"
-									class="mt-16"
+									
 								>
 									Github
 								</v-btn>
@@ -102,28 +103,6 @@
 								</template>
 							</v-list-item>
 						</v-list>
-					</v-col>
-				</v-row>
-				<v-row>
-					<v-col>
-						<v-card
-							:title="$t('pages.about.author.about')"
-							prepend-icon="mdi-text-account"
-						>
-							<v-card-text>
-								"Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit, sed do eiusmod tempor
-								incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation
-								ullamco laboris nisi ut aliquip ex ea commodo
-								consequat. Duis aute irure dolor in
-								reprehenderit in voluptate velit esse cillum
-								dolore eu fugiat nulla pariatur. Excepteur sint
-								occaecat cupidatat non proident, sunt in culpa
-								qui officia deserunt mollit anim id est
-								laborum."
-							</v-card-text>
-						</v-card>
 					</v-col>
 				</v-row>
 			</v-container>

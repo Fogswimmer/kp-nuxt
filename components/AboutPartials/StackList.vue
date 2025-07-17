@@ -1,9 +1,15 @@
 <template>
-	<v-card prepend-icon="mdi-tools" :title="$t('pages.about.stack')" flat>
+	<v-card 
+	prepend-icon="mdi-tools" 
+	:title="$t('pages.about.stack')" 
+	variant="outlined"
+	color="secondary"
+	height="100%"
+	>
 		<v-divider></v-divider>
 		<v-container fluid>
 			<v-row>
-				<v-col>
+				<v-col cols="auto">
 					<v-list>
 						<v-list-subheader> Frontend </v-list-subheader>
 						<v-list-item
@@ -47,9 +53,7 @@
 								</v-icon>
 							</template>
 						</v-list-item>
-
 						<v-list-subheader>Backend</v-list-subheader>
-
 						<v-list-item
 							title="Php 8.3"
 							:subtitle="$t('pages.about.table_headers.language')"
@@ -146,7 +150,7 @@
 						</v-list-item>
 					</v-list>
 				</v-col>
-				<v-col>
+				<v-col >
 					<div
 						class="d-flex flex-column align-center fill-height ga-2 pa-2"
 					>
