@@ -170,7 +170,7 @@
 				</div>
 			</v-alert>
 		</v-bottom-sheet>
-		<v-footer class="position-absolute right-0 left-0">
+		<v-footer v-if="$vuetify.display.mdAndUp" class="position-absolute right-0 left-0">
 			<div class="d-flex flex-column ga-2 justify-center align-center w-100">
 				<a href="https://github.com/Fogswimmer" class="text-primary">© Fogswimmer (Andrey Dyakov)</a>
 				<span>2024 - {{ formatDate(new Date(), "YYYY") }}</span>
