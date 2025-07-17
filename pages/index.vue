@@ -280,7 +280,10 @@ const personItems = computed((): Detail[] => {
 				chipsArr:
 					person.filmWorks.actedInFilms.map((film) => {
 						return {
-							name: film.name,
+							name: getName(
+								film?.name || "",
+								film?.internationalName || "",
+							),
 							to: localeRoute("/films/" + film.slug),
 						};
 					}) || [],
