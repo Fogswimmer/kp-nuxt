@@ -11,7 +11,7 @@ log_error() {
 
 : "${SSH_USER:?Need to set SSH_USER}"
 : "${SSH_HOST:?Need to set SSH_HOST}"
-: "${NUXT_DIR:?Need to set NUXT_DIR}"             
+: "${NUXT_DIR:?Need to set NUXT_DIR}"
 : "${NUXT_CONTAINER:?Need to set NUXT_CONTAINER}"
 
 

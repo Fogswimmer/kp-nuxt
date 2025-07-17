@@ -1,31 +1,31 @@
 <template>
-    <div>
-        <v-app-bar order="1" :extended="extended">
-            <template #prepend>
-                <BackBtn />
-            </template>
-            <slot />
-            <template #extension>
-                <NotAuthWarning @click:close="extended = false" />
-            </template>
-        </v-app-bar>
-        <client-only>
-            <v-navigation-drawer order="0">
-                <Logo />
-                <DrawerNavList />
-                <template #append>
-                    <v-divider />
-                    <div class="pa-2 d-flex align-center">
-                        <ProfileNav />
-                        <SettingsBtn
-                            :active-theme="activeTheme"
-                            @update:active-theme="activeTheme = $event"
-                        />
-                    </div>
-                </template>
-            </v-navigation-drawer>
-        </client-only>
-    </div>
+	<div>
+		<v-app-bar order="1" :extended="extended">
+			<template #prepend>
+				<BackBtn />
+			</template>
+			<slot />
+			<template #extension>
+				<NotAuthWarning @click:close="extended = false" />
+			</template>
+		</v-app-bar>
+		<client-only>
+			<v-navigation-drawer order="0">
+				<Logo />
+				<DrawerNavList />
+				<template #append>
+					<v-divider />
+					<div class="pa-2 d-flex align-center">
+						<ProfileNav />
+						<SettingsBtn
+							:active-theme="activeTheme"
+							@update:active-theme="activeTheme = $event"
+						/>
+					</div>
+				</template>
+			</v-navigation-drawer>
+		</client-only>
+	</div>
 </template>
 
 <script lang="ts" setup>

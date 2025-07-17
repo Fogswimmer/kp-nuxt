@@ -1,70 +1,70 @@
 <template>
-    <v-card rounded="lg" class="pa-2 mb-3">
-        <v-tabs v-model="active">
-            <v-tab value="avatar" prepend-icon="mdi-account" color="primary">{{
-                $t("actions.edit_avatar")
-            }}</v-tab>
-            <v-tab value="cover" prepend-icon="mdi-image" color="primary">{{
-                $t("actions.edit_cover")
-            }}</v-tab>
-            <v-tab
-                value="upload"
-                prepend-icon="mdi-upload"
-                :disabled="uploadDisabled"
-                color="primary"
-                >{{ $t("actions.upload") }}</v-tab
-            >
-            <v-tab
-                value="remove"
-                prepend-icon="mdi-delete"
-                :disabled="removeDisabled"
-                color="error"
-                >{{ $t("actions.remove") }}</v-tab
-            >
-        </v-tabs>
-        <v-card-text>
-            <v-tabs-window v-model="active">
-                <v-tabs-window-item value="avatar">
-                    <SingleImgSelector
-                        v-if="person?.photos.length"
-                        :cover-index="selectedAvatarIndex"
-                        :card-height="cardHeight"
-                        :gallery="person?.photos || []"
-                        @img:select="$emit('avatar:change', $event)"
-                    />
-                    <GalleryUploader
-                        v-else
-                        :upload-count="1"
-                        :upload-error="uploadError"
-                        @files:upload="$emit('avatar:upload', $event)"
-                    />
-                </v-tabs-window-item>
-                <v-tabs-window-item value="cover">
-                    <GalleryUploader
-                        :upload-count="1"
-                        :upload-error="uploadError"
-                        @files:upload="$emit('cover:change', $event)"
-                    />
-                </v-tabs-window-item>
-                <v-tabs-window-item value="upload">
-                    <GalleryUploader
-                        :upload-count="uploadCount"
-                        :upload-error="uploadError"
-                        @files:upload="$emit('upload', $event)"
-                    />
-                </v-tabs-window-item>
-                <v-tabs-window-item value="remove">
-                    <MultipleImgSelector
-                        :slider-gallery-arr="sliderArr || []"
-                        :card-height="cardHeight"
-                        @delete:selected="$emit('delete:selected', $event)"
-                        @update:selected="$emit('update:selected', $event)"
-                        @gallery:clear="clearGalleryFiles"
-                    />
-                </v-tabs-window-item>
-            </v-tabs-window>
-        </v-card-text>
-    </v-card>
+	<v-card rounded="lg" class="pa-2 mb-3">
+		<v-tabs v-model="active">
+			<v-tab value="avatar" prepend-icon="mdi-account" color="primary">{{
+				$t("actions.edit_avatar")
+			}}</v-tab>
+			<v-tab value="cover" prepend-icon="mdi-image" color="primary">{{
+				$t("actions.edit_cover")
+			}}</v-tab>
+			<v-tab
+				value="upload"
+				prepend-icon="mdi-upload"
+				:disabled="uploadDisabled"
+				color="primary"
+				>{{ $t("actions.upload") }}</v-tab
+			>
+			<v-tab
+				value="remove"
+				prepend-icon="mdi-delete"
+				:disabled="removeDisabled"
+				color="error"
+				>{{ $t("actions.remove") }}</v-tab
+			>
+		</v-tabs>
+		<v-card-text>
+			<v-tabs-window v-model="active">
+				<v-tabs-window-item value="avatar">
+					<SingleImgSelector
+						v-if="person?.photos.length"
+						:cover-index="selectedAvatarIndex"
+						:card-height="cardHeight"
+						:gallery="person?.photos || []"
+						@img:select="$emit('avatar:change', $event)"
+					/>
+					<GalleryUploader
+						v-else
+						:upload-count="1"
+						:upload-error="uploadError"
+						@files:upload="$emit('avatar:upload', $event)"
+					/>
+				</v-tabs-window-item>
+				<v-tabs-window-item value="cover">
+					<GalleryUploader
+						:upload-count="1"
+						:upload-error="uploadError"
+						@files:upload="$emit('cover:change', $event)"
+					/>
+				</v-tabs-window-item>
+				<v-tabs-window-item value="upload">
+					<GalleryUploader
+						:upload-count="uploadCount"
+						:upload-error="uploadError"
+						@files:upload="$emit('upload', $event)"
+					/>
+				</v-tabs-window-item>
+				<v-tabs-window-item value="remove">
+					<MultipleImgSelector
+						:slider-gallery-arr="sliderArr || []"
+						:card-height="cardHeight"
+						@delete:selected="$emit('delete:selected', $event)"
+						@update:selected="$emit('update:selected', $event)"
+						@gallery:clear="clearGalleryFiles"
+					/>
+				</v-tabs-window-item>
+			</v-tabs-window>
+		</v-card-text>
+	</v-card>
 </template>
 
 <script lang="ts" setup>
@@ -73,50 +73,50 @@ import MultipleImgSelector from "./Partials/MultipleImgSelector.vue";
 import SingleImgSelector from "./Partials/SingleImgSelector.vue";
 
 defineEmits<{
-    (e: "update:selected" | "delete:selected", value: Array<number>): void;
-    (e: "upload" | "avatar:upload" | "cover:change", value: Array<File>): void;
-    (e: "avatar:change", value: number): void;
+	(e: "update:selected" | "delete:selected", value: Array<number>): void;
+	(e: "upload" | "avatar:upload" | "cover:change", value: Array<File>): void;
+	(e: "avatar:change", value: number): void;
 }>();
 const props = defineProps<{
-    activeTab?: number;
-    person?: IPerson | null;
-    selected: number[];
-    uploadCount: number;
-    uploadDisabled: boolean;
-    removeDisabled: boolean;
-    sliderArr?: string[];
-    cardHeight?: number;
+	activeTab?: number;
+	person?: IPerson | null;
+	selected: number[];
+	uploadCount: number;
+	uploadDisabled: boolean;
+	removeDisabled: boolean;
+	sliderArr?: string[];
+	cardHeight?: number;
 }>();
 const active = ref<number>(props.activeTab || 0);
 const galleryFiles = ref<File[]>([]);
 const selectedAvatarIndex = ref<number>(
-    props.person?.photos?.findIndex(
-        (item: string) => item === props.person?.avatar,
-    ) === -1
-        ? 0
-        : (props.person?.photos?.findIndex(
-              (item: string) => item === props.person?.avatar,
-          ) ?? 0) + 1,
+	props.person?.photos?.findIndex(
+		(item: string) => item === props.person?.avatar,
+	) === -1
+		? 0
+		: (props.person?.photos?.findIndex(
+				(item: string) => item === props.person?.avatar,
+			) ?? 0) + 1,
 );
 
 const computedUploadCount = computed((): number => {
-    return props.uploadCount - galleryFiles.value.length;
+	return props.uploadCount - galleryFiles.value.length;
 });
 
 const uploadError = computed((): boolean => {
-    return computedUploadCount.value <= 0;
+	return computedUploadCount.value <= 0;
 });
 
 const clearGalleryFiles = (): void => {
-    galleryFiles.value = [];
+	galleryFiles.value = [];
 };
 </script>
 
 <style lang="scss">
 .bg-selected-remove {
-    background-color: rgba(255, 0, 0, 0.2) !important;
+	background-color: rgba(255, 0, 0, 0.2) !important;
 }
 .bg-selected-cover {
-    background-color: rgba(0, 255, 0, 0.2) !important;
+	background-color: rgba(0, 255, 0, 0.2) !important;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <pre>
+	<pre>
 <code>
 services:
   symfony:
