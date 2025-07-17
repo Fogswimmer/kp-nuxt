@@ -2,8 +2,7 @@
 	<v-card 
 	prepend-icon="mdi-tools" 
 	:title="$t('pages.about.stack')" 
-	variant="outlined"
-	color="secondary"
+	variant="elevated"
 	height="100%"
 	>
 		<v-divider></v-divider>

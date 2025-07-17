@@ -3,15 +3,14 @@
 		prepend-icon="mdi-account-hard-hat"
 		:title="$t('pages.about.author.title')"
 		height="100%"
-		variant="outlined"
-		color="primary"
+		variant="elevated"
 	>
 		<v-divider></v-divider>
 		<v-card-text>
 			<v-container>
 				<v-row>
 					<v-col cols="12" xl="6" lg="12" md="12" sm="12">
-						<v-card  class="text-center" >
+						<v-card  class="text-center">
 							<v-card-title class="text-h5">{{
 								$t("pages.about.author.name")
 							}}</v-card-title>
@@ -32,16 +31,13 @@
 									block
 									href="https://github.com/Fogswimmer"
 									target="_blank"
-									
 									variant="tonal"
-									
 								>
 									Github
 								</v-btn>
 							</v-card-actions>
 						</v-card>
 					</v-col>
-					<v-divider v-if="$vuetify.display.mdAndUp" vertical></v-divider>
 					<v-col>
 						<v-list density="compact">
 							<v-list-item
