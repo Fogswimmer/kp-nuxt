@@ -627,6 +627,7 @@ const computedGalleryEditTitle = computed((): string => {
 const starring = computed((): Detail[] => {
 	return film.value
 		? film.value.actorsData?.map((person: FilmPerson): Detail => {
+				console.log(person);
 				return {
 					title: "",
 					id: person.id,
@@ -655,7 +656,10 @@ const team = computed((): Detail[] => {
 					return {
 						title: teamMembersTitles[index],
 						id: person.id,
-						value: person?.name || "",
+						value: getName(
+							person?.name || "",
+							person.internationalName || "",
+						),
 						to: "/persons/" + person?.slug || "",
 						avatar: person.avatar || "",
 					};
