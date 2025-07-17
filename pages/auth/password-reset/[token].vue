@@ -4,15 +4,17 @@
 			<Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
 		</Head>
 
-		<v-card variant="outlined">
+		<v-card variant="tonal" max-width="400">
 			<v-card-title>
 				{{ $t("auth.password_reset") }}
 			</v-card-title>
-			<v-card-subtitle>
-				<span class="text-caption text-secondary">{{
-					$t("forms.rules.password_requirement")
-				}}</span>
-			</v-card-subtitle>
+
+			<v-list-item class="text-caption text-secondary" lines="two">
+				<v-list-item-subtitle>
+					{{ $t("forms.rules.password_requirement") }}
+				</v-list-item-subtitle>
+			</v-list-item>
+
 			<v-card-text class="pa-4">
 				<v-form ref="emailFormRef" class="mt-4">
 					<v-text-field
@@ -72,7 +74,7 @@ const closeWindow = () => {
 definePageMeta({
 	name: "passwordReset",
 	path: "/auth/password-reset/:token",
-	middleware: ["validate-reset-token"],
+	// middleware: ["validate-reset-token"],
 	layout: "content-center",
 });
 </script>

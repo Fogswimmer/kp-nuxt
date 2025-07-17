@@ -5,7 +5,7 @@
 		</Head>
 
 		<AuthCard :title="$t('auth.password_reset')">
-			<v-card variant="text">
+			<v-card variant="tonal">
 				<v-card-text class="pa-4">
 					<v-form ref="emailFormRef" class="mt-4">
 						<div class="d-flex flex-column ga-2">
