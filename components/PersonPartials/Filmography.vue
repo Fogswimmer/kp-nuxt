@@ -28,9 +28,13 @@
 							<v-list-item-title>
 								<nuxt-link class="text-primary">
 									{{
-										useInternationalName(
-											item?.name as string,
-											item?.internationalName as string,
+										// useInternationalName(
+										// 	item?.name as string,
+										// 	item?.internationalName as string,
+										// )
+										getName(
+											item?.name,
+											item?.internationalName || "",
 										)
 									}}
 								</nuxt-link>
@@ -63,7 +67,7 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
-
+const getName = useInternationalName();
 const defineCardTitle = (key: string) => {
 	switch (key) {
 		case "actedInFilms":
