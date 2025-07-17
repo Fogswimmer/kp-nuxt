@@ -31,6 +31,14 @@
 					@delete:film="showDeleteWarning = true"
 				/>
 			</template>
+			<template
+				#extension
+				v-if="$vuetify.display.smAndDown && !isAuthenticated"
+			>
+				<div class="d-flex justify-center pa-2">
+					<NotAuthWarning />
+				</div>
+			</template>
 		</v-app-bar>
 		<NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
 			<v-card v-if="computedFilmographyDispay" variant="text">
@@ -262,6 +270,7 @@ import TopInfo from "~/components/Containment/Cards/partials/TopInfo.vue";
 import Filmography from "~/components/PersonPartials/Filmography.vue";
 import definePageTitle from "~/utils/definePageTitle";
 import PersonDetailMenu from "~/components/PersonPartials/PersonDetailMenu.vue";
+import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";

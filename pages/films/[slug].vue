@@ -26,7 +26,7 @@
 				v-if="$vuetify.display.mdAndUp && !isAuthenticated"
 				class="d-flex justify-center pa-2"
 			>
-				<NotAuthWarning v-if="!isAuthenticated" />
+				<NotAuthWarning />
 			</div>
 			<FilmDetailMenu
 				:is-authenticated="isAuthenticated"
@@ -36,6 +36,14 @@
 				@edit:trailer="showLinkTrailerDialog = true"
 				@delete:film="showDeleteWarning = true"
 			/>
+			<template #extension 	v-if="$vuetify.display.smAndDown && !isAuthenticated">
+				<div
+			
+				class="d-flex justify-center pa-2"
+			>
+				<NotAuthWarning />
+			</div>
+			</template>
 		</v-app-bar>
 		<Head>
 			<Title>{{ definePageTitle(film?.name || "") }}</Title>

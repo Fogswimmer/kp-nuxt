@@ -40,7 +40,7 @@
 				</v-card>
 			</v-navigation-drawer>
 		</client-only>
-		<v-toolbar>
+		<v-app-bar>
 			<template #prepend>
 				<BackBtn />
 			</template>
@@ -102,7 +102,7 @@
 					<v-icon>mdi-filter</v-icon>
 				</v-btn>
 			</template>
-		</v-toolbar>
+		</v-app-bar>
 
 		<main>
 			<template v-if="items.length">
