@@ -446,9 +446,7 @@ export default {
                 main_framework: 'Main framework',
                 additional_framework: 'UI framework',
                 important_packages: 'Important packages',
-                internationalization: 'Internationalization',
-                message_brocker: 'Message broker',
-                cache_db: 'Caching db',
+                internationalization: 'Internationalization',            
             },
             dev_prod: {
                 title: 'DevOps stack',
@@ -458,6 +456,8 @@ export default {
                     pipeline: 'Pipeline',
                     containerisation: 'Containerization',
                     scripts: 'Scripts',
+                    message_brocker: 'Message broker',
+                    cache_db: 'Caching db',
                 },
             },
             author: {
