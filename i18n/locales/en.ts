@@ -347,6 +347,7 @@ export default {
         },
         films: {
             title: 'Films',
+            similar_genres: "Similar genres",
             related_persons: 'Related persons',
             country: 'Country',
             budget: 'Budget',

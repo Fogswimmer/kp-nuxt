@@ -1,7 +1,7 @@
 <template>
     <v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
         <client-only>
-            <v-navigation-drawer v-if="$vuetify.display.mdAndUp" width="300">
+            <v-navigation-drawer v-if="$vuetify.display.mdAndUp" width="300" order="0">
                 <Logo />
                 <v-divider />
                 <DrawerNavList />

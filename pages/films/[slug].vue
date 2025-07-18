@@ -40,7 +40,7 @@
             <Meta name="description" :content="film?.description" />
         </Head>
         <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-            <SimilarGenreFilms :films="filmsWithSimilarGenres" />
+            <SimilarGenreFilms :films="filmsWithSimilarGenres" :loading="loading"/>
         </NuxtLayout>
 
         <NuxtLayout name="detail">
@@ -208,6 +208,12 @@
                                     @assession:enable="isAssessing = true"
                                     @assession:cancel="cancelAssessment"
                                     @assession:delete="deleteAssessment"
+                                />
+                            </template>
+                            <template #similar-genres>
+                                <SimilarGenreFilms
+                                    :films="filmsWithSimilarGenres"
+                                    :loading="loading"
                                 />
                             </template>
                         </FilmExpansionPanels>

@@ -115,6 +115,16 @@
                 <slot name="comments" />
             </v-expansion-panel-text>
         </v-expansion-panel>
+        <v-expansion-panel
+            id="similar-films"
+            tag="section"
+            value="similarFilms"
+            :title="$t('pages.films.similar_genres')"
+        >
+            <v-expansion-panel-text>
+                <slot name="similar-genres" />
+            </v-expansion-panel-text>
+        </v-expansion-panel>
     </v-expansion-panels>
 </template>
 
