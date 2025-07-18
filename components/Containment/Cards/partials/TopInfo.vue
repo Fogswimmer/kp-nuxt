@@ -58,13 +58,15 @@
                             }}
                         </div>
                         <div class="d-flex ga-1">
-                            <v-chip
-                                v-for="(item, i) in subtitle"
-                                :key="i"
-                                class="text-caption text-lg-body-1"
-                            >
-                                {{ item }}
-                            </v-chip>
+                            <v-chip-group>
+                                <v-chip
+                                    v-for="(item, i) in subtitle"
+                                    :key="i"
+                                    class="text-caption text-lg-body-1"
+                                >
+                                    {{ item }}
+                                </v-chip>
+                            </v-chip-group>
                         </div>
                     </div>
                 </template>
