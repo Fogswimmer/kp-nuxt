@@ -1,23 +1,23 @@
 <template>
-	<v-btn
-		:loading="loading"
-		:disabled="disabled"
-		color="primary"
-		type="submit"
-		prepend-icon="mdi-check"
-		@click="$emit('click:submit')"
-	>
-		{{ $t("actions.submit") }}
-	</v-btn>
+    <v-btn
+        :loading="loading"
+        :disabled="disabled"
+        color="primary"
+        type="submit"
+        prepend-icon="mdi-check"
+        @click="$emit('click:submit')"
+    >
+        {{ $t('actions.submit') }}
+    </v-btn>
 </template>
 
 <script lang="ts" setup>
 defineProps<{
-	loading?: boolean;
-	disabled?: boolean;
-}>();
+    loading?: boolean
+    disabled?: boolean
+}>()
 
-defineEmits(["click:submit"]);
+defineEmits(['click:submit'])
 </script>
 
 <style></style>

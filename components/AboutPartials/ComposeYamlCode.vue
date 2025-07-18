@@ -1,5 +1,5 @@
 <template>
-	<pre>
+    <pre>
 <code>
 services:
   symfony:
@@ -32,7 +32,7 @@ services:
     networks:
       - app-network
   nuxt:
-    build: ./nuxt 
+    build: ./nuxt
     working_dir: /app
     container_name: nuxt
     ports:
