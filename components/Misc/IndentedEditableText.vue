@@ -26,8 +26,8 @@
         </div>
         <v-confirm-edit
             v-else
-            v-model="editModeText"
-            @save="$emit('sumbit:edit', editModeText)"
+            :model-value="text"
+            @save="$emit('sumbit:edit', text)"
         >
             <template #default="{ model: proxyModel, actions }">
                 <v-card variant="outlined">
@@ -75,7 +75,7 @@ defineEmits<{
     (e: 'cancel:edit'): void
 }>()
 
-const editModeText = ref<string>(props.text)
+
 const visibleParagraphs = ref(new Set<number>())
 const isTruncated = ref<boolean>(props.text.length > 100)
 const formattedText = computed(() => {

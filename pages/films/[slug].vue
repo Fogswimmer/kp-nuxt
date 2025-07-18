@@ -190,6 +190,7 @@
                             </template>
                             <template #description>
                                 <IndentedEditableText
+                                    v-if="film"
                                     :edit-mode="editDescriptionMode"
                                     :messages="
                                         $t('pages.films.edit_description')
@@ -198,6 +199,7 @@
                                     @sumbit:edit="submitDescriptionEdit"
                                     @cancel:edit="cancelDescriptionEdit"
                                 />
+                                <v-skeleton-loader v-else type="text" height="200"></v-skeleton-loader>
                             </template>
                             <template #comments>
                                 <Comments
