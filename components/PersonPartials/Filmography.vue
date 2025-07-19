@@ -8,9 +8,9 @@
                     class="my-2"
                 >
                     <v-list-group v-if="value && value.length > 0" :value="key">
-                        <template #activator="{ props1 }">
+                        <template #activator="{ props }">
                             <v-list-item
-                                v-bind="props1"
+                                v-bind="props"
                                 prepend-icon="mdi-list-box"
                             >
                                 <v-list-item-title>
