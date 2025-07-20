@@ -24,6 +24,10 @@ export default defineVuetifyConfiguration({
         VSheet: {
             border: true,
         },
+        VNavigationDrawer: {
+            disableRouteWatcher: true,
+            disableResizeWatcher: true,
+        }
     },
     theme: {
         defaultTheme: defaultTheme,
