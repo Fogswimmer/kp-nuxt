@@ -3,8 +3,9 @@
         border
         class="ma-4"
         :loading="loading"
-        :style="`background-image: linear-gradient(145deg , ${props.color} 0%, transparent 80%)`"
+        :color="color"
         density="compact"
+        variant="tonal"
     >
         <v-toolbar class="pa-2" density="compact" color="transparent">
             <template #prepend>
@@ -30,8 +31,7 @@
             <template #title>
                 <div class="d-flex flex-column">
                     <span
-                        class="text-body-2 text-lg-text-body-1 font-weight-bold text-truncate"
-                        :style="`color: ${color}`"
+                        class="text-body-2 text-lg-text-body-1 font-weight-bold text-truncate comment-title"
                         >{{
                             comment.authorName ? comment.authorName : '???'
                         }}</span
@@ -44,7 +44,15 @@
         </v-toolbar>
         <v-divider />
         <div class="d-flex pa-2">
-            <span class="mx-2 pa-2"> {{ comment.comment }}</span>
+            <span
+                :class="[
+                    'mx-2 pa-2',
+                    { 'text-white': theme.current.value.dark },
+                    { 'text-black': !theme.current.value.dark },
+                ]"
+            >
+                {{ comment.comment }}</span
+            >
             <v-spacer />
             <v-btn
                 v-if="isAdmin || userId === comment.authorId"
@@ -70,6 +78,8 @@ import FilmRatingChip from '~/components/Misc/FilmRatingChip.vue'
 import ErrorPlaceHolder from '~/components/Containment/Img/ErrorPlaceHolder.vue'
 import ConfirmDialog from '~/components/Dialogs/ConfirmDialog.vue'
 import ImgPlaceholder from '~/components/Containment/Img/ImgPlaceholder.vue'
+
+const theme = useTheme()
 
 interface Comment {
     id: number
@@ -100,7 +110,10 @@ const handleConfirm = (id: number) => {
     showDeleteConfirm.value = false
     emits('confirm:delete', id)
 }
-
 </script>
 
-<style></style>
+<style>
+.comment-title {
+    line-height: 1.2;
+}
+</style>

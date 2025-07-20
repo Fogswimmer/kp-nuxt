@@ -124,11 +124,11 @@ const visibleComments = ref(new Set<number>())
 const itemsPerPage = ref<number>(5)
 const showDeleteConfirm = ref<boolean>(false)
 const commentColors = [
-    'rgba(0, 255, 0, 0.07)',
-    'rgba(255, 0, 0, 0.07)',
-    'rgba(0, 255, 255, 0.07)',
-    'rgba(255, 255, 0, 0.07)',
-    'rgba(155, 155, 0, 0.07)',
+    'rgba(0, 255, 0, 0.8)',
+    'rgba(255, 0, 0, 0.8)',
+    'rgba(0, 255, 255, 0.8)',
+    'rgba(255, 255, 0, 0.8)',
+    'rgba(155, 155, 0, 0.8)',
 ]
 const seeAllOnClick = () => {
     itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5
