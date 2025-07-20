@@ -4,12 +4,12 @@
             <Title>{{ definePageTitle($t('forms.person.add')) }}</Title>
         </Head>
         <ClientOnly />
-        <v-card :loading="loading" height="100%">
-            <v-toolbar-bar :title="$t('forms.person.add')" flat>
+        <v-card :loading="loading" height="100vh">
+            <v-toolbar :title="$t('forms.person.add')" flat>
                 <template #prepend>
                     <BackBtn />
                 </template>
-            </v-toolbar-bar>
+            </v-toolbar>
             <v-stepper v-model="step" :mobile="!$vuetify.display.mdAndUp">
                 <v-stepper-header>
                     <v-stepper-item
