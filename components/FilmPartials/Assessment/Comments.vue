@@ -145,29 +145,26 @@ const assementsWithColors = computed(() => {
         {} as Record<string, IAssessment[]>
     )
 
+    const uniqueAuthors = Object.keys(commentsWithSameAuthor)
+
+    const authorColorMap: Record<string, string> = {}
+    uniqueAuthors.forEach((authorId, index) => {
+        authorColorMap[authorId] = commentColors[index % commentColors.length]
+    })
+
     const mappedAssementsWithColors = Object.entries(
         commentsWithSameAuthor
-    ).map(([_, comments]) => {
-        const color =
-            commentColors[comments.length % commentColors.length] || 'blue'
-        return comments.map((comment) => {
-            return {
-                ...comment,
-                color,
-            }
-        })
+    ).flatMap(([authorId, comments]) => {
+        const color = authorColorMap[authorId]
+        return comments.map((comment) => ({
+            ...comment,
+            color,
+        }))
     })
 
     return mappedAssementsWithColors
-        .flat()
-        .sort((a, b) =>
-            sort.value === 'asc'
-                ? new Date(b.createdAt).getTime() -
-                  new Date(a.createdAt).getTime()
-                : new Date(a.createdAt).getTime() -
-                  new Date(b.createdAt).getTime()
-        )
 })
+
 const confirmDelete = (id: number) => {
     emits('assession:delete', id)
     showDeleteConfirm.value = false

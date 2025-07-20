@@ -346,7 +346,7 @@ export default {
             poster: 'Постер',
             trailer: 'Трейлер',
             related_persons: 'Связанные персоны',
-            similar_genres: "Похожие жанры",
+            similar_genres: "Похожие фильмы",
             country: 'Страна',
             budget: 'Бюджет',
             fees: 'Кассовый сбор',

@@ -268,6 +268,7 @@
                                             prepend-icon="mdi-account"
                                             border
                                             max-height="300"
+                                            height="100%"
                                             class="overflow-y-auto"
                                         >
                                             <v-list rounded="lg">

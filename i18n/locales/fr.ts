@@ -349,7 +349,7 @@ export default {
             title: 'Films',
             trailer: 'Trailer',
             poster: 'Poster',
-            similar_genres: "Genres similaires",
+            similar_genres: "Films similaires",
             related_persons: 'Personnes liées',
             country: 'Pays',
             budget: 'Budget',
