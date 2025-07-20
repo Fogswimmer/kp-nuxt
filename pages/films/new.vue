@@ -18,7 +18,7 @@
                     <v-stepper-item
                         value="1"
                         :title="$t('stepper.general')"
-                        :complete="step >= 1"
+                        :complete="step > 1"
                         :color="step >= 1 ? 'success' : 'primary'"
                     />
 
@@ -26,7 +26,7 @@
                     <v-stepper-item
                         value="2"
                         :complete="step > 2"
-                        :color="step >= 2 ? 'success' : 'primary'"
+                        :color="step > 2 ? 'success' : 'primary'"
                         :title="$t('stepper.gallery')"
                     />
 

@@ -1,5 +1,5 @@
 <template>
-    <v-card flat>
+    <v-card flat height="100%">
         <div>
             <div
                 v-if="$vuetify.display.smAndDown && notification"
