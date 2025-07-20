@@ -121,7 +121,7 @@ const error = useError()
 const { loading, personForm, genders, specialties } =
     storeToRefs(usePersonStore())
 const nextStep = () => {
-    if (!error.value) {
+    if (step.value === 4) return
         step.value++
         switch (step.value) {
             case 1:
@@ -134,7 +134,6 @@ const nextStep = () => {
                 showThirdStepSnackbar.value = true
                 break
         }
-    }
 }
 const {
     fetchGenders,
