@@ -4,7 +4,7 @@
             <Title>{{ definePageTitle($t('forms.person.add')) }}</Title>
         </Head>
         <ClientOnly />
-        <v-card :loading="loading">
+        <v-card :loading="loading" height="100%">
             <v-toolbar-bar :title="$t('forms.person.add')" flat>
                 <template #prepend>
                     <BackBtn />

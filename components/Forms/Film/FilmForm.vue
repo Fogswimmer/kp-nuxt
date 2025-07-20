@@ -1,5 +1,5 @@
 <template>
-    <v-card style="max-height: calc(100vh - 120px); overflow-y: auto">
+    <v-card style="max-height: calc(100vh - 120px); overflow-y: auto" height="100%">
         <v-card-text>
             <v-form ref="formRef" @submit.prevent>
                 <v-text-field
@@ -201,7 +201,7 @@ const MAX_NAME_LENGTH: number = 50
 const MIN_NAME_LENGTH: number = 2
 const CURRENT_YEAR: number = new Date().getFullYear()
 const START_YEAR: number = 1900
-const MAX_DESCRIPTION_LENGTH: number = 3000
+const MAX_DESCRIPTION_LENGTH: number = 10000
 const formRef = ref<HTMLFormElement | null>(null)
 const {
     required: requiredRule,
@@ -239,7 +239,7 @@ const props = defineProps<{
 
 const form = ref<Partial<IFilm>>({ ...props.filmForm })
 const isFormValid = ref<boolean>(true)
-const ageItems: number[] = [0, 3, 12, 16, 18]
+const ageItems: number[] = [3, 12, 16, 18]
 
 const yearsOfReleaseItems = Array.from(
     { length: CURRENT_YEAR - START_YEAR + 1 },

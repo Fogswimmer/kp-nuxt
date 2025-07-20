@@ -40,7 +40,10 @@
             <Meta name="description" :content="film?.description" />
         </Head>
         <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-            <SimilarGenreFilms :films="filmsWithSimilarGenres" :loading="loading"/>
+            <SimilarGenreFilms
+                :films="filmsWithSimilarGenres"
+                :loading="loading"
+            />
         </NuxtLayout>
 
         <NuxtLayout name="detail">
@@ -199,7 +202,11 @@
                                     @sumbit:edit="submitDescriptionEdit"
                                     @cancel:edit="cancelDescriptionEdit"
                                 />
-                                <v-skeleton-loader v-else type="text" height="200"></v-skeleton-loader>
+                                <v-skeleton-loader
+                                    v-else
+                                    type="text"
+                                    height="200"
+                                ></v-skeleton-loader>
                             </template>
                             <template #comments>
                                 <Comments
@@ -251,6 +258,120 @@
                                                     "
                                                 />
                                             </v-card-text>
+                                        </v-card>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-card
+                                            :title="$t('pages.films.starring')"
+                                            prepend-icon="mdi-account"
+                                            border
+                                            max-height="300"
+                                            class="overflow-y-auto"
+                                        >
+                                            <v-list rounded="lg">
+                                                <v-list-item
+                                                    v-for="(
+                                                        actor, index
+                                                    ) in starring"
+                                                    :key="index"
+                                                    :title="actor.value"
+                                                    :value="index"
+                                                    :to="
+                                                        $localeRoute(
+                                                            actor.to || '/'
+                                                        )
+                                                    "
+                                                    base-color="secondary"
+                                                >
+                                                    <template #prepend>
+                                                        <v-avatar>
+                                                            <v-img
+                                                                v-if="
+                                                                    actor.avatar
+                                                                "
+                                                                :src="
+                                                                    actor.avatar
+                                                                "
+                                                            >
+                                                                <template
+                                                                    #placeholder
+                                                                >
+                                                                    <v-icon
+                                                                        size="x-small"
+                                                                    >
+                                                                        mdi-account
+                                                                    </v-icon>
+                                                                </template>
+                                                                <template
+                                                                    #error
+                                                                >
+                                                                    <ErrorPlaceHolder />
+                                                                </template>
+                                                            </v-img>
+                                                            <v-icon
+                                                                v-else
+                                                                icon="mdi-account"
+                                                            />
+                                                        </v-avatar>
+                                                    </template>
+                                                </v-list-item>
+                                            </v-list>
+                                        </v-card>
+                                    </v-col>
+                                    <v-col>
+                                        <v-card
+                                            :title="$t('pages.films.team')"
+                                            prepend-icon="mdi-account-tie"
+                                            border
+                                            height="100%"
+                                            max-height="300"
+                                            class="overflow-y-auto"
+                                        >
+                                            <v-list rounded="lg">
+                                                <v-list-item
+                                                    v-for="(
+                                                        person, index
+                                                    ) in team"
+                                                    :key="index"
+                                                    rounded="lg"
+                                                    :subtitle="$t(person.title)"
+                                                    :title="person.value"
+                                                    :value="index"
+                                                    :to="
+                                                        $localeRoute(
+                                                            person.to || '/'
+                                                        )
+                                                    "
+                                                    base-color="secondary"
+                                                >
+                                                    <template #prepend>
+                                                        <v-avatar>
+                                                            <v-img
+                                                                :src="
+                                                                    person.avatar
+                                                                "
+                                                            >
+                                                                <template
+                                                                    #placeholder
+                                                                >
+                                                                    <v-icon
+                                                                        size="x-small"
+                                                                    >
+                                                                        mdi-account
+                                                                    </v-icon>
+                                                                </template>
+                                                                <template
+                                                                    #error
+                                                                >
+                                                                    <ErrorPlaceHolder />
+                                                                </template>
+                                                            </v-img>
+                                                        </v-avatar>
+                                                    </template>
+                                                </v-list-item>
+                                            </v-list>
                                         </v-card>
                                     </v-col>
                                 </v-row>
