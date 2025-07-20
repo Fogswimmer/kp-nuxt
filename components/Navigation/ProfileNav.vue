@@ -12,7 +12,7 @@
         </v-btn>
         <v-menu v-else v-model="showMenu" location="bottom center">
             <template #activator="{ props }">
-                <v-card variant="text" max-width="200">
+                <v-card variant="text" max-width="300">
                     <v-list-item
                         v-if="$vuetify.display.mdAndUp"
                         v-bind="props"
