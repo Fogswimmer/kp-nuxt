@@ -115,6 +115,20 @@
                         </v-col>
                     </v-row>
                     <v-row>
+                        <v-col>
+                            <HomeSection
+                                v-if="topFilms.length > 0 && filmsPresent"
+                                :loading="filmLoading"
+                                :title="$t('pages.home.top', topFilms.length)"
+                            >
+                                <template #default>
+                                    <HomeWall
+                                        :items="topFilmItems"
+                                        :loading="filmLoading"
+                                    />
+                                </template>
+                            </HomeSection>
+                        </v-col>
                         <v-col cols="12" xl="6" lg="12" md="12" sm="12">
                             <HomeSection
                                 v-if="
@@ -128,20 +142,6 @@
                                         :items="personItems"
                                         :loading="personLoading"
                                         with-chips
-                                    />
-                                </template>
-                            </HomeSection>
-                        </v-col>
-                        <v-col>
-                            <HomeSection
-                                v-if="topFilms.length > 0 && filmsPresent"
-                                :loading="filmLoading"
-                                :title="$t('pages.home.top', topFilms.length)"
-                            >
-                                <template #default>
-                                    <HomeWall
-                                        :items="topFilmItems"
-                                        :loading="filmLoading"
                                     />
                                 </template>
                             </HomeSection>

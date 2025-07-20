@@ -129,7 +129,7 @@
                     item-value="id"
                     :loading="loading"
                     item-title="name"
-                    :items="directors"
+                    :items="producers"
                     :rules="[requiredRule]"
                     :label="$t('forms.film.producer')"
                     prepend-inner-icon="mdi-account"
