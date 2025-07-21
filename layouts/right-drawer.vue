@@ -1,7 +1,7 @@
 <template>
     <div>
         <ClientOnly>
-            <v-navigation-drawer :mobile="false" location="end" order="1" permanent >
+            <v-navigation-drawer :mobile="false" location="end" order="1" >
                 <slot />
             </v-navigation-drawer>
         </ClientOnly>
