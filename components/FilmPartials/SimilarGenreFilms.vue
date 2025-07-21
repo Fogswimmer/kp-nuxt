@@ -3,6 +3,7 @@
         v-if="films.length && $vuetify.display.mdAndUp"
         :title="$t('pages.films.similar_genres')"
         prepend-icon="mdi-filmstrip"
+        flat
     >
         <v-card-text>
             <v-list variant="plain">
@@ -33,14 +34,8 @@
                         />
                     </v-list-item-subtitle>
                     <v-list-item-media class="mt-2">
-                        <v-img :src="film.poster || ''" rounded="lg">
-                            <template #placeholder>
-                                <ImgPlaceholder :loading="loading" />
-                            </template>
-                            <template #error>
-                                <ErrorPlaceHolder />
-                            </template>
-                        </v-img>
+                        <v-avatar :image="film.poster || ''" rounded="sm" size="200"/>
+                   
                     </v-list-item-media>
                 </v-list-item>
             </v-list>

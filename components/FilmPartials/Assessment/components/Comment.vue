@@ -1,52 +1,47 @@
 <template>
-    <v-card
-        border
-        class="ma-4"
-        :loading="loading"
-        :color="color"
+    <v-toolbar
+        class="pa-2"
         density="compact"
-        variant="tonal"
+        color="transparent"
+        extended
+        rounded="lg"
     >
-        <v-toolbar class="pa-2" density="compact" color="transparent">
-            <template #prepend>
-                <div class="position-relative">
-                    <v-avatar border>
-                        <v-img :src="comment?.authorAvatar || ''">
-                            <template #placeholder>
-                                <ImgPlaceholder
-                                    :loading="loading"
-                                    icon="mdi-account"
-                                />
-                            </template>
-                            <template #error>
-                                <ErrorPlaceHolder />
-                            </template>
-                        </v-img>
-                    </v-avatar>
-                </div>
-            </template>
-            <template #append>
-                <FilmRatingChip :rating="comment.rating.toString() || '0'" />
-            </template>
-            <template #title>
-                <div class="d-flex flex-column">
-                    <span
-                        class="text-body-2 text-lg-text-body-1 font-weight-bold text-truncate comment-title"
-                        >{{
-                            comment.authorName ? comment.authorName : '???'
-                        }}</span
-                    >
-                    <span class="text-caption text-disabled">{{
-                        dateFormatter(comment.createdAt)
-                    }}</span>
-                </div>
-            </template>
-        </v-toolbar>
-        <v-divider />
-        <div class="d-flex pa-2">
+        <template #image>
+            <v-img
+                :gradient="`to bottom left, rgba(0,0,0,0), ${color}`"
+            ></v-img>
+        </template>
+        <template #prepend>
+            <v-avatar>
+                <v-img :src="comment?.authorAvatar || ''">
+                    <template #placeholder>
+                        <ImgPlaceholder :loading="loading" icon="mdi-account" />
+                    </template>
+                    <template #error>
+                        <ErrorPlaceHolder />
+                    </template>
+                </v-img>
+            </v-avatar>
+        </template>
+        <template #append>
+            <FilmRatingChip :rating="comment.rating.toString() || '0'" />
+        </template>
+        <template #title>
+            <div class="d-flex flex-column">
+                <span
+                    class="text-body-2 text-lg-body-1 font-weight-bold text-truncate comment-title"
+                    >{{ comment.authorName ? comment.authorName : '???' }}</span
+                >
+                <span class="text-caption text-disabled">{{
+                    dateFormatter(comment.createdAt)
+                }}</span>
+            </div>
+            <v-divider></v-divider>
+        </template>
+        <template #extension>
             <span
                 :class="[
-                    'mx-2 pa-2',
+                    'pa-2 text-caption text-lg-body-2',
                     { 'text-white': theme.current.value.dark },
                     { 'text-black': !theme.current.value.dark },
                 ]"
@@ -62,15 +57,15 @@
                 color="error"
                 @click="showDeleteConfirm = true"
             />
-        </div>
+        </template>
+    </v-toolbar>
 
-        <ConfirmDialog
-            v-model="showDeleteConfirm"
-            :text="$t('actions.delete_assessment_warning')"
-            @cancel="showDeleteConfirm = false"
-            @confirm="handleConfirm(comment.id)"
-        />
-    </v-card>
+    <ConfirmDialog
+        v-model="showDeleteConfirm"
+        :text="$t('actions.delete_assessment_warning')"
+        @cancel="showDeleteConfirm = false"
+        @confirm="handleConfirm(comment.id)"
+    />
 </template>
 
 <script lang="ts" setup>

@@ -123,13 +123,14 @@ const page = ref<number>(1)
 const visibleComments = ref(new Set<number>())
 const itemsPerPage = ref<number>(5)
 const showDeleteConfirm = ref<boolean>(false)
-const commentColors = [
-    'rgba(0, 255, 0, 0.8)',
-    'rgba(255, 0, 0, 0.8)',
-    'rgba(0, 255, 255, 0.8)',
-    'rgba(255, 255, 0, 0.8)',
-    'rgba(155, 155, 0, 0.8)',
-]
+const opacity = 0.2;
+
+const commentColors = Array.from({ length: 10 }, () => {
+    return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
+        Math.random() * 256
+    )}, ${Math.floor(Math.random() * 256)}, ${opacity})`
+})
+
 const seeAllOnClick = () => {
     itemsPerPage.value = itemsPerPage.value === 5 ? props.assessments.length : 5
 }

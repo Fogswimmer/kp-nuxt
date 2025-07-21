@@ -29,52 +29,8 @@
                 />
             </template>
         </v-app-bar>
-        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-            <v-card v-if="computedFilmographyDispay" variant="text">
-                <v-card-title>
-                    {{ $t('pages.persons.filmography') }}
-                </v-card-title>
-                <v-divider class="mt-2" />
-                <v-list>
-                    <div
-                        v-for="(value, key, index) in person?.filmWorks"
-                        :key="`filmwork-category-${key}-${index}`"
-                        class="my-2"
-                    >
-                        <v-list-subheader>
-                            {{ defineCardTitle(key) }}
-                        </v-list-subheader>
-                        <v-list-item
-                            v-for="(item, i) in value"
-                            :key="`filmwork-${key}-${item?.slug || item?.id || i}`"
-                            :to="$localeRoute(`/films/${item?.slug}`)"
-                            :value="item"
-                            :prepend-avatar="item?.poster || ''"
-                        >
-                            <v-list-item-title>
-                                <nuxt-link class="text-primary">
-                                    {{
-                                        getName(
-                                            item.name,
-                                            item?.internationalName || ''
-                                        )
-                                    }}
-                                </nuxt-link>
-                            </v-list-item-title>
-                            <v-list-item-subtitle>
-                                {{ item.releaseYear || $t('general.no_data') }}
-                            </v-list-item-subtitle>
-                        </v-list-item>
-                        <v-divider
-                            v-if="
-                                person?.filmWorks &&
-                                index < Object.keys(person.filmWorks).length - 1
-                            "
-                            :key="`divider-${key}-${index}`"
-                        />
-                    </div>
-                </v-list>
-            </v-card>
+        <NuxtLayout name="right-drawer">
+            <Filmography :person="person" />
         </NuxtLayout>
         <NuxtLayout name="detail">
             <Head>

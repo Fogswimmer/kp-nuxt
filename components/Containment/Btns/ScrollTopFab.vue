@@ -4,8 +4,8 @@
         :active="show"
         icon="mdi-arrow-up"
         color="secondary"
-        location="bottom end"
-        size="64"
+        location="bottom center"
+        variant="tonal"
         app
         @click="$emit('scroll:top')"
     />

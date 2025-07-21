@@ -1,40 +1,5 @@
 <template>
     <div>
-        <v-app-bar order="1">
-            <template #prepend>
-                <BackBtn v-if="$vuetify.display.smAndDown" />
-            </template>
-            <v-app-bar-title>
-                <span
-                    v-if="!loading && $vuetify.display.smAndDown"
-                    class="font-weight-bold"
-                >
-                    {{
-                        getName(film?.name || '', film?.internationalName || '')
-                    }}
-                </span>
-
-                <v-breadcrumbs
-                    v-if="!loading && $vuetify.display.mdAndUp"
-                    :items="breadCrumbs"
-                />
-            </v-app-bar-title>
-            <div
-                v-if="$vuetify.display.mdAndUp && !isAuthenticated"
-                class="d-flex justify-center pa-2"
-            >
-                <NotAuthWarning />
-            </div>
-            <FilmDetailMenu
-                :is-authenticated="isAuthenticated"
-                @edit:general="handleGeneralInfoEdit"
-                @edit:description="handleEditDescription"
-                @edit:gallery="openGalleryEditor"
-                @edit:trailer="showLinkTrailerDialog = true"
-                @delete:film="showDeleteWarning = true"
-            />
-        </v-app-bar>
-
         <Head>
             <Title>{{ definePageTitle(film?.name || '') }}</Title>
             <Meta name="description" :content="film?.description" />
@@ -47,6 +12,43 @@
         </NuxtLayout>
 
         <NuxtLayout name="detail">
+            <v-app-bar order="1">
+                <template #prepend>
+                    <BackBtn v-if="$vuetify.display.smAndDown" />
+                </template>
+                <v-app-bar-title>
+                    <span
+                        v-if="!loading && $vuetify.display.smAndDown"
+                        class="font-weight-bold"
+                    >
+                        {{
+                            getName(
+                                film?.name || '',
+                                film?.internationalName || ''
+                            )
+                        }}
+                    </span>
+
+                    <v-breadcrumbs
+                        v-if="!loading && $vuetify.display.mdAndUp"
+                        :items="breadCrumbs"
+                    />
+                </v-app-bar-title>
+                <div
+                    v-if="$vuetify.display.mdAndUp && !isAuthenticated"
+                    class="d-flex justify-center pa-2"
+                >
+                    <NotAuthWarning />
+                </div>
+                <FilmDetailMenu
+                    :is-authenticated="isAuthenticated"
+                    @edit:general="handleGeneralInfoEdit"
+                    @edit:description="handleEditDescription"
+                    @edit:gallery="openGalleryEditor"
+                    @edit:trailer="showLinkTrailerDialog = true"
+                    @delete:film="showDeleteWarning = true"
+                />
+            </v-app-bar>
             <DetailCard :loading="loading" no-cover>
                 <template #publisher-info>
                     <v-chip size="small">
@@ -237,6 +239,40 @@
                                             "
                                             prepend-icon="mdi-text"
                                         >
+                                            <template #append>
+                                                <v-btn
+                                                    variant="tonal"
+                                                    density="comfortable"
+                                                    icon
+                                                    :color="
+                                                        editDescriptionMode
+                                                            ? 'error'
+                                                            : ''
+                                                    "
+                                                    @click="
+                                                        editDescriptionMode =
+                                                            !editDescriptionMode
+                                                    "
+                                                >
+                                                    <v-icon>{{
+                                                        !editDescriptionMode
+                                                            ? 'mdi-pencil'
+                                                            : 'mdi-close'
+                                                    }}</v-icon>
+                                                    <v-tooltip
+                                                        activator="parent"
+                                                        >{{
+                                                            !editDescriptionMode
+                                                                ? $t(
+                                                                      'pages.films.edit_description'
+                                                                  )
+                                                                : $t(
+                                                                      'actions.stop_edit'
+                                                                  )
+                                                        }}</v-tooltip
+                                                    >
+                                                </v-btn>
+                                            </template>
                                             <v-card-text>
                                                 <IndentedEditableText
                                                     :edit-mode="
@@ -702,7 +738,6 @@ const computedGalleryEditTitle = computed((): string => {
 const starring = computed((): Detail[] => {
     return film.value
         ? film.value.actorsData?.map((person: FilmPerson): Detail => {
-              console.log(person)
               return {
                   title: '',
                   id: person.id,
@@ -834,7 +869,6 @@ const handleGalleryItemsDelete = async (): Promise<void> => {
 }
 
 const handleDeleteImg = async (index: number): Promise<void> => {
-    console.log(index)
     selectedImagesIndices.value.push(index)
     await handleGalleryItemsDelete()
 }
@@ -850,7 +884,6 @@ const handleGalleryUpload = async (files: File[]): Promise<void> => {
 }
 
 const handleChangePoster = async (index: number): Promise<void> => {
-    console.log(index)
     filmForm.value.poster = film.value?.gallery[index] || ''
     await nextTick(() => {
         if (!film.value?.poster) {
