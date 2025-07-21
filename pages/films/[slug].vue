@@ -244,6 +244,7 @@
                                                     variant="tonal"
                                                     density="comfortable"
                                                     icon
+                                                    :disabled="!isAuthenticated"
                                                     :color="
                                                         editDescriptionMode
                                                             ? 'error'
