@@ -208,7 +208,7 @@
                                     v-else
                                     type="text"
                                     height="200"
-                                ></v-skeleton-loader>
+                                />
                             </template>
                             <template #comments>
                                 <Comments

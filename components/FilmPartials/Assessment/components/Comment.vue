@@ -9,7 +9,7 @@
         <template #image>
             <v-img
                 :gradient="`to bottom left, rgba(0,0,0,0), ${color}`"
-            ></v-img>
+            />
         </template>
         <template #prepend>
             <v-avatar>
@@ -36,7 +36,7 @@
                     dateFormatter(comment.createdAt)
                 }}</span>
             </div>
-            <v-divider></v-divider>
+            <v-divider/>
         </template>
         <template #extension>
             <span
@@ -86,7 +86,7 @@ interface Comment {
     createdAt: string
     updatedAt: string
 }
-const props = defineProps<{
+defineProps<{
     loading: boolean
     index: number
     comment: Comment

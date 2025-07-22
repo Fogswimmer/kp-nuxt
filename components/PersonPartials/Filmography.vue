@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-template-shadow -->
 <template>
     <v-card variant="text">
         <template v-if="computedFilmographyDispay">

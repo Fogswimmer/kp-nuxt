@@ -277,13 +277,6 @@ const activeImg = ref<number>(
         : 0
 )
 
-const computedFilmographyDispay = computed(() => {
-    return (
-        person.value?.filmWorks &&
-        Object.values(person.value?.filmWorks).some((value) => value.length > 0)
-    )
-})
-
 const handleBioEdit = (): void => {
     bioEditMode.value = true
     if (!mainAccordion.value.includes('bio')) {
@@ -462,23 +455,6 @@ const fetchData = async (): Promise<void> => {
         fetchGenders(locale.value),
         fetchSpecialties(locale.value),
     ])
-}
-
-const defineCardTitle = (key: string) => {
-    switch (key) {
-        case 'actedInFilms':
-            return t('pages.persons.featuredInFilms')
-        case 'directedFilms':
-            return t('pages.persons.directed_films')
-        case 'writtenFilms':
-            return t('pages.persons.written_films')
-        case 'producedFilms':
-            return t('pages.persons.produced_films')
-        case 'composedFilms':
-            return t('pages.persons.composed_films')
-        default:
-            return key
-    }
 }
 
 onBeforeUnmount((): void => {
