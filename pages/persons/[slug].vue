@@ -29,7 +29,7 @@
                 />
             </template>
         </v-app-bar>
-        <NuxtLayout name="right-drawer">
+        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
             <Filmography :person="person" />
         </NuxtLayout>
         <NuxtLayout name="detail">
