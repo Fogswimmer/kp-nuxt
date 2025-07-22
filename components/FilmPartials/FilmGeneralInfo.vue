@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex flex-column ga-2">
-        <span class="font-weight-bold text-lg-h4 text-h5">{{ title }}</span>
+    <div class="d-flex flex-column ga-2" style="max-width: 100%;">
+        <span class="font-weight-bold text-lg-h5 text-h5 text-truncate">{{ title }}</span>
         <v-list class="pa-2" variant="plain">
             <v-list-item
                 v-for="(detail, index) in generalInfo"
