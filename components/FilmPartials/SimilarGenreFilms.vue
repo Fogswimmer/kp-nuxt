@@ -11,9 +11,8 @@
                     v-for="(film, i) in films"
                     :key="i"
                     class="mb-2 pa-2 text-center"
-                    rounded="lg"
                     :value="film.id"
-                    border
+                    elevation="1"
                     :to="$localeRoute('/films/' + film.slug)"
                 >
                     <v-list-item-title class="font-weight-bold">
@@ -25,17 +24,14 @@
                         }}
                     </v-list-item-title>
                     <v-list-item-subtitle>
-                        <v-rating
-                            :model-value="film?.rating || 0"
-                            readonly
-                            size="small"
-                            density="compact"
-                            color="yellow-darken-2"
-                        />
+                        {{ film.releaseYear }}
                     </v-list-item-subtitle>
                     <v-list-item-media class="mt-2">
-                        <v-avatar :image="film.poster || ''" rounded="sm" size="200"/>
-                   
+                        <v-img
+                            :src="film.poster || ''"
+                            rounded="lg"
+                            size="120"
+                        />
                     </v-list-item-media>
                 </v-list-item>
             </v-list>

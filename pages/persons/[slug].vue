@@ -119,6 +119,25 @@
                         prepend-icon="mdi-feather"
                         class="mt-2"
                     >
+                        <template #append>
+                            <v-btn
+                                variant="tonal"
+                                density="comfortable"
+                                icon
+                                :disabled="!isAuthenticated"
+                                :color="bioEditMode ? 'error' : ''"
+                                @click="bioEditMode = !bioEditMode"
+                            >
+                                <v-icon>{{
+                                    !bioEditMode ? 'mdi-pencil' : 'mdi-close'
+                                }}</v-icon>
+                                <v-tooltip activator="parent">{{
+                                    !bioEditMode
+                                        ? $t('pages.persons.edit_bio')
+                                        : $t('actions.stop_edit')
+                                }}</v-tooltip>
+                            </v-btn>
+                        </template>
                         <v-card-text>
                             <IndentedEditableText
                                 :edit-mode="bioEditMode"

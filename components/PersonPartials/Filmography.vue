@@ -66,14 +66,14 @@
                             <v-list-subheader>
                                 {{ defineCardTitle(key) }}
                             </v-list-subheader>
+                            <v-divider />
                             <v-list-item
                                 v-for="(item, i) in value"
                                 :key="`filmwork-${key}-${item?.slug || item?.id || i}`"
                                 :to="$localeRoute(`/films/${item?.slug}`)"
                                 :value="item"
-                                class="text-center my-2"
-                                border
-                                rounded="lg"
+                                class="text-center my-2 mb-2"
+                                elevation="1"
                             >
                                 <v-list-item-title>
                                     <span class="font-weight-bold text-primary">
@@ -92,11 +92,11 @@
                                     }}
                                 </v-list-item-subtitle>
                                 <v-list-item-media>
-                                    <v-avatar
+                                    <v-img
                                         v-if="item.poster"
-                                        :image="item.poster"
-                                        rounded="0"
-                                        size="200"
+                                        :src="item.poster"
+                                        rounded="lg"
+                                        size="130"
                                     />
                                 </v-list-item-media>
                             </v-list-item>

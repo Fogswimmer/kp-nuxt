@@ -108,13 +108,18 @@
                                     v-bind="colParams.info"
                                 >
                                     <v-card flat :height="TOP_CARDS_HEIGHT">
-                                        <div
-                                            class="fill-height d-flex flex-column items-center"
-                                        >
-                                            <FilmGeneralInfo
-                                                :general-info="generalInfo"
-                                            />
-                                        </div>
+                                        <FilmGeneralInfo
+                                            :title="
+                                                getName(
+                                                    film?.name || '',
+                                                    film?.internationalName ||
+                                                        ''
+                                                ) +
+                                                ' - ' +
+                                                film?.releaseYear
+                                            "
+                                            :general-info="generalInfo"
+                                        />
                                     </v-card>
                                 </v-col>
                                 <v-divider vertical />
@@ -174,7 +179,17 @@
                             :is-description-panel-open="isDescriptionPanelOpen"
                         >
                             <template #general-info>
-                                <FilmGeneralInfo :general-info="generalInfo" />
+                                <FilmGeneralInfo
+                                    :title="
+                                        getName(
+                                            film?.name || '',
+                                            film?.internationalName || ''
+                                        ) +
+                                        ' - ' +
+                                        film?.releaseYear
+                                    "
+                                    :general-info="generalInfo"
+                                />
                             </template>
                             <template #rating>
                                 <Rating
@@ -681,14 +696,6 @@ const breadCrumbs = computed(() => {
 
 const generalInfo = computed((): Detail[] => {
     const info = [
-        {
-            title: 'forms.film.name',
-            value: getName(
-                film.value?.name || '',
-                film.value?.internationalName || ''
-            ),
-            icon: 'mdi-movie',
-        },
         {
             title: 'forms.film.slogan',
             value: film.value?.slogan || '',

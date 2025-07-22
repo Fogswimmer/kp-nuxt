@@ -123,7 +123,7 @@ const page = ref<number>(1)
 const visibleComments = ref(new Set<number>())
 const itemsPerPage = ref<number>(5)
 const showDeleteConfirm = ref<boolean>(false)
-const opacity = 0.2;
+const opacity = 0.15
 
 const commentColors = Array.from({ length: 10 }, () => {
     return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(
