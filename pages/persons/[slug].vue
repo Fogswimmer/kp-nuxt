@@ -1,6 +1,11 @@
 <template>
     <div>
-        <v-app-bar order="1">
+
+        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
+            <Filmography :person="person" />
+        </NuxtLayout>
+        <NuxtLayout name="detail">
+                    <v-app-bar order="1">
             <template v-if="$vuetify.display.smAndDown" #prepend>
                 <BackBtn />
             </template>
@@ -25,14 +30,10 @@
                     @edit:general="generalInfoEdit = true"
                     @edit:bio="handleBioEdit"
                     @edit:gallery="photoEditMode = true"
-                    @delete:film="showDeleteWarning = true"
+                    @delete:person="showDeleteWarning = true"
                 />
             </template>
         </v-app-bar>
-        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-            <Filmography :person="person" />
-        </NuxtLayout>
-        <NuxtLayout name="detail">
             <Head>
                 <Title>{{ definePageTitle(personFullName) }}</Title>
                 <Meta name="description" :content="person?.bio" />
