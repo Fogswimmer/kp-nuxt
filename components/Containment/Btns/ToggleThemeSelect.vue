@@ -15,16 +15,18 @@
 defineProps<{
     activeTheme: string
 }>()
+
 const emit = defineEmits<{
     (e: 'update:activeTheme', value: string): void
 }>()
+
 const theme = useTheme()
+const { t } = useI18n()
 const toggleTheme = () => {
     theme.toggle()
-    localStorage.setItem('theme', theme.global.name.value)
     emit('update:activeTheme', theme.global.name.value)
+    localStorage.setItem('theme', theme.global.name.value)
 }
-const { t } = useI18n()
 const themeOptions = [
     { title: t('menu.theme.dark'), value: 'dark' },
     { title: t('menu.theme.light'), value: 'light' },

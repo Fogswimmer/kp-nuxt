@@ -336,7 +336,6 @@
                                                             actor.to || '/'
                                                         )
                                                     "
-                                                    base-color="secondary"
                                                 >
                                                     <template #prepend>
                                                         <v-avatar>
@@ -397,7 +396,6 @@
                                                             person.to || '/'
                                                         )
                                                     "
-                                                    base-color="secondary"
                                                 >
                                                     <template #prepend>
                                                         <v-avatar>

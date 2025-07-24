@@ -33,17 +33,7 @@ import ProfileNav from '~/components/Navigation/ProfileNav.vue'
 import SettingsBtn from '~/components/Containment/Btns/SettingsBtn.vue'
 
 const theme = useTheme()
-const defaultTheme = useDefaultTheme()
 const activeTheme = ref(theme.global.name.value)
-
-onMounted(() => {
-    if (!localStorage.getItem('theme')) {
-        theme.global.name.value = defaultTheme.value
-        localStorage.setItem('theme', defaultTheme.value)
-    }
-    theme.global.name.value =
-        localStorage.getItem('theme') || defaultTheme.value
-})
 </script>
 
 <style></style>

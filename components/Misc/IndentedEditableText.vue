@@ -75,9 +75,8 @@ defineEmits<{
     (e: 'cancel:edit'): void
 }>()
 
-
 const visibleParagraphs = ref(new Set<number>())
-const isTruncated = ref<boolean>(props.text.length > 100)
+const isTruncated = ref<boolean>(true)
 const formattedText = computed(() => {
     return props.text
         ? props.text
@@ -88,6 +87,13 @@ const formattedText = computed(() => {
               .slice(0, isTruncated.value ? 1 : undefined)
         : []
 })
+
+watch(
+    () => props.text,
+    (newVal) => {
+        isTruncated.value = newVal.length > 100
+    }
+)
 </script>
 
 <style sroped>

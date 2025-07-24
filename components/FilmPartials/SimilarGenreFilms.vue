@@ -15,7 +15,7 @@
                     elevation="1"
                     :to="$localeRoute('/films/' + film.slug)"
                 >
-                    <v-list-item-title class="font-weight-bold">
+                    <v-list-item-title class="font-weight-bold text-primary">
                         {{
                             getName(
                                 film?.name || '',

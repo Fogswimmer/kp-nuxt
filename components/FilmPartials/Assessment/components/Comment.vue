@@ -7,9 +7,7 @@
         rounded="lg"
     >
         <template #image>
-            <v-img
-                :gradient="`to bottom left, rgba(0,0,0,0), ${color}`"
-            />
+            <v-img :gradient="`to bottom left, rgba(0,0,0,0), ${color}`" />
         </template>
         <template #prepend>
             <v-avatar>
@@ -29,14 +27,14 @@
         <template #title>
             <div class="d-flex flex-column">
                 <span
-                    class="text-body-2 text-lg-body-1 font-weight-bold text-truncate comment-title"
+                    class="text-body-2 text-lg-body-1 text-primary font-weight-bold text-truncate comment-title"
                     >{{ comment.authorName ? comment.authorName : '???' }}</span
                 >
                 <span class="text-caption text-disabled">{{
                     dateFormatter(comment.createdAt)
                 }}</span>
             </div>
-            <v-divider/>
+            <v-divider />
         </template>
         <template #extension>
             <span

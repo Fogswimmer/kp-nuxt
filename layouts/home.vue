@@ -53,11 +53,8 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
-    if (!localStorage.getItem('theme')) {
-        theme.global.name.value = defaultTheme.value
-        localStorage.setItem('theme', defaultTheme.value)
-    }
     theme.global.name.value =
         localStorage.getItem('theme') || defaultTheme.value
+    activeTheme.value = defaultTheme.value
 })
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <v-card rounded="lg" height="100%">
+    <v-card rounded="lg" height="100%" variant="text">
         <v-card-title>
             <div class="d-flex flex-column ga-1">
                 <h4 class="text-lg-h4 text-h5 text-center text-uppercase">
@@ -8,7 +8,7 @@
                 <SectionDivider />
             </div>
         </v-card-title>
-        <v-card-text> <slot /></v-card-text>
+        <slot />
     </v-card>
 </template>
 
