@@ -50,27 +50,33 @@
                     </div>
                 </template>
             </v-toolbar>
-            <v-file-upload
-                v-model="previews"
-                show-size
-                chips
-                clearable
-                multiple
-                :density="$vuetify.display.mdAndUp ? 'default' : 'comfortable'"
-                :accept="acceptVideos ? 'video/*' : 'image/*'"
-                divider-text="general.or"
-                browse-text="general.browse_files"
-                :title="$vuetify.display.mdAndUp ? 'general.drag_and_drop' : ''"
-                @update:model-value="handlePreupload"
-            >
-                <template #item="{ props: itemProps }">
-                    <v-file-upload-item v-bind="itemProps" lines="one" nav>
-                        <template #clear="{ props: clearProps }">
-                            <v-btn color="primary" v-bind="clearProps" />
-                        </template>
-                    </v-file-upload-item>
-                </template>
-            </v-file-upload>
+            <client-only>
+                <v-file-upload
+                    v-model="previews"
+                    show-size
+                    chips
+                    clearable
+                    multiple
+                    :density="
+                        $vuetify.display.mdAndUp ? 'default' : 'comfortable'
+                    "
+                    :accept="acceptVideos ? 'video/*' : 'image/*'"
+                    divider-text="general.or"
+                    browse-text="general.browse_files"
+                    :title="
+                        $vuetify.display.mdAndUp ? 'general.drag_and_drop' : ''
+                    "
+                    @update:model-value="handlePreupload"
+                >
+                    <template #item="{ props: itemProps }">
+                        <v-file-upload-item v-bind="itemProps" lines="one" nav>
+                            <template #clear="{ props: clearProps }">
+                                <v-btn color="primary" v-bind="clearProps" />
+                            </template>
+                        </v-file-upload-item>
+                    </template>
+                </v-file-upload>
+            </client-only>
 
             <template #actions>
                 <v-spacer />
