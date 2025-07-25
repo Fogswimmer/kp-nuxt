@@ -113,6 +113,7 @@
 						:title="$t('pages.persons.bio')"
 						prepend-icon="mdi-feather"
 						class="mt-2"
+						flat
 					>
 						<template #append>
 							<v-btn

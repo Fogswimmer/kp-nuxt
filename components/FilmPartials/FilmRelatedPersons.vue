@@ -8,7 +8,7 @@
 			<v-list-item
 				v-for="(actor, index) in starring"
 				:key="`starring-${actor?.id || 'unknown'}-${index}`"
-				:title="actor.value"
+				:title="actor.value.toString()"
 				:value="index"
 				:to="$localeRoute(actor.to || '/')"
 			>
@@ -32,7 +32,7 @@
 				v-for="(person, index) in team"
 				:key="`team-${person?.id || 'unknown'}-${index}`"
 				:subtitle="$t(person.title)"
-				:title="person.value"
+				:title="person.value.toString()"
 				:value="index"
 				:to="$localeRoute(person.to || '/')"
 			>

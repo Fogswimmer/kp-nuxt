@@ -44,7 +44,7 @@
 					<v-list-item
 						v-for="(actor, index) in starring"
 						:key="index"
-						:title="actor.value as string"
+						:title="actor.value?.toString()"
 						:value="index"
 						:to="$localeRoute(actor.to || '/')"
 					>
@@ -81,7 +81,7 @@
 						:key="index"
 						rounded="lg"
 						:subtitle="$t(person.title || '')"
-						:title="person.value as string"
+						:title="person.value?.toString()"
 						:value="index"
 						:to="$localeRoute(person.to || '/')"
 					>

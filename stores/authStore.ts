@@ -17,6 +17,7 @@ export const useAuthStore = defineStore("authStore", () => {
 		maxAge: 60 * 60 * 24 * 7,
 		secure: true,
 	});
+	
 	const resetToken = ref<string | null | undefined>(null);
 	const token = ref<string | null | undefined>(
 		tokenCookie.value || null || "",

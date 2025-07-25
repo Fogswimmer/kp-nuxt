@@ -97,7 +97,7 @@ body {
 }
 @media (prefers-color-scheme: dark) {
 	body {
-		background-color: #07141b;
+		background-color: #07141b !important;
 	}
 }
 </style>
