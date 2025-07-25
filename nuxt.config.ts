@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 		},
 		layoutTransition: { name: "layout", mode: "out-in" },
 		head: {
-			title: process.env.APP_NAME,
+			title: process.env.NUXT_APP_NAME,
 			charset: "utf-8",
 			viewport: "width=device-width, initial-scale=1",
 		},

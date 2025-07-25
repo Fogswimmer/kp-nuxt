@@ -33,7 +33,6 @@
 				>
 					{{ $t("pages.films.assess") }}
 				</v-btn>
-				<NotAuthWarning v-if="!isAuthenticated" short />
 			</div>
 		</v-card-text>
 	</v-card>
@@ -67,9 +66,8 @@
 <script lang="ts" setup>
 import AssessmentForm from "~/components/Forms/Film/AssessmentForm.vue";
 import AssessmentGraph from "./components/AssessmentGraph.vue";
-import { useAuthStore } from "~/stores/authStore";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
-import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
+import { useAuthStore } from "~/stores/authStore";
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
 

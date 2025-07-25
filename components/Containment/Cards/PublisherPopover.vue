@@ -2,7 +2,7 @@
 	<v-menu :open-on-hover="$vuetify.display.mdAndUp">
 		<template #activator="{ props }">
 			<v-chip v-if="!isCommment" size="small" v-bind="props" label>
-				<div class="d-flex ga-2" style="max-width: 130px">
+				<div class="d-flex ga-2">
 					<span>{{ $t("general.published_by") }}:</span>
 					<span class="text-secondary text-truncate">{{
 						publisher.name

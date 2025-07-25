@@ -16,7 +16,7 @@
 						v-if="cover"
 						:src="cover"
 						cover
-						:height="$vuetify.display.mdAndUp ? 550 : 450"
+						:height="$vuetify.display.mdAndUp ? 550 : 400"
 						class="position-relative"
 					>
 						<template #placeholder>
@@ -24,7 +24,7 @@
 						</template>
 						<template #error>
 							<v-sheet
-								:height="$vuetify.display.mdAndUp ? 550 : 450"
+								:height="$vuetify.display.mdAndUp ? 550 : 400"
 								width="100%"
 								:class="
 									theme.current.value.dark
@@ -36,7 +36,7 @@
 					</v-parallax>
 					<v-sheet
 						v-else-if="!noCover"
-						:height="$vuetify.display.mdAndUp ? 550 : 450"
+						:height="$vuetify.display.mdAndUp ? 550 : 400"
 						width="100%"
 						:class="
 							theme.current.value.dark
