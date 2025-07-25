@@ -1,5 +1,5 @@
 <template>
-	<v-card flat height="100%">
+	<v-card flat height="100%" class="mb-4">
 		<div>
 			<div
 				v-if="$vuetify.display.smAndDown && notification"
@@ -16,7 +16,7 @@
 						v-if="cover"
 						:src="cover"
 						cover
-						:height="$vuetify.display.mdAndUp ? 550 : 400"
+						:height="$vuetify.display.mdAndUp ? 550 : 450"
 						class="position-relative"
 					>
 						<template #placeholder>
@@ -24,7 +24,7 @@
 						</template>
 						<template #error>
 							<v-sheet
-								:height="$vuetify.display.mdAndUp ? 550 : 400"
+								:height="$vuetify.display.mdAndUp ? 550 : 450"
 								width="100%"
 								:class="
 									theme.current.value.dark
@@ -36,7 +36,7 @@
 					</v-parallax>
 					<v-sheet
 						v-else-if="!noCover"
-						:height="$vuetify.display.mdAndUp ? 550 : 400"
+						:height="$vuetify.display.mdAndUp ? 550 : 450"
 						width="100%"
 						:class="
 							theme.current.value.dark
@@ -45,6 +45,11 @@
 						"
 					/>
 					<slot name="top_film" />
+					<div class="w-100 d-flex px-8 mb-2">
+						<v-spacer />
+						<slot name="publisher-info" />
+						<v-spacer v-if="$vuetify.display.smAndDown" />
+					</div>
 				</v-card>
 				<div class="position-absolute bottom-0 left-0 right-0">
 					<slot name="general_info" />
@@ -52,10 +57,6 @@
 			</v-card>
 		</div>
 		<slot name="text" />
-		<v-footer height="70">
-			<v-spacer />
-			<slot name="publisher-info" />
-		</v-footer>
 	</v-card>
 </template>
 

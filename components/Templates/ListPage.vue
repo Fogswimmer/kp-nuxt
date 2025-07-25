@@ -120,65 +120,9 @@
 
 		<main>
 			<template v-if="items.length">
-				<template v-if="!loading">
-					<div class="pa-2 overflow-x-hidden">
-						<GradientWrapper v-for="(item, i) in items" :key="i">
-							<v-list-item
-								border
-								rounded="lg"
-								lines="three"
-								class="my-2"
-								:value="item"
-							>
-								<template #title>
-									<nuxt-link
-										:to="$localeRoute(item.to || '/')"
-										class="text-primary text-lg-h6 d-flex ga-1"
-									>
-										<span class="text-truncate">{{
-											item.title
-										}}</span>
-										<span v-if="item.releaseYear"
-											>({{ item.releaseYear }})</span
-										>
-									</nuxt-link>
-								</template>
-								<template #subtitle>
-									{{ item.value }}
-								</template>
-								<template #prepend>
-									<v-avatar
-										:size="
-											$vuetify.display.smAndDown
-												? 84
-												: 100
-										"
-									>
-										<v-img :src="item.avatar">
-											<template #placeholder>
-												<v-sheet height="100%">
-													<div
-														class="d-flex align-center justify-center fill-height"
-													>
-														<v-icon
-															icon="mdi-image-off"
-														/>
-													</div>
-												</v-sheet>
-											</template>
-										</v-img>
-									</v-avatar>
-								</template>
-								<template
-									v-if="$vuetify.display.mdAndUp"
-									#append
-								>
-									<ListCardInfo :item="item" />
-								</template>
-							</v-list-item>
-						</GradientWrapper>
-					</div>
-				</template>
+				<div v-if="!loading" class="pa-2">
+					<ListItems :items="items" />
+				</div>
 				<v-list v-else-if="items.length">
 					<v-skeleton-loader
 						v-for="n in limit"
@@ -227,8 +171,7 @@
 
 <script lang="ts" setup>
 import BackBtn from "../Containment/Btns/BackBtn.vue";
-import GradientWrapper from "../Containment/Cards/GradientWrapper.vue";
-import ListCardInfo from "../Containment/Cards/ListCardInfo.vue";
+import ListItems from "../Containment/Cards/ListItems.vue";
 
 import { useAuthStore } from "#imports";
 
@@ -250,6 +193,7 @@ defineProps<{
 	listTitle?: string;
 	limit: number;
 	breadCrumbs?: IBreadCrumb[];
+	totalCount?: number;
 }>();
 const display = useDisplay();
 

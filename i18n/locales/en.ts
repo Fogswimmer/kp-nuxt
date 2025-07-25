@@ -12,6 +12,8 @@ export default {
 	general: {
 		publications_count: "Publications count",
 		assessments_count: "Assessments count",
+		no_publications: "No publications",
+		no_assessments: "No assessments",
 		no_network: "Please, check your network connection",
 		show_more: "Show more",
 		hide: "Hide",
@@ -104,6 +106,7 @@ export default {
 	auth: {
 		admin: "Admin",
 		not_auth: "Please, log in to use actions",
+		not_auth_short: "Log in required",
 		login_to_continue: "Login to continue",
 		error: "Error",
 		invalid_credentials: "Invalid credentials",
@@ -586,6 +589,7 @@ export default {
 			asc: "Ascending",
 			desc: "Descending",
 		},
+		group_by: "Group by",
 		sort: {
 			title: "Sort",
 			name: "By title",
@@ -594,6 +598,8 @@ export default {
 				year_of_release: "Year of release",
 				rating: "Rating",
 				duration: "Duration",
+				genre: "Genre",
+				country: "Country",
 			},
 			persons: {
 				name: "Name",
@@ -610,6 +616,13 @@ export default {
 					writers: "Writers",
 					composers: "Composers",
 				},
+				specialty: "Specialty",
+				gender: "Gender",
+				actors: "Actors",
+				directors: "Directors",
+				producers: "Producers",
+				composers: "Composers",
+				writers: "Writers",
 			},
 		},
 	},

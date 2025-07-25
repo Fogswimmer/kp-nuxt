@@ -44,10 +44,9 @@
 					<v-list-item
 						v-for="(actor, index) in starring"
 						:key="index"
-						:title="actor.value"
+						:title="actor.value as string"
 						:value="index"
 						:to="$localeRoute(actor.to || '/')"
-						base-color="secondary"
 					>
 						<template #prepend>
 							<v-avatar>
@@ -82,10 +81,9 @@
 						:key="index"
 						rounded="lg"
 						:subtitle="$t(person.title || '')"
-						:title="person.value"
+						:title="person.value as string"
 						:value="index"
 						:to="$localeRoute(person.to || '/')"
-						base-color="secondary"
 					>
 						<template #prepend>
 							<v-avatar>

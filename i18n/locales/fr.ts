@@ -12,6 +12,8 @@ export default {
 	general: {
 		publications_count: "Nombre de publications",
 		assessments_count: "Nombre d'avis",
+		no_publications: "Pas de publications",
+		no_assessments: "Pas d'avis",
 		no_network: "Veuillez vérifier votre connexion réseau",
 		show_more: "Voir plus",
 		hide: "Cacher",
@@ -103,6 +105,7 @@ export default {
 	auth: {
 		admin: "Admin",
 		not_auth: "Connectez-vous pour utiliser les actions",
+		not_auth_short: "Connexion requise",
 		login_to_continue: "Connectez-vous pour continuer",
 		error: "Erreur",
 		invalid_credentials: "Identifiants invalides",
@@ -571,6 +574,7 @@ export default {
 			asc: "Ascendant",
 			desc: "Descendant",
 		},
+		group_by: "Grouper par",
 		sort: {
 			title: "Trier",
 			name: "Par titre",
@@ -579,6 +583,8 @@ export default {
 				year_of_release: "Année de sortie",
 				rating: "Note",
 				duration: "Durée",
+				genre: "Genre",
+				country: "Pays",
 			},
 			persons: {
 				name: "Nom",
@@ -594,6 +600,13 @@ export default {
 					writers: "Auteurs",
 					composers: "Compositeurs",
 				},
+				gender: "Genre",
+				specialty: "Specialité",
+				actors: "Acteurs",
+				directors: "Directeurs",
+				producers: "Producteurs",
+				composers: "Compositeurs",
+				writers: "Auteurs",
 			},
 		},
 	},

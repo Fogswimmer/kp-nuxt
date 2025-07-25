@@ -7,7 +7,6 @@
 				:content="$t('page_descriptions.films_list')"
 			/>
 		</Head>
-
 		<ListPage
 			v-if="filmsPresent && films"
 			:items="filmItems || []"
@@ -24,6 +23,14 @@
 			<template #filters>
 				<Filters
 					:sort-options="sortOptions"
+					:group-by-options-1="{
+						title: $t('filters.sort.films.genre'),
+						options: genres,
+					}"
+					:group-by-options-2="{
+						title: $t('filters.sort.films.country'),
+						options: countries,
+					}"
 					@update:limit="limit = $event.value"
 					@update:order="order = $event.value"
 					@update:search="search = $event.value"
@@ -46,6 +53,7 @@ import { useFilmStore } from "~/stores/filmStore";
 const { films, loading, totalPages, currentPage, filmsPresent } =
 	storeToRefs(useFilmStore());
 const { fetchFilteredFilms, checkFilmsPresence } = useFilmStore();
+const { fetchGenres, fetchCountries } = useTranslationStore();
 const { locale, t } = useI18n();
 const limit = ref<number>(5);
 const offset = ref<number>(0);
@@ -53,6 +61,8 @@ const search = ref<string>("");
 const order = ref<string>("asc");
 const sortBy = ref<string>("name");
 const getName = useInternationalName();
+const { data: genres } = useNuxtData("genres");
+const { data: countries } = useNuxtData("countries");
 const sortOptions = [
 	{ value: "name", title: t("forms.film.name") },
 	{ value: "releaseYear", title: t("forms.film.release_year") },
@@ -85,7 +95,7 @@ const filmItems = computed((): Detail[] => {
 						film?.name || "",
 						film?.internationalName || "",
 					),
-					value: film.description || "",
+					value: film.genreNames || [],
 					avatar: film.poster || film.gallery[0] || "",
 					to: "/films/" + film.slug,
 					createdAt: film.createdAt || "",
@@ -142,6 +152,10 @@ const breadCrumbs = computed((): IBreadCrumb[] => {
 		},
 	];
 });
+
+await fetchGenres(locale.value);
+
+await fetchCountries(locale.value);
 
 onMounted(async (): Promise<void> => {
 	await fetchData();

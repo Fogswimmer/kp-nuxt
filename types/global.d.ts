@@ -59,15 +59,14 @@ declare global {
 	}
 	interface IAssessment {
 		id: number;
-		authorId: number;
-		authorName: string | null;
-		authorAvatar: string | null;
+		publiherData: IPublisher;
 		rating: number;
 		comment?: string;
 		createdAt: string;
 	}
 
 	interface IPublisher {
+		id: number;
 		name: string;
 		age: number;
 		about: string;
@@ -85,7 +84,7 @@ declare global {
 	}
 	interface Detail {
 		title: string;
-		value: string;
+		value: string | string[];
 		id?: number | null;
 		subtitle?: string;
 		icon?: string;
@@ -99,6 +98,7 @@ declare global {
 		releaseYear?: number | null;
 		tooltip?: boolean;
 		flag?: string;
+		info?: string;
 		chipsArr?: {
 			name: string;
 			to: string | RouteLocationResolvedGeneric;
@@ -214,15 +214,6 @@ declare global {
 		writers: {
 			items: Partial<IPerson>[];
 		};
-	}
-	interface CardDetails {
-		name: string;
-		value: string | number;
-		type?: string;
-		tooltip?: boolean;
-		icon?: string;
-		to?: string;
-		avatar?: string;
 	}
 
 	interface CurrentUser {

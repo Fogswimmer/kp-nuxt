@@ -50,28 +50,6 @@
 				/>
 			</v-app-bar>
 			<DetailCard :loading="loading" no-cover>
-				<template #publisher-info>
-					<v-menu open-on-hover>
-						<template #activator="{ props }">
-							<v-chip size="small" v-bind="props">
-								<div class="d-flex ga-2">
-									<span
-										>{{ $t("general.published_by") }}:</span
-									>
-									<span class="text-secondary">{{
-										film?.publisherData
-											? film?.publisherData.name
-											: ""
-									}}</span>
-									<span>{{
-										dateFormatter(film?.createdAt || "")
-									}}</span>
-								</div>
-							</v-chip>
-						</template>
-						<PublisherPopover :publisher="film?.publisherData" />
-					</v-menu>
-				</template>
 				<template #top_film>
 					<v-container fluid>
 						<v-card v-if="!loading" class="pa-2" flat>
@@ -232,6 +210,7 @@
 									height="200"
 								/>
 							</template>
+
 							<template #comments>
 								<Comments
 									:loading="loading"
@@ -336,7 +315,9 @@
 														actor, index
 													) in starring"
 													:key="index"
-													:title="actor.value"
+													:title="
+														actor.value as string
+													"
 													:value="index"
 													:to="
 														$localeRoute(
@@ -398,7 +379,9 @@
 													:subtitle="
 														$t(person.title || '')
 													"
-													:title="person.value"
+													:title="
+														person.value as string
+													"
 													:value="index"
 													:to="
 														$localeRoute(
@@ -469,6 +452,13 @@
 							</v-container>
 						</template>
 					</main>
+				</template>
+				<template #publisher-info>
+					<PublisherPopover
+						v-if="film?.publisherData"
+						:publisher="film.publisherData"
+						:created-at="film.createdAt || ''"
+					/>
 				</template>
 			</DetailCard>
 			<ConfirmDialog

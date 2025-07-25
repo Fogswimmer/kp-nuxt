@@ -34,6 +34,11 @@ import SettingsBtn from "~/components/Containment/Btns/SettingsBtn.vue";
 
 const theme = useTheme();
 const activeTheme = ref(theme.global.name.value);
+const defaultTheme = useDefaultTheme();
+onMounted(() => {
+	theme.change(localStorage.getItem("theme") || defaultTheme.value);
+	activeTheme.value = localStorage.getItem("theme") || defaultTheme.value;
+});
 </script>
 
 <style></style>

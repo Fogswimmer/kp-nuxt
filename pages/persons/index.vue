@@ -24,6 +24,14 @@
 			<template #filters>
 				<Filters
 					:sort-options="sortOptions"
+					:group-by-options-1="{
+						title: $t('filters.sort.persons.gender'),
+						options: genders,
+					}"
+					:group-by-options-2="{
+						title: $t('filters.sort.persons.specialty'),
+						options: specialties,
+					}"
 					@update:limit="limit = $event.value"
 					@update:order="order = $event.value"
 					@update:search="search = $event.value"
@@ -48,7 +56,7 @@ const { locale, t } = useI18n();
 const { loading, totalPages, currentPage, personsPresent, persons } =
 	storeToRefs(usePersonStore());
 const { fetchFilteredPersons, checkPersonsPresence } = usePersonStore();
-const { fetchGenders, fetchSpecialties } = useTranslationStore();
+
 const limit = ref<number | string>(5);
 const offset = ref<number>(0);
 const search = ref<string>("");
@@ -60,6 +68,9 @@ const sortOptions = [
 	{ value: "firstname", title: t("filters.sort.persons.firstname") },
 	{ value: "age", title: t("filters.sort.persons.age") },
 ];
+const { fetchGenders, fetchSpecialties } = useTranslationStore();
+const { data: genders } = useNuxtData("genders");
+const { data: specialties } = useNuxtData("specialties");
 
 const fetchData = async (): Promise<void> => {
 	await checkPersonsPresence();
@@ -90,7 +101,7 @@ const personItems = computed((): Detail[] => {
 			const personFullName = person.firstname + " " + person.lastname;
 			return {
 				title: getName(personFullName, person.internationalName || ""),
-				value: person?.specialtyNames.join(", "),
+				value: person?.specialtyNames,
 				avatar: person?.avatar || "",
 				to: "/persons/" + person?.slug || "",
 				createdAt: person?.createdAt || "",

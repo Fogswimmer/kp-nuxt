@@ -139,7 +139,7 @@ const seeAllOnClick = () => {
 const assementsWithColors = computed(() => {
 	const commentsWithSameAuthor = props.assessments.reduce(
 		(acc, item) => {
-			const { authorId: author } = item;
+			const author = item.id;
 			acc[author] = acc[author] || [];
 			acc[author].push(item);
 			return acc;

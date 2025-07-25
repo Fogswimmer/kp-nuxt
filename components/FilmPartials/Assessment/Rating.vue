@@ -2,8 +2,11 @@
 	<v-card variant="text">
 		<v-card-text>
 			<div class="d-flex flex-column fill-height ga-2 align-center">
-				<div class="d-flex flex-column ga-1 align-center">
-					<span class="text-h4">{{ currentRating || "0" }}</span>
+				<div
+					v-if="currentRating"
+					class="d-flex flex-column ga-1 align-center"
+				>
+					<span class="text-h4">{{ currentRating }}</span>
 					<ClientOnly>
 						<v-rating
 							readonly
@@ -15,22 +18,26 @@
 					</ClientOnly>
 				</div>
 
-				<v-label>{{ computedAssessmentNumber }}</v-label>
-				<ClientOnly>
-					<v-btn
-						:disabled="!isAuthenticated"
-						variant="tonal"
-						block
-						color="secondary"
-						@click="$emit('assession:enable')"
-					>
-						{{ $t("pages.films.assess") }}
-					</v-btn>
-				</ClientOnly>
+				<v-label>{{
+					currentRating
+						? computedAssessmentNumber
+						: t("pages.films.no_assessments")
+				}}</v-label>
+
+				<v-btn
+					:disabled="!isAuthenticated"
+					variant="tonal"
+					block
+					color="secondary"
+					@click="$emit('assession:enable')"
+				>
+					{{ $t("pages.films.assess") }}
+				</v-btn>
+				<NotAuthWarning v-if="!isAuthenticated" short />
 			</div>
 		</v-card-text>
 	</v-card>
-	<v-card variant="text">
+	<v-card v-if="assessments.length" variant="text">
 		<v-card-text>
 			<AssessmentGraph
 				:graph-data="sortedGraphData"
@@ -62,6 +69,7 @@ import AssessmentForm from "~/components/Forms/Film/AssessmentForm.vue";
 import AssessmentGraph from "./components/AssessmentGraph.vue";
 import { useAuthStore } from "~/stores/authStore";
 import BaseDialog from "~/components/Dialogs/BaseDialog.vue";
+import NotAuthWarning from "~/components/Misc/NotAuthWarning.vue";
 
 const { isAuthenticated } = storeToRefs(useAuthStore());
 

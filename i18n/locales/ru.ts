@@ -12,6 +12,8 @@ export default {
 	general: {
 		publications_count: "Количество публикаций",
 		assessments_count: "Количество оценок",
+		no_publications: "Нет публикаций",
+		no_assessments: "Нет оценок",
 		no_network: "Пожалуйста, проверьте подключение к сети",
 		show_more: "Показать еще",
 		hide: "Скрыть",
@@ -70,6 +72,7 @@ export default {
 	auth: {
 		admin: "Админ",
 		not_auth: "Войдите, чтобы использовать действия",
+		not_auth_short: "Необходимо войти",
 		login_to_continue: "Войдите чтобы продолжить",
 		error: "Ошибка",
 		invalid_credentials: "Неправильные учетные данные",
@@ -558,6 +561,7 @@ export default {
 			asc: "По возрастанию",
 			desc: "По убыванию",
 		},
+		group_by: "Группировать по",
 		sort: {
 			title: "Сортировать по",
 			name: "По названию",
@@ -566,6 +570,8 @@ export default {
 				year_of_release: "По году выхода",
 				rating: "По рейтингу",
 				duration: "По длительности",
+				genre: "По жанру",
+				country: "По стране",
 			},
 			persons: {
 				name: "Имя",
@@ -582,6 +588,13 @@ export default {
 					writers: "Сценаристы",
 					composers: "Композиторы",
 				},
+				gender: "По полу",
+				specialty: "По специальности",
+				actors: "По актерам",
+				directors: "По режиссерам",
+				producers: "По продюсерам",
+				composers: "По композиторам",
+				writers: "По сценаристам",
 			},
 		},
 	},

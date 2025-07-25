@@ -1,240 +1,220 @@
 <template>
 	<div>
-		<v-app-bar order="1">
-			<template v-if="$vuetify.display.smAndDown" #prepend>
-				<BackBtn />
-			</template>
-			<v-app-bar-title>
-				<span
-					v-if="!loading && $vuetify.display.smAndDown"
-					class="font-weight-bold"
-				>
-					{{
-						getName(personFullName, person?.internationalName || "")
-					}}
-				</span>
-    <div>
+		<NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
+			<Filmography :person="person" />
+		</NuxtLayout>
+		<NuxtLayout name="detail">
+			<v-app-bar order="1">
+				<template v-if="$vuetify.display.smAndDown" #prepend>
+					<BackBtn />
+				</template>
+				<v-app-bar-title>
+					<span
+						v-if="!loading && $vuetify.display.smAndDown"
+						class="font-weight-bold"
+					>
+						{{
+							getName(
+								personFullName,
+								person?.internationalName || "",
+							)
+						}}
+					</span>
 
-        <NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-            <Filmography :person="person" />
-        </NuxtLayout>
-        <NuxtLayout name="detail">
-                    <v-app-bar order="1">
-            <template v-if="$vuetify.display.smAndDown" #prepend>
-                <BackBtn />
-            </template>
-            <v-app-bar-title>
-                <span
-                    v-if="!loading && $vuetify.display.smAndDown"
-                    class="font-weight-bold"
-                >
-                    {{
-                        getName(personFullName, person?.internationalName || '')
-                    }}
-                </span>
-
-                <v-breadcrumbs
-                    v-if="person && $vuetify.display.mdAndUp"
-                    :items="breadCrumbs"
-                />
-            </v-app-bar-title>
-            <template #append>
-                <PersonDetailMenu
-                    :is-authenticated="isAuthenticated"
-                    @edit:general="generalInfoEdit = true"
-                    @edit:bio="handleBioEdit"
-                    @edit:gallery="photoEditMode = true"
-                    @delete:person="showDeleteWarning = true"
-                />
-            </template>
-        </v-app-bar>
-            <Head>
-                <Title>{{ definePageTitle(personFullName) }}</Title>
-                <Meta name="description" :content="person?.bio" />
-            </Head>
-            <DetailCard
-                :page-name="personFullName"
-                :cover="person?.cover || ''"
-                :is-auth="isAuthenticated"
-                :loading="loading"
-                :notification="!isAuthenticated"
-            >
-                <template #publisher-info>
-                    <v-chip size="small">
-                        <div class="d-flex ga-2">
-                            <span>{{ $t('general.published_by') }}:</span>
-                            <nuxt-link class="text-secondary">{{
-                                person?.publisherData
-                                    ? person?.publisherData.name
-                                    : ''
-                            }}</nuxt-link>
-                            <span>{{
-                                dateFormatter(person?.createdAt || '')
-                            }}</span>
-                        </div>
-                    </v-chip>
-                </template>
-                <template #general_info>
-                    <TopInfo
-                        :loading="loading"
-                        :general-info="computedPersonDetails"
-                        :avatar="person?.avatar || ''"
-                        :title="personFullName"
-                        :subtitle="person?.specialtyNames || []"
-                        :active-img="activeImg"
-                        :gallery="person?.photos || []"
-                        @avatar:set="handleChangeAvatar"
-                        @delete:img="handleDeleteImg"
-                        @gallery:open="photoEditMode = true"
-                    />
-                </template>
-                <template #notification>
-                    <NotAuthWarning v-if="!isAuthenticated" />
-                </template>
-                <template #menu />
-                <template #text>
-                    <v-expansion-panels
-                        v-if="$vuetify.display.smAndDown"
-                        v-model="mainAccordion"
-                    >
-                        <v-expansion-panel
-                            id="bio"
-                            value="bio"
-                            tag="section"
-                            :title="$t('pages.persons.bio')"
-                        >
-                            <v-expansion-panel-text>
-                                <IndentedEditableText
-                                    v-if="person?.bio"
-                                    :edit-mode="bioEditMode"
-                                    :messages="$t('pages.persons.edit_bio')"
-                                    :text="person?.bio || ''"
-                                    @sumbit:edit="submitBioEdit"
-                                    @cancel:edit="cancelBioEdit"
-                                />
-                                <div v-else class="w-100 text-center">
-                                    <span>{{ $t('general.no_data') }}</span>
-                                </div>
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                        <v-expansion-panel
-                            id="filmography"
-                            tag="section"
-                            value="filmography"
-                            :title="$t('pages.persons.filmography')"
-                        >
-                            <v-expansion-panel-text>
-                                <Filmography :person="person" />
-                            </v-expansion-panel-text>
-                        </v-expansion-panel>
-                    </v-expansion-panels>
-                    <v-card
-                        v-else
-                        :title="$t('pages.persons.bio')"
-                        prepend-icon="mdi-feather"
-                        class="mt-2"
-                    >
-                        <template #append>
-                            <v-btn
-                                variant="tonal"
-                                density="comfortable"
-                                icon
-                                :disabled="!isAuthenticated"
-                                :color="bioEditMode ? 'error' : ''"
-                                @click="bioEditMode = !bioEditMode"
-                            >
-                                <v-icon>{{
-                                    !bioEditMode ? 'mdi-pencil' : 'mdi-close'
-                                }}</v-icon>
-                                <v-tooltip activator="parent">{{
-                                    !bioEditMode
-                                        ? $t('pages.persons.edit_bio')
-                                        : $t('actions.stop_edit')
-                                }}</v-tooltip>
-                            </v-btn>
-                        </template>
-                        <v-card-text>
-                            <IndentedEditableText
-                                :edit-mode="bioEditMode"
-                                :messages="$t('pages.persons.edit_bio')"
-                                :text="person?.bio || ''"
-                                @sumbit:edit="submitBioEdit"
-                                @cancel:edit="cancelBioEdit"
-                            />
-                        </v-card-text>
-                    </v-card>
-                </template>
-            </DetailCard>
-            <BaseDialog
-                v-model:opened="generalInfoEdit"
-                :max-width="1000"
-                :title="$t('actions.edit_person') + ' ' + personFullName"
-                @close="generalInfoEdit = false"
-            >
-                <template #text>
-                    <PersonForm
-                        :loading="loading"
-                        :show-bio="false"
-                        :person-form="personForm"
-                        :genders="genders"
-                        :specialties="specialties"
-                        @validate="isFormValid = $event"
-                        @form:submit="submitGeneralInfoEdit"
-                        @update:model-value="personForm = $event"
-                    />
-                </template>
-            </BaseDialog>
-            <SuccessSnackbar
-                v-model:show="showSnackbar"
-                @close="showSnackbar = false"
-            />
-            <BaseDialog
-                v-model:opened="photoEditMode"
-                :title="computedGalleryEditTitle"
-                :max-width="1200"
-                @close="photoEditMode = false"
-            >
-                <template #text>
-                    <PersonGalleryEdit
-                        v-model:selected="selectedImagesIndices"
-                        :active-tab="activeTab"
-                        :person="person"
-                        :slider-arr="sliderGalleryArr || []"
-                        :upload-count="uploadCount"
-                        :edit-mode="photoEditMode"
-                        :upload-disabled="uploadCount === 0"
-                        :remove-disabled="!person?.photos.length"
-                        :card-height="GALLERY_CARD_HEIGHT"
-                        @avatar:change="handleChangeAvatar"
-                        @avatar:upload="handleAvatarUpload"
-                        @update:selected="selectedImagesIndices = $event"
-                        @delete:selected="showConfirmDialog = true"
-                        @cover:change="handleCoverChange"
-                        @upload="handlePhotosUpload"
-                    />
-                </template>
-            </BaseDialog>
-            <ConfirmDialog
-                v-model="showConfirmDialog"
-                type="error"
-                :text="$t('forms.film.gallery_item_delete_confirm')"
-                :loading="loading"
-                @confirm="handleGalleryItemsDelete"
-            />
-            <ConfirmDialog
-                v-model="showCoverReplacementWarning"
-                :text="$t('general.file_replacement_warning')"
-                @cancel="showCoverReplacementWarning = false"
-                @confirm="replaceCover"
-            />
-            <ConfirmDialog
-                v-model="showDeleteWarning"
-                :text="$t('general.entity_delete_warning')"
-                @cancel="showDeleteWarning = false"
-                @confirm="handlePersonDelete"
-            />
-        </NuxtLayout>
-    </div>
+					<v-breadcrumbs
+						v-if="person && $vuetify.display.mdAndUp"
+						:items="breadCrumbs"
+					/>
+				</v-app-bar-title>
+				<template #append>
+					<PersonDetailMenu
+						:is-authenticated="isAuthenticated"
+						@edit:general="generalInfoEdit = true"
+						@edit:bio="handleBioEdit"
+						@edit:gallery="photoEditMode = true"
+						@delete:person="showDeleteWarning = true"
+					/>
+				</template>
+			</v-app-bar>
+			<Head>
+				<Title>{{ definePageTitle(personFullName) }}</Title>
+				<Meta name="description" :content="person?.bio" />
+			</Head>
+			<DetailCard
+				:page-name="personFullName"
+				:cover="person?.cover || ''"
+				:is-auth="isAuthenticated"
+				:loading="loading"
+				:notification="!isAuthenticated"
+			>
+				<template #publisher-info>
+					<PublisherPopover
+						v-if="person?.publisherData"
+						:publisher="person.publisherData"
+						:created-at="person.createdAt || ''"
+					/>
+				</template>
+				<template #general_info>
+					<TopInfo
+						:loading="loading"
+						:general-info="computedPersonDetails"
+						:avatar="person?.avatar || ''"
+						:title="personFullName"
+						:subtitle="person?.specialtyNames || []"
+						:active-img="activeImg"
+						:gallery="person?.photos || []"
+						@avatar:set="handleChangeAvatar"
+						@delete:img="handleDeleteImg"
+						@gallery:open="photoEditMode = true"
+					/>
+				</template>
+				<template #notification>
+					<NotAuthWarning v-if="!isAuthenticated" />
+				</template>
+				<template #menu />
+				<template #text>
+					<v-expansion-panels
+						v-if="$vuetify.display.smAndDown"
+						v-model="mainAccordion"
+					>
+						<v-expansion-panel
+							id="bio"
+							value="bio"
+							tag="section"
+							:title="$t('pages.persons.bio')"
+						>
+							<v-expansion-panel-text>
+								<IndentedEditableText
+									v-if="person?.bio"
+									:edit-mode="bioEditMode"
+									:messages="$t('pages.persons.edit_bio')"
+									:text="person?.bio || ''"
+									@sumbit:edit="submitBioEdit"
+									@cancel:edit="cancelBioEdit"
+								/>
+								<div v-else class="w-100 text-center">
+									<span>{{ $t("general.no_data") }}</span>
+								</div>
+							</v-expansion-panel-text>
+						</v-expansion-panel>
+						<v-expansion-panel
+							id="filmography"
+							tag="section"
+							value="filmography"
+							:title="$t('pages.persons.filmography')"
+						>
+							<v-expansion-panel-text>
+								<Filmography :person="person" />
+							</v-expansion-panel-text>
+						</v-expansion-panel>
+					</v-expansion-panels>
+					<v-card
+						v-else
+						:title="$t('pages.persons.bio')"
+						prepend-icon="mdi-feather"
+						class="mt-2"
+					>
+						<template #append>
+							<v-btn
+								variant="tonal"
+								density="comfortable"
+								icon
+								:disabled="!isAuthenticated"
+								:color="bioEditMode ? 'error' : ''"
+								@click="bioEditMode = !bioEditMode"
+							>
+								<v-icon>{{
+									!bioEditMode ? "mdi-pencil" : "mdi-close"
+								}}</v-icon>
+								<v-tooltip activator="parent">{{
+									!bioEditMode
+										? $t("pages.persons.edit_bio")
+										: $t("actions.stop_edit")
+								}}</v-tooltip>
+							</v-btn>
+						</template>
+						<v-card-text>
+							<IndentedEditableText
+								:edit-mode="bioEditMode"
+								:messages="$t('pages.persons.edit_bio')"
+								:text="person?.bio || ''"
+								@sumbit:edit="submitBioEdit"
+								@cancel:edit="cancelBioEdit"
+							/>
+						</v-card-text>
+					</v-card>
+				</template>
+			</DetailCard>
+			<BaseDialog
+				v-model:opened="generalInfoEdit"
+				:max-width="1000"
+				:title="$t('actions.edit_person') + ' ' + personFullName"
+				@close="generalInfoEdit = false"
+			>
+				<template #text>
+					<PersonForm
+						:loading="loading"
+						:show-bio="false"
+						:person-form="personForm"
+						:genders="genders"
+						:specialties="specialties"
+						@validate="isFormValid = $event"
+						@form:submit="submitGeneralInfoEdit"
+						@update:model-value="personForm = $event"
+					/>
+				</template>
+			</BaseDialog>
+			<SuccessSnackbar
+				v-model:show="showSnackbar"
+				@close="showSnackbar = false"
+			/>
+			<BaseDialog
+				v-model:opened="photoEditMode"
+				:title="computedGalleryEditTitle"
+				:max-width="1200"
+				@close="photoEditMode = false"
+			>
+				<template #text>
+					<PersonGalleryEdit
+						v-model:selected="selectedImagesIndices"
+						:active-tab="activeTab"
+						:person="person"
+						:slider-arr="sliderGalleryArr || []"
+						:upload-count="uploadCount"
+						:edit-mode="photoEditMode"
+						:upload-disabled="uploadCount === 0"
+						:remove-disabled="!person?.photos.length"
+						:card-height="GALLERY_CARD_HEIGHT"
+						@avatar:change="handleChangeAvatar"
+						@avatar:upload="handleAvatarUpload"
+						@update:selected="selectedImagesIndices = $event"
+						@delete:selected="showConfirmDialog = true"
+						@cover:change="handleCoverChange"
+						@upload="handlePhotosUpload"
+					/>
+				</template>
+			</BaseDialog>
+			<ConfirmDialog
+				v-model="showConfirmDialog"
+				type="error"
+				:text="$t('forms.film.gallery_item_delete_confirm')"
+				:loading="loading"
+				@confirm="handleGalleryItemsDelete"
+			/>
+			<ConfirmDialog
+				v-model="showCoverReplacementWarning"
+				:text="$t('general.file_replacement_warning')"
+				@cancel="showCoverReplacementWarning = false"
+				@confirm="replaceCover"
+			/>
+			<ConfirmDialog
+				v-model="showDeleteWarning"
+				:text="$t('general.entity_delete_warning')"
+				@cancel="showDeleteWarning = false"
+				@confirm="handlePersonDelete"
+			/>
+		</NuxtLayout>
+	</div>
 </template>
 
 <script lang="ts" setup>
@@ -273,7 +253,7 @@ const bioEditMode = ref<boolean>(false);
 const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const mainAccordion = ref<string[]>(["bio"]);
+const mainAccordion = ref<string[]>([]);
 const coverFile = ref<File>();
 const avatarFile = ref<File | null>(null);
 const { isAuthenticated } = storeToRefs(useAuthStore());
