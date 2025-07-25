@@ -62,8 +62,8 @@ jobs:
                   host: ${{ secrets.SSH_HOST }}
                   username: ${{ secrets.SSH_USER }}
                   key: ${{ secrets.SSH_PRIVATE_KEY }}
-                  source: '.output'
-                  target: '${{ secrets.PROJECT_FOLDER }}'
+                  source: ".output"
+                  target: "${{ secrets.PROJECT_FOLDER }}"
             - name: Restart Nuxt container via SSH
               uses: appleboy/ssh-action@v1.0.3
               with:
