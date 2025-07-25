@@ -2,6 +2,7 @@
 	<v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
 		<client-only>
 			<v-navigation-drawer v-if="$vuetify.display.mdAndUp">
+				<Logo />
 				<DrawerNavList />
 				<template #append>
 					<v-divider />
@@ -28,6 +29,7 @@ import DrawerNavList from "~/components/Navigation/DrawerNavList.vue";
 import BottomNav from "~/components/Navigation/BottomNav.vue";
 import ProfileNav from "~/components/Navigation/ProfileNav.vue";
 import SettingsBtn from "~/components/Containment/Btns/SettingsBtn.vue";
+import Logo from "~/components/Misc/Logo.vue";
 
 const theme = useTheme();
 const activeTheme = ref(theme.global.name.value);

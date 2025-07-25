@@ -32,24 +32,26 @@
 		</template>
 		<v-divider />
 		<v-card-text>
-			<div
-				:class="[
-					'text-caption text-lg-body-2',
-					{ 'text-white': theme.current.value.dark },
-					{ 'text-black': !theme.current.value.dark },
-				]"
-			>
-				{{ comment.comment }}
+			<div class="w-100 d-flex align-center">
+				<div
+					:class="[
+						'text-caption text-lg-body-2',
+						{ 'text-white': theme.current.value.dark },
+						{ 'text-black': !theme.current.value.dark },
+					]"
+				>
+					{{ comment.comment }}
+				</div>
+				<v-spacer />
+				<v-btn
+					v-if="isAdmin || userId === comment.publisherData.id"
+					size="x-small"
+					variant="tonal"
+					icon="mdi-delete"
+					color="error"
+					@click="showDeleteConfirm = true"
+				/>
 			</div>
-			<v-spacer />
-			<v-btn
-				v-if="isAdmin || userId === comment.publisherData.id"
-				size="x-small"
-				variant="tonal"
-				icon="mdi-delete"
-				color="error"
-				@click="showDeleteConfirm = true"
-			/>
 		</v-card-text>
 	</v-card>
 
