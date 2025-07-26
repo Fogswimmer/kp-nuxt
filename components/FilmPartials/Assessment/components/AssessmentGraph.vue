@@ -29,7 +29,7 @@
 				</div>
 			</div>
 		</template>
-		<v-sheet v-else height="160">
+		<v-sheet v-else>
 			<div class="d-flex fill-height justify-center align-center">
 				<v-label class="text-caption">
 					{{ $t("general.no_data") }}

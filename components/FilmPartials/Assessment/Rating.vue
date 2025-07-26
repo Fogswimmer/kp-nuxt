@@ -1,11 +1,12 @@
 <template>
-	<v-card variant="text">
+	<v-card
+		variant="text"
+		:title="t('pages.films.rating')"
+		prepend-icon="mdi-star"
+	>
 		<v-card-text>
 			<div class="d-flex flex-column fill-height ga-2 align-center">
-				<div
-					v-if="currentRating"
-					class="d-flex flex-column ga-1 align-center"
-				>
+				<div class="d-flex flex-column ga-1 align-center">
 					<span class="text-h4">{{ currentRating }}</span>
 					<ClientOnly>
 						<v-rating
@@ -36,7 +37,7 @@
 			</div>
 		</v-card-text>
 	</v-card>
-	<v-card v-if="assessments.length" variant="text">
+	<v-card variant="text">
 		<v-card-text>
 			<AssessmentGraph
 				:graph-data="sortedGraphData"

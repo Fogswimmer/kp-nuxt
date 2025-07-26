@@ -117,7 +117,7 @@ const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
 const showErrorSnackbar = ref<boolean>(false);
-const error = useError();
+
 const { fetchGenders, fetchSpecialties } = useTranslationStore();
 const {
 	addPerson,
@@ -150,7 +150,7 @@ const nextStep = () => {
 const handleGeneralInfoSubmit = async (): Promise<void> => {
 	if (await addPerson()) {
 		nextStep();
-	} else if (error.value) {
+	} else {
 		showErrorSnackbar.value = true;
 	}
 };
@@ -160,7 +160,7 @@ const handlePhotoSubmit = async (files: File[]): Promise<void> => {
 	if (id) {
 		await uploadPhotos(files, id || 0);
 		nextStep();
-	} else if (error.value) {
+	} else {
 		showErrorSnackbar.value = true;
 	}
 };
@@ -176,11 +176,8 @@ const handleCoverSubmit = async (files: File[]): Promise<void> => {
 	const coverFile = files[0];
 	const id = personForm.value.id;
 	await uploadCover(coverFile, id || 0);
-	if (error.value) {
-		showErrorSnackbar.value = true;
-	} else {
-		navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
-	}
+
+	navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
 };
 
 const handleAvatarSubmit = async (index: number): Promise<void> => {
@@ -188,9 +185,7 @@ const handleAvatarSubmit = async (index: number): Promise<void> => {
 		? personForm.value?.photos[index - 1]
 		: "";
 	await editPerson();
-	if (error.value) {
-		showErrorSnackbar.value = true;
-	}
+
 	nextStep();
 };
 

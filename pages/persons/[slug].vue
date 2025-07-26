@@ -43,7 +43,6 @@
 			<DetailCard
 				:page-name="personFullName"
 				:cover="person?.cover || ''"
-				:is-auth="isAuthenticated"
 				:loading="loading"
 				:notification="!isAuthenticated"
 			>
@@ -254,7 +253,7 @@ const bioEditMode = ref<boolean>(false);
 const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const mainAccordion = ref<string[]>([]);
+const mainAccordion = ref<string[]>(["bio"]);
 const coverFile = ref<File>();
 const avatarFile = ref<File | null>(null);
 const { isAuthenticated } = storeToRefs(useAuthStore());

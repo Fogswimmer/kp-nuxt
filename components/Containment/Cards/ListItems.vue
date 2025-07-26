@@ -26,7 +26,7 @@
 				</v-chip-group>
 			</template>
 			<template #prepend>
-				<v-avatar :size="$vuetify.display.smAndDown ? 84 : 100">
+				<v-avatar :size="$vuetify.display.smAndDown ? 84 : 116">
 					<v-img :src="item.avatar">
 						<template #placeholder>
 							<v-sheet height="100%">

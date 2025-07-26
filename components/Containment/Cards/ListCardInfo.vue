@@ -19,7 +19,7 @@
 			/>
 			<v-spacer/>
 			<div class="d-flex ga-1 fill-height align-center">
-				<v-chip size="small" label>
+				<v-chip size="small" label >
 					<div class="d-flex ga-1">
 						<span> {{ $t("general.created_at") }}:</span>
 						<span> {{ dateFormatter(item.createdAt || "") }}</span>

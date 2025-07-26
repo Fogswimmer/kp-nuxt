@@ -1,63 +1,70 @@
 <template>
-	<v-card flat height="100%" class="mb-4">
-		<div>
-			<div
-				v-if="$vuetify.display.smAndDown && notification"
-				class="d-flex justify-center pa-2 text-caption"
-			>
-				<slot name="notification" />
-			</div>
-			<v-card flat>
-				<template v-if="loading" #loader>
-					<v-progress-linear indeterminate color="primary" />
-				</template>
+		<v-card flat class="mb-4" height="100%" variant="text">
+			<div>
+				<div
+					v-if="$vuetify.display.smAndDown && notification"
+					class="d-flex justify-center pa-2 text-caption"
+				>
+					<slot name="notification" />
+				</div>
 				<v-card flat>
-					<v-parallax
-						v-if="cover"
-						:src="cover"
-						cover
-						:height="$vuetify.display.mdAndUp ? 550 : 400"
-						class="position-relative"
-					>
-						<template #placeholder>
-							<ImgPlaceholder />
-						</template>
-						<template #error>
-							<v-sheet
-								:height="$vuetify.display.mdAndUp ? 550 : 400"
-								width="100%"
-								:class="
-									theme.current.value.dark
-										? 'default-cover-dark'
-										: 'default-cover-light'
-								"
-							/>
-						</template>
-					</v-parallax>
-					<v-sheet
-						v-else-if="!noCover"
-						:height="$vuetify.display.mdAndUp ? 550 : 400"
-						width="100%"
-						:class="
-							theme.current.value.dark
-								? 'default-cover-dark'
-								: 'default-cover-light'
-						"
-					/>
-					<slot name="top_film" />
-					<div class="w-100 d-flex px-8 mb-2">
-						<v-spacer />
-						<slot name="publisher-info" />
-						<v-spacer v-if="$vuetify.display.smAndDown" />
+					<template v-if="loading" #loader>
+						<v-progress-linear indeterminate color="primary" />
+					</template>
+					<v-card flat>
+						<v-parallax
+							v-if="cover"
+							:src="cover"
+							cover
+							:height="$vuetify.display.mdAndUp ? 550 : 400"
+							class="position-relative"
+						>
+							<template #placeholder>
+								<ImgPlaceholder />
+							</template>
+							<template #error>
+								<v-sheet
+									:height="
+										$vuetify.display.mdAndUp ? 550 : 400
+									"
+									width="100%"
+									:class="
+										theme.current.value.dark
+											? 'default-cover-dark'
+											: 'default-cover-light'
+									"
+								/>
+							</template>
+						</v-parallax>
+						<v-sheet
+							v-else-if="!noCover"
+							:height="$vuetify.display.mdAndUp ? 550 : 400"
+							width="100%"
+							:class="
+								theme.current.value.dark
+									? 'default-cover-dark'
+									: 'default-cover-light'
+							"
+						/>
+						<slot name="top_film" />
+						<div class="w-100 d-flex px-8 mb-2">
+							<v-spacer />
+							<v-spacer v-if="$vuetify.display.smAndDown" />
+						</div>
+					</v-card>
+					<div class="position-absolute bottom-0 left-0 right-0">
+						<slot name="general_info" />
 					</div>
 				</v-card>
-				<div class="position-absolute bottom-0 left-0 right-0">
-					<slot name="general_info" />
+			</div>
+			<slot name="text" />
+			<v-footer absolute>
+				<div class="w-100 text-center pa-2">
+					<slot name="publisher-info" />
 				</div>
-			</v-card>
-		</div>
-		<slot name="text" />
-	</v-card>
+			</v-footer>
+		</v-card>
+
 </template>
 
 <script lang="ts" setup>

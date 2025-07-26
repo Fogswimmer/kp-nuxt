@@ -1,5 +1,5 @@
 <template>
-	<div :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
+	<div class="bg-surface">
 		<client-only>
 			<v-navigation-drawer>
 				<Logo />

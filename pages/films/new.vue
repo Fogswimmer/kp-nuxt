@@ -3,7 +3,7 @@
 		<Head>
 			<Title>{{ definePageTitle($t("nav.films_add")) }}</Title>
 		</Head>
-		<v-card :loading="loading">
+		<v-card :loading="loading" flat height="100%">
 			<v-toolbar :title="$t('nav.films_add')">
 				<template #prepend>
 					<BackBtn />
@@ -12,19 +12,20 @@
 			<v-stepper
 				v-if="personsPresent"
 				v-model="step"
+				hide-actions
 				:mobile="!$vuetify.display.mdAndUp"
 			>
 				<v-stepper-header>
 					<v-stepper-item
-						value="1"
+						:value="1"
 						:title="$t('stepper.general')"
 						:complete="step > 1"
-						:color="step >= 1 ? 'success' : 'primary'"
+						:color="step > 1 ? 'success' : 'primary'"
 					/>
 
 					<v-divider />
 					<v-stepper-item
-						value="2"
+						:value="2"
 						:complete="step > 2"
 						:color="step > 2 ? 'success' : 'primary'"
 						:title="$t('stepper.gallery')"
@@ -32,14 +33,14 @@
 
 					<v-divider />
 					<v-stepper-item
-						value="3"
+						:value="3"
 						:complete="step > 3"
 						color="primary"
 						:title="$t('stepper.poster')"
 					/>
 				</v-stepper-header>
 				<v-stepper-window>
-					<v-stepper-window-item value="1">
+					<v-stepper-window-item :value="1">
 						<FilmForm
 							:film-form="filmForm"
 							:genres="genres"
@@ -54,13 +55,13 @@
 							@update:model-value="updateForm"
 						/>
 					</v-stepper-window-item>
-					<v-stepper-window-item value="2">
+					<v-stepper-window-item :value="2">
 						<GalleryUploader
 							:upload-count="GALLERY_SIZE"
 							@files:upload="handleGallerySubmit"
 						/>
 					</v-stepper-window-item>
-					<v-stepper-window-item value="3">
+					<v-stepper-window-item :value="3">
 						<SingleImgSelector
 							:gallery="filmForm.gallery || []"
 							@img:select="handleSetPoster"
@@ -119,41 +120,36 @@ const {
 	GALLERY_SIZE,
 } = useFilmStore();
 
-const error = useError();
 const localeRoute = useLocaleRoute();
 const { fetchGenres, fetchCountries } = useTranslationStore();
 const { data: genres } = useNuxtData("genres");
 const { data: countries } = useNuxtData("countries");
 
-const step = ref<number>(0);
+const step = ref<number>(1);
 const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
 const showErrorSnackbar = ref<boolean>(false);
 
 const nextStep = () => {
-	if (!error.value) {
-		step.value++;
-		switch (step.value) {
-			case 1:
-				showFirstStepSnackbar.value = true;
-				break;
-			case 2:
-				showSecondStepSnackbar.value = true;
-				break;
-			case 3:
-				showThirdStepSnackbar.value = true;
-				break;
-		}
+	step.value++;
+	switch (step.value) {
+		case 1:
+			showFirstStepSnackbar.value = true;
+			break;
+		case 2:
+			showSecondStepSnackbar.value = true;
+			break;
+		case 3:
+			showThirdStepSnackbar.value = true;
+			break;
 	}
 };
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
 	if (await addFilm()) {
 		nextStep();
-	} else if (error.value) {
-		showErrorSnackbar.value = true;
-	}
+	} else showErrorSnackbar.value = true;
 };
 
 const handleGallerySubmit = async (files: File[]): Promise<void> => {
@@ -161,7 +157,7 @@ const handleGallerySubmit = async (files: File[]): Promise<void> => {
 	if (id) {
 		await uploadGallery(files, id || 0);
 		nextStep();
-	} else if (error.value) {
+	} else {
 		showErrorSnackbar.value = true;
 	}
 };
