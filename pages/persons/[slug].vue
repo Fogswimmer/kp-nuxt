@@ -111,8 +111,7 @@
 						v-else
 						:title="$t('pages.persons.bio')"
 						prepend-icon="mdi-feather"
-						class="mt-2 overflow-y-auto"
-						height="270"
+						class="mt-2"
 						flat
 					>
 						<template #append>
