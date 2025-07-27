@@ -1,9 +1,11 @@
 <template>
 	<LoadingScreen v-if="isLoading" />
-	<NuxtLayout>
-		<NuxtLoadingIndicator color="rgb(255, 174, 0)" />
-		<NuxtPage />
-	</NuxtLayout>
+	<v-app>
+		<NuxtLayout>
+			<NuxtLoadingIndicator color="rgb(255, 174, 0)" />
+			<NuxtPage />
+		</NuxtLayout>
+	</v-app>
 </template>
 
 <script setup lang="ts">
@@ -68,25 +70,16 @@ p {
 	text-indent: 2rem !important;
 }
 .light-glassed {
-	background: rgba(255, 255, 255, 0.6);
+	background: linear-gradient(to top, rgba(255, 255, 255, 1), transparent);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 }
 .dark-glassed {
-	background: rgba(34, 34, 34, 0.6);
+	background: linear-gradient(to top, #08141b, transparent);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 }
 
-.bg-gradient {
-	background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
-	background-attachment: fixed;
-}
-
-.bg-dark {
-	background-image: radial-gradient(circle, #131f27, #07141b, #090a0c);
-	background-attachment: fixed;
-}
 
 .bg-light {
 	background-image: radial-gradient(circle, #fcfcfc, #f3f3f3, #f3f3f3);
