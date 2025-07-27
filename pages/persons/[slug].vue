@@ -58,7 +58,7 @@
 						:loading="loading"
 						:general-info="computedPersonDetails"
 						:avatar="person?.avatar || ''"
-						:title="personFullName"
+						:title="getName(personFullName, person?.internationalName || '')	"
 						:subtitle="person?.specialtyNames || []"
 						:active-img="activeImg"
 						:gallery="person?.photos || []"
@@ -111,7 +111,8 @@
 						v-else
 						:title="$t('pages.persons.bio')"
 						prepend-icon="mdi-feather"
-						class="mt-2"
+						class="mt-2 overflow-y-auto"
+						height="270"
 						flat
 					>
 						<template #append>
@@ -236,6 +237,7 @@ import PublisherPopover from "~/components/Containment/Cards/PublisherPopover.vu
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
 import { useTranslationStore } from "~/stores/translationStore";
+
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();

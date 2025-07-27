@@ -1,5 +1,5 @@
 <template>
-	<v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
+	<v-layout>
 		<client-only>
 			<v-navigation-drawer v-if="$vuetify.display.mdAndUp">
 				<Logo />

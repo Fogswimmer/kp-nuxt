@@ -1,5 +1,5 @@
 <template>
-	<v-layout :class="theme.current.value.dark ? 'bg-dark' : 'bg-light'">
+	<v-layout>
 		<v-main class="container">
 			<slot />
 		</v-main>
