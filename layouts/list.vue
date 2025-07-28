@@ -18,7 +18,7 @@
 			</v-navigation-drawer>
 		</client-only>
 
-		<v-main style="height: calc(100vh - 16px)" class="overflow-y-auto">
+		<v-main style="min-height: calc(100vh - 128px)" class="overflow-y-auto">
 			<slot />
 		</v-main>
 

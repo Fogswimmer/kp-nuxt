@@ -38,7 +38,6 @@
 							:label="$t('filters.sort.films.genre')"
 							value="gender"
 							hide-details
-							@update:model-value="clearSelectedGenres"
 						/>
 						<v-chip-group
 							v-if="selectedGroups.includes('gender')"
@@ -110,7 +109,7 @@ const sortOptions = [
 	{ value: "rating", title: t("pages.films.rating") },
 ] as IOption[];
 const selectedGroups = ref<string[]>([]);
-const selectedGenres = ref<number[]>([]);
+const selectedGenres = ref<string[]>([]);
 const selectedCountries = ref<string[]>([]);
 
 const fetchData = async (): Promise<void> => {
@@ -163,9 +162,6 @@ const mappedCountries = computed(() => {
 const computedLimitProp = computed((): number => {
 	return typeof limit.value === "number" ? limit.value : 15;
 });
-const clearSelectedGenres = (): void => {
-	selectedGenres.value = [];
-};
 
 const updateQueryParams = (page: number): void => {
 	offset.value = (page - 1) * limit.value;
@@ -175,7 +171,6 @@ watch(
 	[
 		limit,
 		offset,
-		search,
 		order,
 		sortBy,
 		locale,
@@ -185,7 +180,7 @@ watch(
 	async ([
 		newLimit,
 		newOffset,
-		newSearch,
+
 		newOrder,
 		newSortBy,
 		newLocale,
@@ -195,7 +190,7 @@ watch(
 		await fetchFilteredFilms(
 			newLimit,
 			newOffset,
-			newSearch,
+			"",
 			newOrder,
 			newSortBy,
 			newLocale,
@@ -229,6 +224,22 @@ await fetchCountries(locale.value);
 onMounted(async (): Promise<void> => {
 	await fetchData();
 });
+
+watch(
+	search,
+	debounce(async (newVal: string): Promise<void> => {
+		await fetchFilteredFilms(
+			limit.value,
+			offset.value,
+			newVal,
+			order.value,
+			sortBy.value,
+			locale.value,
+			selectedGenres.value,
+			selectedCountries.value,
+		);
+	}, 1000),
+);
 
 definePageMeta({
 	name: "films",
