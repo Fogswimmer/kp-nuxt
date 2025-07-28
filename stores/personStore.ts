@@ -43,14 +43,17 @@ export const usePersonStore = defineStore("persons", () => {
 		search: string,
 		sortBy: string,
 		order: string,
-		specialty: string,
 		locale: string,
+		gender: number | string | null,
+		specialties: number[],
 	) => {
 		try {
 			loading.value = true;
-			const response = await $fetch<IPersonListResponse>(
-				`${baseUrl}/persons/filter?limit=${limit}&offset=${offset}&search=${search}&sortBy=${sortBy}&order=${order}&specialty=${specialty}&locale=${locale}`,
-			);
+			let queryString = `${baseUrl}/persons/filter?limit=${limit}&offset=${offset}&search=${search}&sortBy=${sortBy}&order=${order}&locale=${locale}&specialties=${specialties}`;
+			if (gender) {
+				queryString += `&gender=${gender}`;
+			}
+			const response = await $fetch<IPersonListResponse>(queryString);
 			persons.value = response?.items || [];
 			currentPage.value = response?.currentPage || 1;
 			totalPages.value = response?.totalPages || 0;

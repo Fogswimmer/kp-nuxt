@@ -58,11 +58,13 @@ export const useFilmStore = defineStore("films", () => {
 		order: string,
 		sortBy: string,
 		locale: string,
+		selectedGenres: number[],
+		selectedCountries: string[],
 	): Promise<void> => {
 		try {
 			loading.value = true;
 			const response = await $fetch<IFilmListResponse>(
-				`${baseUrl}/films/filter?limit=${limit}&offset=${offset}&search=${search}&order=${order}&sortBy=${sortBy}&locale=${locale}`,
+				`${baseUrl}/films/filter?limit=${limit}&offset=${offset}&search=${search}&order=${order}&sortBy=${sortBy}&locale=${locale}&genres=${selectedGenres}&countries=${selectedCountries}`,
 			);
 			films.value = response?.items || [];
 			currentPage.value = response?.currentPage || 1;

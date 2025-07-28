@@ -1,5 +1,5 @@
 <template>
-	<v-layout>
+	<div>
 		<client-only>
 			<v-navigation-drawer v-if="$vuetify.display.mdAndUp">
 				<Logo />
@@ -17,11 +17,13 @@
 				</template>
 			</v-navigation-drawer>
 		</client-only>
-		<v-main style="min-height: calc(100vh - 8px)">
+
+		<v-main style="height: calc(100vh - 16px)" class="overflow-y-auto">
 			<slot />
 		</v-main>
+
 		<BottomNav show-profile-nav />
-	</v-layout>
+	</div>
 </template>
 
 <script lang="ts" setup>

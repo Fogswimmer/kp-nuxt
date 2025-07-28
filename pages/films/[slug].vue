@@ -314,11 +314,11 @@
 													v-for="(
 														actor, index
 													) in starring"
-													:key="index"
+													:key="`starring-${index}`"
 													:title="
 														actor.value as string
 													"
-													:value="index"
+													:value="`starring-${index}`"
 													:to="
 														$localeRoute(
 															actor.to || '/',
@@ -374,7 +374,7 @@
 													v-for="(
 														person, index
 													) in team"
-													:key="index"
+													:key="`team-${index}`"
 													rounded="lg"
 													:subtitle="
 														$t(person.title || '')
@@ -382,7 +382,7 @@
 													:title="
 														person.value as string
 													"
-													:value="index"
+													:value="`team-${index}`"
 													:to="
 														$localeRoute(
 															person.to || '/',

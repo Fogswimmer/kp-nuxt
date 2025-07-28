@@ -32,6 +32,7 @@
 				v-model="showFilters"
 				width="300"
 				location="end"
+				:permanent="$vuetify.display.mdAndUp"
 			>
 				<slot name="filters" />
 			</v-navigation-drawer>
@@ -120,7 +121,7 @@
 
 		<main>
 			<template v-if="items.length">
-				<div v-if="!loading" class="pa-2">
+				<div v-if="!loading" class="pa-2 overflow-y-auto">
 					<ListItems :items="items" />
 				</div>
 				<v-list v-else-if="items.length">
@@ -135,7 +136,7 @@
 				</v-list>
 			</template>
 			<v-sheet
-				v-if="needle != '' && !items.length && !loading"
+				v-if="!items.length && !loading"
 				height="calc(100vh - 128px)"
 			>
 				<div
@@ -145,13 +146,13 @@
 						{{ $t("general.no_results") }}
 					</v-label>
 					<v-btn
+						v-if="needle != ''"
 						prepend-icon="mdi-close"
 						@click="$emit('update:search', '')"
 						>{{ $t("actions.clear") }}</v-btn
 					>
 				</div>
 			</v-sheet>
-			<slot name="empty-state" />
 		</main>
 
 		<v-app-bar location="bottom" order="1" permanent>

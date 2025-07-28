@@ -103,6 +103,8 @@ declare global {
 			name: string;
 			to: string | RouteLocationResolvedGeneric;
 		}[];
+		age?: string | number | null;
+		gender?: string | null;
 	}
 
 	interface IFilmForm {

@@ -17,16 +17,36 @@
 						>({{ item.releaseYear }})</span
 					>
 				</nuxt-link>
+
+				<v-chip
+					v-if="item.age"
+					variant="plain"
+					size="small"
+					prepend-icon="mdi-account"
+					>{{ useDeclineAge(Number(item.age) || 0) }}</v-chip
+				>
+				<v-chip
+					v-if="item.gender"
+					prepend-icon="mdi-gender-male-female"
+					variant="plain"
+					size="small"
+				>
+					{{ item.gender }}</v-chip
+				>
 			</template>
 			<template #subtitle>
 				<v-chip-group>
-					<v-chip v-for="(chip, j) in item.value" :key="j">
+					<v-chip
+						v-for="(chip, j) in item.value"
+						:key="j"
+						color="secondary"
+					>
 						{{ chip }}</v-chip
 					>
 				</v-chip-group>
 			</template>
 			<template #prepend>
-				<v-avatar :size="$vuetify.display.smAndDown ? 84 : 116">
+				<v-avatar :size="84">
 					<v-img :src="item.avatar">
 						<template #placeholder>
 							<v-sheet height="100%">

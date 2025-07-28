@@ -2,7 +2,7 @@
 	<v-menu :open-on-hover="$vuetify.display.mdAndUp">
 		<template #activator="{ props }">
 			<v-chip v-if="!isCommment" size="small" v-bind="props" label>
-				<div class="d-flex ga-2">
+				<div class="d-flex ga-2" style="max-width: 150px">
 					<span>{{ $t("general.published_by") }}:</span>
 					<span class="text-secondary text-truncate">{{
 						publisher.name
@@ -25,8 +25,12 @@
 			:title="publisher.name"
 			:subtitle="publisher.age ? useDeclineAge(publisher.age).value : ''"
 		>
-			<template v-if="!isCommment" #prepend>
-				<v-avatar v-if="publisher.avatar" :image="publisher.avatar" />
+			<template #prepend>
+				<v-avatar
+					v-if="publisher.avatar"
+					:image="publisher.avatar || ''"
+					size="64"
+				/>
 				<v-icon v-else size="x-large">mdi-account</v-icon>
 			</template>
 			<v-card-text>

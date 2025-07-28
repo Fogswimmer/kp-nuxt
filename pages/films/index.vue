@@ -23,10 +23,6 @@
 			<template #filters>
 				<Filters
 					:sort-options="sortOptions"
-					:group-by-options-1="{
-						title: $t('filters.sort.films.genre'),
-						options: genres,
-					}"
 					:group-by-options-2="{
 						title: $t('filters.sort.films.country'),
 						options: countries,
@@ -35,7 +31,51 @@
 					@update:order="order = $event.value"
 					@update:search="search = $event.value"
 					@update:sort="sortBy = $event.value"
-				/>
+				>
+					<template #group-by>
+						<v-checkbox
+							v-model="selectedGroups"
+							:label="$t('filters.sort.films.genre')"
+							value="gender"
+							hide-details
+							@update:model-value="clearSelectedGenres"
+						/>
+						<v-chip-group
+							v-if="selectedGroups.includes('gender')"
+							v-model="selectedGenres"
+							column
+							selected-class="text-green"
+							multiple
+						>
+							<v-chip
+								v-for="(group, index) in genres"
+								:key="`genre-${index}`"
+								:value="group.value"
+								filter
+							>
+								{{ group.name }}
+							</v-chip>
+						</v-chip-group>
+						<v-divider />
+
+						<v-checkbox
+							v-model="selectedGroups"
+							:label="$t('filters.sort.films.country')"
+							value="country"
+							hide-details
+						/>
+						<v-autocomplete
+							v-if="selectedGroups.includes('country')"
+							v-model="selectedCountries"
+							:items="mappedCountries"
+							multiple
+							hide-details
+							:label="$t('pages.films.country')"
+							item-value="value"
+							item-title="name"
+						/>
+					</template>
+				</Filters>
 			</template>
 		</ListPage>
 		<PageLoader v-else />
@@ -55,6 +95,7 @@ const { films, loading, totalPages, currentPage, filmsPresent } =
 const { fetchFilteredFilms, checkFilmsPresence } = useFilmStore();
 const { fetchGenres, fetchCountries } = useTranslationStore();
 const { locale, t } = useI18n();
+
 const limit = ref<number>(5);
 const offset = ref<number>(0);
 const search = ref<string>("");
@@ -68,6 +109,9 @@ const sortOptions = [
 	{ value: "releaseYear", title: t("forms.film.release_year") },
 	{ value: "rating", title: t("pages.films.rating") },
 ] as IOption[];
+const selectedGroups = ref<string[]>([]);
+const selectedGenres = ref<number[]>([]);
+const selectedCountries = ref<string[]>([]);
 
 const fetchData = async (): Promise<void> => {
 	await checkFilmsPresence();
@@ -80,6 +124,8 @@ const fetchData = async (): Promise<void> => {
 				order.value,
 				sortBy.value,
 				locale.value,
+				selectedGenres.value,
+				selectedCountries.value,
 			),
 		]);
 	} else {
@@ -107,16 +153,35 @@ const filmItems = computed((): Detail[] => {
 		: [];
 });
 
+const mappedCountries = computed(() => {
+	return Object.entries(countries.value).map(([value, name]) => ({
+		value,
+		name,
+	}));
+});
+
 const computedLimitProp = computed((): number => {
 	return typeof limit.value === "number" ? limit.value : 15;
 });
+const clearSelectedGenres = (): void => {
+	selectedGenres.value = [];
+};
 
 const updateQueryParams = (page: number): void => {
 	offset.value = (page - 1) * limit.value;
 };
 
 watch(
-	[limit, offset, search, order, sortBy, locale],
+	[
+		limit,
+		offset,
+		search,
+		order,
+		sortBy,
+		locale,
+		selectedGenres,
+		selectedCountries,
+	],
 	async ([
 		newLimit,
 		newOffset,
@@ -124,6 +189,8 @@ watch(
 		newOrder,
 		newSortBy,
 		newLocale,
+		newSelectedGenres,
+		newSelectedCountries,
 	]): Promise<void> => {
 		await fetchFilteredFilms(
 			newLimit,
@@ -132,6 +199,8 @@ watch(
 			newOrder,
 			newSortBy,
 			newLocale,
+			newSelectedGenres,
+			newSelectedCountries,
 		);
 	},
 	{
