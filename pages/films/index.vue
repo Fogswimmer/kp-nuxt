@@ -133,7 +133,7 @@ const filmItems = computed((): Detail[] => {
 					title: getName(
 						film?.name || "",
 						film?.internationalName || "",
-					) + ' ' + film.countryCode,
+					),
 					value: film.genreNames || [],
 					avatar: film.poster || film.gallery[0] || "",
 					to: "/films/" + film.slug,
@@ -141,6 +141,7 @@ const filmItems = computed((): Detail[] => {
 					rating: film.rating || 0,
 					releaseYear: film.releaseYear || 0,
 					publisherData: film.publisherData || [],
+					flag: countryCodeToEmoji(film.countryCode)
 				};
 			})
 		: [];

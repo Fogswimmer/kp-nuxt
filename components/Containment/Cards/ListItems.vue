@@ -16,6 +16,8 @@
 					<span v-if="item.releaseYear"
 						>({{ item.releaseYear }})</span
 					>
+					{{ item.flag  }}
+					<span>{{ item.flag }}</span>
 				</nuxt-link>
 
 				<v-chip
