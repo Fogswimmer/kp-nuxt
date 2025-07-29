@@ -4,8 +4,8 @@
 		:border="false"
 		class="pa-2"
 		color="transparent"
-		
-		width="200"
+		width="230"
+		height="100"
 	>
 		<div class="d-flex flex-column ga-2 fill-height w-100">
 			<v-rating
@@ -13,11 +13,12 @@
 				:model-value="item.rating"
 				readonly
 				density="compact"
+				size="small"
 				color="yellow-darken-2"
 			/>
 			<v-spacer />
 		
-				<v-chip label size="small">
+				<v-chip label size="small" variant="plain" prepend-icon="mdi-calendar">
 					<div class="d-flex ga-1">
 						<span> {{ $t("general.created_at") }}:</span>
 						<span> {{ dateFormatter(item.createdAt || "") }}</span>
