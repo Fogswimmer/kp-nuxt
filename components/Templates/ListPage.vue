@@ -32,6 +32,7 @@
 				v-model="showFilters"
 				width="300"
 				location="end"
+				order="0"
 				:permanent="$vuetify.display.mdAndUp"
 			>
 				<slot name="filters" />

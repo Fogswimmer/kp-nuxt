@@ -4,10 +4,10 @@
 		:border="false"
 		class="pa-2"
 		color="transparent"
-		height="100"
-		width="350"
+		
+		width="200"
 	>
-		<v-container class="d-flex ga-2 align-center fill-height w-100">
+		<div class="d-flex flex-column ga-2 fill-height w-100">
 			<v-rating
 				v-if="item.rating !== null"
 				:model-value="item.rating"
@@ -16,8 +16,8 @@
 				color="yellow-darken-2"
 			/>
 			<v-spacer />
-			<div class="d-flex ga-1 fill-height align-center">
-				<v-chip size="small" label>
+		
+				<v-chip label size="small">
 					<div class="d-flex ga-1">
 						<span> {{ $t("general.created_at") }}:</span>
 						<span> {{ dateFormatter(item.createdAt || "") }}</span>
@@ -26,7 +26,7 @@
 
 				<PublisherPopover :publisher="item.publisherData" />
 			</div>
-		</v-container>
+	
 	</v-sheet>
 </template>
 

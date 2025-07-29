@@ -65,9 +65,6 @@
 					</v-chip-group>
 				</v-list-item>
 				<v-divider />
-				<v-list-subheader
-					>{{ $t("filters.group_by") }}:</v-list-subheader
-				>
 				<slot name="group-by"/>
 			</v-list>
 		</v-card-text>

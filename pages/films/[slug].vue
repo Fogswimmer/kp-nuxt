@@ -34,6 +34,7 @@
 						:items="breadCrumbs"
 					/>
 				</v-app-bar-title>
+
 				<div
 					v-if="$vuetify.display.mdAndUp && !isAuthenticated"
 					class="d-flex justify-center pa-2"
@@ -133,6 +134,17 @@
 											@rating:update="rating = $event"
 										/>
 									</v-card>
+								</v-col>
+							</v-row>
+							<v-row>
+								<v-col>
+									<div class="w-100 text-end pr-4">
+										<PublisherPopover
+											v-if="film?.publisherData"
+											:publisher="film.publisherData"
+											:created-at="film.createdAt || ''"
+										/>
+									</div>
 								</v-col>
 							</v-row>
 						</v-card>
@@ -452,13 +464,6 @@
 							</v-container>
 						</template>
 					</main>
-				</template>
-				<template #publisher-info>
-					<PublisherPopover
-						v-if="film?.publisherData"
-						:publisher="film.publisherData"
-						:created-at="film.createdAt || ''"
-					/>
 				</template>
 			</DetailCard>
 			<ConfirmDialog

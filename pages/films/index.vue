@@ -33,46 +33,40 @@
 					@update:sort="sortBy = $event.value"
 				>
 					<template #group-by>
-						<v-checkbox
-							v-model="selectedGroups"
-							:label="$t('filters.sort.films.genre')"
-							value="gender"
-							hide-details
-						/>
-						<v-chip-group
-							v-if="selectedGroups.includes('gender')"
-							v-model="selectedGenres"
-							column
-							selected-class="text-green"
-							multiple
+						<v-list-subheader
+							>{{ $t("filters.sort.films.genre") }}:</v-list-subheader
 						>
-							<v-chip
-								v-for="(group, index) in genres"
-								:key="`genre-${index}`"
-								:value="group.value"
-								filter
+						<v-list-item>
+							<v-chip-group
+								v-model="selectedGenres"
+								column
+								selected-class="text-green"
+								multiple
 							>
-								{{ group.name }}
-							</v-chip>
-						</v-chip-group>
+								<v-chip
+									v-for="(group, index) in genres"
+									:key="`genre-${index}`"
+									:value="group.value"
+									filter
+								>
+									{{ group.name }}
+								</v-chip>
+							</v-chip-group>
+						</v-list-item>
 						<v-divider />
 
-						<v-checkbox
-							v-model="selectedGroups"
-							:label="$t('filters.sort.films.country')"
-							value="country"
-							hide-details
-						/>
-						<v-autocomplete
-							v-if="selectedGroups.includes('country')"
-							v-model="selectedCountries"
-							:items="mappedCountries"
-							multiple
-							hide-details
-							:label="$t('pages.films.country')"
-							item-value="value"
-							item-title="name"
-						/>
+						<v-list-item class="mt-3">
+							<v-autocomplete
+								v-model="selectedCountries"
+								density="comfortable"
+								:items="mappedCountries"
+								multiple
+								hide-details
+								:label="$t('pages.films.country')"
+								item-value="value"
+								item-title="name"
+							/>
+						</v-list-item>
 					</template>
 				</Filters>
 			</template>
@@ -108,7 +102,7 @@ const sortOptions = [
 	{ value: "releaseYear", title: t("forms.film.release_year") },
 	{ value: "rating", title: t("pages.films.rating") },
 ] as IOption[];
-const selectedGroups = ref<string[]>([]);
+
 const selectedGenres = ref<string[]>([]);
 const selectedCountries = ref<string[]>([]);
 
@@ -139,7 +133,7 @@ const filmItems = computed((): Detail[] => {
 					title: getName(
 						film?.name || "",
 						film?.internationalName || "",
-					),
+					) + ' ' + film.countryCode,
 					value: film.genreNames || [],
 					avatar: film.poster || film.gallery[0] || "",
 					to: "/films/" + film.slug,
@@ -168,15 +162,7 @@ const updateQueryParams = (page: number): void => {
 };
 
 watch(
-	[
-		limit,
-		offset,
-		order,
-		sortBy,
-		locale,
-		selectedGenres,
-		selectedCountries,
-	],
+	[limit, offset, order, sortBy, locale, selectedGenres, selectedCountries],
 	async ([
 		newLimit,
 		newOffset,

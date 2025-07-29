@@ -30,15 +30,11 @@
 					@update:sort="sortBy = $event.value"
 				>
 					<template #group-by>
-						<div class="pa-2">
-							<v-checkbox
-								v-model="selectedGroups"
-								:label="$t('filters.sort.persons.gender')"
-								value="gender"
-								hide-details
-							/>
+						<v-list-subheader>{{
+							$t("filters.sort.persons.gender")
+						}}</v-list-subheader>
+						<v-list-item>
 							<v-chip-group
-								v-if="selectedGroups.includes('gender')"
 								v-model="selectedGender"
 								column
 								selected-class="text-green"
@@ -52,17 +48,14 @@
 									{{ group.name }}
 								</v-chip>
 							</v-chip-group>
-							<v-divider />
-						</div>
-						<div class="pa-2">
-							<v-checkbox
-								v-model="selectedGroups"
-								:label="$t('filters.sort.persons.specialty')"
-								value="specialty"
-								hide-details
-							/>
+						</v-list-item>
+						<v-divider />
+
+						<v-list-subheader>{{
+							$t("filters.sort.persons.specialty")
+						}}</v-list-subheader>
+						<v-list-item>
 							<v-chip-group
-								v-if="selectedGroups.includes('specialty')"
 								v-model="selectedSpecialties"
 								column
 								multiple
@@ -77,7 +70,7 @@
 									{{ group.name }}
 								</v-chip>
 							</v-chip-group>
-						</div>
+						</v-list-item>
 					</template>
 				</Filters>
 			</template>
@@ -106,7 +99,6 @@ const search = ref<string>("");
 const sortBy = ref<string>("firstname");
 const order = ref<string>("asc");
 
-const selectedGroups = ref<string[]>([]);
 const selectedGender = ref<number | null>(null);
 const selectedSpecialties = ref<number[]>([]);
 
