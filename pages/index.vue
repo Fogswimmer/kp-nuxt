@@ -5,7 +5,7 @@
 			<Meta name="description" :content="$t('page_descriptions.home')" />
 		</Head>
 		<template v-if="filmsPresent && personsPresent">
-			<div class="d-flex flex-column ga-2 overflow-y-hidden">
+			<div class="d-flex flex-column ga-2 overflow-y-auto">
 				<v-container fluid>
 					<v-row>
 						<v-col>

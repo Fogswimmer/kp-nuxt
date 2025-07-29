@@ -1,6 +1,10 @@
 <template>
 	<client-only>
-		<v-bottom-navigation v-if="$vuetify.display.smAndDown" grow>
+		<v-bottom-navigation
+			v-if="$vuetify.display.smAndDown"
+			color="primary"
+			grow
+		>
 			<v-btn
 				:active="computedActiveNavBtn.home"
 				value="home"
