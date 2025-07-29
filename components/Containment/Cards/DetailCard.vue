@@ -1,5 +1,5 @@
 <template>
-	<v-card flat class="mb-4 overflow-y-auto" height="100vh" variant="text">
+	<v-card flat class="mb-4 overflow-y-auto" height="calc(100vh - 64px)" variant="text">
 		<v-card flat>
 			<template v-if="loading" #loader>
 				<v-progress-linear indeterminate color="primary" />

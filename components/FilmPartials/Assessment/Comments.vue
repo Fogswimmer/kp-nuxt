@@ -139,12 +139,12 @@ const seeAllOnClick = () => {
 const assementsWithColors = computed(() => {
 	const commentsWithSameAuthor = props.assessments.reduce(
 		(acc, item) => {
-			const author = item.id;
-			acc[author] = acc[author] || [];
-			acc[author].push(item);
+			const authorId = item.publisherData.id; 
+			acc[authorId] = acc[authorId] || [];
+			acc[authorId].push(item);
 			return acc;
 		},
-		{} as Record<string, IAssessment[]>,
+		{} as Record<number, IAssessment[]>,
 	);
 
 	const uniqueAuthors = Object.keys(commentsWithSameAuthor);
@@ -166,6 +166,7 @@ const assementsWithColors = computed(() => {
 
 	return mappedAssementsWithColors;
 });
+
 
 const confirmDelete = (id: number) => {
 	emits("assession:delete", id);

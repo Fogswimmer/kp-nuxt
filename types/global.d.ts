@@ -59,7 +59,7 @@ declare global {
 	}
 	interface IAssessment {
 		id: number;
-		publiherData: IPublisher;
+		publisherData: IPublisher;
 		rating: number;
 		comment?: string;
 		createdAt: string;
