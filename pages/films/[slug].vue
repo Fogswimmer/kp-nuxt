@@ -14,7 +14,7 @@
 		<NuxtLayout name="detail">
 			<v-app-bar order="1">
 				<template #prepend>
-					<BackBtn v-if="$vuetify.display.smAndDown" />
+					<BackBtn />
 				</template>
 				<v-app-bar-title>
 					<span
@@ -383,10 +383,8 @@
 										>
 											<v-list rounded="lg">
 												<v-list-item
-													v-for="(
-														person, index
-													) in team"
-													:key="`team-${index}`"
+													v-for="(person, i) in team"
+													:key="`team-${i}`"
 													rounded="lg"
 													:subtitle="
 														$t(person.title || '')
@@ -394,7 +392,7 @@
 													:title="
 														person.value as string
 													"
-													:value="`team-${index}`"
+													:value="`team-${i}`"
 													:to="
 														$localeRoute(
 															person.to || '/',
@@ -581,7 +579,7 @@ import { useAuthStore } from "~/stores/authStore";
 import { useTranslationStore } from "~/stores/translationStore";
 
 const GALLERY_CARD_HEIGHT: number = 400;
-const TOP_CARDS_HEIGHT: number = 470;
+const TOP_CARDS_HEIGHT: number = 450;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();

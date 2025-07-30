@@ -10,14 +10,15 @@
 			<template #title>
 				<nuxt-link
 					:to="$localeRoute(item.to || '/')"
-					class="text-primary text-lg-h6 d-flex ga-1"
+					class="text-primary text-lg-h6 d-flex ga-1 align-center"
 				>
 					<span class="text-truncate">{{ item.title }}</span>
 					<span v-if="item.releaseYear"
 						>({{ item.releaseYear }})</span
 					>
-					{{ item.flag  }}
-					<span>{{ item.flag }}</span>
+					<span class="text-lg-body-1 text-caption ml-2">{{
+						item.flag
+					}}</span>
 				</nuxt-link>
 
 				<v-chip
@@ -37,30 +38,30 @@
 				>
 			</template>
 			<template #subtitle>
-				<v-chip-group>
-					<v-chip
-						v-for="(chip, j) in item.value"
-						:key="j"
-						color="secondary"
-					>
-						{{ chip }}</v-chip
-					>
-				</v-chip-group>
+				<div
+					v-for="(chip, j) in item.value"
+					:key="j"
+					class="d-inline mr-1"
+				>
+					<v-chip size="small"> {{ chip }}</v-chip>
+				</div>
 			</template>
 			<template #prepend>
-				<v-avatar :size="84">
-					<v-img :src="item.avatar">
-						<template #placeholder>
-							<v-sheet height="100%">
-								<div
-									class="d-flex align-center justify-center fill-height"
-								>
-									<v-icon icon="mdi-image-off" />
-								</div>
-							</v-sheet>
-						</template>
-					</v-img>
-				</v-avatar>
+				<nuxt-link :to="item.to" class="mr-2">
+					<v-avatar :size="$vuetify.display.mdAndUp ? 100 : 64">
+						<v-img :src="item.avatar">
+							<template #placeholder>
+								<v-sheet height="100%">
+									<div
+										class="d-flex align-center justify-center fill-height"
+									>
+										<v-icon icon="mdi-image-off" />
+									</div>
+								</v-sheet>
+							</template>
+						</v-img>
+					</v-avatar>
+				</nuxt-link>
 			</template>
 			<template v-if="$vuetify.display.mdAndUp" #append>
 				<ListCardInfo :item="item" />

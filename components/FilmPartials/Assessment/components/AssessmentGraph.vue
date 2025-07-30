@@ -6,7 +6,7 @@
 					<div class="d-flex ga-1 align-center w-100">
 						<v-chip
 							:color="stripeColor(data.rating)"
-							size="small"
+							size="x-small"
 							prepend-icon="mdi-star"
 						>
 							{{ data.rating }}

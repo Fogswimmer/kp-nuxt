@@ -9,13 +9,6 @@
 					>{{ item.title }}</nuxt-link
 				>
 				<v-spacer />
-				<FilmRatingChip
-					v-if="item.rating && !withChips"
-					:rating="item?.rating.toString()"
-				/>
-				<v-chip v-else-if="$vuetify.display.mdAndUp" variant="plain">
-					{{ item.rating }}
-				</v-chip>
 			</div>
 		</v-list-item-title>
 		<v-list-item-subtitle>
@@ -37,6 +30,12 @@
 					</v-img>
 				</v-avatar>
 			</nuxt-link>
+		</template>
+		<template #append>
+			<FilmRatingChip
+				v-if="item.rating && !withChips"
+				:rating="item?.rating.toString()"
+			/>
 		</template>
 		<v-chip-group v-if="withChips">
 			<v-chip v-for="(chip, i) in item.chipsArr" :key="i" :to="chip.to">

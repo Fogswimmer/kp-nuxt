@@ -181,7 +181,8 @@ import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
+const localeRoute = useLocaleRoute();
 
 const {
 	loading: filmLoading,
@@ -197,9 +198,8 @@ const {
 	popularActors,
 } = storeToRefs(usePersonStore());
 
-const { locale } = useI18n();
-const localeRoute = useLocaleRoute();
 const isOffline = ref<boolean>(false);
+const getName = useInternationalName();
 
 const fetchData = async (): Promise<void> => {
 	await checkFilmsPresence();
@@ -215,7 +215,7 @@ const fetchData = async (): Promise<void> => {
 		navigateTo(localeRoute("/empty-page"));
 	}
 };
-const getName = useInternationalName();
+
 const latestFilmItems = computed((): Detail[] => {
 	return latestFilms.value[0] !== null
 		? latestFilms.value?.map((film: IFilm) => {

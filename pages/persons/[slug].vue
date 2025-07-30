@@ -5,7 +5,7 @@
 		</NuxtLayout>
 		<NuxtLayout name="detail">
 			<v-app-bar order="1">
-				<template v-if="$vuetify.display.smAndDown" #prepend>
+				<template #prepend>
 					<BackBtn />
 				</template>
 				<v-app-bar-title>
@@ -58,7 +58,12 @@
 						:loading="loading"
 						:general-info="computedPersonDetails"
 						:avatar="person?.avatar || ''"
-						:title="getName(personFullName, person?.internationalName || '')	"
+						:title="
+							getName(
+								personFullName,
+								person?.internationalName || '',
+							)
+						"
 						:subtitle="person?.specialtyNames || []"
 						:active-img="activeImg"
 						:gallery="person?.photos || []"
@@ -236,7 +241,6 @@ import PublisherPopover from "~/components/Containment/Cards/PublisherPopover.vu
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
 import { useTranslationStore } from "~/stores/translationStore";
-
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
