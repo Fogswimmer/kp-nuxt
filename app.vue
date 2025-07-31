@@ -1,11 +1,11 @@
 <template>
 	<LoadingScreen v-if="isLoading" />
-	<v-app>
-		<NuxtLayout>
-			<NuxtLoadingIndicator color="rgb(255, 174, 0)" />
+	<NuxtLayout>
+		<NuxtLoadingIndicator color="rgb(255, 174, 0)" />
+		<v-app>
 			<NuxtPage />
+		</v-app>
 		</NuxtLayout>
-	</v-app>
 </template>
 
 <script setup lang="ts">

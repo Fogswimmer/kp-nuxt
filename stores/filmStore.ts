@@ -58,7 +58,7 @@ export const useFilmStore = defineStore("films", () => {
 		order: string,
 		sortBy: string,
 		locale: string,
-		selectedGenres: number[],
+		selectedGenres: string[],
 		selectedCountries: string[],
 	): Promise<void> => {
 		try {

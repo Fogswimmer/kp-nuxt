@@ -4,11 +4,11 @@
 			:active-theme="activeTheme"
 			@update:active-theme="activeTheme = $event"
 		/>
-		
-			<v-main v-scroll="onScroll" style="min-height: calc(100vh - 64px)">
-				<slot />
-			</v-main>
-		
+
+		<v-main v-scroll="onScroll" style="min-height: calc(100vh - 64px)">
+			<slot />
+		</v-main>
+
 		<BottomNav show-profile-nav />
 		<client-only>
 			<v-navigation-drawer
