@@ -1,6 +1,6 @@
 <template>
+	<v-layout>
 	<NuxtLayout>
-		<v-layout>
 			<Head>
 				<Title>
 					{{
@@ -26,8 +26,8 @@
 					@click:action="clearError({ redirect: '/' })"
 				/>
 			</v-main>
-		</v-layout>
-	</NuxtLayout>
+		</NuxtLayout>
+	</v-layout>
 </template>
 
 <script setup lang="ts">
