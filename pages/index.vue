@@ -129,11 +129,15 @@
 								</template>
 							</HomeSection>
 						</v-col>
-						<v-col cols="12" xl="6" lg="12" md="12" sm="12">
+						<v-col
+							v-if="popularActors.length > 0 && personsPresent"
+							cols="12"
+							xl="6"
+							lg="12"
+							md="12"
+							sm="12"
+						>
 							<HomeSection
-								v-if="
-									popularActors.length > 0 && personsPresent
-								"
 								:title="$t('pages.home.popular_actors')"
 								:loading="personLoading"
 							>
