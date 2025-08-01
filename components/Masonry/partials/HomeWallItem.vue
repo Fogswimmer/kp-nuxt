@@ -34,6 +34,7 @@
 		<template #append>
 			<FilmRatingChip
 				v-if="item.rating && !withChips"
+				size="small"
 				:rating="item?.rating.toString()"
 			/>
 		</template>

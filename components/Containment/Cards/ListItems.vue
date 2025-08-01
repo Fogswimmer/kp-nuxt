@@ -38,13 +38,15 @@
 				>
 			</template>
 			<template #subtitle>
-				<div
-					v-for="(chip, j) in item.value"
-					:key="j"
-					class="d-inline mr-1"
-				>
-					<v-chip size="small"> {{ chip }}</v-chip>
-				</div>
+				<v-chip-group>
+					<v-chip
+						v-for="(chip, j) in item.value"
+						:key="j"
+						size="small"
+					>
+						{{ chip }}</v-chip
+					>
+				</v-chip-group>
 			</template>
 			<template #prepend>
 				<nuxt-link :to="item.to" class="mr-2">
