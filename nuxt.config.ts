@@ -30,16 +30,18 @@ export default defineNuxtConfig({
 			wasm: false,
 		},
 	},
+	build: {
+    	transpile: ['vuetify'],
+  	},
 	runtimeConfig: {
 		public: {
 			apiBase: process.env.NUXT_API_BASE_URL,
 			appName: process.env.NUXT_APP_NAME,
 		},
 	},
-	compatibilityDate: "2024-04-03",
+	compatibilityDate: "2025-01-01",
 
 	vite: {
-		logLevel: "info",
 		build: {
 			sourcemap: true,
 		},
