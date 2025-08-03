@@ -22,7 +22,7 @@
 							class="fill-height d-flex justify-center align-center pa-2"
 						>
 							<v-img
-								src="public/img/scheme.webp"
+								src="/img/scheme.webp"
 								alt="scheme"
 								:class="
 									theme.current.value.dark ? '' : 'inverted'
