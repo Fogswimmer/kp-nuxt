@@ -110,21 +110,6 @@ const limitOptions: INumberValueOption[] = [
 const selectedLimit = ref<INumberValueOption>(limitOptions[0]);
 const selectedSortOption = ref<IStringValueOption>(props.sortOptions[0]);
 
-// const selectedGroups = ref<string[]>([]);
-// const selectedGenre = ref<string[]>([]);
-// const selectedCountry = ref<string>("");
-// const selectedSpecialty = ref<string>("");
-
-// const mappedCountries = computed(() => {
-// 	return props.groupByOptions2
-// 		? Object.entries(props.groupByOptions2.options).map(
-// 				([value, name]) => ({
-// 					value,
-// 					name,
-// 				}),
-// 			)
-// 		: [];
-// });
 </script>
 
 <style></style>

@@ -71,6 +71,7 @@
 						@delete:img="handleDeleteImg"
 						@gallery:open="photoEditMode = true"
 					/>
+					{{ activeImg }}
 				</template>
 				<template #notification>
 					<NotAuthWarning v-if="!isAuthenticated" />
@@ -259,7 +260,7 @@ const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>(["bio"]);
-const coverFile = ref<File>();
+const coverFile = ref<File|null>();
 const avatarFile = ref<File | null>(null);
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { person, personForm, loading } = storeToRefs(usePersonStore());
@@ -284,19 +285,20 @@ const imagesToDelete = computed(() => {
 			selectedImagesIndices.value.includes(index),
 		)
 		.map((imageName: string): string => {
-			const fileName = imageName ? imageName.split("/").at(-1) : "";
-
-			return fileName ? fileName.split(".")[0] : "";
+			if (!imageName) return "";
+			const fileName = imageName.split(/[/\\]/).at(-1) || "";
+			const namePart = fileName.split(".")[0] ?? "";
+			return namePart;
 		});
 }) as ComputedRef<string[]>;
 
-const activeImg = ref<number>(
-	person.value
+const activeImg = computed(() => {
+	return person.value
 		? person.value?.photos.findIndex(
 				(img: string) => img === person.value?.avatar || "",
 			)
-		: 0,
-);
+		: 0;
+});
 
 const handleBioEdit = (): void => {
 	bioEditMode.value = true;
@@ -404,9 +406,9 @@ const handleChangeAvatar = async (index: number): Promise<void> => {
 };
 
 const handleAvatarUpload = async (files: File[]): Promise<void> => {
-	avatarFile.value = files[0];
+	avatarFile.value = files[0] ?? null;
 	const personId: number = person.value?.id || 0;
-	await uploadPhotos([avatarFile.value], personId);
+	await uploadPhotos([avatarFile.value as File], personId);
 	personForm.value.avatar = person.value?.photos[0] || "";
 	await editPerson();
 	photoEditMode.value = false;
@@ -424,7 +426,7 @@ const handlePhotosUpload = async (files: File[]): Promise<void> => {
 };
 
 const handleCoverChange = async (files: File[]): Promise<void> => {
-	const file: File = files[0];
+	const file: File|null = files[0] ?? null;
 	const personId: number = person.value?.id || 0;
 	if (person.value?.cover !== "") {
 		showCoverReplacementWarning.value = true;
@@ -468,7 +470,7 @@ const handleDeleteImg = async (index: number) => {
 };
 
 const fetchData = async (): Promise<void> => {
-	const slug = useRoute().params.slug.toString();
+	const slug = useRoute().params.slug?.toString() ?? "";
 
 	await Promise.allSettled([
 		fetchPersonDetails(slug, locale.value),

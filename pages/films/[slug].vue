@@ -670,7 +670,8 @@ const imagesToDelete = computed(() => {
 		.map((imageName: string): string => {
 			if (!imageName) return "";
 			const fileName = imageName.split(/[/\\]/).at(-1) || "";
-			return fileName.split(".")[0];
+			const namePart = fileName.split(".")[0] ?? "";
+			return namePart;
 		});
 }) as ComputedRef<string[]>;
 
