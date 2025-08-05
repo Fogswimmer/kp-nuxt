@@ -16,18 +16,18 @@
 				size="small"
 				color="yellow-darken-2"
 			/>
-			<v-spacer />
-		
-				<v-chip label size="small" variant="plain" prepend-icon="mdi-calendar">
-					<div class="d-flex ga-1">
-						<span> {{ $t("general.created_at") }}:</span>
-						<span> {{ dateFormatter(item.createdAt || "") }}</span>
-					</div>
-				</v-chip>
+			<v-spacer v-else/>
 
-				<PublisherPopover :publisher="item.publisherData" />
-			</div>
-	
+			<v-chip label size="small" prepend-icon="mdi-calendar">
+				<div class="d-flex ga-1">
+					<span> {{ $t("general.created_at") }}:</span>
+					<span> {{ dateFormatter(item.createdAt || "") }}</span>
+				</div>
+			</v-chip>
+
+			<PublisherPopover :publisher="item.publisherData" />
+			<v-spacer />
+		</div>
 	</v-sheet>
 </template>
 
