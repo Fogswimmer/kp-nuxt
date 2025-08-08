@@ -1,39 +1,48 @@
 <template>
 	<v-card
-		v-if="films.length && $vuetify.display.mdAndUp"
-		:title="$t('pages.films.similar_genres')"
-		prepend-icon="mdi-filmstrip"
+		v-if="persons.length && $vuetify.display.mdAndUp"
+		:title="$t('pages.persons.similar')"
+		prepend-icon="mdi-account"
 		flat
 	>
 		<v-card-text>
-			<v-list variant="plain">
+			<v-list variant="plain" class="pa-2">
 				<v-list-item
-					v-for="(film, i) in films"
+					v-for="(person, i) in persons"
 					:key="i"
 					class="my-2 text-center"
-					:value="film.id"
+					:value="person.id"
 					elevation="2"
 					border
 					rounded="lg"
-					:to="localeRoute('/films/' + film.slug)"
+					:to="localeRoute('/persons/' + person.slug)"
 				>
 					<v-list-item-title class="font-weight-bold text-primary">
 						{{
 							getName(
-								film?.name || "",
-								film?.internationalName || "",
+								person?.name || "",
+								person?.internationalName || "",
 							)
 						}}
 					</v-list-item-title>
-					<v-list-item-subtitle>
-						{{ film.releaseYear }}
+					<v-list-item-subtitle class="d-flex justify-center">
+						<v-chip-group>
+							<v-chip
+								v-for="(name, j) in person.specialtyNames"
+								:key="j"
+								size="small"
+							>
+								{{ name }}
+							</v-chip>
+						</v-chip-group>
 					</v-list-item-subtitle>
 					<v-list-item-media class="mt-2">
 						<v-img
-							:src="film.poster || ''"
+							:src="person.avatar || ''"
 							rounded="lg"
 							height="250"
 							width="200"
+							cover
 						/>
 					</v-list-item-media>
 				</v-list-item>
@@ -42,33 +51,35 @@
 	</v-card>
 
 	<v-slide-group v-else-if="$vuetify.display.smAndDown">
-		<v-slide-group-item v-for="(film, i) in films" :key="i">
+		<v-slide-group-item v-for="(person, i) in persons" :key="i">
 			<v-card
 				:title="
-					getName(film?.name || '', film?.internationalName || '')
+					getName(person?.name || '', person?.internationalName || '')
 				"
 				width="200"
 				height="300"
 				variant="tonal"
 				rounded="lg"
 				class="text-center mr-4"
-				:to="localeRoute('/films/' + film.slug)"
+				:to="localeRoute('/persons/' + person.slug)"
 			>
-				<template #subtitle>
-					<v-rating
-						:model-value="film?.rating || 0"
-						readonly
-						size="small"
-						density="compact"
-						color="yellow-darken-2"
-					/>
-				</template>
-				<v-card-text>
+				<v-card-subtitle class="d-flex justify-center">
+					<v-chip-group>
+						<v-chip
+							v-for="(name, j) in person.specialtyNames"
+							:key="j"
+							size="small"
+						>
+							{{ name }}
+						</v-chip>
+					</v-chip-group>
+				</v-card-subtitle>
+				<v-card-text class="d-flex justify-center">
 					<v-img
-						:src="film.poster || ''"
+						:src="person.avatar || ''"
 						rounded="lg"
-						height="200"
-						width="300"
+						height="170"
+						width="150"
 						cover
 					>
 						<template #placeholder>
@@ -89,7 +100,7 @@ import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
 defineProps<{
-	films: IFilm[];
+	persons: IPerson[];
 	loading: boolean;
 }>();
 

@@ -405,6 +405,7 @@ export default {
 			firstname: "Firstname",
 			details: "Person details",
 			title: "Persons",
+			similar: "Similar persons",
 			list: "Persons list",
 			lastname: "Lastname",
 			birthday: "Birthday",

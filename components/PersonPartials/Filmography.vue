@@ -56,46 +56,52 @@
 				:title="$t('pages.persons.filmography')"
 			>
 				<v-card-text>
-					<v-divider class="mt-2" />
-					<v-list>
-						<div
-							v-for="(value, key, index) in person?.filmWorks"
-							:key="`filmwork-category-${key}-${index}`"
-							class="my-2"
-						>
-							<v-list-subheader>
-								{{ defineCardTitle(key) }}
-							</v-list-subheader>
-							<v-divider />
-							<v-list-item
-								v-for="(item, i) in value"
-								:key="`filmwork-${key}-${item?.slug || item?.id || i}`"
-								:to="localeRoute(`/films/${item?.slug}`)"
-								:value="item"
-								class="text-center my-2 mb-2"
-								elevation="1"
-								:title="
-									getName(
-										item.name,
-										item?.internationalName || '',
-									)
-								"
-								:subtitle="
-									item.releaseYear || $t('general.no_data')
-								"
-								:prepend-avatar="item.poster || ''"
-							/>
-
-							<v-divider
-								v-if="
-									person?.filmWorks &&
-									index <
-										Object.keys(person.filmWorks).length - 1
-								"
-								:key="`divider-${key}-${index}`"
-							/>
-						</div>
-					</v-list>
+					<v-container>
+						<v-row>
+							<v-col
+								v-for="(value, key, index) in person?.filmWorks"
+								:key="`filmwork-category-${key}-${index}`"
+								cols="12"
+								lg="4"
+								md="6"
+								class="my-2"
+							>
+								<v-card
+									:subtitle="defineCardTitle(key)"
+									max-height="300"
+									height="100%"
+									class="overflow-y-auto"
+								>
+									<v-list>
+										<v-list-item
+											v-for="(item, i) in value"
+											:key="`filmwork-${key}-${item?.slug || item?.id || i}`"
+											:to="
+												localeRoute(
+													`/films/${item?.slug}`,
+												)
+											"
+											:value="item"
+											class="my-2"
+											rounded="lg"
+											:title="
+												getName(
+													item.name,
+													item?.internationalName ||
+														'',
+												)
+											"
+											:subtitle="
+												item.releaseYear ||
+												$t('general.no_data')
+											"
+											:prepend-avatar="item.poster || ''"
+										/>
+									</v-list>
+								</v-card>
+							</v-col>
+						</v-row>
+					</v-container>
 				</v-card-text>
 			</v-card>
 		</template>

@@ -396,6 +396,7 @@ export default {
 		persons: {
 			related_films: "Связанные фильмы",
 			list: "Список персон",
+			similar: "Похожие персоны",
 			details: "Подробности о персоне",
 			title: "Персоны",
 			firstname: "Имя",

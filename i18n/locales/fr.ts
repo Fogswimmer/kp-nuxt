@@ -402,6 +402,7 @@ export default {
 		persons: {
 			related_films: "Films liés",
 			title: "Personnes",
+			similar: "Personnes similaires",
 			details: "Details de la personne",
 			list: "Liste des personnes",
 			firstname: "Prénom",

@@ -1,7 +1,10 @@
 <template>
 	<div>
 		<NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
-			<Filmography :person="person" />
+			<SimilarSpecialists
+				:persons="similarSpecialists"
+				:loading="loading"
+			/>
 		</NuxtLayout>
 		<NuxtLayout name="detail">
 			<v-app-bar order="1">
@@ -111,43 +114,60 @@
 								<Filmography :person="person" />
 							</v-expansion-panel-text>
 						</v-expansion-panel>
+						<v-expansion-panel 
+						id="similar-specialists" 
+						tag="section"
+						value="similar-specialists"
+						:title="$t('pages.persons.similar')"
+						>
+							<v-expansion-panel-text>
+								<SimilarSpecialists
+									:persons="similarSpecialists"
+									:loading="loading"
+								/>
+							</v-expansion-panel-text>
+						</v-expansion-panel>
 					</v-expansion-panels>
-					<v-card
-						v-else
-						:title="$t('pages.persons.bio')"
-						prepend-icon="mdi-feather"
-						class="mt-2"
-						flat
-					>
-						<template #append>
-							<v-btn
-								variant="tonal"
-								density="comfortable"
-								icon
-								:disabled="!isAuthenticated"
-								:color="bioEditMode ? 'error' : ''"
-								@click="bioEditMode = !bioEditMode"
-							>
-								<v-icon>{{
-									!bioEditMode ? "mdi-pencil" : "mdi-close"
-								}}</v-icon>
-								<v-tooltip activator="parent">{{
-									!bioEditMode
-										? $t("pages.persons.edit_bio")
-										: $t("actions.stop_edit")
-								}}</v-tooltip>
-							</v-btn>
-						</template>
-						<v-card-text>
-							<IndentedEditableText
-								:edit-mode="bioEditMode"
-								:messages="$t('pages.persons.edit_bio')"
-								:text="person?.bio || ''"
-								@sumbit:edit="submitBioEdit"
-								@cancel:edit="cancelBioEdit"
-							/>
-						</v-card-text>
-					</v-card>
+					<template v-else>
+						<v-card
+							:title="$t('pages.persons.bio')"
+							prepend-icon="mdi-feather"
+							class="mt-2"
+							flat
+						>
+							<template #append>
+								<v-btn
+									variant="tonal"
+									density="comfortable"
+									icon
+									:disabled="!isAuthenticated"
+									:color="bioEditMode ? 'error' : ''"
+									@click="bioEditMode = !bioEditMode"
+								>
+									<v-icon>{{
+										!bioEditMode
+											? "mdi-pencil"
+											: "mdi-close"
+									}}</v-icon>
+									<v-tooltip activator="parent">{{
+										!bioEditMode
+											? $t("pages.persons.edit_bio")
+											: $t("actions.stop_edit")
+									}}</v-tooltip>
+								</v-btn>
+							</template>
+							<v-card-text>
+								<IndentedEditableText
+									:edit-mode="bioEditMode"
+									:messages="$t('pages.persons.edit_bio')"
+									:text="person?.bio || ''"
+									@sumbit:edit="submitBioEdit"
+									@cancel:edit="cancelBioEdit"
+								/>
+							</v-card-text>
+						</v-card>
+						<Filmography :person="person" />
+					</template>
 				</template>
 			</DetailCard>
 			<BaseDialog
@@ -237,6 +257,7 @@ import definePageTitle from "~/utils/definePageTitle";
 import PersonDetailMenu from "~/components/PersonPartials/PersonDetailMenu.vue";
 import BackBtn from "~/components/Containment/Btns/BackBtn.vue";
 import PublisherPopover from "~/components/Containment/Cards/PublisherPopover.vue";
+import SimilarSpecialists from "~/components/PersonPartials/SimilarSpecialists.vue";
 
 import { usePersonStore } from "~/stores/personStore";
 import { useAuthStore } from "~/stores/authStore";
@@ -262,7 +283,8 @@ const mainAccordion = ref<string[]>(["bio"]);
 const coverFile = ref<File | null>();
 const avatarFile = ref<File | null>(null);
 const { isAuthenticated } = storeToRefs(useAuthStore());
-const { person, personForm, loading } = storeToRefs(usePersonStore());
+const { person, personForm, loading, similarSpecialists } =
+	storeToRefs(usePersonStore());
 const {
 	fetchPersonDetails,
 	editPerson,
@@ -272,6 +294,7 @@ const {
 	removePerson,
 	deleteGalleryItems,
 	clearPersonForm,
+	fetchSimilarSpecialists,
 	GALLERY_SIZE,
 } = usePersonStore();
 
@@ -480,6 +503,7 @@ const fetchData = async (): Promise<void> => {
 	await Promise.allSettled([
 		fetchPersonDetails(slug, locale.value),
 		fetchPersonForm(slug),
+		fetchSimilarSpecialists(slug, locale.value),
 	]);
 };
 

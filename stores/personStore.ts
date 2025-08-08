@@ -36,6 +36,7 @@ export const usePersonStore = defineStore("persons", () => {
 	const personForm = ref<Partial<IPerson>>({
 		...defaultPersonValues,
 	});
+	const similarSpecialists = ref<IPerson[]>([]);
 
 	const fetchFilteredPersons = async (
 		limit: number | string,
@@ -242,6 +243,20 @@ export const usePersonStore = defineStore("persons", () => {
 		}
 	};
 
+	const fetchSimilarSpecialists = async (slug: string, locale: string) => {
+		try {
+			loading.value = true;
+			const response = await $fetch<IPersonListResponse>(
+				`${baseUrl}/persons/${slug}/similar-specialties?locale=${locale}`,
+			);
+			similarSpecialists.value = response?.items || [];
+		} catch (error: unknown) {
+			handleError(error);
+		} finally {
+			loading.value = false;
+		}
+	};
+
 	const clearPersonForm = () => {
 		personForm.value = {
 			...defaultPersonValues,
@@ -259,6 +274,7 @@ export const usePersonStore = defineStore("persons", () => {
 		GALLERY_SIZE,
 		personsPresent,
 		popularActors,
+		similarSpecialists,
 		fetchFilteredPersons,
 		fetchPersonDetails,
 		addPerson,
@@ -271,5 +287,6 @@ export const usePersonStore = defineStore("persons", () => {
 		checkPersonsPresence,
 		listPopularActors,
 		deleteGalleryItems,
+		fetchSimilarSpecialists
 	};
 });
