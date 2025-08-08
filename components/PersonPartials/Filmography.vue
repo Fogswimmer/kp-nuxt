@@ -61,9 +61,6 @@
 							<v-col
 								v-for="(value, key, index) in person?.filmWorks"
 								:key="`filmwork-category-${key}-${index}`"
-								cols="12"
-								lg="4"
-								md="6"
 								class="my-2"
 							>
 								<v-card
