@@ -8,7 +8,7 @@
 					:items-per-page="itemsPerPage"
 				>
 					<template #header>
-						<div class="d-flex align-center pa-2">
+						<!-- <div class="d-flex align-center pa-2">
 							<v-responsive
 								:max-width="
 									$vuetify.display.mdAndUp ? 250 : 150
@@ -20,6 +20,7 @@
 									hide-details
 									class="ma-2"
 									density="compact"
+									@update:model-value="$emit('assession:sort', $event)"
 								/>
 							</v-responsive>
 							<v-spacer />
@@ -32,7 +33,7 @@
 									$t("general.see_all")
 								}}</span>
 							</v-btn>
-						</div>
+						</div> -->
 					</template>
 					<template #default="{ items }">
 						<div
@@ -94,29 +95,30 @@
 <script lang="ts" setup>
 import Comment from "./components/Comment.vue";
 
-const { t } = useI18n();
+// const { t } = useI18n();
 const emits = defineEmits<{
 	(event: "assession:delete", id: number): void;
-}>();
+	(event: "assession:sort", value: string): void;
+}>()
 const props = defineProps<{
 	assessments: IAssessment[];
 	loading: boolean;
 }>();
-const sort = ref<string>("asc");
-interface SortItem {
-	value: string;
-	title: string;
-}
-const sortItems = ref<SortItem[]>([
-	{
-		value: "asc",
-		title: t("actions.desc"),
-	},
-	{
-		value: "desc",
-		title: t("actions.asc"),
-	},
-]);
+// const sort = ref<string>("asc");
+// interface SortItem {
+// 	value: string;
+// 	title: string;
+// }
+// const sortItems = ref<SortItem[]>([
+// 	{
+// 		value: "asc",
+// 		title: t("actions.desc"),
+// 	},
+// 	{
+// 		value: "desc",
+// 		title: t("actions.asc"),
+// 	},
+// ]);
 
 const { currentUser, isAuthenticated, isAdmin } = storeToRefs(useAuthStore());
 const page = ref<number>(1);
@@ -131,10 +133,10 @@ const commentColors = Array.from({ length: 10 }, () => {
 	)}, ${Math.floor(Math.random() * 256)}, ${opacity})`;
 });
 
-const seeAllOnClick = () => {
-	itemsPerPage.value =
-		itemsPerPage.value === 5 ? props.assessments.length : 5;
-};
+// const seeAllOnClick = () => {
+// 	itemsPerPage.value =
+// 		itemsPerPage.value === 5 ? props.assessments.length : 5;
+// };
 
 const assementsWithColors = computed(() => {
 	const commentsWithSameAuthor = props.assessments.reduce(
@@ -175,6 +177,7 @@ const confirmDelete = (id: number) => {
 	emits("assession:delete", id);
 	showDeleteConfirm.value = false;
 };
+
 </script>
 
 <style>

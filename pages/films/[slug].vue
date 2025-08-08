@@ -232,6 +232,7 @@
 									@assession:enable="isAssessing = true"
 									@assession:cancel="cancelAssessment"
 									@assession:delete="deleteAssessment"
+									@assession:sort="sortAssessments"
 								/>
 							</template>
 							<template #similar-genres>
