@@ -65,7 +65,7 @@
 					</v-chip-group>
 				</v-list-item>
 				<v-divider />
-				<slot name="group-by"/>
+				<slot name="group-by" />
 			</v-list>
 		</v-card-text>
 	</v-card>
@@ -107,9 +107,12 @@ const limitOptions: INumberValueOption[] = [
 	{ value: 15, title: "15" },
 	{ value: 0, title: t("filters.sort.all") },
 ];
-const selectedLimit = ref<INumberValueOption>(limitOptions[0] || { value: 5, title: "5" });
-const selectedSortOption = ref<IStringValueOption>(props.sortOptions[0] || { value: "", title: "" });
-
+const selectedLimit = ref<INumberValueOption>(
+	limitOptions[0] || { value: 5, title: "5" },
+);
+const selectedSortOption = ref<IStringValueOption>(
+	props.sortOptions[0] || { value: "", title: "" },
+);
 </script>
 
 <style></style>

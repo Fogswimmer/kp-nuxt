@@ -26,15 +26,7 @@
 						}}
 					</v-list-item-title>
 					<v-list-item-subtitle class="d-flex justify-center">
-						<v-chip-group>
-							<v-chip
-								v-for="(name, j) in person.specialtyNames"
-								:key="j"
-								size="small"
-							>
-								{{ name }}
-							</v-chip>
-						</v-chip-group>
+						{{ person.specialtyNames.join(", ") }}
 					</v-list-item-subtitle>
 					<v-list-item-media class="mt-2">
 						<v-img
@@ -64,15 +56,7 @@
 				:to="localeRoute('/persons/' + person.slug)"
 			>
 				<v-card-subtitle class="d-flex justify-center">
-					<v-chip-group>
-						<v-chip
-							v-for="(name, j) in person.specialtyNames"
-							:key="j"
-							size="small"
-						>
-							{{ name }}
-						</v-chip>
-					</v-chip-group>
+					{{ person.specialtyNames.join(", ") }}
 				</v-card-subtitle>
 				<v-card-text class="d-flex justify-center">
 					<v-img

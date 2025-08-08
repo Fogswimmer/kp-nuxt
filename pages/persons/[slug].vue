@@ -114,11 +114,11 @@
 								<Filmography :person="person" />
 							</v-expansion-panel-text>
 						</v-expansion-panel>
-						<v-expansion-panel 
-						id="similar-specialists" 
-						tag="section"
-						value="similar-specialists"
-						:title="$t('pages.persons.similar')"
+						<v-expansion-panel
+							id="similar-specialists"
+							tag="section"
+							value="similar-specialists"
+							:title="$t('pages.persons.similar')"
 						>
 							<v-expansion-panel-text>
 								<SimilarSpecialists

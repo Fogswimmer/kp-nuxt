@@ -759,7 +759,7 @@ const starring = computed((): Partial<Detail>[] => {
 					),
 					to: localeRoute("/persons/" + person?.slug) || "",
 					avatar: person.avatar || "",
-				} as Detail ;
+				} ;
 			})
 		: [];
 });
