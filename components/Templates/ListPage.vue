@@ -105,7 +105,7 @@
 					<v-icon>mdi-filter</v-icon>
 				</v-btn>
 			</template>
-			<template v-if="needle && !loading" #extension>
+			<template v-if="needle && !loading && items.length" #extension>
 				<div
 					class="mt-2 w-100 fill-height d-flex align-center justify-center"
 				>
@@ -219,6 +219,8 @@ const clearSearch = (): void => {
 };
 
 const updateSearch = (): void => {
+	currentPage.value = 1;
+	emit("update:page", 1);
 	emit("update:search", needle.value);
 };
 
