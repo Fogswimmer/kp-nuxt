@@ -1,6 +1,6 @@
 <template>
-	<v-card variant="elevated">
-		<v-toolbar>
+	<v-card variant="outlined">
+		<v-toolbar color="transparent">
 			<template #prepend>
 				<v-icon class="ml-2"> mdi-all-inclusive </v-icon>
 			</template>
@@ -22,11 +22,12 @@
 							class="fill-height d-flex justify-center align-center pa-2"
 						>
 							<v-img
-								src="/img/scheme.webp"
-								alt="scheme"
-								:class="
-									theme.current.value.dark ? '' : 'inverted'
+								:src="
+									theme.current.value.dark
+										? '/img/network_scheme_dark.webp'
+										: '/img/network_scheme.webp'
 								"
+								alt="scheme"
 								:height="$vuetify.display.mdAndUp ? 500 : 300"
 							>
 								<template #placeholder>
@@ -37,7 +38,9 @@
 					</v-sheet>
 				</v-tabs-window-item>
 				<v-tabs-window-item value="code">
-					<ComposeYamlCode />
+					<v-sheet max-height="600" class="overflow-y-auto">
+						<ComposeYamlCode />
+					</v-sheet>
 				</v-tabs-window-item>
 			</v-tabs-window>
 		</v-card-text>

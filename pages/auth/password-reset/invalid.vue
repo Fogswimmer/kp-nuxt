@@ -8,7 +8,7 @@
 				<v-btn
 					variant="tonal"
 					prepend-icon="mdi-home"
-					@click="navigateTo($localeRoute('/'))"
+					@click="navigateTo(localeRoute('/'))"
 				>
 					{{ $t("empty_states.actions.home") }}
 				</v-btn>
@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts" setup>
+const localeRoute = useLocaleRoute();
 definePageMeta({
 	name: "passwordResetInvalidToken",
 	path: "/auth/password-reset/invalid",

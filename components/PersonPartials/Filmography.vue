@@ -22,7 +22,7 @@
 						<v-list-item
 							v-for="(item, i) in value"
 							:key="i"
-							:to="$localeRoute(`/films/${item?.slug}`)"
+							:to="localeRoute(`/films/${item?.slug}`)"
 							:value="item"
 							:prepend-avatar="item?.poster || ''"
 						>
@@ -57,7 +57,7 @@
 			>
 				<v-card-text>
 					<v-divider class="mt-2" />
-					<v-list variant="plain">
+					<v-list>
 						<div
 							v-for="(value, key, index) in person?.filmWorks"
 							:key="`filmwork-category-${key}-${index}`"
@@ -70,36 +70,22 @@
 							<v-list-item
 								v-for="(item, i) in value"
 								:key="`filmwork-${key}-${item?.slug || item?.id || i}`"
-								:to="$localeRoute(`/films/${item?.slug}`)"
+								:to="localeRoute(`/films/${item?.slug}`)"
 								:value="item"
 								class="text-center my-2 mb-2"
 								elevation="1"
-							>
-								<v-list-item-title>
-									<span class="font-weight-bold text-primary">
-										{{
-											getName(
-												item.name,
-												item?.internationalName || "",
-											)
-										}}
-									</span>
-								</v-list-item-title>
-								<v-list-item-subtitle>
-									{{
-										item.releaseYear ||
-										$t("general.no_data")
-									}}
-								</v-list-item-subtitle>
-								<v-list-item-media>
-									<v-img
-										v-if="item.poster"
-										:src="item.poster"
-										rounded="lg"
-										size="130"
-									/>
-								</v-list-item-media>
-							</v-list-item>
+								:title="
+									getName(
+										item.name,
+										item?.internationalName || '',
+									)
+								"
+								:subtitle="
+									item.releaseYear || $t('general.no_data')
+								"
+								:prepend-avatar="item.poster || ''"
+							/>
+
 							<v-divider
 								v-if="
 									person?.filmWorks &&
@@ -127,6 +113,7 @@ const props = defineProps<{
 }>();
 
 const { t } = useI18n();
+const localeRoute = useLocaleRoute();
 const getName = useInternationalName();
 const defineCardTitle = (key: string) => {
 	switch (key) {

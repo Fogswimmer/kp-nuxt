@@ -3,7 +3,7 @@
 		:title="$t('empty_states.persons')"
 		icon="mdi-account-off"
 		:action-text="$t('empty_states.actions.add')"
-		@click:action="navigateTo($localeRoute('/persons/new'))"
+		@click:action="navigateTo(localeRoute('/persons/new'))"
 	/>
 </template>
 
@@ -11,4 +11,5 @@
 definePageMeta({
 	layout: "home",
 });
+const localeRoute = useLocaleRoute();
 </script>

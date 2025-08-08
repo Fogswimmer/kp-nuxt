@@ -1,12 +1,12 @@
 <template>
-	<v-sheet height="100vh" class="overlay">
+	<div class="overlay">
 		<div
 			class="d-flex flex-column fill-height gap-2 align-center justify-center"
 		>
 			<span class="text-center">{{ $t("state.loading") }}...</span>
 			<span class="progress" />
 		</div>
-	</v-sheet>
+	</div>
 </template>
 
 <script lang="ts" setup></script>
@@ -19,6 +19,8 @@
 	z-index: 9999;
 	width: 100%;
 	height: 100%;
+	height: 100vh;
+	background-color: white;
 }
 
 .progress {
@@ -38,6 +40,12 @@
 	}
 	100% {
 		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-color-scheme: dark) {
+	.overlay {
+		background-color: #08141b;
 	}
 }
 </style>

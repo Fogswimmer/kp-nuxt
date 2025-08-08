@@ -1,5 +1,10 @@
 <template>
-	<v-card flat class="pb-2 overflow-y-auto" height="calc(100vh - 64px)" variant="text">
+	<v-card
+		flat
+		class="pb-2 overflow-y-auto"
+		:height="`calc(100vh - ${$vuetify.display.mdAndUp ? 64 : 128}px)`"
+		variant="text"
+	>
 		<v-card flat>
 			<template v-if="loading" #loader>
 				<v-progress-linear indeterminate color="primary" />

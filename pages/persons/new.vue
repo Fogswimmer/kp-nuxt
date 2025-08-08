@@ -173,9 +173,12 @@ const handleFinish = (): void => {
 	}
 };
 const handleCoverSubmit = async (files: File[]): Promise<void> => {
-	const coverFile = files[0];
+	const file: File | null = files[0] ?? null;
+	if (!file) {
+		return;
+	}
 	const id = personForm.value.id;
-	await uploadCover(coverFile, id || 0);
+	await uploadCover(file, id || 0);
 
 	navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
 };

@@ -7,7 +7,7 @@
 			:title="$t('nav.home')"
 			prepend-icon="mdi-home"
 			value="home"
-			:to="$localeRoute('/')"
+			:to="localeRoute('/')"
 		/>
 		<v-list-group>
 			<template #activator="{ props }">
@@ -28,7 +28,7 @@
 				:base-color="activeRoute === '/films' ? 'primary' : ''"
 				:active="activeRoute === '/films'"
 				:title="$t('nav.films_list')"
-				:to="$localeRoute('/films')"
+				:to="localeRoute('/films')"
 			/>
 			<v-list-item
 				prepend-icon="mdi-plus"
@@ -36,7 +36,7 @@
 				:base-color="activeRoute === '/films/new' ? 'primary' : ''"
 				:active="activeRoute === '/films/new'"
 				:title="$t('nav.films_add')"
-				:to="$localeRoute('/films/new')"
+				:to="localeRoute('/films/new')"
 			/>
 		</v-list-group>
 		<v-list-group>
@@ -58,7 +58,7 @@
 				:active="activeRoute === '/persons'"
 				:base-color="activeRoute === '/persons' ? 'primary' : ''"
 				:title="$t('nav.persons_list')"
-				:to="$localeRoute('/persons')"
+				:to="localeRoute('/persons')"
 			/>
 			<v-list-item
 				prepend-icon="mdi-plus"
@@ -66,7 +66,7 @@
 				:active="activeRoute === '/persons/new'"
 				:base-color="activeRoute === '/persons/new' ? 'primary' : ''"
 				:title="$t('nav.persons_add')"
-				:to="$localeRoute('/persons/new')"
+				:to="localeRoute('/persons/new')"
 			/>
 		</v-list-group>
 
@@ -90,7 +90,7 @@
 const { setLocale, locale } = useI18n();
 const route = useRoute();
 const activeRoute = computed((): string => route.path);
-
+const localeRoute = useLocaleRoute();
 const changeLanguage = (lang: Language) => {
 	setLocale(lang);
 };

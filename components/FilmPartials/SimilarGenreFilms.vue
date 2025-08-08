@@ -13,7 +13,7 @@
 					class="mb-2 pa-2 text-center"
 					:value="film.id"
 					elevation="1"
-					:to="$localeRoute('/films/' + film.slug)"
+					:to="localeRoute('/films/' + film.slug)"
 				>
 					<v-list-item-title class="font-weight-bold text-primary">
 						{{
@@ -49,7 +49,7 @@
 				variant="tonal"
 				rounded="lg"
 				class="text-center mr-4"
-				:to="$localeRoute('/films/' + film.slug)"
+				:to="localeRoute('/films/' + film.slug)"
 			>
 				<template #subtitle>
 					<v-rating
@@ -85,6 +85,7 @@
 import ImgPlaceholder from "../Containment/Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
+const localeRoute = useLocaleRoute();
 defineProps<{
 	films: IFilm[];
 	loading: boolean;

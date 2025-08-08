@@ -10,7 +10,7 @@
 				:key="`starring-${actor?.id || 'unknown'}-${index}`"
 				:title="actor.value.toString()"
 				:value="index"
-				:to="$localeRoute(actor.to || '/')"
+				:to="localeRoute(actor.to || '/')"
 			>
 				<template #prepend>
 					<v-avatar>
@@ -34,7 +34,7 @@
 				:subtitle="$t(person.title)"
 				:title="person.value.toString()"
 				:value="index"
-				:to="$localeRoute(person.to || '/')"
+				:to="localeRoute(person.to || '/')"
 			>
 				<template #prepend>
 					<v-avatar>
@@ -56,6 +56,7 @@
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
+const localeRoute = useLocaleRoute();
 defineProps<{
 	starring: Detail[];
 	team: Detail[];

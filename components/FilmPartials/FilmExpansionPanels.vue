@@ -46,7 +46,7 @@
 						:key="index"
 						:title="actor.value?.toString()"
 						:value="index"
-						:to="$localeRoute(actor.to || '/')"
+						:to="localeRoute(actor.to || '/')"
 					>
 						<template #prepend>
 							<v-avatar>
@@ -83,7 +83,7 @@
 						:subtitle="$t(person.title || '')"
 						:title="person.value?.toString()"
 						:value="index"
-						:to="$localeRoute(person.to || '/')"
+						:to="localeRoute(person.to || '/')"
 					>
 						<template #prepend>
 							<v-avatar>
@@ -132,6 +132,8 @@ import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 defineEmits<{
 	(e: "description:change", value: boolean): void;
 }>();
+
+const localeRoute = useLocaleRoute();
 const display = useDisplay();
 const props = defineProps<{
 	isDescriptionPanelOpen: boolean;

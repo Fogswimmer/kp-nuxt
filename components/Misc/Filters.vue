@@ -107,8 +107,8 @@ const limitOptions: INumberValueOption[] = [
 	{ value: 15, title: "15" },
 	{ value: 0, title: t("filters.sort.all") },
 ];
-const selectedLimit = ref<INumberValueOption>(limitOptions[0]);
-const selectedSortOption = ref<IStringValueOption>(props.sortOptions[0]);
+const selectedLimit = ref<INumberValueOption>(limitOptions[0] || { value: 5, title: "5" });
+const selectedSortOption = ref<IStringValueOption>(props.sortOptions[0] || { value: "", title: "" });
 
 </script>
 

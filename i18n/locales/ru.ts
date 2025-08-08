@@ -129,6 +129,7 @@ export default {
 		persons_list: "Персоны",
 		persons_add: "Новая персона",
 		all: "Список",
+		list: "Список",
 		directors: "Режиссеры",
 		language: "Язык",
 		edit: "Редактирование",

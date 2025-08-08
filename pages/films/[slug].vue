@@ -332,7 +332,7 @@
 													"
 													:value="`starring-${index}`"
 													:to="
-														$localeRoute(
+														localeRoute(
 															actor.to || '/',
 														)
 													"
@@ -394,7 +394,7 @@
 													"
 													:value="`team-${i}`"
 													:to="
-														$localeRoute(
+														localeRoute(
 															person.to || '/',
 														)
 													"
@@ -583,6 +583,7 @@ const TOP_CARDS_HEIGHT: number = 450;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
+
 const showDeleteWarning = ref<boolean>(false);
 const editDescriptionMode = ref<boolean>(false);
 const showConfirmDialog = ref<boolean>(false);
@@ -654,6 +655,7 @@ const colParams = {
 	},
 };
 const getName = useInternationalName();
+
 const activeImg = computed(() => {
 	return film.value
 		? film.value?.gallery.findIndex(
@@ -757,7 +759,7 @@ const starring = computed((): Partial<Detail>[] => {
 					),
 					to: localeRoute("/persons/" + person?.slug) || "",
 					avatar: person.avatar || "",
-				};
+				} as Detail ;
 			})
 		: [];
 });
@@ -789,7 +791,12 @@ const team = computed((): Partial<Detail>[] => {
 });
 
 const fetchData = async (): Promise<void> => {
-	const slug = useRoute().params.slug.toString();
+	const route = useRoute();
+	const slug = route.params.slug?.toString();
+
+	if (!slug) {
+		return;
+	}
 
 	await Promise.allSettled([
 		fetchGenres(locale.value),
@@ -938,7 +945,12 @@ const showFullScreenPoster = (poster: string) => {
 watch(
 	locale,
 	async (newVal: string): Promise<void> => {
-		const slug = useRoute().params.slug.toString();
+		const route = useRoute();
+		const slug = route.params.slug?.toString();
+
+		if (!slug) {
+			return;
+		}
 		await fetchFilmDetails(slug, newVal);
 	},
 	{ immediate: true },

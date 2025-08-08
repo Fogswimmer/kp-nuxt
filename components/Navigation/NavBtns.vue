@@ -24,7 +24,7 @@
 					<v-list-item
 						:active="computedActiveNavBtn.films"
 						prepend-icon="mdi-list-box"
-						:title="$t('nav.films_list')"
+						:title="$t('nav.list')"
 						:to="$localeRoute('/films')"
 					/>
 					<v-list-item
@@ -49,7 +49,7 @@
 				<v-list nav density="compact">
 					<v-list-item
 						prepend-icon="mdi-list-box"
-						:title="$t('nav.persons_list')"
+						:title="$t('nav.list')"
 						:to="$localeRoute('/persons')"
 					/>
 					<v-list-item

@@ -5,7 +5,7 @@
 				<nuxt-link
 					class="text-lg-h5 text-primary text-truncate"
 					style="max-width: 75%"
-					:to="item.to ? $localeRoute(item.to) : '/'"
+					:to="item.to ? localeRoute(item.to) : '/'"
 					>{{ item.title }}</nuxt-link
 				>
 				<v-spacer />
@@ -15,7 +15,7 @@
 			<span v-if="item.value">{{ item.value }}</span>
 		</v-list-item-subtitle>
 		<template #prepend>
-			<nuxt-link :to="item.to ? $localeRoute(item.to) : '/'" class="mr-2">
+			<nuxt-link :to="item.to ? localeRoute(item.to) : '/'" class="mr-2">
 				<v-avatar :size="$vuetify.display.mdAndUp ? 112 : 64">
 					<v-img :src="item?.avatar || ''">
 						<template #placeholder>
@@ -51,6 +51,7 @@ import FilmRatingChip from "~/components/Misc/FilmRatingChip.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 
+const localeRoute = useLocaleRoute();
 defineProps<{
 	item: Detail;
 	loading: boolean;

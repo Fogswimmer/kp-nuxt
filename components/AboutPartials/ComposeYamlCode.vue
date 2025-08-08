@@ -1,5 +1,5 @@
 <template>
-	<pre>
+<pre>
 <code>
 services:
   symfony:
@@ -12,6 +12,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    restart: unless-stopped
     networks:
       - app-network
   caddy:
@@ -26,9 +27,12 @@ services:
       - ./caddy/data:/data
       - ./caddy_config:/config
       - ./caddy/fallback:/var/www
+      - ./symfony/public:/var/www/html/public
     depends_on:
-      - nuxt
-      - symfony
+      symfony:
+        condition: service_started
+      nuxt:
+        condition: service_started
     networks:
       - app-network
   nuxt:
@@ -37,7 +41,8 @@ services:
     container_name: nuxt
     ports:
       - "3000:3000"
-    command: ["node", "/app/.output/server/index.mjs"]
+    volumes:
+      - ./nuxt/.output:/app/.output
     networks:
       - app-network
   db:
@@ -55,6 +60,22 @@ services:
       retries: 5
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+  image-compressor:
+    build: ./services/image-compressor
+    container_name: img-compressor
+    ports:
+      - "7070:7070"
+    environment:
+      PORT: ${GIN_PORT}
+      HOST: ${GIN_HOST}
+      MAX_FILE_SIZE: ${IMG_MAX_FILE_SIZE}
+      DEFAULT_QUALITY: ${IMG_DEFAULT_QUALITY}
+      ALLOW_ORIGIN: ${GIN_ALLOW_ORIGIN}
+      GIN_MODE: ${GIN_MODE}
+    depends_on:
+      - symfony
     networks:
       - app-network
   redis:
@@ -76,11 +97,34 @@ services:
       retries: 3
       start_period: 40s
     environment:
-      RABBITMQ_DEFAULT_USER: guest
-      RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     networks:
       - app-network
-
+  worker:
+    container_name: worker
+    build:
+      context: ./symfony
+    depends_on:
+      symfony:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    restart: unless-stopped
+    environment:
+      - SKIP_DB_CHECK=true
+      - SKIP_CACHE_WARMUP=true
+      - CONTAINER_TYPE=worker
+      - APP_ENV=prod
+    volumes:
+      - ./symfony:/var/www/html:cached
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - app-network
 volumes:
   postgres_data:
   caddy_data:

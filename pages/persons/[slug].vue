@@ -259,7 +259,7 @@ const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
 const mainAccordion = ref<string[]>(["bio"]);
-const coverFile = ref<File|null>();
+const coverFile = ref<File | null>();
 const avatarFile = ref<File | null>(null);
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { person, personForm, loading } = storeToRefs(usePersonStore());
@@ -425,13 +425,19 @@ const handlePhotosUpload = async (files: File[]): Promise<void> => {
 };
 
 const handleCoverChange = async (files: File[]): Promise<void> => {
-	const file: File|null = files[0] ?? null;
+	const file: File | null = files[0] ?? null;
 	const personId: number = person.value?.id || 0;
+
 	if (person.value?.cover !== "") {
 		showCoverReplacementWarning.value = true;
 		coverFile.value = file;
 		return;
 	}
+
+	if (!file) {
+		return;
+	}
+
 	await uploadCover(file, personId || 0);
 	await fetchData();
 	photoEditMode.value = false;

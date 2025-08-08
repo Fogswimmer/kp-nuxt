@@ -167,6 +167,7 @@ export default {
 		edit: "Modifier",
 		language: "Langue",
 		account: "Compte",
+		list: "Liste",
 		pagination: {
 			page: "Page",
 			of: "de",

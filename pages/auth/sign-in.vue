@@ -60,7 +60,7 @@
 					variant="plain"
 					block
 					size="large"
-					:to="$localeRoute('/')"
+					:to="localeRoute('/')"
 				>
 					{{ $t("auth.continue_as_guest") }}
 				</v-btn>
@@ -81,8 +81,9 @@ import AuthCard from "~/components/Containment/Cards/AuthCard.vue";
 
 const { userForm, loading, showErrorMessage } = storeToRefs(useAuthStore());
 const { locale } = useI18n();
-const visible = ref<boolean>(false);
 const localeRoute = useLocaleRoute();
+
+const visible = ref<boolean>(false);
 const loginFormRef = ref<HTMLFormElement | null>();
 const { login, fetchCurrentUser } = useAuthStore();
 

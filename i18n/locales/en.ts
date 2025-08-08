@@ -170,6 +170,7 @@ export default {
 		directors: "Directors",
 		language: "Language",
 		account: "Account",
+		list: "List",
 		pagination: {
 			page: "Page",
 			total: "Total",

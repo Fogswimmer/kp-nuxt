@@ -4,9 +4,9 @@
 		<v-list-item
 			v-for="(actor, index) in starring"
 			:key="index"
-			:title="actor.value as string"
+			:title="actor.value.toString()"
 			:value="index"
-			:to="$localeRoute(actor.to || '/')"
+			:to="localeRoute(actor.to || '/')"
 		>
 			<template #prepend>
 				<v-avatar>
@@ -30,9 +30,9 @@
 				:key="index"
 				rounded="lg"
 				:subtitle="$t(person.title)"
-				:title="person.value as string"
+				:title="person.value.toString()"
 				:value="index"
-				:to="$localeRoute(person.to || '/')"
+				:to="localeRoute(person.to || '/')"
 			>
 				<template #prepend>
 					<v-avatar>
@@ -54,6 +54,7 @@
 <script lang="ts" setup>
 import ErrorPlaceHolder from "../Containment/Img/ErrorPlaceHolder.vue";
 
+const localeRoute = useLocaleRoute();
 defineProps<{
 	starring: Detail[];
 	team: Detail[];

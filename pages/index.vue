@@ -176,8 +176,8 @@
 </template>
 
 <script lang="ts" setup>
-import HomeSection from "~/components/Masonry/partials/HomeSection.vue";
-import HomeWall from "~/components/Masonry/HomeWall.vue";
+import HomeSection from "~/components/Home/partials/HomeSection.vue";
+import HomeWall from "~/components/Home/HomeWall.vue";
 import PageLoader from "~/components/Misc/PageLoader.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
@@ -242,7 +242,7 @@ const latestFilmItems = computed((): Detail[] => {
 		: [];
 });
 
-const currentFilm = ref<Detail>(latestFilmItems.value[0]);
+const currentFilm = ref<Detail>(latestFilmItems.value[0] || {} as Detail);
 
 const topFilmItems = computed((): Detail[] => {
 	return topFilms.value[0] !== null

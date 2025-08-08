@@ -16,7 +16,7 @@
 			</v-avatar>
 		</template>
 		<template #append>
-			<FilmRatingChip :rating="comment.rating.toString() || '0'" />
+			<FilmRatingChip :rating="comment.rating.toString() || '0'" size="small"/>
 		</template>
 		<template #title>
 			<div class="d-flex flex-column">

@@ -139,7 +139,7 @@ const seeAllOnClick = () => {
 const assementsWithColors = computed(() => {
 	const commentsWithSameAuthor = props.assessments.reduce(
 		(acc, item) => {
-			const authorId = item.publisherData.id; 
+			const authorId = item.publisherData.id;
 			acc[authorId] = acc[authorId] || [];
 			acc[authorId].push(item);
 			return acc;
@@ -150,8 +150,12 @@ const assementsWithColors = computed(() => {
 	const uniqueAuthors = Object.keys(commentsWithSameAuthor);
 
 	const authorColorMap: Record<string, string> = {};
+
 	uniqueAuthors.forEach((authorId, index) => {
-		authorColorMap[authorId] = commentColors[index % commentColors.length];
+		const color = commentColors[index % commentColors.length];
+		if (color) {
+			authorColorMap[authorId] = color;
+		}
 	});
 
 	const mappedAssementsWithColors = Object.entries(
@@ -166,7 +170,6 @@ const assementsWithColors = computed(() => {
 
 	return mappedAssementsWithColors;
 });
-
 
 const confirmDelete = (id: number) => {
 	emits("assession:delete", id);
