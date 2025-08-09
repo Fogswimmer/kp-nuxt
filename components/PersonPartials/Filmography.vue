@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/no-template-shadow -->
 <template>
-	<v-card variant="text">
+	<v-card>
 		<template v-if="computedFilmographyDispay">
 			<v-list v-if="$vuetify.display.smAndDown">
 				<div
@@ -51,7 +51,6 @@
 			</v-list>
 			<v-card
 				v-else
-				flat
 				prepend-icon="mdi-filmstrip"
 				:title="$t('pages.persons.filmography')"
 			>
