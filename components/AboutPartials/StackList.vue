@@ -54,7 +54,7 @@
 						</v-list-item>
 						<v-list-subheader>Backend</v-list-subheader>
 						<v-list-item
-							title="Php 8.3"
+							title="Php 8.4"
 							:subtitle="$t('pages.about.table_headers.language')"
 						>
 							<template #prepend>
