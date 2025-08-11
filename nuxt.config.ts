@@ -42,6 +42,9 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-01-01",
 
 	vite: {
+		optimizeDeps: {
+			exclude: ["vuetify"],
+		},
 		build: {
 			sourcemap: true,
 		},

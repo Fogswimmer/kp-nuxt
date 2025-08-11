@@ -251,7 +251,7 @@ const handleEdit = () => {
 	userForm.value = { ...currentUser.value };
 };
 
-onMounted(async (): Promise<void> => {
+onMounted(async () => {
 	const route = useRoute();
 	if (
 		!isAuthenticated.value &&

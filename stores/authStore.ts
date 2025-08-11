@@ -17,7 +17,7 @@ export const useAuthStore = defineStore("authStore", () => {
 		maxAge: 60 * 60 * 24 * 7,
 		secure: true,
 	});
-	
+
 	const resetToken = ref<string | null | undefined>(null);
 	const token = ref<string | null | undefined>(
 		tokenCookie.value || null || "",
@@ -63,7 +63,11 @@ export const useAuthStore = defineStore("authStore", () => {
 		newPassword: "",
 	});
 
-	const fetchCurrentUser = async (locale: string) => {
+	const fetchCurrentUser = async (locale: string, force = false) => {
+		if (currentUser.value && !force) {
+			return currentUser.value;
+		}
+
 		try {
 			loading.value = true;
 			const response = await $fetch<CurrentUser>(
