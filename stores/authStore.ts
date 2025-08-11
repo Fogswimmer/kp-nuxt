@@ -125,6 +125,7 @@ export const useAuthStore = defineStore("authStore", () => {
 			});
 			currentUser.value = null;
 			token.value = null;
+			tokenCookie.value = null;
 		} catch (error: unknown) {
 			handleError(error);
 		} finally {

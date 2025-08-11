@@ -197,7 +197,7 @@ defineProps<{
 	bottom?: boolean;
 }>();
 
-const { currentUser, isAuthenticated, token, loading, isAdmin, userForm } =
+const { currentUser, isAuthenticated, loading, isAdmin, userForm } =
 	storeToRefs(useAuthStore());
 const { signOut, fetchCurrentUser, uploadAvatar, editUser } = useAuthStore();
 
@@ -255,7 +255,6 @@ onMounted(async () => {
 	const route = useRoute();
 	if (
 		!isAuthenticated.value &&
-		token.value &&
 		!["signIn", "signUp"].includes(route.name as string)
 	) {
 		await fetchCurrentUser(locale.value);
