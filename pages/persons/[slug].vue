@@ -83,6 +83,7 @@
 					<v-expansion-panels
 						v-if="$vuetify.display.smAndDown"
 						v-model="mainAccordion"
+						variant="accordion"
 					>
 						<v-expansion-panel
 							id="bio"
@@ -133,7 +134,6 @@
 							:title="$t('pages.persons.bio')"
 							prepend-icon="mdi-feather"
 							class="mt-2"
-							flat
 						>
 							<template #append>
 								<v-btn
@@ -267,6 +267,9 @@ const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
 
 const getName = useInternationalName();
+
+const GALLERY_CARD_HEIGHT: number = 300;
+
 const isFormValid = ref<boolean>(false);
 const showSnackbar = ref<boolean>(false);
 const showDeleteWarning = ref<boolean>(false);
@@ -275,13 +278,12 @@ const photoEditMode = ref<boolean>(false);
 const showCoverReplacementWarning = ref<boolean>(false);
 const generalInfoEdit = ref<boolean>(false);
 const bioEditMode = ref<boolean>(false);
-
-const GALLERY_CARD_HEIGHT: number = 300;
 const activeTab = ref<number>(0);
 const selectedImagesIndices = ref<number[]>([]);
-const mainAccordion = ref<string[]>(["bio"]);
+const mainAccordion = ref<string[]>([]);
 const coverFile = ref<File | null>();
 const avatarFile = ref<File | null>(null);
+
 const { isAuthenticated } = storeToRefs(useAuthStore());
 const { person, personForm, loading, similarSpecialists } =
 	storeToRefs(usePersonStore());

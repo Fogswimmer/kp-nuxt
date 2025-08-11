@@ -61,7 +61,7 @@ a {
 	content: "";
 	position: absolute;
 	inset: 0;
-	background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent 60%);
+	background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5), transparent 60%);
 	z-index: 1;
 }
 
@@ -70,7 +70,7 @@ p {
 	text-indent: 2rem !important;
 }
 .light-glassed {
-	background: linear-gradient(to top, rgba(255, 255, 255, 1), transparent);
+	background: linear-gradient(to top, rgba(255, 255, 255, 1) , rgba(255, 255, 255, 0.7), transparent);
 	backdrop-filter: blur(10px);
 	-webkit-backdrop-filter: blur(10px);
 }
