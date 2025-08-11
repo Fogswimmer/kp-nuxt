@@ -3,7 +3,7 @@
 		<div
 			class="d-flex flex-column fill-height gap-2 align-center justify-center"
 		>
-			<span class="text-center">{{ $t("state.loading") }}...</span>
+			<span class="loading-label">{{ $t("state.loading") }}...</span>
 			<span class="progress" />
 		</div>
 	</div>
@@ -33,6 +33,9 @@
 	box-sizing: border-box;
 	animation: rotation 1s linear infinite;
 }
+.loading-label {
+	color: #5e5e5e;
+}
 
 @keyframes rotation {
 	0% {
@@ -46,6 +49,9 @@
 @media (prefers-color-scheme: dark) {
 	.overlay {
 		background-color: #08141b;
+	}
+	.loading-label {
+		color: white !important;
 	}
 }
 </style>
