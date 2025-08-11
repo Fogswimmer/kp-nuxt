@@ -63,11 +63,7 @@ export const useAuthStore = defineStore("authStore", () => {
 		newPassword: "",
 	});
 
-	const fetchCurrentUser = async (locale: string, force = false) => {
-		if (currentUser.value && !force) {
-			return currentUser.value;
-		}
-
+	const fetchCurrentUser = async (locale: string) => {
 		try {
 			loading.value = true;
 			const response = await $fetch<CurrentUser>(
