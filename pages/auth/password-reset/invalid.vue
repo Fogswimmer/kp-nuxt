@@ -1,5 +1,5 @@
 <template>
-	<v-card max-width="600" class="mx-auto pa-5">
+	<v-card max-width="600" class="mx-auto pa-5" variant="outlined">
 		<v-card-text>
 			<v-alert variant="tonal" color="error" class="text-center">
 				{{ $t("auth.password_reset_messages.invalid_token") }}

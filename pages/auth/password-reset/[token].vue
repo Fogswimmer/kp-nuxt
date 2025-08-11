@@ -4,7 +4,7 @@
 			<Title>{{ definePageTitle($t("auth.password_reset")) }}</Title>
 		</Head>
 
-		<v-card max-width="400">
+		<v-card max-width="400" variant="outlined">
 			<v-card-title>
 				{{ $t("auth.password_reset") }}
 			</v-card-title>
