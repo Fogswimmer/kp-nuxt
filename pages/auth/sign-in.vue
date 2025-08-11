@@ -5,7 +5,7 @@
 		</Head>
 		<AuthCard :title="$t('auth.sign_in')">
 			<v-form ref="loginFormRef" class="mt-4">
-				<div class="d-flex flex-column ga-2">
+				<div class="d-flex flex-column ga-2 text-center">
 					<v-text-field
 						v-model="userForm.username"
 						:label="$t('auth.login')"
@@ -26,13 +26,15 @@
 						@click:append-inner="visible = !visible"
 					/>
 				</div>
+			</v-form>
+			<div class="w-100 text-end">
 				<v-label>
 					<NuxtLink :to="localeRoute('/auth/password-reset')">
 						{{ $t("auth.forgot_password") }}</NuxtLink
 					>
 				</v-label>
-			</v-form>
-			<div class="d-flex flex-column ga-4 mt-10">
+			</div>
+			<div class="d-flex flex-column ga-4 mt-5">
 				<v-btn
 					color="primary"
 					size="large"

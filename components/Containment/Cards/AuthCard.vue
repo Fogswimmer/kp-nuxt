@@ -2,6 +2,7 @@
 	<v-card
 		:width="$vuetify.display.smAndDown ? '100vw' : 500"
 		:height="$vuetify.display.smAndDown ? '100vh' : ''"
+		variant="outlined"
 	>
 		<v-toolbar>
 			<template #prepend>
