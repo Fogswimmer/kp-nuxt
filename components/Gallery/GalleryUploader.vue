@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card flat>
+		<v-card flat :disabled="disabled">
 			<v-toolbar :extended="$vuetify.display.smAndDown">
 				<v-alert
 					icon="mdi-information"
@@ -123,6 +123,7 @@ const previews = ref<File[]>([]);
 const props = defineProps<{
 	uploadCount: number;
 	acceptVideos?: boolean;
+	disabled?: boolean;
 }>();
 
 const uploadError = computed((): boolean => {

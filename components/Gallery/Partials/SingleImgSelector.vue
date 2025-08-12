@@ -1,5 +1,5 @@
 <template>
-	<v-card variant="text">
+	<v-card variant="text" :disabled="disabled">
 		<v-slide-group v-model="selectedCoverIndex" show-arrows center-active>
 			<v-slide-group-item
 				v-for="(img, index) in ['', ...(gallery as string[])]"
@@ -80,6 +80,7 @@ const props = defineProps<{
 	coverIndex?: number;
 	gallery: string[];
 	cardHeight?: number;
+	disabled?: boolean;
 }>();
 const selectedCoverIndex = ref<number>(props.coverIndex || 0);
 </script>

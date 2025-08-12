@@ -1,5 +1,5 @@
 <template>
-	<v-card style="max-height: 600px; overflow-y: auto" flat>
+	<v-card style="max-height: 620px; overflow-y: auto" :disabled="disabled">
 		<v-card-text>
 			<v-form ref="formRef">
 				<v-text-field
@@ -118,6 +118,7 @@ const props = defineProps<{
 	specialties: ISpecialty[];
 	loading: boolean;
 	showBio: boolean;
+	disabled?: boolean;
 }>();
 
 const formRef = ref<HTMLFormElement>();

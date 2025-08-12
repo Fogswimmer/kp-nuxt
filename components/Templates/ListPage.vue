@@ -7,7 +7,6 @@
 						<v-text-field
 							v-model="needle"
 							:placeholder="$t('actions.search')"
-							:loading="loading"
 							chips
 							hide-details
 							prepend-inner-icon="mdi-magnify"

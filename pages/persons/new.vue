@@ -24,6 +24,7 @@
 							:genders="genders"
 							:specialties="specialties"
 							show-bio
+							:disabled="isMainDataSent"
 							@form:validate="isFormValid = $event"
 							@form:submit="handleGeneralInfoSubmit"
 							@update:model-value="personForm = $event"
@@ -45,6 +46,7 @@
 					>
 						<GalleryUploader
 							:upload-count="GALLERY_SIZE"
+							:disabled="isGalleryDataSent"
 							@files:upload="handlePhotoSubmit"
 						/>
 
@@ -61,6 +63,7 @@
 					>
 						<SingleImgSelector
 							:gallery="personForm.photos || []"
+							:disabled="isAvatarDataSent"
 							@img:select="handleAvatarSubmit"
 						/>
 
@@ -122,6 +125,9 @@ const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
 const showErrorSnackbar = ref<boolean>(false);
+const isMainDataSent = ref<boolean>(false);
+const isGalleryDataSent = ref<boolean>(false);
+const isAvatarDataSent = ref<boolean>(false);
 
 const { fetchGenders, fetchSpecialties } = useTranslationStore();
 const {
@@ -136,13 +142,10 @@ const {
 const { loading, personForm } = storeToRefs(usePersonStore());
 const { data: genders } = useNuxtData("genders");
 const { data: specialties } = useNuxtData("specialties");
-const nextStep = () => {
-	step.value++;
-};
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
 	if (await addPerson()) {
-		nextStep();
+		isMainDataSent.value = true;
 	} else {
 		showErrorSnackbar.value = true;
 	}
@@ -152,7 +155,7 @@ const handlePhotoSubmit = async (files: File[]): Promise<void> => {
 	const id = personForm.value.id;
 	if (id) {
 		await uploadPhotos(files, id || 0);
-		nextStep();
+		isGalleryDataSent.value = true;
 	} else {
 		showErrorSnackbar.value = true;
 	}
@@ -174,8 +177,7 @@ const handleAvatarSubmit = async (index: number): Promise<void> => {
 		? personForm.value?.photos[index - 1]
 		: "";
 	await editPerson();
-
-	nextStep();
+	isAvatarDataSent.value = true;
 };
 
 const handleFinish = async (): Promise<void> => {
@@ -201,13 +203,6 @@ onMounted(async (): Promise<void> => {
 	showThirdStepSnackbar.value = false;
 });
 
-definePageMeta({
-	name: "newPerson",
-	path: "/persons/new",
-	middleware: ["auth"],
-	layout: "home",
-});
-
 watch(step, (newVal): void => {
 	switch (newVal) {
 		case 1:
@@ -220,6 +215,13 @@ watch(step, (newVal): void => {
 			showThirdStepSnackbar.value = true;
 			break;
 	}
+});
+
+definePageMeta({
+	name: "newPerson",
+	path: "/persons/new",
+	middleware: ["auth"],
+	layout: "home",
 });
 </script>
 

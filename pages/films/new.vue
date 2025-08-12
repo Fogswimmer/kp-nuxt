@@ -10,74 +10,6 @@
 					<BackBtn />
 				</template>
 			</v-toolbar>
-			<!-- <v-stepper
-				v-if="personsPresent"
-				v-model="step"
-				hide-actions
-				:mobile="!$vuetify.display.mdAndUp"
-			>
-				<v-stepper-header>
-					<v-stepper-item
-						:value="1"
-						:title="$t('stepper.general')"
-						:complete="step > 1"
-						:color="step > 1 ? 'success' : 'primary'"
-					/>
-
-					<v-divider />
-					<v-stepper-item
-						:value="2"
-						:complete="step > 2"
-						:color="step > 2 ? 'success' : 'primary'"
-						:title="$t('stepper.gallery')"
-					/>
-
-					<v-divider />
-					<v-stepper-item
-						:value="3"
-						:complete="step > 3"
-						color="primary"
-						:title="$t('stepper.poster')"
-					/>
-				</v-stepper-header>
-				<v-stepper-window>
-					<v-stepper-window-item :value="1">
-						<FilmForm
-							:film-form="filmForm"
-							:genres="genres"
-							:actors="actors"
-							:directors="directors"
-							:producers="producers"
-							:writers="writers"
-							:composers="composers"
-							:countries="countries || []"
-							show-description
-							@form:submit="handleGeneralInfoSubmit"
-							@update:model-value="updateForm"
-						/>
-					</v-stepper-window-item>
-					<v-stepper-window-item :value="2">
-						<GalleryUploader
-							:upload-count="GALLERY_SIZE"
-							@files:upload="handleGallerySubmit"
-						/>
-					</v-stepper-window-item>
-					<v-stepper-window-item :value="3">
-						<SingleImgSelector
-							:gallery="filmForm.gallery || []"
-							@img:select="handleSetPoster"
-						/>
-					</v-stepper-window-item>
-					<v-btn
-						:disabled="step === 0"
-						block
-						class="ma-4"
-						@click="handleFinish"
-					>
-						{{ $t("actions.finish") }}
-					</v-btn>
-				</v-stepper-window>
-			</v-stepper> -->
 			<v-stepper-vertical>
 				<template #default="{ step }">
 					<v-stepper-vertical-item
@@ -94,6 +26,7 @@
 							:writers="writers"
 							:composers="composers"
 							:countries="countries || []"
+							:disabled="isMainDataSent"
 							show-description
 							@form:validate="isFormValid = $event"
 							@form:submit="handleGeneralInfoSubmit"
@@ -115,6 +48,7 @@
 						value="2"
 					>
 						<GalleryUploader
+							:disabled="isGalleryDataSent"
 							:upload-count="GALLERY_SIZE"
 							@files:upload="handleGallerySubmit"
 						/>
@@ -135,8 +69,12 @@
 							@img:select="handleSetPoster"
 						/>
 
-						<template #next="{ next }">
-							<v-btn color="primary" @click="next" />
+						<template #next>
+							<v-btn
+								color="primary"
+								:text="$t('actions.finish')"
+								@click="handleFinish"
+							/>
 						</template>
 					</v-stepper-vertical-item>
 				</template>
@@ -192,22 +130,20 @@ const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
 const showErrorSnackbar = ref<boolean>(false);
-
-const nextStep = () => {
-	step.value++;
-};
+const isMainDataSent = ref<boolean>(false);
+const isGalleryDataSent = ref<boolean>(false);
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
-	if (await addFilm()) {
-		nextStep();
-	} else showErrorSnackbar.value = true;
+	await addFilm();
+	isMainDataSent.value = true;
 };
 
 const handleGallerySubmit = async (files: File[]): Promise<void> => {
 	const id = filmForm.value.id;
 	if (id) {
 		await uploadGallery(files, id || 0);
-		nextStep();
+
+		isGalleryDataSent.value = true;
 	} else {
 		showErrorSnackbar.value = true;
 	}

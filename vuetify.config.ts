@@ -14,12 +14,15 @@ export default defineVuetifyConfiguration({
 	defaults: {
 		VTextField: {
 			variant: "filled",
+			density: "comfortable",
 		},
 		VSelect: {
 			variant: "filled",
+			density: "comfortable",
 		},
 		VCombobox: {
 			variant: "filled",
+			density: "comfortable",
 		},
 		VSheet: {
 			border: true,

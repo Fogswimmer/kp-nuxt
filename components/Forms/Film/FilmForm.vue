@@ -1,8 +1,8 @@
 <template>
 	<v-card
-		style="max-height: calc(100vh - 120px); overflow-y: auto"
+		style="max-height: 550px; overflow-y: auto"
 		height="100%"
-		flat
+		:disabled="disabled"
 	>
 		<v-card-text>
 			<v-form ref="formRef" @submit.prevent>
@@ -207,6 +207,7 @@ const props = defineProps<{
 	directors: Partial<IPerson>[];
 	countries: CountryAlpha2Name;
 	loading?: boolean;
+	disabled?: boolean;
 }>();
 
 const MAX_NAME_LENGTH: number = 50;
@@ -219,12 +220,10 @@ const {
 	required: requiredRule,
 	requiredMinOneOption: requiredMinOneOptionRule,
 	onlyNums: onlyNumsRule,
-	onlyLetters: onlyLettersRule,
 	minLength,
 	maxLength,
 	minYear,
 	maxYear,
-	onlyLatinChars: onlyLatinCharsRule,
 } = useValidation();
 const minLengthRule = minLength(MIN_NAME_LENGTH);
 const maxLengthRule = maxLength(MAX_NAME_LENGTH);
