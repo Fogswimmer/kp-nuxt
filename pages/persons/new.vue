@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-template-shadow -->
 <template>
 	<div>
 		<Head>
@@ -10,77 +11,83 @@
 					<BackBtn />
 				</template>
 			</v-toolbar>
-			<v-stepper v-model="step" :mobile="!$vuetify.display.mdAndUp">
-				<v-stepper-header>
-					<v-stepper-item
-						value="1"
+			<v-stepper-vertical>
+				<template #default="{ step }">
+					<v-stepper-vertical-item
+						:complete="step > 1"
 						:title="$t('stepper.general')"
-						:complete="step === 1"
-						:color="step === 1 ? 'success' : 'primary'"
-					/>
-
-					<v-divider />
-					<v-stepper-item
-						value="2"
-						:title="$t('stepper.gallery')"
-						:complete="step === 2"
-						:color="step === 2 ? 'success' : 'primary'"
-					/>
-
-					<v-divider />
-					<v-stepper-item
-						value="3"
-						:title="$t('stepper.avatar')"
-						:complete="step === 3"
-						:color="step === 3 ? 'success' : 'primary'"
-					/>
-					<v-divider />
-					<v-stepper-item
-						value="4"
-						color="primary"
-						:title="$t('stepper.cover')"
-					/>
-				</v-stepper-header>
-				<v-stepper-window>
-					<v-stepper-window-item value="1">
+						value="1"
+					>
 						<PersonForm
 							:loading="loading"
 							:person-form="personForm"
 							:genders="genders"
 							:specialties="specialties"
 							show-bio
+							@form:validate="isFormValid = $event"
 							@form:submit="handleGeneralInfoSubmit"
 							@update:model-value="personForm = $event"
 						/>
-					</v-stepper-window-item>
-					<v-stepper-window-item value="2">
+
+						<template #next="{ next }">
+							<v-btn
+								:disabled="!isFormValid"
+								color="primary"
+								@click="next"
+							/>
+						</template>
+					</v-stepper-vertical-item>
+
+					<v-stepper-vertical-item
+						:complete="step > 2"
+						:title="$t('stepper.gallery')"
+						value="2"
+					>
 						<GalleryUploader
 							:upload-count="GALLERY_SIZE"
 							@files:upload="handlePhotoSubmit"
 						/>
-					</v-stepper-window-item>
-					<v-stepper-window-item value="3">
+
+						<template #next="{ next }">
+							<v-btn color="primary" @click="next" />
+						</template>
+						<template #prev />
+					</v-stepper-vertical-item>
+
+					<v-stepper-vertical-item
+						:complete="step > 3"
+						:title="$t('stepper.avatar')"
+						value="3"
+					>
 						<SingleImgSelector
 							:gallery="personForm.photos || []"
 							@img:select="handleAvatarSubmit"
 						/>
-					</v-stepper-window-item>
-					<v-stepper-window-item value="4">
+
+						<template #next="{ next }">
+							<v-btn color="primary" @click="next" />
+						</template>
+					</v-stepper-vertical-item>
+					<v-stepper-vertical-item
+						:complete="step > 4"
+						:title="$t('stepper.cover')"
+						value="4"
+					>
 						<GalleryUploader
 							:upload-count="1"
 							@files:upload="handleCoverSubmit"
 						/>
-					</v-stepper-window-item>
-					<v-btn
-						:disabled="step === 0"
-						block
-						class="ma-4"
-						@click="handleFinish"
-					>
-						{{ $t("actions.finish") }}
-					</v-btn>
-				</v-stepper-window>
-			</v-stepper>
+
+						<template #next>
+							<v-btn
+								color="primary"
+								:text="$t('actions.finish')"
+								@click="handleFinish"
+							/>
+						</template>
+					</v-stepper-vertical-item>
+				</template>
+			</v-stepper-vertical>
 		</v-card>
 		<v-snackbar v-model="showFirstStepSnackbar" color="success">
 			{{ $t("toast.messages.success.add") }}
@@ -94,9 +101,6 @@
 		<v-snackbar v-model="showErrorSnackbar" color="error">
 			{{ $t("toast.messages.error.add") }}
 		</v-snackbar>
-		<ClientOnly>
-			<v-navigation-drawer location="end" />
-		</ClientOnly>
 	</div>
 </template>
 
@@ -113,6 +117,7 @@ const { locale } = useI18n();
 const localeRoute = useLocaleRoute();
 
 const step = ref<number>(0);
+const isFormValid = ref<boolean>(false);
 const showFirstStepSnackbar = ref<boolean>(false);
 const showSecondStepSnackbar = ref<boolean>(false);
 const showThirdStepSnackbar = ref<boolean>(false);
@@ -132,19 +137,7 @@ const { loading, personForm } = storeToRefs(usePersonStore());
 const { data: genders } = useNuxtData("genders");
 const { data: specialties } = useNuxtData("specialties");
 const nextStep = () => {
-	if (step.value === 4) return;
 	step.value++;
-	switch (step.value) {
-		case 1:
-			showFirstStepSnackbar.value = true;
-			break;
-		case 2:
-			showSecondStepSnackbar.value = true;
-			break;
-		case 3:
-			showThirdStepSnackbar.value = true;
-			break;
-	}
 };
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
@@ -165,13 +158,6 @@ const handlePhotoSubmit = async (files: File[]): Promise<void> => {
 	}
 };
 
-const handleFinish = (): void => {
-	if (step.value <= 2) {
-		navigateTo(localeRoute(`/persons`));
-	} else {
-		navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
-	}
-};
 const handleCoverSubmit = async (files: File[]): Promise<void> => {
 	const file: File | null = files[0] ?? null;
 	if (!file) {
@@ -190,6 +176,11 @@ const handleAvatarSubmit = async (index: number): Promise<void> => {
 	await editPerson();
 
 	nextStep();
+};
+
+const handleFinish = async (): Promise<void> => {
+	await editPerson();
+	navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
 };
 
 const fetchData = async (): Promise<void> => {
@@ -214,7 +205,21 @@ definePageMeta({
 	name: "newPerson",
 	path: "/persons/new",
 	middleware: ["auth"],
-	layout: "list",
+	layout: "home",
+});
+
+watch(step, (newVal): void => {
+	switch (newVal) {
+		case 1:
+			showFirstStepSnackbar.value = true;
+			break;
+		case 2:
+			showSecondStepSnackbar.value = true;
+			break;
+		case 3:
+			showThirdStepSnackbar.value = true;
+			break;
+	}
 });
 </script>
 

@@ -9,12 +9,7 @@
 				<v-text-field
 					v-model="form.name"
 					name="name"
-					:rules="[
-						requiredRule,
-						minLengthRule,
-						maxLengthRule,
-						onlyLettersRule,
-					]"
+					:rules="[requiredRule, minLengthRule, maxLengthRule]"
 					:label="$t('forms.film.name')"
 					prepend-inner-icon="mdi-movie-play"
 					@update:model-value="handleUpdateModelValue"
@@ -22,13 +17,7 @@
 				<v-text-field
 					v-model="form.internationalName"
 					name="internationalName"
-					:rules="[
-						requiredRule,
-						onlyLatinCharsRule,
-						minLengthRule,
-						maxLengthRule,
-						onlyLettersRule,
-					]"
+					:rules="[requiredRule, minLengthRule, maxLengthRule]"
 					:label="$t('forms.film.name_international')"
 					prepend-inner-icon="mdi-movie-play"
 					@update:model-value="handleUpdateModelValue"
@@ -201,6 +190,25 @@
 <script lang="ts" setup>
 import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
 
+const emit = defineEmits<{
+	(event: "form:submit"): void;
+	(event: "form:validate", value: boolean): void;
+	(event: "update:modelValue", value: Partial<IFilm>): void;
+}>();
+
+const props = defineProps<{
+	filmForm: Partial<IFilm>;
+	showDescription?: boolean;
+	genres: IGenre[];
+	actors: Partial<IPerson>[];
+	producers: Partial<IPerson>[];
+	writers: Partial<IPerson>[];
+	composers: Partial<IPerson>[];
+	directors: Partial<IPerson>[];
+	countries: CountryAlpha2Name;
+	loading?: boolean;
+}>();
+
 const MAX_NAME_LENGTH: number = 50;
 const MIN_NAME_LENGTH: number = 2;
 const CURRENT_YEAR: number = new Date().getFullYear();
@@ -223,23 +231,6 @@ const maxLengthRule = maxLength(MAX_NAME_LENGTH);
 const minYearRule = minYear(START_YEAR);
 const maxYearRule = maxYear(CURRENT_YEAR);
 const maxDescriptionLengthRule = maxLength(MAX_DESCRIPTION_LENGTH);
-const emit = defineEmits<{
-	(event: "form:submit"): void;
-	(event: "update:modelValue", value: Partial<IFilm>): void;
-}>();
-
-const props = defineProps<{
-	filmForm: Partial<IFilm>;
-	showDescription?: boolean;
-	genres: IGenre[];
-	actors: Partial<IPerson>[];
-	producers: Partial<IPerson>[];
-	writers: Partial<IPerson>[];
-	composers: Partial<IPerson>[];
-	directors: Partial<IPerson>[];
-	countries: CountryAlpha2Name;
-	loading?: boolean;
-}>();
 
 const form = ref<Partial<IFilm>>({ ...props.filmForm });
 const isFormValid = ref<boolean>(true);
@@ -267,6 +258,7 @@ const handleValidationAndSubmit = async (): Promise<void> => {
 	const isValid = await validate();
 	if (isValid) {
 		emit("form:submit");
+		emit("form:validate", isValid);
 	}
 };
 

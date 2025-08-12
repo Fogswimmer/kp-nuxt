@@ -1,15 +1,16 @@
+<!-- eslint-disable vue/no-template-shadow -->
 <template>
 	<div>
 		<Head>
 			<Title>{{ definePageTitle($t("nav.films_add")) }}</Title>
 		</Head>
-		<v-card :loading="loading" flat height="100%">
+		<v-card :loading="loading" height="100%">
 			<v-toolbar :title="$t('nav.films_add')">
 				<template #prepend>
 					<BackBtn />
 				</template>
 			</v-toolbar>
-			<v-stepper
+			<!-- <v-stepper
 				v-if="personsPresent"
 				v-model="step"
 				hide-actions
@@ -76,7 +77,70 @@
 						{{ $t("actions.finish") }}
 					</v-btn>
 				</v-stepper-window>
-			</v-stepper>
+			</v-stepper> -->
+			<v-stepper-vertical>
+				<template #default="{ step }">
+					<v-stepper-vertical-item
+						:complete="step > 1"
+						:title="$t('stepper.general')"
+						value="1"
+					>
+						<FilmForm
+							:film-form="filmForm"
+							:genres="genres"
+							:actors="actors"
+							:directors="directors"
+							:producers="producers"
+							:writers="writers"
+							:composers="composers"
+							:countries="countries || []"
+							show-description
+							@form:validate="isFormValid = $event"
+							@form:submit="handleGeneralInfoSubmit"
+							@update:model-value="updateForm"
+						/>
+
+						<template #next="{ next }">
+							<v-btn
+								:disabled="!isFormValid"
+								color="primary"
+								@click="next"
+							/>
+						</template>
+					</v-stepper-vertical-item>
+
+					<v-stepper-vertical-item
+						:complete="step > 2"
+						:title="$t('stepper.gallery')"
+						value="2"
+					>
+						<GalleryUploader
+							:upload-count="GALLERY_SIZE"
+							@files:upload="handleGallerySubmit"
+						/>
+
+						<template #next="{ next }">
+							<v-btn color="primary" @click="next" />
+						</template>
+						<template #prev />
+					</v-stepper-vertical-item>
+
+					<v-stepper-vertical-item
+						:complete="step > 3"
+						:title="$t('stepper.poster')"
+						value="3"
+					>
+						<SingleImgSelector
+							:gallery="filmForm.gallery || []"
+							@img:select="handleSetPoster"
+						/>
+
+						<template #next="{ next }">
+							<v-btn color="primary" @click="next" />
+						</template>
+					</v-stepper-vertical-item>
+				</template>
+			</v-stepper-vertical>
 		</v-card>
 		<v-snackbar v-model="showFirstStepSnackbar" color="success">
 			{{ $t("toast.messages.success.add") }}
@@ -90,9 +154,6 @@
 		<v-snackbar v-model="showErrorSnackbar" color="error">
 			{{ $t("toast.messages.error.add") }}
 		</v-snackbar>
-		<ClientOnly>
-			<v-navigation-drawer location="end" />
-		</ClientOnly>
 	</div>
 </template>
 
@@ -124,6 +185,7 @@ const localeRoute = useLocaleRoute();
 const { fetchGenres, fetchCountries } = useTranslationStore();
 const { data: genres } = useNuxtData("genres");
 const { data: countries } = useNuxtData("countries");
+const isFormValid = ref<boolean>(false);
 
 const step = ref<number>(1);
 const showFirstStepSnackbar = ref<boolean>(false);
@@ -133,17 +195,6 @@ const showErrorSnackbar = ref<boolean>(false);
 
 const nextStep = () => {
 	step.value++;
-	switch (step.value) {
-		case 1:
-			showFirstStepSnackbar.value = true;
-			break;
-		case 2:
-			showSecondStepSnackbar.value = true;
-			break;
-		case 3:
-			showThirdStepSnackbar.value = true;
-			break;
-	}
 };
 
 const handleGeneralInfoSubmit = async (): Promise<void> => {
@@ -202,11 +253,39 @@ await fetchGenres(locale.value);
 
 await fetchCountries(locale.value);
 
+watch(step, (newVal): void => {
+	switch (newVal) {
+		case 1:
+			showFirstStepSnackbar.value = true;
+			break;
+		case 2:
+			showSecondStepSnackbar.value = true;
+			break;
+		case 3:
+			showThirdStepSnackbar.value = true;
+			break;
+	}
+});
+
+watch(step, (newVal): void => {
+	switch (newVal) {
+		case 1:
+			showFirstStepSnackbar.value = true;
+			break;
+		case 2:
+			showSecondStepSnackbar.value = true;
+			break;
+		case 3:
+			showThirdStepSnackbar.value = true;
+			break;
+	}
+});
+
 definePageMeta({
 	name: "newFilm",
 	path: "/films/new",
 	middleware: ["auth"],
-	layout: "list",
+	layout: "home",
 });
 </script>
 

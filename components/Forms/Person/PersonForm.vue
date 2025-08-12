@@ -1,5 +1,5 @@
 <template>
-	<v-card style="max-height: calc(100vh - 120px); overflow-y: auto" flat>
+	<v-card style="max-height: 600px; overflow-y: auto" flat>
 		<v-card-text>
 			<v-form ref="formRef">
 				<v-text-field
@@ -108,6 +108,7 @@ import SubmitBtn from "~/components/Containment/Btns/SubmitBtn.vue";
 
 const emit = defineEmits<{
 	(event: "form:submit"): void;
+	(event: "form:validate", value: boolean): void;
 	(event: "update:modelValue", value: Partial<IPerson>): void;
 }>();
 
@@ -169,6 +170,7 @@ const handleValidationAndSubmit = async (): Promise<void> => {
 	const isValid = await validate();
 	if (isValid) {
 		emit("form:submit");
+		emit("form:validate", isValid);
 	}
 };
 
