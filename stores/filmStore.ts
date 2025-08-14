@@ -76,11 +76,11 @@ export const useFilmStore = defineStore("films", () => {
 		}
 	};
 
-	const fetchLatestFilms = async (): Promise<void> => {
+	const fetchLatestFilms = async (locale: string): Promise<void> => {
 		try {
 			loading.value = true;
 			const response = await $fetch<IFilmListResponse>(
-				`${baseUrl}/films-latest`,
+				`${baseUrl}/films-latest?locale=${locale}`,
 			);
 			latestFilms.value = response?.items || [];
 		} catch (error: unknown) {
@@ -90,11 +90,11 @@ export const useFilmStore = defineStore("films", () => {
 		}
 	};
 
-	const fetchTopFilms = async (): Promise<void> => {
+	const fetchTopFilms = async (locale: string): Promise<void> => {
 		try {
 			loading.value = true;
 			const response = await $fetch<IFilmListResponse>(
-				`${baseUrl}/films-top`,
+				`${baseUrl}/films-top?locale=${locale}`,
 			);
 			topFilms.value = response?.items || [];
 		} catch (error: unknown) {
@@ -301,11 +301,14 @@ export const useFilmStore = defineStore("films", () => {
 		}
 	};
 
-	const fetchFilmsWithSililarGenres = async (slug: string) => {
+	const fetchFilmsWithSililarGenres = async (
+		slug: string,
+		locale: string,
+	) => {
 		try {
 			loading.value = true;
 			const response = await $fetch<IFilmListResponse>(
-				`${baseUrl}/films/${slug}/similar-genres`,
+				`${baseUrl}/films/${slug}/similar-genres?locale=${locale}`,
 			);
 			filmsWithSimilarGenres.value = response?.items || [];
 		} catch (error: unknown) {

@@ -209,8 +209,8 @@ const fetchData = async (): Promise<void> => {
 	await checkFilmsPresence();
 	await checkPersonsPresence();
 	if (filmsPresent.value) {
-		await fetchLatestFilms();
-		await fetchTopFilms();
+		await fetchLatestFilms(locale.value);
+		await fetchTopFilms(locale.value);
 	}
 	if (personsPresent.value) {
 		await listPopularActors(locale.value);
@@ -242,7 +242,7 @@ const latestFilmItems = computed((): Detail[] => {
 		: [];
 });
 
-const currentFilm = ref<Detail>(latestFilmItems.value[0] || {} as Detail);
+const currentFilm = ref<Detail>(latestFilmItems.value[0] || ({} as Detail));
 
 const topFilmItems = computed((): Detail[] => {
 	return topFilms.value[0] !== null

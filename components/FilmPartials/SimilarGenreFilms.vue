@@ -1,5 +1,5 @@
 <template>
-<div>
+	<div>
 		<v-card
 			v-if="films.length && $vuetify.display.mdAndUp"
 			:title="$t('pages.films.similar_genres')"
@@ -18,7 +18,9 @@
 						rounded="lg"
 						:to="localeRoute('/films/' + film.slug)"
 					>
-						<v-list-item-title class="font-weight-bold text-primary">
+						<v-list-item-title
+							class="font-weight-bold text-primary"
+						>
 							{{
 								getName(
 									film?.name || "",
@@ -41,7 +43,7 @@
 				</v-list>
 			</v-card-text>
 		</v-card>
-	
+
 		<v-slide-group v-else-if="$vuetify.display.smAndDown">
 			<v-slide-group-item v-for="(film, i) in films" :key="i">
 				<v-card
@@ -83,7 +85,7 @@
 				</v-card>
 			</v-slide-group-item>
 		</v-slide-group>
-</div>
+	</div>
 </template>
 
 <script lang="ts" setup>

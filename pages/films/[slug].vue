@@ -759,7 +759,7 @@ const starring = computed((): Partial<Detail>[] => {
 					),
 					to: localeRoute("/persons/" + person?.slug) || "",
 					avatar: person.avatar || "",
-				} ;
+				};
 			})
 		: [];
 });
@@ -790,8 +790,6 @@ const team = computed((): Partial<Detail>[] => {
 		: [];
 });
 
-
-
 const fetchData = async (): Promise<void> => {
 	const route = useRoute();
 	const slug = route.params.slug?.toString();
@@ -804,7 +802,7 @@ const fetchData = async (): Promise<void> => {
 		fetchGenres(locale.value),
 		fetchFilmDetails(slug, locale.value),
 		fetchFilmForm(slug, locale.value),
-		fetchFilmsWithSililarGenres(slug),
+		fetchFilmsWithSililarGenres(slug, locale.value),
 	]);
 };
 
