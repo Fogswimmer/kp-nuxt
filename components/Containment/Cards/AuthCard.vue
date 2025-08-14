@@ -1,7 +1,7 @@
 <template>
 	<v-card
 		:width="$vuetify.display.smAndDown ? '100vw' : 500"
-		:height="$vuetify.display.smAndDown ? '100vh' : ''"
+		:height="$vuetify.display.smAndDown ? 'cacl(100vh - 64px)' : ''"
 		variant="outlined"
 	>
 		<v-toolbar>
