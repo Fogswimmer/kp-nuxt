@@ -3,7 +3,6 @@
 		<v-app-bar-title>
 			<Logo />
 		</v-app-bar-title>
-		{{ searchQuery }}
 		<v-responsive max-width="600">
 			<AppSearch :query="searchQuery" @update:query="handleUpdateSearch"
 		/></v-responsive>
@@ -26,32 +25,28 @@ import ProfileNav from "../Navigation/ProfileNav.vue";
 import SettingsBtn from "../Containment/Btns/SettingsBtn.vue";
 import AppSearch from "./AppSearch.vue";
 
-const handleUpdateSearch = async (value: string) => {
-	debounce(() => (searchQuery.value = value), 1000);
+const searchQuery = ref<string>("");
+
+const localeRoute = useLocaleRoute();
+
+const handleUpdateSearch = (value: string) => {
+	searchQuery.value = value;
+	setTimeout(async () => {
+		await navigateTo({
+			path: localeRoute("/films")!.path || "/films",
+			query: {
+				search: searchQuery.value,
+			},
+		});
+	}, 1000);
 };
 
-watch(
-	() => searchQuery.value,
-	async (newVal) => {
-		if (newVal != "") {
-			const localeRoute = useLocaleRoute();
-			await navigateTo({
-				path: localeRoute("/films")!.path || "/films",
-				query: {
-					search: searchQuery.value,
-				},
-			});
-		}
-	},
-);
 defineProps<{
 	activeTheme: string;
 }>();
 defineEmits<{
 	(e: "update:activeTheme", value: string): void;
 }>();
-
-const searchQuery = ref<string>("");
 </script>
 
 <style></style>

@@ -1,12 +1,14 @@
 <template>
 	<div>
-		<v-navigation-drawer
-			v-if="$vuetify.display.mdAndUp"
-			order="1"
-			:rail="$vuetify.display.mdAndDown"
-		>
-			<DrawerNavList />
-		</v-navigation-drawer>
+		<client-only>
+			<v-navigation-drawer
+				v-if="$vuetify.display.mdAndUp"
+				order="1"
+				:rail="$vuetify.display.mdAndDown"
+			>
+				<DrawerNavList />
+			</v-navigation-drawer>
+		</client-only>
 		<AppHeader
 			:active-theme="activeTheme"
 			@update:active-theme="activeTheme = $event"
@@ -16,7 +18,7 @@
 			<ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
 		</v-main>
 
-		<BottomNav show-profile-nav />
+		<BottomNav v-if="$vuetify.display.smAndDown" show-profile-nav />
 	</div>
 </template>
 
