@@ -27,17 +27,12 @@
 					</v-label>
 				</v-sheet>
 			</v-dialog>
-			<v-navigation-drawer
-				v-model="showFilters"
-				width="300"
-				location="end"
-				order="0"
-				:permanent="$vuetify.display.mdAndUp"
-			>
+
+			<NuxtLayout name="right-drawer">
 				<slot name="filters" />
-			</v-navigation-drawer>
+			</NuxtLayout>
 		</client-only>
-		<v-app-bar :extended="needle !== '' && !loading">
+		<v-toolbar :extended="needle !== '' && !loading">
 			<template v-if="$vuetify.display.smAndDown" #prepend>
 				<BackBtn />
 			</template>
@@ -117,7 +112,7 @@
 					</v-label>
 				</div>
 			</template>
-		</v-app-bar>
+		</v-toolbar>
 
 		<main>
 			<template v-if="items.length">
@@ -155,7 +150,7 @@
 			</v-sheet>
 		</main>
 
-		<v-app-bar location="bottom" order="1" permanent>
+		<NuxtLayout name="footer">
 			<div class="w-100">
 				<v-pagination
 					v-model="currentPage"
@@ -166,7 +161,7 @@
 					@update:model-value="handlePageChange"
 				/>
 			</div>
-		</v-app-bar>
+		</NuxtLayout>
 	</div>
 </template>
 

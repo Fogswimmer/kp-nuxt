@@ -1,9 +1,5 @@
 <template>
-	<v-card
-		:width="$vuetify.display.smAndDown ? '100vw' : 500"
-		:height="$vuetify.display.smAndDown ? 'cacl(100vh - 64px)' : ''"
-		variant="outlined"
-	>
+	<v-card variant="outlined" :width="$vuetify.display.mdAndUp ? 600 : ''">
 		<v-toolbar>
 			<template #prepend>
 				<BackBtn />

@@ -3,7 +3,7 @@
 		v-for="(item, i) in items"
 		:key="i"
 		rounded="lg"
-		lines="three"
+		lines="two"
 		class="my-3"
 		elevation="5"
 		border

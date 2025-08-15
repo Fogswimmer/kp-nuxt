@@ -11,545 +11,504 @@
 			/>
 		</NuxtLayout>
 
-		<NuxtLayout name="detail">
-			<v-app-bar order="1">
-				<template #prepend>
-					<BackBtn />
-				</template>
-				<v-app-bar-title>
-					<span
-						v-if="!loading && $vuetify.display.smAndDown"
-						class="font-weight-bold"
-					>
-						{{
-							getName(
-								film?.name || "",
-								film?.internationalName || "",
-							)
-						}}
-					</span>
-
-					<v-breadcrumbs
-						v-if="!loading && $vuetify.display.mdAndUp"
-						:items="breadCrumbs"
-					/>
-				</v-app-bar-title>
-
-				<div
-					v-if="$vuetify.display.mdAndUp && !isAuthenticated"
-					class="d-flex justify-center pa-2"
+		<v-app-bar order="1">
+			<template #prepend>
+				<BackBtn />
+			</template>
+			<v-app-bar-title>
+				<span
+					v-if="!loading && $vuetify.display.smAndDown"
+					class="font-weight-bold"
 				>
-					<NotAuthWarning />
-				</div>
-				<FilmDetailMenu
-					:is-authenticated="isAuthenticated"
-					@edit:general="handleGeneralInfoEdit"
-					@edit:description="handleEditDescription"
-					@edit:gallery="openGalleryEditor"
-					@edit:trailer="showLinkTrailerDialog = true"
-					@delete:film="showDeleteWarning = true"
+					{{
+						getName(film?.name || "", film?.internationalName || "")
+					}}
+				</span>
+
+				<v-breadcrumbs
+					v-if="!loading && $vuetify.display.mdAndUp"
+					:items="breadCrumbs"
 				/>
-			</v-app-bar>
-			<DetailCard :loading="loading" no-cover>
-				<template #top_film>
-					<v-container fluid>
-						<v-card v-if="!loading" class="pa-2" flat>
-							<v-row>
-								<v-col v-bind="colParams.poster">
-									<v-img
-										:src="film?.poster || ''"
-										cover
-										rounded="lg"
-										:height="TOP_CARDS_HEIGHT"
-										class="cursor-pointer"
-										@click="
-											showFullScreenPoster(
-												film?.poster || '',
-											)
+			</v-app-bar-title>
+
+			<div
+				v-if="$vuetify.display.mdAndUp && !isAuthenticated"
+				class="d-flex justify-center pa-2"
+			>
+				<NotAuthWarning />
+			</div>
+			<FilmDetailMenu
+				:is-authenticated="isAuthenticated"
+				@edit:general="handleGeneralInfoEdit"
+				@edit:description="handleEditDescription"
+				@edit:gallery="openGalleryEditor"
+				@edit:trailer="showLinkTrailerDialog = true"
+				@delete:film="showDeleteWarning = true"
+			/>
+		</v-app-bar>
+		<DetailCard :loading="loading" no-cover>
+			<template #top_film>
+				<v-container fluid>
+					<v-card v-if="!loading" class="pa-2" flat>
+						<v-row>
+							<v-col v-bind="colParams.poster">
+								<v-img
+									:src="film?.poster || ''"
+									cover
+									rounded="lg"
+									:height="TOP_CARDS_HEIGHT"
+									class="cursor-pointer"
+									@click="
+										showFullScreenPoster(film?.poster || '')
+									"
+								>
+									<template #placeholder>
+										<ImgPlaceholder
+											v-if="loading"
+											:loading="loading"
+										/>
+										<v-sheet v-else height="100%">
+											<div
+												class="fill-height d-flex justify-center align-center"
+											>
+												<v-icon> mdi-filmstrip </v-icon>
+											</div>
+										</v-sheet>
+									</template>
+									<template #error>
+										<ErrorPlaceHolder />
+									</template>
+								</v-img>
+							</v-col>
+							<v-divider vertical />
+							<v-col
+								v-if="$vuetify.display.mdAndUp"
+								v-bind="colParams.info"
+							>
+								<v-card flat :height="TOP_CARDS_HEIGHT">
+									<FilmGeneralInfo
+										:title="
+											getName(
+												film?.name || '',
+												film?.internationalName || '',
+											) +
+											' - ' +
+											film?.releaseYear
 										"
+										:general-info="generalInfo"
+									/>
+								</v-card>
+							</v-col>
+							<v-divider vertical />
+							<v-col
+								v-if="$vuetify.display.mdAndUp"
+								v-bind="colParams.rating"
+							>
+								<v-card flat :height="TOP_CARDS_HEIGHT">
+									<Rating
+										:current-rating="film?.rating || ''"
+										:assessments="film?.assessments || []"
+										:assessments-graph="
+											film?.assessmentsGraph || []
+										"
+										:is-assessing="isAssessing"
+										:rating="rating"
+										:comment="comment"
+										@assession:submit="submitAssessment"
+										@assession:enable="isAssessing = true"
+										@assession:cancel="cancelAssessment"
+										@comment:update="comment = $event"
+										@rating:update="rating = $event"
+									/>
+								</v-card>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col>
+								<div class="w-100 text-end pr-4">
+									<PublisherPopover
+										v-if="film?.publisherData"
+										:publisher="film.publisherData"
+										:created-at="film.createdAt || ''"
+									/>
+								</div>
+							</v-col>
+						</v-row>
+					</v-card>
+					<div
+						v-else-if="$vuetify.display.mdAndUp"
+						class="d-flex ga-2 fill-height"
+					>
+						<v-skeleton-loader
+							v-for="n in 3"
+							:key="n"
+							type="card"
+							:height="TOP_CARDS_HEIGHT"
+							width="calc(100% / 3)"
+						/>
+					</div>
+					<v-skeleton-loader
+						v-else
+						type="card"
+						:height="TOP_CARDS_HEIGHT"
+					/>
+				</v-container>
+			</template>
+			<template #text>
+				<main>
+					<FilmExpansionPanels
+						v-if="$vuetify.display.smAndDown"
+						:team="team"
+						:starring="starring"
+						:is-description-panel-open="isDescriptionPanelOpen"
+					>
+						<template #general-info>
+							<FilmGeneralInfo
+								:title="
+									getName(
+										film?.name || '',
+										film?.internationalName || '',
+									) +
+									' - ' +
+									film?.releaseYear
+								"
+								:general-info="generalInfo"
+							/>
+						</template>
+						<template #rating>
+							<Rating
+								:current-rating="film?.rating || ''"
+								:assessments="film?.assessments || []"
+								:assessments-graph="
+									film?.assessmentsGraph || []
+								"
+								:is-assessing="isAssessing"
+								:rating="rating"
+								:comment="comment"
+								@assession:submit="submitAssessment"
+								@assession:enable="isAssessing = true"
+								@assession:cancel="cancelAssessment"
+								@comment:update="comment = $event"
+								@rating:update="rating = $event"
+							/>
+						</template>
+						<template #description>
+							<IndentedEditableText
+								v-if="film"
+								:edit-mode="editDescriptionMode"
+								:messages="$t('pages.films.edit_description')"
+								:text="film?.description || ''"
+								@sumbit:edit="submitDescriptionEdit"
+								@cancel:edit="cancelDescriptionEdit"
+							/>
+							<v-skeleton-loader
+								v-else
+								type="text"
+								height="200"
+							/>
+						</template>
+
+						<template #comments>
+							<Comments
+								:loading="loading"
+								:assessments="film?.assessments || []"
+								:comment="comment"
+								@assession:submit="submitAssessment"
+								@assession:enable="isAssessing = true"
+								@assession:cancel="cancelAssessment"
+								@assession:delete="deleteAssessment"
+							/>
+						</template>
+						<template #similar-genres>
+							<SimilarGenreFilms
+								:films="filmsWithSimilarGenres"
+								:loading="loading"
+							/>
+						</template>
+					</FilmExpansionPanels>
+					<template v-else>
+						<v-container fluid>
+							<v-row>
+								<v-col>
+									<v-card
+										border
+										:title="$t('pages.films.description')"
+										prepend-icon="mdi-text"
 									>
-										<template #placeholder>
-											<ImgPlaceholder
-												v-if="loading"
-												:loading="loading"
+										<template #append>
+											<v-btn
+												variant="tonal"
+												density="comfortable"
+												icon
+												:disabled="!isAuthenticated"
+												:color="
+													editDescriptionMode
+														? 'error'
+														: ''
+												"
+												@click="
+													editDescriptionMode =
+														!editDescriptionMode
+												"
+											>
+												<v-icon>{{
+													!editDescriptionMode
+														? "mdi-pencil"
+														: "mdi-close"
+												}}</v-icon>
+												<v-tooltip activator="parent">{{
+													!editDescriptionMode
+														? $t(
+																"pages.films.edit_description",
+															)
+														: $t(
+																"actions.stop_edit",
+															)
+												}}</v-tooltip>
+											</v-btn>
+										</template>
+										<v-card-text>
+											<IndentedEditableText
+												:edit-mode="editDescriptionMode"
+												:messages="
+													$t(
+														'pages.films.edit_description',
+													)
+												"
+												:text="film?.description || ''"
+												@sumbit:edit="
+													submitDescriptionEdit
+												"
+												@cancel:edit="
+													cancelDescriptionEdit
+												"
 											/>
-											<v-sheet v-else height="100%">
-												<div
-													class="fill-height d-flex justify-center align-center"
-												>
-													<v-icon>
-														mdi-filmstrip
-													</v-icon>
-												</div>
-											</v-sheet>
-										</template>
-										<template #error>
-											<ErrorPlaceHolder />
-										</template>
-									</v-img>
-								</v-col>
-								<v-divider vertical />
-								<v-col
-									v-if="$vuetify.display.mdAndUp"
-									v-bind="colParams.info"
-								>
-									<v-card flat :height="TOP_CARDS_HEIGHT">
-										<FilmGeneralInfo
-											:title="
-												getName(
-													film?.name || '',
-													film?.internationalName ||
-														'',
-												) +
-												' - ' +
-												film?.releaseYear
-											"
-											:general-info="generalInfo"
-										/>
-									</v-card>
-								</v-col>
-								<v-divider vertical />
-								<v-col
-									v-if="$vuetify.display.mdAndUp"
-									v-bind="colParams.rating"
-								>
-									<v-card flat :height="TOP_CARDS_HEIGHT">
-										<Rating
-											:current-rating="film?.rating || ''"
-											:assessments="
-												film?.assessments || []
-											"
-											:assessments-graph="
-												film?.assessmentsGraph || []
-											"
-											:is-assessing="isAssessing"
-											:rating="rating"
-											:comment="comment"
-											@assession:submit="submitAssessment"
-											@assession:enable="
-												isAssessing = true
-											"
-											@assession:cancel="cancelAssessment"
-											@comment:update="comment = $event"
-											@rating:update="rating = $event"
-										/>
+										</v-card-text>
 									</v-card>
 								</v-col>
 							</v-row>
 							<v-row>
 								<v-col>
-									<div class="w-100 text-end pr-4">
-										<PublisherPopover
-											v-if="film?.publisherData"
-											:publisher="film.publisherData"
-											:created-at="film.createdAt || ''"
-										/>
-									</div>
+									<v-card
+										:title="$t('pages.films.starring')"
+										prepend-icon="mdi-account"
+										border
+										max-height="300"
+										height="100%"
+										class="overflow-y-auto"
+									>
+										<v-list rounded="lg">
+											<v-list-item
+												v-for="(
+													actor, index
+												) in starring"
+												:key="`starring-${index}`"
+												:title="actor.value as string"
+												:value="`starring-${index}`"
+												:to="
+													localeRoute(actor.to || '/')
+												"
+											>
+												<template #prepend>
+													<v-avatar>
+														<v-img
+															v-if="actor.avatar"
+															:src="actor.avatar"
+														>
+															<template
+																#placeholder
+															>
+																<v-icon
+																	size="x-small"
+																>
+																	mdi-account
+																</v-icon>
+															</template>
+															<template #error>
+																<ErrorPlaceHolder />
+															</template>
+														</v-img>
+														<v-icon
+															v-else
+															icon="mdi-account"
+														/>
+													</v-avatar>
+												</template>
+											</v-list-item>
+										</v-list>
+									</v-card>
+								</v-col>
+								<v-col>
+									<v-card
+										:title="$t('pages.films.team')"
+										prepend-icon="mdi-account-tie"
+										border
+										height="100%"
+										max-height="300"
+										class="overflow-y-auto"
+									>
+										<v-list rounded="lg">
+											<v-list-item
+												v-for="(person, i) in team"
+												:key="`team-${i}`"
+												rounded="lg"
+												:subtitle="
+													$t(person.title || '')
+												"
+												:title="person.value as string"
+												:value="`team-${i}`"
+												:to="
+													localeRoute(
+														person.to || '/',
+													)
+												"
+											>
+												<template #prepend>
+													<v-avatar>
+														<v-img
+															:src="person.avatar"
+														>
+															<template
+																#placeholder
+															>
+																<v-icon
+																	size="x-small"
+																>
+																	mdi-account
+																</v-icon>
+															</template>
+															<template #error>
+																<ErrorPlaceHolder />
+															</template>
+														</v-img>
+													</v-avatar>
+												</template>
+											</v-list-item>
+										</v-list>
+									</v-card>
 								</v-col>
 							</v-row>
-						</v-card>
-						<div
-							v-else-if="$vuetify.display.mdAndUp"
-							class="d-flex ga-2 fill-height"
-						>
-							<v-skeleton-loader
-								v-for="n in 3"
-								:key="n"
-								type="card"
-								:height="TOP_CARDS_HEIGHT"
-								width="calc(100% / 3)"
-							/>
-						</div>
-						<v-skeleton-loader
-							v-else
-							type="card"
-							:height="TOP_CARDS_HEIGHT"
-						/>
-					</v-container>
-				</template>
-				<template #text>
-					<main>
-						<FilmExpansionPanels
-							v-if="$vuetify.display.smAndDown"
-							:team="team"
-							:starring="starring"
-							:is-description-panel-open="isDescriptionPanelOpen"
-						>
-							<template #general-info>
-								<FilmGeneralInfo
-									:title="
-										getName(
-											film?.name || '',
-											film?.internationalName || '',
-										) +
-										' - ' +
-										film?.releaseYear
-									"
-									:general-info="generalInfo"
-								/>
-							</template>
-							<template #rating>
-								<Rating
-									:current-rating="film?.rating || ''"
-									:assessments="film?.assessments || []"
-									:assessments-graph="
-										film?.assessmentsGraph || []
-									"
-									:is-assessing="isAssessing"
-									:rating="rating"
-									:comment="comment"
-									@assession:submit="submitAssessment"
-									@assession:enable="isAssessing = true"
-									@assession:cancel="cancelAssessment"
-									@comment:update="comment = $event"
-									@rating:update="rating = $event"
-								/>
-							</template>
-							<template #description>
-								<IndentedEditableText
-									v-if="film"
-									:edit-mode="editDescriptionMode"
-									:messages="
-										$t('pages.films.edit_description')
-									"
-									:text="film?.description || ''"
-									@sumbit:edit="submitDescriptionEdit"
-									@cancel:edit="cancelDescriptionEdit"
-								/>
-								<v-skeleton-loader
-									v-else
-									type="text"
-									height="200"
-								/>
-							</template>
-
-							<template #comments>
-								<Comments
-									:loading="loading"
-									:assessments="film?.assessments || []"
-									:comment="comment"
-									@assession:submit="submitAssessment"
-									@assession:enable="isAssessing = true"
-									@assession:cancel="cancelAssessment"
-									@assession:delete="deleteAssessment"
-								/>
-							</template>
-							<template #similar-genres>
-								<SimilarGenreFilms
-									:films="filmsWithSimilarGenres"
-									:loading="loading"
-								/>
-							</template>
-						</FilmExpansionPanels>
-						<template v-else>
-							<v-container fluid>
-								<v-row>
-									<v-col>
-										<v-card
-											border
-											:title="
-												$t('pages.films.description')
-											"
-											prepend-icon="mdi-text"
-										>
-											<template #append>
-												<v-btn
-													variant="tonal"
-													density="comfortable"
-													icon
-													:disabled="!isAuthenticated"
-													:color="
-														editDescriptionMode
-															? 'error'
-															: ''
-													"
-													@click="
-														editDescriptionMode =
-															!editDescriptionMode
-													"
-												>
-													<v-icon>{{
-														!editDescriptionMode
-															? "mdi-pencil"
-															: "mdi-close"
-													}}</v-icon>
-													<v-tooltip
-														activator="parent"
-														>{{
-															!editDescriptionMode
-																? $t(
-																		"pages.films.edit_description",
-																	)
-																: $t(
-																		"actions.stop_edit",
-																	)
-														}}</v-tooltip
-													>
-												</v-btn>
-											</template>
-											<v-card-text>
-												<IndentedEditableText
-													:edit-mode="
-														editDescriptionMode
-													"
-													:messages="
-														$t(
-															'pages.films.edit_description',
-														)
-													"
-													:text="
-														film?.description || ''
-													"
-													@sumbit:edit="
-														submitDescriptionEdit
-													"
-													@cancel:edit="
-														cancelDescriptionEdit
-													"
-												/>
-											</v-card-text>
-										</v-card>
-									</v-col>
-								</v-row>
-								<v-row>
-									<v-col>
-										<v-card
-											:title="$t('pages.films.starring')"
-											prepend-icon="mdi-account"
-											border
-											max-height="300"
-											height="100%"
-											class="overflow-y-auto"
-										>
-											<v-list rounded="lg">
-												<v-list-item
-													v-for="(
-														actor, index
-													) in starring"
-													:key="`starring-${index}`"
-													:title="
-														actor.value as string
-													"
-													:value="`starring-${index}`"
-													:to="
-														localeRoute(
-															actor.to || '/',
-														)
-													"
-												>
-													<template #prepend>
-														<v-avatar>
-															<v-img
-																v-if="
-																	actor.avatar
-																"
-																:src="
-																	actor.avatar
-																"
-															>
-																<template
-																	#placeholder
-																>
-																	<v-icon
-																		size="x-small"
-																	>
-																		mdi-account
-																	</v-icon>
-																</template>
-																<template
-																	#error
-																>
-																	<ErrorPlaceHolder />
-																</template>
-															</v-img>
-															<v-icon
-																v-else
-																icon="mdi-account"
-															/>
-														</v-avatar>
-													</template>
-												</v-list-item>
-											</v-list>
-										</v-card>
-									</v-col>
-									<v-col>
-										<v-card
-											:title="$t('pages.films.team')"
-											prepend-icon="mdi-account-tie"
-											border
-											height="100%"
-											max-height="300"
-											class="overflow-y-auto"
-										>
-											<v-list rounded="lg">
-												<v-list-item
-													v-for="(person, i) in team"
-													:key="`team-${i}`"
-													rounded="lg"
-													:subtitle="
-														$t(person.title || '')
-													"
-													:title="
-														person.value as string
-													"
-													:value="`team-${i}`"
-													:to="
-														localeRoute(
-															person.to || '/',
-														)
-													"
-												>
-													<template #prepend>
-														<v-avatar>
-															<v-img
-																:src="
-																	person.avatar
-																"
-															>
-																<template
-																	#placeholder
-																>
-																	<v-icon
-																		size="x-small"
-																	>
-																		mdi-account
-																	</v-icon>
-																</template>
-																<template
-																	#error
-																>
-																	<ErrorPlaceHolder />
-																</template>
-															</v-img>
-														</v-avatar>
-													</template>
-												</v-list-item>
-											</v-list>
-										</v-card>
-									</v-col>
-								</v-row>
-								<v-row>
-									<v-col>
-										<v-card
-											border
-											:title="$t('pages.films.comments')"
-											prepend-icon="mdi-comment"
-										>
-											<v-card-text>
-												<Comments
-													:loading="loading"
-													:assessments="
-														film?.assessments || []
-													"
-													:comment="comment"
-													@assession:submit="
-														submitAssessment
-													"
-													@assession:enable="
-														isAssessing = true
-													"
-													@assession:cancel="
-														cancelAssessment
-													"
-													@assession:delete="
-														deleteAssessment
-													"
-												/>
-											</v-card-text>
-										</v-card>
-									</v-col>
-								</v-row>
-							</v-container>
-						</template>
-					</main>
-				</template>
-			</DetailCard>
-			<ConfirmDialog
-				v-model="showConfirmDialog"
-				type="error"
-				:text="$t('forms.film.gallery_item_delete_confirm')"
-				:loading="loading"
-				@confirm="handleGalleryItemsDelete"
-				@cancel="showConfirmDialog = false"
-			/>
-			<BaseDialog
-				v-model:opened="generalInfoEdit"
-				:max-width="800"
-				:title="$t('pages.films.edit') + ' ' + film?.name"
-				:loading="loading"
-				@close="generalInfoEdit = false"
-			>
-				<template #text>
-					<FilmForm
-						:film-form="filmForm"
-						:show-description="false"
-						:genres="genres"
-						:actors="actors"
-						:directors="directors"
-						:producers="producers"
-						:writers="writers"
-						:composers="composers"
-						:is-valid="isFormValid"
-						:countries="countries"
-						@validate="isFormValid = $event"
-						@form:submit="sumbitEdit"
-						@update:model-value="filmForm = $event"
-					/>
-				</template>
-			</BaseDialog>
-			<BaseDialog
-				v-model:opened="editGalleryMode"
-				:loading="loading"
-				:title="computedGalleryEditTitle"
-				:max-width="1200"
-				@close="editGalleryMode = false"
-			>
-				<template #text>
-					<FilmGalleryEdit
-						v-model:selected="selectedImagesIndices"
-						:active-tab="activeTab"
-						:film="film"
-						:slider-arr="sliderGalleryArr || []"
-						:upload-count="uploadCount"
-						:edit-mode="editGalleryMode"
-						:upload-disabled="uploadCount === 0"
-						:remove-disabled="!film?.gallery.length"
-						:card-height="GALLERY_CARD_HEIGHT"
-						@poster:change="handleChangePoster"
-						@update:selected="selectedImagesIndices = $event"
-						@delete:selected="showConfirmDialog = true"
-						@upload:gallery="handleGalleryUpload"
-					/>
-				</template>
-			</BaseDialog>
-			<GalleryFullscreenViewer
-				v-model:show-gallery="showFullScreenViewer"
-				v-model:active-img-index="activeImg"
-				:gallery-content="film?.gallery || []"
-				:name="getName(film?.name || '', film?.internationalName || '')"
-				:no-content-label="$t('pages.films.no_gallery')"
-				:with-avatar="false"
-				@close="showFullScreenViewer = false"
-				@poster:set="handleChangePoster"
-				@delete:img="handleDeleteImg"
-			/>
-			<SuccessSnackbar
-				v-model:show="showSnackbar"
-				@close="showSnackbar = false"
-			/>
-			<ConfirmDialog
-				v-model="showDeleteWarning"
-				:text="$t('general.entity_delete_warning')"
-				@cancel="showDeleteWarning = false"
-				@confirm="handleFilmDelete"
-			/>
-			<ConfirmDialog
-				v-model="showPosterSetDialog"
-				:text="$t('actions.set_poster') + '?'"
-				@cancel="showPosterSetDialog = false"
-				@confirm="setAsPosterAfterUpload"
-			/>
-		</NuxtLayout>
+							<v-row>
+								<v-col>
+									<v-card
+										border
+										:title="$t('pages.films.comments')"
+										prepend-icon="mdi-comment"
+									>
+										<v-card-text>
+											<Comments
+												:loading="loading"
+												:assessments="
+													film?.assessments || []
+												"
+												:comment="comment"
+												@assession:submit="
+													submitAssessment
+												"
+												@assession:enable="
+													isAssessing = true
+												"
+												@assession:cancel="
+													cancelAssessment
+												"
+												@assession:delete="
+													deleteAssessment
+												"
+											/>
+										</v-card-text>
+									</v-card>
+								</v-col>
+							</v-row>
+						</v-container>
+					</template>
+				</main>
+			</template>
+		</DetailCard>
+		<ConfirmDialog
+			v-model="showConfirmDialog"
+			type="error"
+			:text="$t('forms.film.gallery_item_delete_confirm')"
+			:loading="loading"
+			@confirm="handleGalleryItemsDelete"
+			@cancel="showConfirmDialog = false"
+		/>
+		<BaseDialog
+			v-model:opened="generalInfoEdit"
+			:max-width="800"
+			:title="$t('pages.films.edit') + ' ' + film?.name"
+			:loading="loading"
+			@close="generalInfoEdit = false"
+		>
+			<template #text>
+				<FilmForm
+					:film-form="filmForm"
+					:show-description="false"
+					:genres="genres"
+					:actors="actors"
+					:directors="directors"
+					:producers="producers"
+					:writers="writers"
+					:composers="composers"
+					:is-valid="isFormValid"
+					:countries="countries"
+					@validate="isFormValid = $event"
+					@form:submit="sumbitEdit"
+					@update:model-value="filmForm = $event"
+				/>
+			</template>
+		</BaseDialog>
+		<BaseDialog
+			v-model:opened="editGalleryMode"
+			:loading="loading"
+			:title="computedGalleryEditTitle"
+			:max-width="1200"
+			@close="editGalleryMode = false"
+		>
+			<template #text>
+				<FilmGalleryEdit
+					v-model:selected="selectedImagesIndices"
+					:active-tab="activeTab"
+					:film="film"
+					:slider-arr="sliderGalleryArr || []"
+					:upload-count="uploadCount"
+					:edit-mode="editGalleryMode"
+					:upload-disabled="uploadCount === 0"
+					:remove-disabled="!film?.gallery.length"
+					:card-height="GALLERY_CARD_HEIGHT"
+					@poster:change="handleChangePoster"
+					@update:selected="selectedImagesIndices = $event"
+					@delete:selected="showConfirmDialog = true"
+					@upload:gallery="handleGalleryUpload"
+				/>
+			</template>
+		</BaseDialog>
+		<GalleryFullscreenViewer
+			v-model:show-gallery="showFullScreenViewer"
+			v-model:active-img-index="activeImg"
+			:gallery-content="film?.gallery || []"
+			:name="getName(film?.name || '', film?.internationalName || '')"
+			:no-content-label="$t('pages.films.no_gallery')"
+			:with-avatar="false"
+			@close="showFullScreenViewer = false"
+			@poster:set="handleChangePoster"
+			@delete:img="handleDeleteImg"
+		/>
+		<SuccessSnackbar
+			v-model:show="showSnackbar"
+			@close="showSnackbar = false"
+		/>
+		<ConfirmDialog
+			v-model="showDeleteWarning"
+			:text="$t('general.entity_delete_warning')"
+			@cancel="showDeleteWarning = false"
+			@confirm="handleFilmDelete"
+		/>
+		<ConfirmDialog
+			v-model="showPosterSetDialog"
+			:text="$t('actions.set_poster') + '?'"
+			@cancel="showPosterSetDialog = false"
+			@confirm="setAsPosterAfterUpload"
+		/>
 	</div>
 </template>
 

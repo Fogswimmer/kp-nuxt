@@ -169,7 +169,7 @@ const handleCoverSubmit = async (files: File[]): Promise<void> => {
 	const id = personForm.value.id;
 	await uploadCover(file, id || 0);
 
-	navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
+	await navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
 };
 
 const handleAvatarSubmit = async (index: number): Promise<void> => {
@@ -182,7 +182,7 @@ const handleAvatarSubmit = async (index: number): Promise<void> => {
 
 const handleFinish = async (): Promise<void> => {
 	await editPerson();
-	navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
+	await navigateTo(localeRoute(`/persons/${personForm.value.slug}`));
 };
 
 const fetchData = async (): Promise<void> => {
@@ -221,7 +221,6 @@ definePageMeta({
 	name: "newPerson",
 	path: "/persons/new",
 	middleware: ["auth"],
-	layout: "home",
 });
 </script>
 

@@ -41,7 +41,6 @@ definePageMeta({
 	name: "about",
 	path: "/about",
 	title: "About",
-	layout: "home",
 });
 </script>
 

@@ -154,7 +154,7 @@ const handleSetPoster = async (id: number): Promise<void> => {
 		(filmForm.value.gallery && filmForm.value?.gallery[id - 1]) || "";
 
 	await editFilm(locale.value);
-	navigateTo(localeRoute(`/films/${filmForm.value.slug}`));
+	await navigateTo(localeRoute(`/films/${filmForm.value.slug}`));
 };
 
 const updateForm = (value: IFilm) => {
@@ -164,11 +164,11 @@ const updateForm = (value: IFilm) => {
 	filmForm.value = transformedValue;
 };
 
-const handleFinish = (): void => {
+const handleFinish = async (): Promise<void> => {
 	if (step.value <= 2) {
-		navigateTo(localeRoute(`/films`));
+		await navigateTo(localeRoute(`/films`));
 	} else {
-		navigateTo(localeRoute(`/films/${filmForm.value.slug}`));
+		await navigateTo(localeRoute(`/films/${filmForm.value.slug}`));
 	}
 };
 
@@ -179,7 +179,7 @@ onBeforeUnmount((): void => {
 onMounted(async (): Promise<void> => {
 	await checkPersonsPresence();
 	if (!personsPresent.value) {
-		navigateTo(localeRoute("/films/persons-empty"));
+		await navigateTo(localeRoute("/films/persons-empty"));
 	} else {
 		await fetchSpecialists();
 	}
@@ -221,7 +221,6 @@ definePageMeta({
 	name: "newFilm",
 	path: "/films/new",
 	middleware: ["auth"],
-	layout: "home",
 });
 </script>
 

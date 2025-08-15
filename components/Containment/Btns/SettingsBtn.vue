@@ -3,9 +3,6 @@
 		<template #activator="{ props }">
 			<v-btn v-bind="props" icon flat>
 				<v-icon>mdi-cog</v-icon>
-				<v-tooltip activator="parent">
-					{{ $t("nav.settings") }}
-				</v-tooltip>
 			</v-btn>
 		</template>
 		<v-list nav>

@@ -318,7 +318,22 @@ export const useFilmStore = defineStore("films", () => {
 		}
 	};
 
-	return {
+	const searchFilms = async (query: string) => {
+		try {
+			loading.value = true;
+			const response = await $fetch<IFilmListResponse>(
+				`${baseUrl}/search/films?search=${query}`,
+			);
+			films.value = response?.items || [];
+		} catch (error: unknown) {
+			handleError(error);
+		} finally {
+			loading.value = false;
+		}
+	};
+
+  return {
+
 		film,
 		films,
 		filmForm,
@@ -352,5 +367,6 @@ export const useFilmStore = defineStore("films", () => {
 		deleteAssessmentById,
 		fetchTopFilms,
 		fetchFilmsWithSililarGenres,
+		searchFilms,
 	};
 });

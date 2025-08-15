@@ -34,7 +34,9 @@
 				>
 					<template #group-by>
 						<v-list-subheader
-							>{{ $t("filters.sort.films.genre") }}:</v-list-subheader
+							>{{
+								$t("filters.sort.films.genre")
+							}}:</v-list-subheader
 						>
 						<v-list-item>
 							<v-chip-group
@@ -85,7 +87,7 @@ import { useFilmStore } from "~/stores/filmStore";
 
 const { films, loading, totalPages, currentPage, filmsPresent } =
 	storeToRefs(useFilmStore());
-const { fetchFilteredFilms, checkFilmsPresence } = useFilmStore();
+const { fetchFilteredFilms, checkFilmsPresence, searchFilms } = useFilmStore();
 const { fetchGenres, fetchCountries } = useTranslationStore();
 const { locale, t } = useI18n();
 
@@ -141,7 +143,7 @@ const filmItems = computed((): Detail[] => {
 					rating: film.rating || 0,
 					releaseYear: film.releaseYear || 0,
 					publisherData: film.publisherData || [],
-					flag: countryCodeToEmoji(film.countryCode)
+					flag: countryCodeToEmoji(film.countryCode),
 				};
 			})
 		: [];
@@ -208,8 +210,13 @@ await fetchGenres(locale.value);
 
 await fetchCountries(locale.value);
 
-onMounted(async (): Promise<void> => {
-	await fetchData();
+onMounted(async () => {
+	const q = queryString(useRoute().query.search);
+	if (q) {
+		searchFilms(q);
+	} else {
+		await fetchData();
+	}
 });
 
 watch(
@@ -231,7 +238,6 @@ watch(
 definePageMeta({
 	name: "films",
 	path: "/films",
-	layout: "list",
 	key: (route) => route.fullPath,
 });
 </script>
