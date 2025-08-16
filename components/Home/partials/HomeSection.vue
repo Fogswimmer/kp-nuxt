@@ -1,8 +1,10 @@
 <template>
-	<v-card rounded="lg" height="100%" variant="text">
+	<v-card height="100%" variant="text">
 		<v-card-title>
 			<div class="d-flex flex-column ga-1">
-				<h4 class="text-lg-h4 text-h5 text-center text-uppercase">
+				<h4
+					class="text-lg-h4 mb-2 text-primary text-h5 text-center text-uppercase"
+				>
 					{{ title }}
 				</h4>
 				<SectionDivider />
