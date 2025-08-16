@@ -1,9 +1,5 @@
 <template>
-	<v-app-bar
-		order="0"
-		scroll-behavior="hide"
-		:extended="$vuetify.display.smAndDown && showSearch"
-	>
+	<v-app-bar order="0" scroll-behavior="hide">
 		<v-app-bar-title>
 			<Logo />
 		</v-app-bar-title>
@@ -14,25 +10,25 @@
 		<template #append>
 			<div class="d-flex ga-1 align-center mr-2">
 				<ProfileNav v-if="$vuetify.display.mdAndUp" />
-				<v-btn
+				<!-- <v-btn
 					v-if="$vuetify.display.smAndDown"
 					icon="mdi-magnify"
 					@click="showSearch = !showSearch"
-				/>
+				/> -->
 				<SettingsBtn
 					:active-theme="activeTheme"
 					@update:active-theme="$emit('update:activeTheme', $event)"
 				/>
 			</div>
 		</template>
-		<template v-if="$vuetify.display.smAndDown && showSearch" #extension>
+		<!-- <template v-if="$vuetify.display.smAndDown && showSearch" #extension>
 			<div class="w-100 pa-2 mb-2">
 				<AppSearch
 					:query="searchQuery"
 					@update:query="handleUpdateSearch"
 				/>
 			</div>
-		</template>
+		</template> -->
 	</v-app-bar>
 </template>
 
@@ -40,24 +36,24 @@
 import Logo from "~/components/Misc/Logo.vue";
 import ProfileNav from "../Navigation/ProfileNav.vue";
 import SettingsBtn from "../Containment/Btns/SettingsBtn.vue";
-import AppSearch from "./AppSearch.vue";
+// import AppSearch from "./AppSearch.vue";
 
-const searchQuery = ref<string>("");
-const showSearch = ref<boolean>(false);
+// const searchQuery = ref<string>("");
+// const showSearch = ref<boolean>(false);
 
-const localeRoute = useLocaleRoute();
+// const localeRoute = useLocaleRoute();
 
-const handleUpdateSearch = (value: string) => {
-	searchQuery.value = value;
-	setTimeout(async () => {
-		await navigateTo({
-			path: localeRoute("/films")!.path || "/films",
-			query: {
-				search: searchQuery.value,
-			},
-		});
-	}, 1000);
-};
+// const handleUpdateSearch = (value: string) => {
+// 	searchQuery.value = value;
+// 	setTimeout(async () => {
+// 		await navigateTo({
+// 			path: localeRoute("/films")!.path || "/films",
+// 			query: {
+// 				search: searchQuery.value,
+// 			},
+// 		});
+// 	}, 1000);
+// };
 
 defineProps<{
 	activeTheme: string;

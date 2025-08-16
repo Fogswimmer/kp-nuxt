@@ -28,9 +28,9 @@
 				</v-sheet>
 			</v-dialog>
 		</client-only>
-		<NuxtLayout name="right-drawer">
+		<v-navigation-drawer v-model="showFilters">
 			<slot name="filters" />
-		</NuxtLayout>
+		</v-navigation-drawer>
 		<v-toolbar :extended="needle !== '' && !loading">
 			<template v-if="$vuetify.display.smAndDown" #prepend>
 				<BackBtn />
