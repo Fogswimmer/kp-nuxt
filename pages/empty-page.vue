@@ -13,7 +13,6 @@ const localeRoute = useLocaleRoute();
 definePageMeta({
 	name: "emptyPage",
 	path: "/empty-page",
-	layout: "home",
 });
 </script>
 

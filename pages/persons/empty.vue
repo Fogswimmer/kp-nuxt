@@ -8,8 +8,5 @@
 </template>
 
 <script lang="ts" setup>
-definePageMeta({
-	layout: "home",
-});
 const localeRoute = useLocaleRoute();
 </script>

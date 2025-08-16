@@ -3,9 +3,8 @@
 		:loading="loading"
 		:model-value="query"
 		hide-details
-		:placeholder="$t('actions.search')"
-		variant="outlined"
-		persistent-placeholder
+		:label="$t('actions.search')"
+		variant="solo-filled"
 		prepend-inner-icon="mdi-magnify"
 		@update:model-value="$emit('update:query', $event)"
 	/>

@@ -7,9 +7,9 @@
 		<v-app-bar-title>
 			<Logo />
 		</v-app-bar-title>
-		<v-responsive v-if="$vuetify.display.mdAndUp" max-width="600">
+		<!-- <v-responsive v-if="$vuetify.display.mdAndUp" max-width="600">
 			<AppSearch :query="searchQuery" @update:query="handleUpdateSearch"
-		/></v-responsive>
+		/></v-responsive> -->
 		<v-spacer v-if="$vuetify.display.mdAndUp" />
 		<template #append>
 			<div class="d-flex ga-1 align-center mr-2">

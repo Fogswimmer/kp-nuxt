@@ -229,7 +229,6 @@ onMounted(async (): Promise<void> => {
 definePageMeta({
 	name: "persons",
 	path: "/persons",
-	layout: "list",
 });
 </script>
 

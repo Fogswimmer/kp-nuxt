@@ -9,7 +9,4 @@
 
 <script lang="ts" setup>
 const localeRoute = useLocaleRoute();
-definePageMeta({
-	layout: "home",
-});
 </script>

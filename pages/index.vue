@@ -135,7 +135,6 @@
 								<HomeWall
 									:items="personItems"
 									:loading="personLoading"
-									with-chips
 								/>
 							</template>
 						</HomeSection>
@@ -235,19 +234,25 @@ const currentFilm = ref<Detail>(latestFilmItems.value[0] || ({} as Detail));
 
 const topFilmItems = computed((): Detail[] => {
 	return topFilms.value[0] !== null
-		? topFilms.value?.map((film: IFilm) => {
+		? topFilms.value?.map((film: IFilm): Detail => {
+				console.log(film);
 				return {
 					title: getName(
 						film?.name || "",
 						film?.internationalName || "",
 					),
-					value: film.description || "",
+					value: "",
 					rating: film.rating || "0",
 					avatar: film.poster || film.gallery[0] || "",
 					to: "/films/" + film.slug,
 					createdAt: film.createdAt || "",
 					releaseYear: film.releaseYear || 0,
 					publisherData: film.publisherData || [],
+					chipsArr:
+						film.genreNames.map((genre) => ({
+							name: genre,
+							to: "",
+						})) || [],
 				};
 			})
 		: [];
@@ -257,21 +262,10 @@ const personItems = computed((): Detail[] => {
 	return (
 		popularActors.value &&
 		popularActors.value?.map((person: IPerson): Detail => {
-			const filmsCount = person.filmWorks.actedInFilms.length;
-			const filmsCountLabel = t("general.total", {
-				count:
-					locale.value == "ru"
-						? declineInRussian(filmsCount, [
-								"фильм",
-								"фильма",
-								"фильмов",
-							])
-						: filmsCount + " " + t("pages.films.title"),
-			});
 			return {
 				title: getName(person.name, person.internationalName || ""),
 				value: "",
-				rating: filmsCountLabel,
+				rating: null,
 				avatar: person?.avatar || "",
 				to: localeRoute("/persons/" + person?.slug) || "",
 				createdAt: person?.createdAt || "",

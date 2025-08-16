@@ -5,7 +5,7 @@
 		rounded="lg"
 		lines="two"
 		class="my-3"
-		elevation="5"
+		elevation="2"
 		border
 		:value="item"
 	>

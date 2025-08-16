@@ -33,12 +33,12 @@
 		</template>
 		<template #append>
 			<FilmRatingChip
-				v-if="item.rating && !withChips"
+				v-if="item.rating !== null"
 				size="small"
-				:rating="item?.rating.toString()"
+				:rating="item.rating ? item?.rating.toString() : '0'"
 			/>
 		</template>
-		<v-chip-group v-if="withChips">
+		<v-chip-group>
 			<v-chip v-for="(chip, i) in item.chipsArr" :key="i" :to="chip.to">
 				{{ chip.name }}
 			</v-chip>
@@ -55,7 +55,6 @@ const localeRoute = useLocaleRoute();
 defineProps<{
 	item: Detail;
 	loading: boolean;
-	withChips?: boolean;
 }>();
 </script>
 

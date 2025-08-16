@@ -27,11 +27,10 @@
 					</v-label>
 				</v-sheet>
 			</v-dialog>
-
-			<NuxtLayout name="right-drawer">
-				<slot name="filters" />
-			</NuxtLayout>
 		</client-only>
+		<NuxtLayout name="right-drawer">
+			<slot name="filters" />
+		</NuxtLayout>
 		<v-toolbar :extended="needle !== '' && !loading">
 			<template v-if="$vuetify.display.smAndDown" #prepend>
 				<BackBtn />
