@@ -3,7 +3,10 @@
 		<div
 			v-for="(item, index) in items"
 			:key="index"
-			:class="['masonry-item', { 'fade-in': visibleItems.has(index) }]"
+			:class="[
+				'intersection-item',
+				{ 'slide-in': visibleItems.has(index) },
+			]"
 		>
 			<HomeWallItem
 				v-intersect="useIntersection(index, visibleItems)"
@@ -28,17 +31,17 @@ defineProps<{
 </script>
 
 <style scoped>
-.masonry-item {
+.intersection-item {
 	opacity: 0;
-	transform: translateY(20px);
+	transform: translateX(-50px);
 	transition:
 		opacity 0.6s ease-out,
 		transform 0.6s ease-out;
 }
 
-.masonry-item.fade-in {
+.intersection-item.slide-in {
 	opacity: 1;
-	transform: translateY(0);
+	transform: translateX(0);
 }
 .grid {
 	display: grid;
