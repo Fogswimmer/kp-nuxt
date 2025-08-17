@@ -28,7 +28,10 @@
 				</v-sheet>
 			</v-dialog>
 		</client-only>
-		<v-navigation-drawer v-model="showFilters">
+		<v-navigation-drawer
+			v-model="showFilters"
+			:location="$vuetify.display.smAndDown ? 'start' : 'end'"
+		>
 			<slot name="filters" />
 		</v-navigation-drawer>
 		<v-toolbar :extended="needle !== '' && !loading">
