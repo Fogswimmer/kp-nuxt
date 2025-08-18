@@ -1,51 +1,55 @@
 <template>
 	<div>
+		<Head>
+			<Title>{{ definePageTitle(personFullName) }}</Title>
+			<Meta name="description" :content="person?.bio" />
+		</Head>
 		<NuxtLayout v-if="$vuetify.display.mdAndUp" name="right-drawer">
 			<SimilarSpecialists
 				:persons="similarSpecialists"
 				:loading="loading"
 			/>
 		</NuxtLayout>
-
-		<v-toolbar>
-			<template #prepend>
-				<BackBtn />
-			</template>
-			<v-toolbar-title>
-				<span
-					v-if="!loading && $vuetify.display.smAndDown"
-					class="font-weight-bold"
-				>
-					{{
-						getName(personFullName, person?.internationalName || "")
-					}}
-				</span>
-
-				<v-breadcrumbs
-					v-if="person && $vuetify.display.mdAndUp"
-					:items="breadCrumbs"
-				/>
-			</v-toolbar-title>
-			<template #append>
-				<PersonDetailMenu
-					:is-authenticated="isAuthenticated"
-					@edit:general="generalInfoEdit = true"
-					@edit:bio="handleBioEdit"
-					@edit:gallery="photoEditMode = true"
-					@delete:person="showDeleteWarning = true"
-				/>
-			</template>
-		</v-toolbar>
-		<Head>
-			<Title>{{ definePageTitle(personFullName) }}</Title>
-			<Meta name="description" :content="person?.bio" />
-		</Head>
 		<DetailCard
 			:page-name="personFullName"
 			:cover="person?.cover || ''"
 			:loading="loading"
 			:notification="!isAuthenticated"
 		>
+			<template #toolbar>
+				<v-toolbar>
+					<template #prepend>
+						<BackBtn />
+					</template>
+					<v-toolbar-title>
+						<span
+							v-if="!loading && $vuetify.display.smAndDown"
+							class="font-weight-bold"
+						>
+							{{
+								getName(
+									personFullName,
+									person?.internationalName || "",
+								)
+							}}
+						</span>
+
+						<v-breadcrumbs
+							v-if="person && $vuetify.display.mdAndUp"
+							:items="breadCrumbs"
+						/>
+					</v-toolbar-title>
+					<template #append>
+						<PersonDetailMenu
+							:is-authenticated="isAuthenticated"
+							@edit:general="generalInfoEdit = true"
+							@edit:bio="handleBioEdit"
+							@edit:gallery="photoEditMode = true"
+							@delete:person="showDeleteWarning = true"
+						/>
+					</template>
+				</v-toolbar>
+			</template>
 			<template #publisher-info>
 				<PublisherPopover
 					v-if="person?.publisherData"

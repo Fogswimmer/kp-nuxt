@@ -45,8 +45,8 @@ defineProps<{
 }
 .grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(375px, auto));
-	gap: 1rem;
+	grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+	gap: 2rem;
 	justify-content: center;
 }
 </style>

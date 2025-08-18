@@ -2,10 +2,11 @@
 	<v-card
 		flat
 		class="pb-2 overflow-y-auto"
-		:height="`calc(100dvh - ${$vuetify.display.mdAndUp ? 64 : 128}px)`"
+		:min-height="`calc(100dvh - ${$vuetify.display.mdAndUp ? 64 : 128}px)`"
 		variant="text"
 	>
 		<v-card flat>
+			<slot name="toolbar" />
 			<template v-if="loading" #loader>
 				<v-progress-linear indeterminate color="primary" />
 			</template>
@@ -61,13 +62,8 @@
 import ImgPlaceholder from "../Img/ImgPlaceholder.vue";
 
 defineProps<{
-	pageName?: string;
-	title?: string;
 	loading: boolean;
 	cover?: string;
-	drawer?: boolean;
-	notification?: boolean;
-	poster?: boolean;
 	noCover?: boolean;
 }>();
 

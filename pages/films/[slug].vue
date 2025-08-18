@@ -11,42 +11,47 @@
 			/>
 		</NuxtLayout>
 
-		<v-toolbar>
-			<template #prepend>
-				<BackBtn />
-			</template>
-			<v-toolbar-title>
-				<span
-					v-if="!loading && $vuetify.display.smAndDown"
-					class="font-weight-bold"
-				>
-					{{
-						getName(film?.name || "", film?.internationalName || "")
-					}}
-				</span>
-
-				<v-breadcrumbs
-					v-if="!loading && $vuetify.display.mdAndUp"
-					:items="breadCrumbs"
-				/>
-			</v-toolbar-title>
-
-			<div
-				v-if="$vuetify.display.mdAndUp && !isAuthenticated"
-				class="d-flex justify-center pa-2"
-			>
-				<NotAuthWarning />
-			</div>
-			<FilmDetailMenu
-				:is-authenticated="isAuthenticated"
-				@edit:general="handleGeneralInfoEdit"
-				@edit:description="handleEditDescription"
-				@edit:gallery="openGalleryEditor"
-				@edit:trailer="showLinkTrailerDialog = true"
-				@delete:film="showDeleteWarning = true"
-			/>
-		</v-toolbar>
 		<DetailCard :loading="loading" no-cover>
+			<template #toolbar>
+				<v-toolbar>
+					<template #prepend>
+						<BackBtn />
+					</template>
+					<v-toolbar-title>
+						<span
+							v-if="!loading && $vuetify.display.smAndDown"
+							class="font-weight-bold"
+						>
+							{{
+								getName(
+									film?.name || "",
+									film?.internationalName || "",
+								)
+							}}
+						</span>
+
+						<v-breadcrumbs
+							v-if="!loading && $vuetify.display.mdAndUp"
+							:items="breadCrumbs"
+						/>
+					</v-toolbar-title>
+
+					<div
+						v-if="$vuetify.display.mdAndUp && !isAuthenticated"
+						class="d-flex justify-center pa-2"
+					>
+						<NotAuthWarning />
+					</div>
+					<FilmDetailMenu
+						:is-authenticated="isAuthenticated"
+						@edit:general="handleGeneralInfoEdit"
+						@edit:description="handleEditDescription"
+						@edit:gallery="openGalleryEditor"
+						@edit:trailer="showLinkTrailerDialog = true"
+						@delete:film="showDeleteWarning = true"
+					/>
+				</v-toolbar>
+			</template>
 			<template #top_film>
 				<v-container fluid>
 					<v-card v-if="!loading" class="pa-2" flat>

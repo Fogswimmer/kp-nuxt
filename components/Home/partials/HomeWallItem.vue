@@ -57,7 +57,6 @@
 				v-if="!loading"
 				height="600"
 				class="text-center"
-				variant="outlined"
 				:to="item.to ? localeRoute(item.to) : '/'"
 			>
 				<v-card-title>
