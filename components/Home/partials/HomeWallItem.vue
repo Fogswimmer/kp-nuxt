@@ -55,8 +55,10 @@
 		<template v-else>
 			<v-card
 				v-if="!loading"
-				height="600"
-				class="text-center"
+				height="575"
+				class="text-center pa-2"
+				elevation="5"
+				rounded="lg"
 				:to="item.to ? localeRoute(item.to) : '/'"
 			>
 				<v-card-title>
@@ -76,7 +78,7 @@
 						:src="item?.avatar || ''"
 						aspect-ratio="1"
 						width="100%"
-						height="440"
+						height="400"
 						cover
 						rounded="lg"
 					/>
