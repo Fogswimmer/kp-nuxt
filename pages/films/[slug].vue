@@ -11,11 +11,11 @@
 			/>
 		</NuxtLayout>
 
-		<v-app-bar order="1">
+		<v-toolbar>
 			<template #prepend>
 				<BackBtn />
 			</template>
-			<v-app-bar-title>
+			<v-toolbar-title>
 				<span
 					v-if="!loading && $vuetify.display.smAndDown"
 					class="font-weight-bold"
@@ -29,7 +29,7 @@
 					v-if="!loading && $vuetify.display.mdAndUp"
 					:items="breadCrumbs"
 				/>
-			</v-app-bar-title>
+			</v-toolbar-title>
 
 			<div
 				v-if="$vuetify.display.mdAndUp && !isAuthenticated"
@@ -45,7 +45,7 @@
 				@edit:trailer="showLinkTrailerDialog = true"
 				@delete:film="showDeleteWarning = true"
 			/>
-		</v-app-bar>
+		</v-toolbar>
 		<DetailCard :loading="loading" no-cover>
 			<template #top_film>
 				<v-container fluid>

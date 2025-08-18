@@ -7,11 +7,11 @@
 			/>
 		</NuxtLayout>
 
-		<v-app-bar order="1">
+		<v-toolbar>
 			<template #prepend>
 				<BackBtn />
 			</template>
-			<v-app-bar-title>
+			<v-toolbar-title>
 				<span
 					v-if="!loading && $vuetify.display.smAndDown"
 					class="font-weight-bold"
@@ -25,7 +25,7 @@
 					v-if="person && $vuetify.display.mdAndUp"
 					:items="breadCrumbs"
 				/>
-			</v-app-bar-title>
+			</v-toolbar-title>
 			<template #append>
 				<PersonDetailMenu
 					:is-authenticated="isAuthenticated"
@@ -35,7 +35,7 @@
 					@delete:person="showDeleteWarning = true"
 				/>
 			</template>
-		</v-app-bar>
+		</v-toolbar>
 		<Head>
 			<Title>{{ definePageTitle(personFullName) }}</Title>
 			<Meta name="description" :content="person?.bio" />
