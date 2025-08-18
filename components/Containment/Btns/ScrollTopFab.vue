@@ -5,7 +5,6 @@
 		icon="mdi-arrow-up"
 		color="secondary"
 		location="bottom right"
-		variant="tonal"
 		size="large"
 		app
 		@click="$emit('scroll:top')"
