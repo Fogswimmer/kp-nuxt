@@ -24,7 +24,7 @@
 								color="primary"
 								touch
 								cycle
-								:height="$vuetify.display.mdAndUp ? 500 : 300"
+								:height="$vuetify.display.mdAndUp ? 600 : 300"
 							>
 								<v-carousel-item
 									v-for="(item, i) in latestFilmItems"

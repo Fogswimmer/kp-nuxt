@@ -7,6 +7,7 @@
 				:rail="$vuetify.display.mdAndDown"
 			>
 				<DrawerNavList />
+				<ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
 			</v-navigation-drawer>
 		</client-only>
 		<AppHeader
@@ -15,7 +16,6 @@
 		/>
 		<v-main v-scroll="onScroll" style="min-height: calc(100vh - 64px)">
 			<slot />
-			<ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
 		</v-main>
 
 		<BottomNav v-if="$vuetify.display.smAndDown" show-profile-nav />

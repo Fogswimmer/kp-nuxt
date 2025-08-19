@@ -1,20 +1,26 @@
 <template>
-	<v-container class="overflow-hidden pa-2 grid">
-		<div
-			v-for="(item, index) in items"
-			:key="index"
-			:class="[
-				'intersection-item',
-				{ 'slide-in': visibleItems.has(index) },
-			]"
-		>
-			<HomeWallItem
-				v-intersect="useIntersection(index, visibleItems)"
-				:item="item"
-				:loading="loading"
-				:with-chips="withChips"
-			/>
-		</div>
+	<v-container fluid>
+		<v-row>
+			<v-col
+				v-for="(item, index) in items"
+				:key="index"
+				cols="12"
+				sm="12"
+				md="6"
+				lg="3"
+				:class="[
+					'intersection-item',
+					{ 'slide-in': visibleItems.has(index) },
+				]"
+			>
+				<HomeWallItem
+					v-intersect="useIntersection(index, visibleItems)"
+					:item="item"
+					:loading="loading"
+					:with-chips="withChips"
+				/>
+			</v-col>
+		</v-row>
 	</v-container>
 </template>
 
@@ -42,11 +48,5 @@ defineProps<{
 .intersection-item.slide-in {
 	opacity: 1;
 	transform: translateX(0);
-}
-.grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(300px, auto));
-	gap: 2rem;
-	justify-content: center;
 }
 </style>

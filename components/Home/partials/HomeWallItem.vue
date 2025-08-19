@@ -55,9 +55,10 @@
 		<template v-else>
 			<v-card
 				v-if="!loading"
-				height="600"
-				class="text-center"
-				:to="item.to ? localeRoute(item.to) : '/'"
+				height="575"
+				class="text-center pa-2"
+				elevation="5"
+				rounded="lg"
 			>
 				<v-card-title>
 					<span class="text-h5">{{ item.title }}</span>
@@ -72,14 +73,16 @@
 					</v-chip>
 				</v-card-subtitle>
 				<v-card-text>
-					<v-img
-						:src="item?.avatar || ''"
-						aspect-ratio="1"
-						width="100%"
-						height="440"
-						cover
-						rounded="lg"
-					/>
+					<nuxt-link :to="item.to ? localeRoute(item.to) : '/'">
+						<v-img
+							:src="item?.avatar || ''"
+							aspect-ratio="1"
+							width="100%"
+							height="400"
+							cover
+							rounded="lg"
+						/>
+					</nuxt-link>
 
 					<div class="pa-2 d-flex flex-column ga-2 align-center">
 						<v-chip-group>
