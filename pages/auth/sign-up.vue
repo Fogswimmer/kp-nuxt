@@ -4,26 +4,28 @@
 			<Title>{{ definePageTitle($t("auth.register")) }}</Title>
 		</Head>
 		<AuthCard :title="$t('auth.register')" :top-offset="5">
-			<RegistrationForm
-				is-new
-				:user-form="userForm"
-				:loading="loading"
-				@update:model-value="userForm = $event"
-				@form:submit="submit"
-			/>
+			<template #default>
+				<RegistrationForm
+					:is-new="true"
+					:user-form="userForm"
+					:loading="loading"
+					@update:model-value="userForm = $event"
+					@form:submit="submit"
+				/>
 
-			<div class="d-flex flex-column ga-4 mt-5">
-				<v-btn
-					prepend-icon="mdi-account-off"
-					color="secondary"
-					variant="plain"
-					size="large"
-					block
-					to="/"
-				>
-					{{ $t("auth.continue_as_guest") }}
-				</v-btn>
-			</div>
+				<div class="d-flex flex-column ga-4 mt-5">
+					<v-btn
+						prepend-icon="mdi-account-off"
+						color="secondary"
+						variant="plain"
+						size="large"
+						block
+						to="/"
+					>
+						{{ $t("auth.continue_as_guest") }}
+					</v-btn>
+				</div>
+			</template>
 		</AuthCard>
 		<v-snackbar
 			v-model="showErrorMessage"
@@ -43,12 +45,13 @@ interface AuthError {
 	message: string;
 }
 
+const { locale } = useI18n();
 const { register } = useAuthStore();
 const localeRoute = useLocaleRoute();
 const { loading, authError, showErrorMessage, userForm } =
 	storeToRefs(useAuthStore());
 const submit = async () => {
-	await register();
+	await register(locale.value);
 	if (!showErrorMessage.value) {
 		navigateTo(localeRoute("/auth/sign-in"));
 	}

@@ -19,7 +19,7 @@
 					class="position-relative"
 				>
 					<div class="w-100 pa-2 text-end">
-						<slot name="publisher-info" />
+          <slot name="publisher-info" />
 					</div>
 					<template #placeholder>
 						<ImgPlaceholder />

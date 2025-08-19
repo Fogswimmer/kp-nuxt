@@ -4,6 +4,7 @@
 			<template v-if="isNew">
 				<v-text-field
 					v-model="form.username"
+					name="username"
 					:label="$t('auth.login')"
 					:placeholder="$t('auth.login_placeholder')"
 					prepend-inner-icon="mdi-account-key"
@@ -19,6 +20,7 @@
 				}}</span>
 				<v-text-field
 					v-model="form.password"
+					name="password"
 					:append-inner-icon="visible ? 'mdi-eye-off' : 'mdi-eye'"
 					:type="visible ? 'text' : 'password'"
 					:label="$t('auth.password')"
@@ -31,6 +33,7 @@
 			</template>
 			<v-text-field
 				v-model="form.email"
+				name="email"
 				:label="$t('auth.email')"
 				:placeholder="$t('auth.email_placeholder')"
 				:rules="[requiredRule, emailRule]"
@@ -39,6 +42,7 @@
 			/>
 			<v-text-field
 				v-model="form.displayName"
+				name="displayName"
 				:label="$t('auth.display_name')"
 				:placeholder="$t('auth.login_placeholder')"
 				prepend-inner-icon="mdi-account-eye"
@@ -46,6 +50,7 @@
 			/>
 			<v-text-field
 				v-model.number="form.age"
+				name="age"
 				:label="$t('forms.person.age')"
 				:rules="[requiredRule, onlyNumsRule]"
 				prepend-inner-icon="mdi-calendar"
@@ -53,8 +58,9 @@
 			/>
 			<v-textarea
 				v-model="form.about"
+				name="about"
 				:label="$t('auth.about')"
-				:rules="[(value: string) => !value || true, maxAboutLengthRule]"
+				:rules="[maxAboutLengthRule]"
 				rows="3"
 				counter
 				prepend-inner-icon="mdi-pencil"

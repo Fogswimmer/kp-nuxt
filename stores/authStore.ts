@@ -103,10 +103,10 @@ export const useAuthStore = defineStore("authStore", () => {
 		}
 	};
 
-	const register = async () => {
+	const register = async (locale: string) => {
 		try {
 			loading.value = true;
-			await $fetch<CurrentUser>(`${baseUrl}/register`, {
+			await $fetch<CurrentUser>(`${baseUrl}/register?locale=${locale}`, {
 				method: "POST",
 				body: userForm.value,
 			});

@@ -6,6 +6,7 @@ export const useValidation = () => {
 		email: /\S[^\s@]*@\S+\.\S+/,
 		typeNum: /^\d+$/,
 		letters: /^[a-z\s]+$/i,
+		// eslint-disable-next-line regexp/no-obscure-range
 		latinAndCyrillicLetters: /^[\wа-яА-Я&.\s-]+$/,
 		password: /^(?=.*[A-Z])(?=.*\d)[A-Z\d]{8,}$/i,
 		url: /https?:\/\/(www\.)?[-\w@:%.~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-\w()@:%+.~#?&/=]*)/,
@@ -25,8 +26,14 @@ export const useValidation = () => {
 			: t("forms.rules.only_letters");
 	const minLength = (min: number) => (value: string) =>
 		value.length >= min ? true : t("forms.rules.min_chars", { min });
-	const maxLength = (max: number) => (value: string) =>
-		value.length <= max ? true : t("forms.rules.max_chars", { max });
+	const maxLength =
+		(max: number) =>
+		(value: string | null = null) =>
+			value?.length
+				? value.length <= max
+					? true
+					: t("forms.rules.max_chars", { max })
+				: true;
 	const minYear = (year: number) => (value: string) =>
 		new Date(value).getFullYear() >= year
 			? true
