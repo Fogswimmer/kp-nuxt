@@ -49,10 +49,6 @@ export default defineNuxtConfig({
 	experimental: {
 		scanPageMeta: "after-resolve",
 		sharedPrerenderData: false,
-		compileTemplate: true,
-		resetAsyncDataToUndefined: true,
-		templateUtils: true,
-		relativeWatchPaths: true,
 		normalizeComponentNames: false,
 		defaults: {
 			useAsyncData: {
@@ -133,4 +129,5 @@ export default defineNuxtConfig({
 	vuetify: {
 		vuetifyOptions: "./vuetify.config.ts",
 	},
+	compatibilityDate: "2025-08-20",
 });
