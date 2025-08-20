@@ -31,15 +31,40 @@ export default defineNuxtConfig({
 		},
 	},
 	build: {
-    	transpile: ['vuetify'],
-  	},
+		transpile: ["vuetify"],
+	},
 	runtimeConfig: {
 		public: {
 			apiBase: process.env.NUXT_API_BASE_URL,
 			appName: process.env.NUXT_APP_NAME,
 		},
 	},
-	compatibilityDate: "2025-01-01",
+	future: {
+		compatibilityVersion: 4,
+	},
+	srcDir: ".",
+	dir: {
+		app: "app",
+	},
+	experimental: {
+		scanPageMeta: "after-resolve",
+		sharedPrerenderData: false,
+		compileTemplate: true,
+		resetAsyncDataToUndefined: true,
+		templateUtils: true,
+		relativeWatchPaths: true,
+		normalizeComponentNames: false,
+		defaults: {
+			useAsyncData: {
+				deep: true,
+			},
+		},
+	},
+	unhead: {
+		renderSSRHeadOptions: {
+			omitLineBreaks: false,
+		},
+	},
 
 	vite: {
 		optimizeDeps: {
