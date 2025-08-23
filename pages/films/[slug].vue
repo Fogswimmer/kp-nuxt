@@ -595,13 +595,13 @@ const { genres, countries } = storeToRefs(useTranslationStore());
 const colParams = {
 	poster: {
 		cols: 12,
-		lg: 4,
+		lg: 3,
 		md: 4,
 		sm: 12,
 	},
 	info: {
 		cols: 12,
-		lg: 4,
+		lg: 5,
 		md: 4,
 		sm: 12,
 	},

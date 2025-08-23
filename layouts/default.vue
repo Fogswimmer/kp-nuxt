@@ -1,11 +1,16 @@
 <template>
 	<div>
 		<client-only>
-			<v-navigation-drawer v-if="$vuetify.display.xlAndUp" order="1" />
+			<v-navigation-drawer
+				v-if="$vuetify.display.lgAndUp"
+				width="200"
+				order="1"
+			/>
 			<v-navigation-drawer
 				v-if="$vuetify.display.lgAndUp"
 				location="end"
 				order="1"
+				width="200"
 			>
 				<ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
 			</v-navigation-drawer>
