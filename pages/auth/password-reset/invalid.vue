@@ -22,7 +22,6 @@ const localeRoute = useLocaleRoute();
 definePageMeta({
 	name: "passwordResetInvalidToken",
 	path: "/auth/password-reset/invalid",
-	layout: "content-center",
 });
 </script>
 

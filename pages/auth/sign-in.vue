@@ -122,7 +122,7 @@ definePageMeta({
 
 <style scoped>
 .centered-container {
-	height: 100vh;
+	height: calc(100vh - 128px);
 	display: grid;
 	place-items: center;
 	place-content: center;

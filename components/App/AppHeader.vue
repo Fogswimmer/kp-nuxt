@@ -1,11 +1,17 @@
 <template>
-	<v-app-bar order="0" scroll-behavior="hide">
+	<v-app-bar order="0">
+		<template #image>
+			<v-img gradient="to top , rgba(0,0,0,0), rgba(0,0,0,0.1)" />
+		</template>
 		<v-app-bar-title>
 			<Logo />
 		</v-app-bar-title>
 		<!-- <v-responsive v-if="$vuetify.display.mdAndUp" max-width="600">
 			<AppSearch :query="searchQuery" @update:query="handleUpdateSearch"
 		/></v-responsive> -->
+		<v-responsive v-if="$vuetify.display.mdAndUp" max-width="600">
+			<NavBtns />
+		</v-responsive>
 		<v-spacer v-if="$vuetify.display.mdAndUp" />
 		<template #append>
 			<div class="d-flex ga-1 align-center mr-2">
@@ -36,6 +42,7 @@
 import Logo from "~/components/Misc/Logo.vue";
 import ProfileNav from "../Navigation/ProfileNav.vue";
 import SettingsBtn from "../Containment/Btns/SettingsBtn.vue";
+import NavBtns from "../Navigation/NavBtns.vue";
 // import AppSearch from "./AppSearch.vue";
 
 // const searchQuery = ref<string>("");

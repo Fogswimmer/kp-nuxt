@@ -8,87 +8,39 @@
 			<div class="d-flex flex-column ga-2 pa-4">
 				<HomeSection
 					v-if="latestFilms.length > 0"
-					:present="filmsPresent"
 					:loading="filmLoading"
 					:title="$t('pages.home.newest')"
-					type="carousel"
 				>
 					<template #default>
-						<v-sheet rounded="lg">
-							<v-carousel
-								v-model="currentFilm"
-								hide-delimiter-background
-								hide-delimiters
-								show-arrows="hover"
-								progress="primary"
-								color="primary"
-								touch
-								cycle
-								:height="$vuetify.display.mdAndUp ? 600 : 300"
+						<HomeCarousel
+							:items="latestFilmItems"
+							:current-film="currentFilm"
+							@update:current-film="currentFilm = $event"
+						/>
+						<v-list nav class="overflow-x-hidden">
+							<v-list-item
+								v-for="(film, i) in latestFilms"
+								:key="i"
+								:value="film.id"
+								:to="localeRoute('/films/' + film.slug)"
+								:title="
+									getName(film.name, film.internationalName)
+								"
+								:active="currentFilm.id === film.id"
+								:subtitle="film.releaseYear?.toString()"
+								:prepend-avatar="film.poster || film.gallery[0]"
 							>
-								<v-carousel-item
-									v-for="(item, i) in latestFilmItems"
-									:key="i"
-									:value="item"
-									:src="item.avatar"
-									class="img-blur"
-									cover
-								>
-									>
-									<template #placeholder>
-										<ImgPlaceholder />
-									</template>
-									<template #error>
-										<ErrorPlaceHolder />
-									</template>
-								</v-carousel-item>
-
-								<v-overlay
-									:scrim="false"
-									content-class="w-100 h-100 d-flex flex-column align-center justify-space-between pointer-pass-through py-3"
-									contained
-									model-value
-									no-click-animation
-									persistent
-								>
-									<v-scroll-x-transition mode="out-in" appear>
-										<v-card
-											height="100%"
-											:width="
-												$vuetify.display.mdAndUp
-													? 400
-													: '100%'
-											"
-											:image="currentFilm.avatar"
-											class="position-relative"
-											elevation="10"
-											:to="currentFilm.to"
-										>
-											<v-card-title
-												class="dark-glassed text-white text-center text-truncate"
-											>
-												{{ currentFilm.title }}
-												({{ currentFilm.releaseYear }})
-											</v-card-title>
-
-											<div
-												class="position-absolute bottom-0 right-0 left-0 w-100 text-center pa-2 dark-glassed"
-											>
-												<v-chip color="yellow-darken-2">
-													<v-rating
-														:model-value="
-															currentFilm.rating ||
-															0
-														"
-														readonly
-													/>
-												</v-chip>
-											</div>
-										</v-card>
-									</v-scroll-x-transition>
-								</v-overlay>
-							</v-carousel>
-						</v-sheet>
+								<template #append>
+									<v-rating
+										readonly
+										density="compact"
+										size="x-small"
+										color="yellow-darken-2"
+										:model-value="film.rating || 0"
+									/>
+								</template>
+							</v-list-item>
+						</v-list>
 					</template>
 				</HomeSection>
 
@@ -143,8 +95,8 @@
 import HomeSection from "~/components/Home/partials/HomeSection.vue";
 import HomeWall from "~/components/Home/HomeWall.vue";
 import PageLoader from "~/components/Misc/PageLoader.vue";
-import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
-import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
+
+import HomeCarousel from "~/components/Home/partials/HomeCarousel.vue";
 
 import { useFilmStore } from "~/stores/filmStore";
 import { usePersonStore } from "~/stores/personStore";
@@ -211,7 +163,6 @@ const currentFilm = ref<Detail>(latestFilmItems.value[0] || ({} as Detail));
 const topFilmItems = computed((): Detail[] => {
 	return topFilms.value[0] !== null
 		? topFilms.value?.map((film: IFilm): Detail => {
-				console.log(film);
 				return {
 					title:
 						getName(

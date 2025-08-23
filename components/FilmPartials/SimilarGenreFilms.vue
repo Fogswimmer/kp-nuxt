@@ -7,11 +7,11 @@
 			flat
 		>
 			<v-card-text>
-				<v-list variant="plain">
+				<v-list variant="plain" class="pa-2">
 					<v-list-item
 						v-for="(film, i) in films"
 						:key="i"
-						class="my-2 text-center"
+						class="my-4 text-center"
 						:value="film.id"
 						elevation="2"
 						border
@@ -32,12 +32,9 @@
 							{{ film.releaseYear }}
 						</v-list-item-subtitle>
 						<v-list-item-media class="mt-2">
-							<v-img
-								:src="film.poster || ''"
-								rounded="lg"
-								height="250"
-								width="200"
-							/>
+							<div class="d-flex justify-center">
+								<v-img :src="film.poster || ''" rounded="lg" />
+							</div>
 						</v-list-item-media>
 					</v-list-item>
 				</v-list>

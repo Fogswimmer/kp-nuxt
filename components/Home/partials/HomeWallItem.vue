@@ -55,9 +55,8 @@
 		<template v-else>
 			<v-card
 				v-if="!loading"
-				height="575"
+				height="400"
 				class="text-center pa-2"
-				elevation="5"
 				rounded="lg"
 			>
 				<v-card-title>
@@ -74,14 +73,7 @@
 				</v-card-subtitle>
 				<v-card-text>
 					<nuxt-link :to="item.to ? localeRoute(item.to) : '/'">
-						<v-img
-							:src="item?.avatar || ''"
-							aspect-ratio="1"
-							width="100%"
-							height="400"
-							cover
-							rounded="lg"
-						/>
+						<v-avatar size="200" :image="item?.avatar" />
 					</nuxt-link>
 
 					<div class="pa-2 d-flex flex-column ga-2 align-center">

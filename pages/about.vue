@@ -4,29 +4,31 @@
 			<Title>{{ definePageTitle($t("pages.about.title")) }}</Title>
 		</Head>
 
-		<v-app-bar v-if="$vuetify.display.smAndDown">
-			<template #prepend>
-				<BackBtn />
-			</template>
-			<v-toolbar-title>
-				{{ $t("pages.about.title") }}
-			</v-toolbar-title>
-		</v-app-bar>
-		<v-container fluid>
-			<v-row>
-				<v-col>
-					<Author />
-				</v-col>
-				<v-col>
-					<StackList />
-				</v-col>
-			</v-row>
-			<v-row>
-				<v-col>
-					<Devops />
-				</v-col>
-			</v-row>
-		</v-container>
+		<v-card variant="text">
+			<v-toolbar v-if="$vuetify.display.smAndDown">
+				<template #prepend>
+					<BackBtn />
+				</template>
+				<v-toolbar-title>
+					{{ $t("pages.about.title") }}
+				</v-toolbar-title>
+			</v-toolbar>
+			<v-container fluid>
+				<v-row>
+					<v-col>
+						<Author />
+					</v-col>
+					<v-col>
+						<StackList />
+					</v-col>
+				</v-row>
+				<v-row>
+					<v-col>
+						<Devops />
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-card>
 	</div>
 </template>
 

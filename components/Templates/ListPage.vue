@@ -30,6 +30,8 @@
 		</client-only>
 		<v-navigation-drawer
 			v-model="showFilters"
+			order="1"
+			width="300"
 			:location="$vuetify.display.smAndDown ? 'start' : 'end'"
 		>
 			<slot name="filters" />

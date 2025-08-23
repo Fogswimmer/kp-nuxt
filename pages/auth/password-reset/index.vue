@@ -87,6 +87,5 @@ onMounted(() => {
 definePageMeta({
 	name: "passwordResetEmail",
 	path: "/auth/password-reset",
-	layout: "content-center",
 });
 </script>

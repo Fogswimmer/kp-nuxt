@@ -74,8 +74,7 @@ const closeWindow = () => {
 definePageMeta({
 	name: "passwordReset",
 	path: "/auth/password-reset/:token",
-	// middleware: ["validate-reset-token"],
-	layout: "content-center",
+	middleware: ["validate-reset-token"],
 });
 </script>
 

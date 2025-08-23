@@ -1,12 +1,12 @@
 <template>
 	<div>
 		<client-only>
+			<v-navigation-drawer v-if="$vuetify.display.xlAndUp" order="1" />
 			<v-navigation-drawer
-				v-if="$vuetify.display.mdAndUp"
+				v-if="$vuetify.display.xlAndUp"
+				location="end"
 				order="1"
-				:rail="$vuetify.display.mdAndDown"
 			>
-				<DrawerNavList />
 				<ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
 			</v-navigation-drawer>
 		</client-only>
@@ -23,7 +23,6 @@
 </template>
 
 <script lang="ts" setup>
-import DrawerNavList from "~/components/Navigation/DrawerNavList.vue";
 import BottomNav from "~/components/Navigation/BottomNav.vue";
 import ScrollTopFab from "~/components/Containment/Btns/ScrollTopFab.vue";
 import AppHeader from "~/components/App/AppHeader.vue";
