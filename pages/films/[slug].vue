@@ -13,7 +13,7 @@
 
 		<DetailCard :loading="loading" no-cover>
 			<template #toolbar>
-				<v-toolbar>
+				<v-toolbar :extended="!isAuthenticated">
 					<template #prepend>
 						<BackBtn />
 					</template>
@@ -36,12 +36,9 @@
 						/>
 					</v-toolbar-title>
 
-					<div
-						v-if="$vuetify.display.mdAndUp && !isAuthenticated"
-						class="d-flex justify-center pa-2"
-					>
+					<template #extension>
 						<NotAuthWarning />
-					</div>
+					</template>
 					<FilmDetailMenu
 						:is-authenticated="isAuthenticated"
 						@edit:general="handleGeneralInfoEdit"

@@ -1,5 +1,5 @@
 <template>
-	<v-alert closable type="warning" variant="tonal" density="compact">
+	<v-alert type="warning" variant="tonal" density="compact">
 		<nuxt-link :to="$localeRoute('/auth/sign-in')">
 			<span class="text-caption text-truncate">
 				{{
