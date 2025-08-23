@@ -3,7 +3,7 @@
 		<client-only>
 			<v-navigation-drawer v-if="$vuetify.display.xlAndUp" order="1" />
 			<v-navigation-drawer
-				v-if="$vuetify.display.xlAndUp"
+				v-if="$vuetify.display.lgAndUp"
 				location="end"
 				order="1"
 			>
