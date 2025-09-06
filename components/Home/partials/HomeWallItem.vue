@@ -58,6 +58,7 @@
 				height="400"
 				class="text-center pa-2"
 				rounded="lg"
+				elevation="10"
 			>
 				<v-card-title>
 					<span class="text-h5">{{ item.title }}</span>
