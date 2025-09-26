@@ -4,7 +4,7 @@
 		:active="show"
 		icon="mdi-arrow-up"
 		color="secondary"
-		location="bottom right"
+		location="bottom start"
 		app
 		@click="$emit('scroll:top')"
 	/>

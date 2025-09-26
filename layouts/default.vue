@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop" />
+		<v-navigation-drawer order="1" width="200" />
 		<AppHeader
 			:active-theme="activeTheme"
 			@update:active-theme="activeTheme = $event"
@@ -8,6 +8,9 @@
 		<v-main v-scroll="onScroll" style="min-height: calc(100vh - 64px)">
 			<slot />
 		</v-main>
+		<v-navigation-drawer order="0" width="200" location="end"
+			><ScrollTopFab :show="showScrollBtn" @scroll:top="scrollToTop"
+		/></v-navigation-drawer>
 
 		<BottomNav v-if="$vuetify.display.smAndDown" show-profile-nav />
 	</div>
