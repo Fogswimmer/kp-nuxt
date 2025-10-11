@@ -36,7 +36,7 @@
 								:src="person.avatar || ''"
 								rounded="lg"
 								height="250"
-								width="200"
+								width="100%"
 								cover
 							/>
 						</v-list-item-media>
