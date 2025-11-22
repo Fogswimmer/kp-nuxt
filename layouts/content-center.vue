@@ -1,6 +1,6 @@
 <template>
 	<v-layout>
-		<v-main class="container">
+		<v-main class="centered-container py-2">
 			<slot />
 		</v-main>
 	</v-layout>
@@ -16,8 +16,8 @@ onMounted(() => {
 </script>
 
 <style>
-.container {
-	height: 100vh;
+.centered-container {
+	min-height: 100vh;
 	display: grid;
 	place-items: center;
 	place-content: center;

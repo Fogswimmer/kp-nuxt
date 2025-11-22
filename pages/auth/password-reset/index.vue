@@ -5,33 +5,28 @@
 		</Head>
 
 		<AuthCard :title="$t('auth.password_reset')">
-			<v-card>
-				<v-card-text class="pa-4">
-					<v-form ref="emailFormRef" class="mt-4">
-						<div class="d-flex flex-column ga-2">
-							<v-text-field
-								v-model="passwordResetForm.email"
-								name="email"
-								:disabled="showSuccessMessage || loading"
-								:label="$t('auth.password_reset_email')"
-								:placeholder="$t('auth.password_reset_email')"
-								prepend-inner-icon="mdi-email-outline"
-								variant="outlined"
-								:rules="[required, emailRule]"
-							/>
-						</div>
-					</v-form>
-				</v-card-text>
-				<v-card-actions>
-					<v-spacer />
-					<SubmitBtn
-						:loading="loading"
-						@click="handleValidationAndSubmit"
+			<v-form ref="emailFormRef" class="mt-4">
+				<div class="d-flex flex-column ga-2">
+					<v-text-field
+						v-model="passwordResetForm.email"
+						name="email"
+						:disabled="showSuccessMessage || loading"
+						:label="$t('auth.password_reset_email')"
+						:placeholder="$t('auth.password_reset_email')"
+						prepend-inner-icon="mdi-email-outline"
+						variant="outlined"
+						:rules="[required, emailRule]"
 					/>
-				</v-card-actions>
-			</v-card>
-		</AuthCard>
+				</div>
+			</v-form>
 
+			<div class="d-flex flex-column ga-4 mt-5">
+				<SubmitBtn
+					:loading="loading"
+					@click="handleValidationAndSubmit"
+				/>
+			</div>
+		</AuthCard>
 		<v-snackbar
 			v-model="showSuccessMessage"
 			color="success"
@@ -87,5 +82,6 @@ onMounted(() => {
 definePageMeta({
 	name: "passwordResetEmail",
 	path: "/auth/password-reset",
+	layout: "content-center",
 });
 </script>

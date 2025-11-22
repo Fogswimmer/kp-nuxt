@@ -17,6 +17,7 @@ import CloseWindowBtn from "~/components/Containment/Btns/CloseWindowBtn.vue";
 definePageMeta({
 	name: "passwordResetSuccess",
 	path: "/auth/password-reset/reset-success",
+	layout: "content-center",
 });
 </script>
 

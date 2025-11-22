@@ -75,6 +75,7 @@ definePageMeta({
 	name: "passwordReset",
 	path: "/auth/password-reset/:token",
 	middleware: ["validate-reset-token"],
+	layout: "content-center",
 });
 </script>
 
