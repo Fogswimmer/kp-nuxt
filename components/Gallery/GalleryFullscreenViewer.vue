@@ -156,9 +156,22 @@ const handleChangePoster = () => {
 	emits("close");
 };
 
-onMounted(() => {
-	activeImg.value = props.galleryContent[props.activeImgIndex];
-});
+watch(
+	() => props.galleryContent,
+	(list) => {
+
+		if (list && list.length > 0) {
+			const index = props.activeImgIndex;
+			activeImg.value = list[index]! ?? list[0];
+			openImgIndex.value = index;
+		}
+	},
+	{ immediate: true },
+);
+
+onBeforeUnmount((): void => {
+	activeImg.value = "";
+})
 </script>
 
 <style></style>

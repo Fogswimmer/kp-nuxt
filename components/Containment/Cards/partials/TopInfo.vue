@@ -80,7 +80,7 @@
 		</div>
 		<GalleryFullscreenViewer
 			v-model:show-gallery="showFullScrenView"
-			v-model:active-img-index="active"
+			v-model:active-img-index="activeIndex"
 			:gallery-content="gallery || []"
 			:name="title"
 			with-avatar
@@ -105,7 +105,7 @@ const props = defineProps<{
 	loading: boolean;
 }>();
 
-const active = ref(props.activeImg);
+const activeIndex = ref<number>(0);
 const theme = useTheme();
 const emit = defineEmits<{
 	(e: "delete:img" | "avatar:set", index: number): void;
@@ -118,6 +118,13 @@ const handleShowFullScreenView = (): void => {
 		showFullScrenView.value = true;
 	} else emit("gallery:open");
 };
+
+watch(
+	() => props.activeImg,
+	(): void => {
+		activeIndex.value = props.activeImg;
+	},
+);
 </script>
 
 <style>
