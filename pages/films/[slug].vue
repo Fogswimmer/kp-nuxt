@@ -299,7 +299,7 @@
 										height="100%"
 										class="overflow-y-auto"
 									>
-										<v-list rounded="lg">
+										<v-list>
 											<v-list-item
 												v-for="(
 													actor, index
@@ -349,11 +349,11 @@
 										max-height="300"
 										class="overflow-y-auto"
 									>
-										<v-list rounded="lg">
+										<v-list>
 											<v-list-item
 												v-for="(person, i) in team"
 												:key="`team-${i}`"
-												rounded="lg"
+	
 												:subtitle="
 													$t(person.title || '')
 												"
@@ -540,7 +540,7 @@ import { useAuthStore } from "~/stores/authStore";
 import { useTranslationStore } from "~/stores/translationStore";
 
 const GALLERY_CARD_HEIGHT: number = 400;
-const TOP_CARDS_HEIGHT: number = 450;
+const TOP_CARDS_HEIGHT: number = 500;
 
 const localeRoute = useLocaleRoute();
 const { locale, t } = useI18n();
@@ -596,19 +596,19 @@ const colParams = {
 	poster: {
 		cols: 12,
 		lg: 3,
-		md: 4,
+		md: 6,
 		sm: 12,
 	},
 	info: {
 		cols: 12,
 		lg: 5,
-		md: 4,
+		md: 6,
 		sm: 12,
 	},
 	rating: {
 		cols: 12,
 		lg: 4,
-		md: 4,
+		md: 12,
 		sm: 12,
 	},
 };

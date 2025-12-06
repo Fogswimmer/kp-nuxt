@@ -14,7 +14,7 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	app: {
 		pageTransition: {
-			name: "page",
+			name: "slide",
 			mode: "out-in", // default
 		},
 		layoutTransition: { name: "layout", mode: "out-in" },

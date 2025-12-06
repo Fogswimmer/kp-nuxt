@@ -76,7 +76,6 @@
 										"
 										:value="item"
 										class="my-2"
-										rounded="lg"
 										:title="
 											getName(
 												item.name,
