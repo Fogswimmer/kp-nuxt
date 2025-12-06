@@ -72,7 +72,6 @@
 					@delete:img="handleDeleteImg"
 					@gallery:open="photoEditMode = true"
 				/>
-				{{ activeImg }}
 			</template>
 			<template #notification>
 				<NotAuthWarning v-if="!isAuthenticated" />
