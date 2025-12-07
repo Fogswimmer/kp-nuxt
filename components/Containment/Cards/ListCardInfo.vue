@@ -16,9 +16,15 @@
 				size="small"
 				color="yellow-darken-2"
 			/>
-			<v-spacer v-else/>
+			<v-spacer v-else />
 
-			<v-chip label size="small" prepend-icon="mdi-calendar">
+			<v-chip
+				label
+				size="small"
+				prepend-icon="mdi-calendar"
+				variant="flat"
+				class="opacity-60"
+			>
 				<div class="d-flex ga-1">
 					<span> {{ $t("general.created_at") }}:</span>
 					<span> {{ dateFormatter(item.createdAt || "") }}</span>

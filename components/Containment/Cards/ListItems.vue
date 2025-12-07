@@ -23,7 +23,8 @@
 
 			<v-chip
 				v-if="item.age"
-				variant="plain"
+				variant="flat"
+				class="opacity-60"
 				size="small"
 				prepend-icon="mdi-account"
 				>{{ useDeclineAge(Number(item.age) || 0) }}</v-chip
