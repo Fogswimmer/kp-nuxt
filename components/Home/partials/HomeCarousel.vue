@@ -10,6 +10,7 @@
 			touch
 			cycle
 			height="500"
+			crossfade
 			@update:model-value="$emit('update:currentFilm', $event)"
 		>
 			<v-carousel-item

@@ -137,25 +137,22 @@ const fetchData = async (): Promise<void> => {
 };
 
 const latestFilmItems = computed((): Detail[] => {
-	return latestFilms.value[0] !== null
-		? latestFilms.value?.map((film: IFilm) => {
-				return {
-					title: getName(
-						film?.name || "",
-						film?.internationalName || "",
-					),
-					subtitle: film.description,
-					id: film.id,
-					releaseYear: film.releaseYear,
-					value: film.description || "",
-					rating: film.rating || "0",
-					avatar: film.poster || film.gallery[0] || "",
-					to: "/films/" + film.slug,
-					createdAt: film.createdAt || "",
-					publisherData: film.publisherData || [],
-				};
-			})
-		: [];
+	if (!latestFilms.value[0]) return [];
+
+	const shuffled = shuffle(latestFilms.value);
+
+	return shuffled.map((film: IFilm) => ({
+		title: getName(film?.name || "", film?.internationalName || ""),
+		subtitle: film.description,
+		id: film.id,
+		releaseYear: film.releaseYear,
+		value: film.description || "",
+		rating: film.rating || "0",
+		avatar: film.poster || film.gallery[0] || "",
+		to: "/films/" + film.slug,
+		createdAt: film.createdAt || "",
+		publisherData: film.publisherData || [],
+	}));
 });
 
 const currentFilm = ref<Detail>(latestFilmItems.value[0] || ({} as Detail));

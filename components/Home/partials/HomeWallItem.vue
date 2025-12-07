@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-list-item v-if="$vuetify.display.smAndDown" rounded="lg" border>
+		<v-card v-if="$vuetify.display.smAndDown" rounded="lg" width="100">
 			<v-list-item-title>
 				<div class="d-flex w-100 align-center">
 					<nuxt-link
@@ -51,14 +51,14 @@
 					{{ chip.name }}
 				</v-chip>
 			</v-chip-group>
-		</v-list-item>
+		</v-card>
 		<template v-else>
 			<v-card
 				v-if="!loading"
 				height="400"
 				class="text-center pa-2"
 				rounded="lg"
-				elevation="10"
+				elevation="5"
 			>
 				<v-card-title>
 					<span class="text-h5">{{ item.title }}</span>

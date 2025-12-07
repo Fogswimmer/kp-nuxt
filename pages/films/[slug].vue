@@ -353,7 +353,6 @@
 											<v-list-item
 												v-for="(person, i) in team"
 												:key="`team-${i}`"
-	
 												:subtitle="
 													$t(person.title || '')
 												"
@@ -596,13 +595,13 @@ const colParams = {
 	poster: {
 		cols: 12,
 		lg: 3,
-		md: 6,
+		md: 12,
 		sm: 12,
 	},
 	info: {
 		cols: 12,
 		lg: 5,
-		md: 6,
+		md: 12,
 		sm: 12,
 	},
 	rating: {

@@ -7,7 +7,7 @@
 				cols="12"
 				sm="12"
 				md="6"
-				lg="4"
+				lg="3"
 				:class="[
 					'intersection-item',
 					{ 'slide-in': visibleItems.has(index) },

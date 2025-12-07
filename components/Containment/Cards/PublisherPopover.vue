@@ -5,7 +5,8 @@
 				v-if="!isCommment"
 				size="small"
 				prepend-icon="mdi-newspaper"
-				variant="tonal"
+				variant="flat"
+				class="opacity-60"
 				v-bind="props"
 				label
 			>
