@@ -32,7 +32,8 @@
 			<v-chip
 				v-if="item.gender"
 				prepend-icon="mdi-gender-male-female"
-				variant="plain"
+				variant="flat"
+				class="opacity-60"
 				size="small"
 			>
 				{{ item.gender }}</v-chip
