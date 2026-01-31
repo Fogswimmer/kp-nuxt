@@ -3,12 +3,11 @@ export const useAuthStore = defineStore("authStore", () => {
 		USER = "ROLE_USER",
 		ADMIN = "ROLE_ADMIN",
 	}
-
 	interface ResetTokenResponse {
 		token: string;
 		expiresAt: string;
 	}
-	
+
 	const baseUrl = useRuntimeConfig().public.apiBase;
 	const currentUser = ref<CurrentUser | null>();
 	const loading = ref(false);
