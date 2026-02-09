@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<v-card v-if="$vuetify.display.smAndDown" rounded="lg" width="100">
+		<v-list-item v-if="$vuetify.display.smAndDown" rounded="lg" elevation="2">
 			<v-list-item-title>
 				<div class="d-flex w-100 align-center">
 					<nuxt-link
-						class="text-lg-h5 text-primary text-truncate"
+						class="text-primary text-truncate"
 						style="max-width: 75%"
 						:to="item.to ? localeRoute(item.to) : '/'"
 						>{{ item.title }}</nuxt-link
@@ -47,11 +47,12 @@
 					v-for="(chip, i) in item.chipsArr"
 					:key="i"
 					:to="chip.to"
+					size="small"
 				>
 					{{ chip.name }}
 				</v-chip>
 			</v-chip-group>
-		</v-card>
+		</v-list-item>
 		<template v-else>
 			<v-card
 				v-if="!loading"
