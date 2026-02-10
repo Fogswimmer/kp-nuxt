@@ -102,6 +102,7 @@ import ImgPlaceholder from "~/components/Containment/Img/ImgPlaceholder.vue";
 import ErrorPlaceHolder from "~/components/Containment/Img/ErrorPlaceHolder.vue";
 
 const localeRoute = useLocaleRoute();
+
 defineProps<{
 	item: Detail;
 	loading: boolean;
