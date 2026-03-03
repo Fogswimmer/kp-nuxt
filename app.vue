@@ -9,14 +9,14 @@
 </template>
 
 <script setup lang="ts">
-import LoadingScreen from "./components/Misc/LoadingScreen.vue";
+	import LoadingScreen from "./components/Misc/LoadingScreen.vue";
 
-const isLoading = ref(true);
-onMounted(async () => {
-	await nextTick(() => {
-		isLoading.value = false;
+	const isLoading = ref(true);
+	onMounted(async () => {
+		await nextTick(() => {
+			isLoading.value = false;
+		});
 	});
-});
 </script>
 
 <style lang="scss">

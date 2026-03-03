@@ -153,7 +153,6 @@
 				</div>
 			</v-sheet>
 		</main>
-
 		<NuxtLayout name="footer">
 			<div class="w-100">
 				<v-pagination

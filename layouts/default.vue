@@ -7,7 +7,8 @@
 		<v-main v-scroll="onScroll" style="min-height: calc(100vh - 64px)">
 			<slot />
 		</v-main>
-		<BottomNav v-if="$vuetify.display.smAndDown" show-profile-nav />
+		<AppFooter v-if="$vuetify.display.mdAndUp" />
+		<BottomNav v-else show-profile-nav />
 	</div>
 </template>
 
@@ -15,6 +16,7 @@
 import BottomNav from "~/components/Navigation/BottomNav.vue";
 import ScrollTopFab from "~/components/Containment/Btns/ScrollTopFab.vue";
 import AppHeader from "~/components/App/AppHeader.vue";
+import AppFooter from "~/components/App/AppFooter.vue";
 
 const theme = useTheme();
 const activeTheme = ref(theme.global.name.value);

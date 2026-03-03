@@ -1,6 +1,8 @@
 export default {
 	welcome: "Bienvenue",
 	language: "langue",
+	copyright: "Tous droits reservés - {year}",
+	developed_by: "Dévelopé par ©Fogswimmer (Andrew Dyakov)",
 	contents: "Contenu",
 	logo_description: "Centre des cinéphiles",
 	page_descriptions: {

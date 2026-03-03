@@ -1,7 +1,7 @@
 <template>
-  <v-app-bar location="bottom" order="1" permanent>
+  <v-footer>
     <slot />
-  </v-app-bar>
+  </v-footer>
 </template>
 
 <script lang="ts" setup>

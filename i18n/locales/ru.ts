@@ -1,6 +1,8 @@
 export default {
 	welcome: "Добро пожаловать",
 	language: "язык",
+	copyright: "Все права защищены - {year}",
+	developed_by: "Разработка - ©Fogswimmer (Andrew Dyakov)",
 	contents: "Содержание",
 	logo_description: "Для киноманов",
 	page_descriptions: {

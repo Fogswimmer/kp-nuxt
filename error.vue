@@ -1,6 +1,6 @@
 <template>
-	<v-layout>
-	<NuxtLayout>
+	<v-app>
+		<NuxtLayout>
 			<Head>
 				<Title>
 					{{
@@ -12,22 +12,23 @@
 					}}
 				</Title>
 			</Head>
-			<v-main class="container">
-				<v-empty-state
-					:headline="error?.statusCode.toString()"
-					:title="
-						$t(
-							`toast.messages.server_errors.${error?.statusCode || 500}`,
-						)
-					"
-					:text="error?.message"
-					icon="mdi-alert-rhombus"
-					:action-text="$t('empty_states.actions.home')"
-					@click:action="clearError({ redirect: '/' })"
-				/>
-			</v-main>
+				<div class="container">
+					<v-empty-state
+						:headline="error?.statusCode.toString()"
+						:title="
+							$t(
+								`toast.messages.server_errors.${error?.statusCode || 500}`,
+							)
+						"
+						:text="error?.message"
+						icon="mdi-alert-rhombus"
+						:action-text="$t('empty_states.actions.home')"
+						class="full-height"
+						@click:action="clearError({ redirect: '/' })"
+					/>
+				</div>
 		</NuxtLayout>
-	</v-layout>
+	</v-app>
 </template>
 
 <script setup lang="ts">

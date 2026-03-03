@@ -1,5 +1,7 @@
 export default {
 	welcome: "Welcome",
+	copyright: "All rights reserved - {year}",
+	developed_by: "Developed by ©Fogswimmer (Andrew Dyakov)",
 	language: "language",
 	contents: "Contents",
 	logo_description: "Cinemalovers hub",

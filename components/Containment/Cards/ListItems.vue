@@ -46,7 +46,7 @@
 		</template>
 		<template #prepend>
 			<nuxt-link :to="item.to" class="mr-2">
-				<v-avatar :size="$vuetify.display.mdAndUp ? 100 : 64">
+				<v-avatar :size="$vuetify.display.mdAndUp ? 116 : 82">
 					<v-img :src="item.avatar">
 						<template #placeholder>
 							<v-sheet height="100%">

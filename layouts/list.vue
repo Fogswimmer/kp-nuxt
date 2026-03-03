@@ -1,13 +1,11 @@
 <template>
 	<div>
 		<client-only>
-			
 			<v-navigation-drawer v-if="$vuetify.display.mdAndUp">
 				<Logo />
 				<DrawerNavList />
 				<template #append>
 					<v-divider />
-
 					<div class="pa-2 d-flex ga-2 align-center">
 						<ProfileNav />
 						<SettingsBtn
